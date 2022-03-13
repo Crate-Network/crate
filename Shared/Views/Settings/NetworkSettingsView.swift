@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct IPFSSettingsView: View {
+struct NetworkSettingsView: View {
     @EnvironmentObject var ipfs: IPFSCore
     var body: some View {
         Section {
@@ -35,9 +35,9 @@ struct IPFSSettingsView: View {
     }
 }
 
-struct IPFSSettingsView_Previews: PreviewProvider {
+struct NetworkSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        IPFSSettingsView()
+        NetworkSettingsView()
             .environmentObject(IPFSCore())
     }
 }

@@ -39,12 +39,12 @@ struct SettingsView: View {
                 }
             
             Form {
-                IPFSSettingsView()
+                NetworkSettingsView()
                     .frame(maxWidth: 250)
                 
             }
                 .tabItem {
-                    Label("IPFS", systemImage: "point.3.connected.trianglepath.dotted")
+                    Label("Network", systemImage: "point.3.connected.trianglepath.dotted")
                 }
             Form {
                 NotificationSettingsView()

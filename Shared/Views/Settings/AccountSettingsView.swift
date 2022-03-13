@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct AccountSettingsView: View {
+    @EnvironmentObject var account: Account
     var body: some View {
         Button("Logout") {
-            
+            do {
+                try account.signOut()
+            } catch {
+                print(error)
+            }
         }
     }
 }

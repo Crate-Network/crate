@@ -19,46 +19,55 @@ struct SettingsView: View {
         VStack {
             Form {
                 Section {
-                    NavigationLink(
-                        destination: AccountSettingsView()
-                            .navigationTitle("Account"),
-                        label: {
-                            HStack {
-                                Label {
-                                    VStack {
-                                        HStack {
-                                            Text("Chris Vanderloo")
-                                                .font(.headline)
-                                                .dynamicTypeSize(.xxLarge)
-                                            Spacer()
-                                        }
-                                        HStack {
-                                            Text("Crate Account")
-                                                .font(.footnote)
-                                                .foregroundColor(.gray)
-                                            Spacer()
-                                        }
+                    NavigationLink {
+                        AccountSettingsView()
+                                .navigationTitle("Account")
+                    } label: {
+                        HStack {
+                            Label {
+                                VStack {
+                                    HStack {
+                                        Text("Account")
+                                            .font(.headline)
+                                            .dynamicTypeSize(.xxLarge)
+                                        Spacer()
                                     }
-                                } icon: {
-                                    Image(systemName: "person.circle")
+                                    HStack {
+                                        Text("Signed In: chris.vanderloo@yahoo.com")
+                                            .font(.footnote)
+                                            .foregroundColor(.gray)
+                                        Spacer()
+                                    }
                                 }
+                            } icon: {
+                                Image(systemName: "person.circle")
                             }
-                        }).frame(height: 50)
+                        }
+                    }.frame(height: 50)
                     NavigationLink {
                         Form {
                             if UIDevice.current.userInterfaceIdiom != .pad {
                                 IPFSIndicator()
                             }
-                            IPFSSettingsView()
+                            NetworkSettingsView()
                         }
-                        .navigationTitle("IPFS")
+                        .navigationTitle("Network")
                     } label: {
-                        Label("IPFS Settings", systemImage: "point.3.connected.trianglepath.dotted")
+                        Label("Network", systemImage: "point.3.connected.trianglepath.dotted")
+                    }
+                    NavigationLink {
+                        Form {
+                            StorageSettingsView()
+                        }
+                            .navigationTitle("Storage")
+                    } label: {
+                        Label("Storage", systemImage: "shippingbox")
                     }
                 }
-                NotificationSettingsView()
-                SyncSettingsView()
-                StorageSettingsView()
+                Section {
+                    NotificationSettingsView()
+                    SyncSettingsView()
+                }
             }
         }.navigationTitle("Settings")
     }

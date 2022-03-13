@@ -42,13 +42,13 @@ extension View {
 }
 
 extension Shape {
-  func fill(_ color: ColorType) -> some View {
-    self.fill(Color(color.name))
-  }
-    
-  func stroke(_ color: ColorType) -> some View {
-    self.stroke(Color(color.name))
-  }
+    func fillCT(_ color: ColorType) -> some View {
+        self.fill(Color(color.name))
+    }
+
+    func strokeCT(_ color: ColorType) -> some View {
+        self.stroke(Color(color.name))
+    }
 }
 
 extension Color {
