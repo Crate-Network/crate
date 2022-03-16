@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var account: Account
+    @EnvironmentObject var authentication: CrateAuthentication
     var body: some View {
         NavigationView {
             Sidebar()

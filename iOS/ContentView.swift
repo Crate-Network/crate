@@ -8,24 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var account: Account
+    @EnvironmentObject var user: CrateUser
     var body: some View {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            if account.loggedIn {
-                TabBar()
-            }
-            if !account.loggedIn {
-                Authenticate()
-                    .transition(.move(edge: .bottom).animation(.easeInOut(duration: 0.3)))
-            }
+            TabBar()
+                .sheet(isPresented: $user.loggedIn.not) {
+                    Authenticate()
+                        .interactiveDismissDisabled(true)
+                }
         } else {
             NavigationView {
                 Sidebar()
                 FilesView()
             }
-            .sheet(isPresented: $account.loggedIn.not) {
+            .sheet(isPresented: $user.loggedIn.not) {
                 Authenticate()
-                    .environmentObject(account)
             }
             .interactiveDismissDisabled()
         }
@@ -39,12 +36,3 @@ struct ContentView: View {
 //        }
 //    }
 //}
-
-extension Binding where Value == Bool {
-    var not: Binding<Value> {
-        Binding<Value>(
-            get: { !self.wrappedValue },
-            set: { self.wrappedValue = !$0 }
-        )
-    }
-}

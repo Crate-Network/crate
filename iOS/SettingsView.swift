@@ -14,6 +14,7 @@ enum Size {
 
 struct SettingsView: View {
     @EnvironmentObject var ipfs: IPFSCore
+    @EnvironmentObject var user: CrateUser
     
     var body: some View {
         VStack {
@@ -21,7 +22,7 @@ struct SettingsView: View {
                 Section {
                     NavigationLink {
                         AccountSettingsView()
-                                .navigationTitle("Account")
+                            .navigationTitle("Account")
                     } label: {
                         HStack {
                             Label {
@@ -33,7 +34,7 @@ struct SettingsView: View {
                                         Spacer()
                                     }
                                     HStack {
-                                        Text("Signed In: chris.vanderloo@yahoo.com")
+                                        Text("Signed In: \(user.email)")
                                             .font(.footnote)
                                             .foregroundColor(.gray)
                                         Spacer()
@@ -65,7 +66,6 @@ struct SettingsView: View {
                     }
                 }
                 Section {
-                    NotificationSettingsView()
                     SyncSettingsView()
                 }
             }

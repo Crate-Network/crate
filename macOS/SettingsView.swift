@@ -15,14 +15,25 @@ struct SettingsView: View {
     @State var playSounds: Bool = true
     @State var selectedSize: Size = .large
     @EnvironmentObject var ipfs: IPFSCore
+    @EnvironmentObject var user: CrateUser
     var body: some View {
         TabView {
             Form {
                 AccountSettingsView()
+                    .frame(maxWidth: 350)
             }
                 .tabItem {
                     Label("Account", systemImage: "person.crop.circle")
                 }
+            
+            if user.uses2FA {
+                Form {
+                    ChangePassword()
+                }
+                    .tabItem {
+                        Label("Password", systemImage: "lock.fill")
+                    }
+            }
             
             Form {
                 SyncSettingsView()
@@ -32,7 +43,7 @@ struct SettingsView: View {
                 }
             Form {
                 StorageSettingsView()
-                    .frame(maxWidth: 250)
+                    .frame(maxWidth: 350)
             }
                 .tabItem {
                     Label("Storage", systemImage: "shippingbox")
@@ -45,12 +56,6 @@ struct SettingsView: View {
             }
                 .tabItem {
                     Label("Network", systemImage: "point.3.connected.trianglepath.dotted")
-                }
-            Form {
-                NotificationSettingsView()
-            }
-                .tabItem {
-                    Label("Notifications", systemImage: "bell.badge")
                 }
         }
     }

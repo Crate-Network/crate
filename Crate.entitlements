@@ -9,7 +9,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>crate-f84de.firebaseapp.com</string>
-		<string>link.crate.network</string>
+		<string>applinks:link.crate.network</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>

@@ -107,7 +107,7 @@ struct Sidebar: View {
             }
         }
         #endif
-        .navigationTitle("Crate")
+        .navigationTitle("CRATE")
     }
     
     #if os(macOS)

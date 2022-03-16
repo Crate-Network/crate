@@ -17,7 +17,7 @@ struct Authenticate: View {
     @State var showAlert: Bool = false
     @State var error: String = ""
     
-    @EnvironmentObject var account: Account
+    @EnvironmentObject var authentication: CrateAuthentication
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
@@ -33,14 +33,15 @@ struct Authenticate: View {
                 if showRest {
                     Text("Login/Register")
                         .font(Font.custom("iA Writer Quattro S", size: 30))
-                    SignInWithEmail(showRest: $showRest, showAlert: $showAlert, error: $error)
-                    Divider().padding()
+                    
                     SignInWithAppleButton(.continue, onRequest: { req in
-                        account.asAccount.startSignInWithAppleFlow()
+                        authentication.signInWithApple()
                     }, onCompletion: { result in
                         print(result)
                     }).signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
                         .frame(height: 44)
+                    Divider().padding()
+                    SignInWithEmail(showRest: $showRest, showAlert: $showAlert, error: $error)
 //                    GoogleButton()
 //                    GitHubButton()
                     Spacer()
@@ -132,8 +133,9 @@ struct SignInWithEmail: View {
     @Binding var error: String
     
     @State var email: String = ""
+    @State var showEmailMsg: Bool = false
     
-    @EnvironmentObject var account: Account
+    @EnvironmentObject var authentication: CrateAuthentication
     var body: some View {
         VStack {
             TextField("Email", text: $email)
@@ -160,6 +162,9 @@ struct SignInWithEmail: View {
                     Spacer()
                 }
             }
+            .alert("An email was sent. Please tap on the link in the email to finish login.", isPresented: $showEmailMsg) {
+                Button("OK") { showEmailMsg = false }
+            }
             .disabled(email == "")
             .buttonStyle(.plain)
             .padding(10.0)
@@ -177,8 +182,8 @@ struct SignInWithEmail: View {
         Task { @MainActor in
             do {
                 print(self.email)
-                try await account.sendEmailLink(email: self.email)
-                account.loggedIn = true
+                try await authentication.sendEmailLink(email: self.email)
+                self.showEmailMsg = true
             } catch {
                 print(error)
                 self.error = error.localizedDescription
