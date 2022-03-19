@@ -13,8 +13,13 @@ struct ContentView: View {
         NavigationView {
             Sidebar()
                 .frame(minWidth: 250)
+            
             FilesView()
+                .frame(minWidth: 400, maxWidth: .infinity, maxHeight: .infinity)
+                
         }
+        .frame(minWidth: 400, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
+        
     }
 }
 

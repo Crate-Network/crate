@@ -25,6 +25,4 @@ struct IPFSExternalCore: IPFSProvider {
     func getCID(_ data: Data) async throws -> String {
         throw IPFSError.notImplemented
     }
-    
-    
 }

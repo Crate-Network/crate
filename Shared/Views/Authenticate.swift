@@ -18,6 +18,7 @@ struct Authenticate: View {
     @State var error: String = ""
     
     @EnvironmentObject var authentication: CrateAuthentication
+    @EnvironmentObject var user: CrateUser
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
@@ -42,6 +43,9 @@ struct Authenticate: View {
                         .frame(height: 44)
                     Divider().padding()
                     SignInWithEmail(showRest: $showRest, showAlert: $showAlert, error: $error)
+                    Button("Bypass") {
+                        user.loggedIn = true
+                    }
 //                    GoogleButton()
 //                    GitHubButton()
                     Spacer()

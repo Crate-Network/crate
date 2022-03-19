@@ -12,10 +12,13 @@ struct CrateApp: App {
     @StateObject var ipfs: IPFSCore = IPFSCore()
     @StateObject var user: CrateUser = CrateUser()
     @StateObject var authentication: CrateAuthentication = CrateAuthentication()
+    @StateObject var fileStore: FileStore = FileStore()
     
     init() {
         FirebaseConstants.initialize()
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "iA Writer Quattro S", size: 35)!]
+        #if os(iOS)
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "iA Writer Quattro S", size: 30)!]
+        #endif
     }
     
     #if os(macOS)
@@ -27,7 +30,7 @@ struct CrateApp: App {
                 .environmentObject(ipfs)
                 .environmentObject(user)
                 .environmentObject(authentication)
-                .frame(minWidth: 800, maxWidth: .infinity, maxHeight: .infinity)
+                .environmentObject(fileStore)
                 .sheet(isPresented: $user.loggedIn.not) {
                     Authenticate()
                         .environmentObject(authentication)
@@ -61,6 +64,7 @@ struct CrateApp: App {
                 .environmentObject(ipfs)
                 .environmentObject(user)
                 .environmentObject(authentication)
+                .environmentObject(fileStore)
         }
     }
     #endif

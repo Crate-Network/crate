@@ -69,13 +69,17 @@ struct SortingTypePicker: View {
 struct FilesView: View {
     @State var searchText: String = ""
     @State var selectedDisplay: FileDisplay = .icon
+    @State var selection: Set<File.ID> = Set([])
+    @State var sorting: [KeyPathComparator<File>] = [
+        .init(\.fileName, order: .forward)
+    ]
     var body: some View {
         VStack {
             switch selectedDisplay {
             case .icon:
-                FilesGrid()
+                FilesGrid(selection: $selection, sortOrder: $sorting)
             case .list:
-                FilesList()
+                FilesList(selection: $selection, sortOrder: $sorting)
             case .column:
                 FilesColumn()
             }
@@ -95,15 +99,17 @@ struct FilesView: View {
             }
             ToolbarItemGroup {
                 #if os(iOS)
-                Menu {
-                    FileDisplayPicker(selectedDisplay:  $selectedDisplay)
-                } label: {
-                    Image(systemName: selectedDisplay.rawValue)
-                }
-                Menu {
-                    SortingTypePicker()
-                } label: {
-                    Image(systemName: "arrow.up.arrow.down")
+                HStack {
+                    Menu {
+                        FileDisplayPicker(selectedDisplay:  $selectedDisplay)
+                    } label: {
+                        Image(systemName: selectedDisplay.rawValue)
+                    }
+                    Menu {
+                        SortingTypePicker()
+                    } label: {
+                        Image(systemName: "arrow.up.arrow.down")
+                    }
                 }
                 #else
                 FileDisplayPicker(selectedDisplay: $selectedDisplay)
@@ -137,8 +143,8 @@ struct FilesView: View {
 }
 
 
-struct FilesView_Previews: PreviewProvider {
-    static var previews: some View {
-        FilesView()
-    }
-}
+//struct FilesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FilesView()
+//    }
+//}
