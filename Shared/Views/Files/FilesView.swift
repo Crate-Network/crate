@@ -69,17 +69,25 @@ struct SortingTypePicker: View {
 struct FilesView: View {
     @State var searchText: String = ""
     @State var selectedDisplay: FileDisplay = .icon
-    @State var selection: Set<File.ID> = Set([])
-    @State var sorting: [KeyPathComparator<File>] = [
-        .init(\.fileName, order: .forward)
+    @State var selection = Set<UnixFSNode.ID>()
+    @State var sortOrder: [KeyPathComparator<UnixFSNode>] = [
+        .init(\.name, order: SortOrder.forward)
     ]
+    
+    @State var sheetShown: Bool = false
+    @State var cid: String = ""
+    @State var filename: String = ""
+    
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: UnixFSNode.entity(), sortDescriptors: []) var nodes: FetchedResults<UnixFSNode>
+    
     var body: some View {
         VStack {
             switch selectedDisplay {
             case .icon:
-                FilesGrid(selection: $selection, sortOrder: $sorting)
+                FilesGrid(selection: $selection)
             case .list:
-                FilesList(selection: $selection, sortOrder: $sorting)
+                FilesList(selection: $selection, sortOrder: $sortOrder)
             case .column:
                 FilesColumn()
             }
@@ -91,8 +99,11 @@ struct FilesView: View {
         .toolbar {
             ToolbarItem(placement: .navigation) {
                 Menu {
+                    Button("New File", action: newFile)
+                    Button("New Folder", action: newFolder)
+                    Divider()
                     Button("Import File", action: addFile)
-                    Button("Add IPFS CID", action: addIPFSCID)
+                    Button("Import IPFS CID", action: addIPFSCID)
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -115,11 +126,29 @@ struct FilesView: View {
                 FileDisplayPicker(selectedDisplay: $selectedDisplay)
                 SortingTypePicker()
                 Spacer()
-                Button(action: toggleRightSidebar, label: {
-                    Image(systemName: "sidebar.trailing")
-                })
+//                Button(action: toggleRightSidebar, label: {
+//                    Image(systemName: "sidebar.trailing")
+//                })
                 #endif
             }
+        }
+        .sheet(isPresented: $sheetShown) {
+            VStack {
+                Text("Add CID").font(.headline)
+                TextField("CID", text: $cid)
+                    .frame(minWidth: 200)
+                TextField("File Name (Optional)", text: $filename)
+                    .frame(minWidth: 200)
+                Button("Add") {
+                    let file = File(context: moc)
+                    file.name = filename == "" ? cid : filename
+                    file.cid = cid
+                    file.size = 80
+                    try? moc.save()
+                    sheetShown = false
+                }
+            }
+            .padding()
         }
         #if os(iOS)
         .searchable(text: $searchText,
@@ -129,8 +158,20 @@ struct FilesView: View {
         #endif
     }
     
-    private func toggleRightSidebar() {
-        
+//    private func toggleRightSidebar() {
+//
+//    }
+    
+    private func newFile() {
+        let file = File(context: moc)
+        file.name = "file.txt"
+        try? moc.save()
+    }
+    
+    private func newFolder() {
+        let folder = Folder(context: moc)
+        folder.name = "folder"
+        try? moc.save()
     }
     
     private func addFile() {
@@ -138,7 +179,7 @@ struct FilesView: View {
     }
     
     private func addIPFSCID() {
-        
+        sheetShown = true
     }
 }
 

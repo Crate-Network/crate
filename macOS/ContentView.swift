@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var authentication: CrateAuthentication
     var body: some View {
         NavigationView {
             Sidebar()
@@ -19,7 +18,6 @@ struct ContentView: View {
                 
         }
         .frame(minWidth: 400, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
-        
     }
 }
 

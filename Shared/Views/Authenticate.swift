@@ -17,7 +17,7 @@ struct Authenticate: View {
     @State var showAlert: Bool = false
     @State var error: String = ""
     
-    @EnvironmentObject var authentication: CrateAuthentication
+    var authentication: CrateAuthentication = CrateAuthentication()
     @EnvironmentObject var user: CrateUser
     @Environment(\.colorScheme) private var colorScheme
     
@@ -42,7 +42,7 @@ struct Authenticate: View {
                     }).signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
                         .frame(height: 44)
                     Divider().padding()
-                    SignInWithEmail(showRest: $showRest, showAlert: $showAlert, error: $error)
+                    SignInWithEmail(showRest: $showRest, showAlert: $showAlert, error: $error, authentication: authentication)
                     Button("Bypass") {
                         user.loggedIn = true
                     }
@@ -139,7 +139,7 @@ struct SignInWithEmail: View {
     @State var email: String = ""
     @State var showEmailMsg: Bool = false
     
-    @EnvironmentObject var authentication: CrateAuthentication
+    var authentication: CrateAuthentication
     var body: some View {
         VStack {
             TextField("Email", text: $email)

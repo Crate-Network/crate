@@ -9,7 +9,7 @@ import Foundation
 import FirebaseAuth
 import SwiftUI
 
-class CrateAuthentication: ObservableObject {
+class CrateAuthentication {
     private var asAccount: ASAccount?
     
     init() {

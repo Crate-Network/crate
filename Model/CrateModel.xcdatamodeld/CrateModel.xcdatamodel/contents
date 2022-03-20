@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="File" representedClassName="File" parentEntity="UnixFSNode" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="size" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="parent" maxCount="1" deletionRule="Nullify" destinationEntity="Folder"/>
+    </entity>
+    <entity name="Folder" representedClassName="Folder" parentEntity="UnixFSNode" syncable="YES" codeGenerationType="class">
+        <attribute name="favorited" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="children" toMany="YES" deletionRule="Nullify" destinationEntity="UnixFSNode"/>
+    </entity>
+    <entity name="UnixFSNode" representedClassName="UnixFSNode" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <attribute name="cid" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="cid"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <elements>
+        <element name="File" positionX="-54" positionY="-9" width="128" height="88"/>
+        <element name="Folder" positionX="-347.0078125" positionY="-81.82421875" width="128" height="73"/>
+        <element name="UnixFSNode" positionX="-171" positionY="9" width="128" height="74"/>
+    </elements>
+</model>

@@ -9,10 +9,10 @@ import SwiftUI
 
 @main
 struct CrateApp: App {
+    let persistentContainer = CoreDataManager.shared.persistentContainer
+    
     @StateObject var ipfs: IPFSCore = IPFSCore()
     @StateObject var user: CrateUser = CrateUser()
-    @StateObject var authentication: CrateAuthentication = CrateAuthentication()
-    @StateObject var fileStore: FileStore = FileStore()
     
     init() {
         FirebaseConstants.initialize()
@@ -29,11 +29,9 @@ struct CrateApp: App {
             ContentView()
                 .environmentObject(ipfs)
                 .environmentObject(user)
-                .environmentObject(authentication)
-                .environmentObject(fileStore)
+                .environment(\.managedObjectContext, persistentContainer.viewContext)
                 .sheet(isPresented: $user.loggedIn.not) {
                     Authenticate()
-                        .environmentObject(authentication)
                 }
                 .interactiveDismissDisabled()
 
@@ -50,7 +48,7 @@ struct CrateApp: App {
                     .multilineTextAlignment(.leading)
                     .environmentObject(ipfs)
                     .environmentObject(user)
-                    .environmentObject(authentication)
+                    .environment(\.managedObjectContext, persistentContainer.viewContext)
             } else {
                 Text("Please log in or make an account.")
                     .frame(width: 200, height: 100)
@@ -63,8 +61,7 @@ struct CrateApp: App {
             ContentView()
                 .environmentObject(ipfs)
                 .environmentObject(user)
-                .environmentObject(authentication)
-                .environmentObject(fileStore)
+                .environment(\.managedObjectContext, persistentContainer.viewContext)
         }
     }
     #endif

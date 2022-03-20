@@ -36,8 +36,6 @@
 		7F2BA13027CDB97E008FFEDF /* FilesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA12E27CDB97E008FFEDF /* FilesList.swift */; };
 		7F2BA13227CDB986008FFEDF /* FilesColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA13127CDB986008FFEDF /* FilesColumn.swift */; };
 		7F2BA13327CDB986008FFEDF /* FilesColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA13127CDB986008FFEDF /* FilesColumn.swift */; };
-		7F2BA13627CDB9D7008FFEDF /* FileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA13527CDB9D7008FFEDF /* FileStore.swift */; };
-		7F2BA13727CDB9D7008FFEDF /* FileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA13527CDB9D7008FFEDF /* FileStore.swift */; };
 		7F2BA13927CDBE95008FFEDF /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA13827CDBE95008FFEDF /* SectionHeader.swift */; };
 		7F2BA13A27CDBE95008FFEDF /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA13827CDBE95008FFEDF /* SectionHeader.swift */; };
 		7F2BA13C27CDC292008FFEDF /* IPFSGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA13B27CDC292008FFEDF /* IPFSGateway.swift */; };
@@ -88,14 +86,16 @@
 		7F521DC227CF2612001D8A35 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA11B27CC9DB1008FFEDF /* HomeView.swift */; };
 		7F521DC427CF2BA8001D8A35 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F521DC327CF2BA8001D8A35 /* BrowseView.swift */; };
 		7F521DC527CF2BA8001D8A35 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F521DC327CF2BA8001D8A35 /* BrowseView.swift */; };
-		7F6AE50E27E61B7F00BE5BAA /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE50D27E61B7F00BE5BAA /* FileContextMenu.swift */; };
-		7F6AE50F27E61B7F00BE5BAA /* FileContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE50D27E61B7F00BE5BAA /* FileContextMenu.swift */; };
-		7F6AE51227E63B6100BE5BAA /* Directory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE51127E63B6100BE5BAA /* Directory.swift */; };
-		7F6AE51327E63B6100BE5BAA /* Directory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE51127E63B6100BE5BAA /* Directory.swift */; };
+		7F6AE50E27E61B7F00BE5BAA /* NodeContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */; };
+		7F6AE50F27E61B7F00BE5BAA /* NodeContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */; };
 		7F6AE51D27E6461F00BE5BAA /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6AE51C27E6461F00BE5BAA /* SwiftProtobuf */; };
 		7F6AE52527E6474100BE5BAA /* UnixFS.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52427E6474100BE5BAA /* UnixFS.pb.swift */; };
 		7F6AE52627E6474100BE5BAA /* UnixFS.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52427E6474100BE5BAA /* UnixFS.pb.swift */; };
 		7F6AE52927E647B700BE5BAA /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6AE52827E647B700BE5BAA /* SwiftProtobuf */; };
+		7F6AE52D27E64A6300BE5BAA /* CrateModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52B27E64A6300BE5BAA /* CrateModel.xcdatamodeld */; };
+		7F6AE52E27E64A6300BE5BAA /* CrateModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52B27E64A6300BE5BAA /* CrateModel.xcdatamodeld */; };
+		7F6AE53027E64A7C00BE5BAA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52F27E64A7C00BE5BAA /* CoreDataManager.swift */; };
+		7F6AE53127E64A7C00BE5BAA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52F27E64A7C00BE5BAA /* CoreDataManager.swift */; };
 		7F976D0A27D07EDA0020506A /* ipfs-core.js in Resources */ = {isa = PBXBuildFile; fileRef = 7F976D0927D07EDA0020506A /* ipfs-core.js */; };
 		7F976D0B27D07EDA0020506A /* ipfs-core.js in Resources */ = {isa = PBXBuildFile; fileRef = 7F976D0927D07EDA0020506A /* ipfs-core.js */; };
 		7FACED8C27CBF19F0076A05F /* IPFSIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FACED8B27CBF19F0076A05F /* IPFSIndicator.swift */; };
@@ -117,10 +117,8 @@
 		7FB8AC7127DEE5DC0004AF9B /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 7FB8AC7027DEE5DC0004AF9B /* FirebaseFirestoreCombine-Community */; };
 		7FB8AC7327DEE5DC0004AF9B /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 7FB8AC7227DEE5DC0004AF9B /* FirebaseFirestoreSwift-Beta */; };
 		7FEB711327CBEEA200177AC6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3FBB127C5FAB6003E2F02 /* SettingsView.swift */; };
-		7FF73B6627E2BE5900927583 /* FileIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF73B6527E2BE5900927583 /* FileIcon.swift */; };
-		7FF73B6727E2BE5900927583 /* FileIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF73B6527E2BE5900927583 /* FileIcon.swift */; };
-		7FF73B6927E2C1C700927583 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF73B6827E2C1C700927583 /* File.swift */; };
-		7FF73B6A27E2C1C700927583 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF73B6827E2C1C700927583 /* File.swift */; };
+		7FF73B6627E2BE5900927583 /* NodeIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF73B6527E2BE5900927583 /* NodeIcon.swift */; };
+		7FF73B6727E2BE5900927583 /* NodeIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF73B6527E2BE5900927583 /* NodeIcon.swift */; };
 		7FF954B127D0403B0095EE6A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF954B027D0403B0095EE6A /* Color.swift */; };
 		7FF954B227D0403B0095EE6A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF954B027D0403B0095EE6A /* Color.swift */; };
 		83765CB72676ADC400318CDB /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83765CB62676ADC400318CDB /* Tests_iOS.swift */; };
@@ -224,7 +222,6 @@
 		7F2BA12B27CDB974008FFEDF /* FilesGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesGrid.swift; sourceTree = "<group>"; };
 		7F2BA12E27CDB97E008FFEDF /* FilesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesList.swift; sourceTree = "<group>"; };
 		7F2BA13127CDB986008FFEDF /* FilesColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesColumn.swift; sourceTree = "<group>"; };
-		7F2BA13527CDB9D7008FFEDF /* FileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStore.swift; sourceTree = "<group>"; };
 		7F2BA13827CDBE95008FFEDF /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		7F2BA13B27CDC292008FFEDF /* IPFSGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPFSGateway.swift; sourceTree = "<group>"; };
 		7F3AEF3227D1BD7C003641CB /* IPFSJSCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPFSJSCore.swift; sourceTree = "<group>"; };
@@ -248,9 +245,10 @@
 		7F4EC32327DD8A140082B254 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7F521DC327CF2BA8001D8A35 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
 		7F521DC727CF32CF001D8A35 /* Crate (macOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Crate (macOS).entitlements"; sourceTree = "<group>"; };
-		7F6AE50D27E61B7F00BE5BAA /* FileContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileContextMenu.swift; sourceTree = "<group>"; };
-		7F6AE51127E63B6100BE5BAA /* Directory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Directory.swift; sourceTree = "<group>"; };
+		7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeContextMenu.swift; sourceTree = "<group>"; };
 		7F6AE52427E6474100BE5BAA /* UnixFS.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnixFS.pb.swift; sourceTree = "<group>"; };
+		7F6AE52C27E64A6300BE5BAA /* CrateModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CrateModel.xcdatamodel; sourceTree = "<group>"; };
+		7F6AE52F27E64A7C00BE5BAA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7F976D0927D07EDA0020506A /* ipfs-core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "ipfs-core.js"; sourceTree = "<group>"; };
 		7FACED8B27CBF19F0076A05F /* IPFSIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPFSIndicator.swift; sourceTree = "<group>"; };
 		7FACED9A27CC3CB30076A05F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -260,8 +258,7 @@
 		7FB3FB9E27C5E061003E2F02 /* IPFSCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPFSCore.swift; sourceTree = "<group>"; };
 		7FB3FBB127C5FAB6003E2F02 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7FB3FBB427C5FAD0003E2F02 /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
-		7FF73B6527E2BE5900927583 /* FileIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIcon.swift; sourceTree = "<group>"; };
-		7FF73B6827E2C1C700927583 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		7FF73B6527E2BE5900927583 /* NodeIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeIcon.swift; sourceTree = "<group>"; };
 		7FF954B027D0403B0095EE6A /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		83765CA22676ADC300318CDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83765CA72676ADC300318CDB /* Crate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crate.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -424,8 +421,8 @@
 				7F2BA12B27CDB974008FFEDF /* FilesGrid.swift */,
 				7F2BA12E27CDB97E008FFEDF /* FilesList.swift */,
 				7F2BA13127CDB986008FFEDF /* FilesColumn.swift */,
-				7FF73B6527E2BE5900927583 /* FileIcon.swift */,
-				7F6AE50D27E61B7F00BE5BAA /* FileContextMenu.swift */,
+				7FF73B6527E2BE5900927583 /* NodeIcon.swift */,
+				7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -454,21 +451,13 @@
 			path = Server;
 			sourceTree = "<group>";
 		};
-		7F4EC32827DD8F400082B254 /* Authentication */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Authentication;
-			sourceTree = "<group>";
-		};
 		7F6AE50927E5834100BE5BAA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7F6AE52B27E64A6300BE5BAA /* CrateModel.xcdatamodeld */,
+				7F6AE52F27E64A7C00BE5BAA /* CoreDataManager.swift */,
 				7F3AEF3927D83CC3003641CB /* CrateAuthentication.swift */,
 				7F41352427DE8DC0003DE25E /* CrateUser.swift */,
-				7F2BA13527CDB9D7008FFEDF /* FileStore.swift */,
-				7FF73B6827E2C1C700927583 /* File.swift */,
-				7F6AE51127E63B6100BE5BAA /* Directory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -539,7 +528,6 @@
 				7F3AEF5327D8E9C1003641CB /* Authenticate.swift */,
 				7F0FA16127C4185400C603F5 /* Sidebar.swift */,
 				7F521DC327CF2BA8001D8A35 /* BrowseView.swift */,
-				7F4EC32827DD8F400082B254 /* Authentication */,
 				7F2BA12A27CDB969008FFEDF /* Files */,
 				7F2974BA27C5D1CB00A3602D /* Status */,
 				7FACED9927CC398F0076A05F /* Settings */,
@@ -920,7 +908,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F6AE50E27E61B7F00BE5BAA /* FileContextMenu.swift in Sources */,
+				7F6AE53027E64A7C00BE5BAA /* CoreDataManager.swift in Sources */,
+				7F6AE50E27E61B7F00BE5BAA /* NodeContextMenu.swift in Sources */,
 				7F48BBA027D9CA790099DE2D /* SHA256.swift in Sources */,
 				7F521DC227CF2612001D8A35 /* HomeView.swift in Sources */,
 				7F2BA12F27CDB97E008FFEDF /* FilesList.swift in Sources */,
@@ -935,13 +924,12 @@
 				7FB3FBB527C5FAD0003E2F02 /* AccountSettingsView.swift in Sources */,
 				7FACEDA327CC45EC0076A05F /* NetworkSettingsView.swift in Sources */,
 				7FACED8C27CBF19F0076A05F /* IPFSIndicator.swift in Sources */,
+				7F6AE52D27E64A6300BE5BAA /* CrateModel.xcdatamodeld in Sources */,
 				7F2974C227C5DB8400A3602D /* StatusView.swift in Sources */,
-				7F6AE51227E63B6100BE5BAA /* Directory.swift in Sources */,
 				7F3AEF3A27D83CC3003641CB /* CrateAuthentication.swift in Sources */,
 				7F2BA12527CDAB80008FFEDF /* IPFSTypes.swift in Sources */,
 				7F4008DE27DEBCD90031002E /* CrateApp.swift in Sources */,
 				7F48BB9D27D9CA5F0099DE2D /* Random.swift in Sources */,
-				7FF73B6927E2C1C700927583 /* File.swift in Sources */,
 				7F2BA12C27CDB974008FFEDF /* FilesGrid.swift in Sources */,
 				7F521DC427CF2BA8001D8A35 /* BrowseView.swift in Sources */,
 				7FF954B127D0403B0095EE6A /* Color.swift in Sources */,
@@ -950,8 +938,7 @@
 				7F41352527DE8DC0003DE25E /* CrateUser.swift in Sources */,
 				7F3AEF3327D1BD7C003641CB /* IPFSJSCore.swift in Sources */,
 				7F6AE52527E6474100BE5BAA /* UnixFS.pb.swift in Sources */,
-				7F2BA13627CDB9D7008FFEDF /* FileStore.swift in Sources */,
-				7FF73B6627E2BE5900927583 /* FileIcon.swift in Sources */,
+				7FF73B6627E2BE5900927583 /* NodeIcon.swift in Sources */,
 				7FB3FB9F27C5E061003E2F02 /* IPFSCore.swift in Sources */,
 				7F3AEF3627D2CEC5003641CB /* IPFSExternalCore.swift in Sources */,
 				7F41352227DE8CA2003DE25E /* Crypto.swift in Sources */,
@@ -971,11 +958,10 @@
 				7F2974BC27C5D1E100A3602D /* StatusView.swift in Sources */,
 				7F4EC32727DD8E760082B254 /* Authenticate.swift in Sources */,
 				7F2BA12D27CDB974008FFEDF /* FilesGrid.swift in Sources */,
-				7F6AE50F27E61B7F00BE5BAA /* FileContextMenu.swift in Sources */,
+				7F6AE50F27E61B7F00BE5BAA /* NodeContextMenu.swift in Sources */,
+				7F6AE53127E64A7C00BE5BAA /* CoreDataManager.swift in Sources */,
 				7F0FA16427C4185400C603F5 /* Sidebar.swift in Sources */,
-				7F2BA13727CDB9D7008FFEDF /* FileStore.swift in Sources */,
 				7F2BA13027CDB97E008FFEDF /* FilesList.swift in Sources */,
-				7F6AE51327E63B6100BE5BAA /* Directory.swift in Sources */,
 				7FB3FBB627C5FAD0003E2F02 /* AccountSettingsView.swift in Sources */,
 				7FACEDA427CC45EC0076A05F /* NetworkSettingsView.swift in Sources */,
 				7FB3FBA027C5E061003E2F02 /* IPFSCore.swift in Sources */,
@@ -985,9 +971,9 @@
 				7F3AEF3427D1BD7C003641CB /* IPFSJSCore.swift in Sources */,
 				7F2974BE27C5D22A00A3602D /* FilesIndicator.swift in Sources */,
 				7FF954B227D0403B0095EE6A /* Color.swift in Sources */,
+				7F6AE52E27E64A6300BE5BAA /* CrateModel.xcdatamodeld in Sources */,
 				7FACED9E27CC45CB0076A05F /* SyncSettingsView.swift in Sources */,
 				7F4008DD27DEB8380031002E /* FirebaseConstants.swift in Sources */,
-				7FF73B6A27E2C1C700927583 /* File.swift in Sources */,
 				7F41352627DE8DC0003DE25E /* CrateUser.swift in Sources */,
 				7F6AE52627E6474100BE5BAA /* UnixFS.pb.swift in Sources */,
 				7F3AEF3727D2CEC5003641CB /* IPFSExternalCore.swift in Sources */,
@@ -997,7 +983,7 @@
 				7F2BA11427CC8DD1008FFEDF /* CrateApp.swift in Sources */,
 				7F2BA13D27CDC292008FFEDF /* IPFSGateway.swift in Sources */,
 				7FACEDA127CC45DB0076A05F /* StorageSettingsView.swift in Sources */,
-				7FF73B6727E2BE5900927583 /* FileIcon.swift in Sources */,
+				7FF73B6727E2BE5900927583 /* NodeIcon.swift in Sources */,
 				7F48BBA127D9CA790099DE2D /* SHA256.swift in Sources */,
 				7F41352327DE8CA2003DE25E /* Crypto.swift in Sources */,
 				7F2974B927C5C33F00A3602D /* FilesView.swift in Sources */,
@@ -1799,6 +1785,19 @@
 			productName = "FirebaseFirestoreSwift-Beta";
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		7F6AE52B27E64A6300BE5BAA /* CrateModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7F6AE52C27E64A6300BE5BAA /* CrateModel.xcdatamodel */,
+			);
+			currentVersion = 7F6AE52C27E64A6300BE5BAA /* CrateModel.xcdatamodel */;
+			path = CrateModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 83765C9B2676ADC100318CDB /* Project object */;
 }

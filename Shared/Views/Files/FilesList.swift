@@ -7,28 +7,32 @@
 
 import SwiftUI
 
+extension UnixFSNode {
+    var wrappedName: String { get {
+        self.name ?? ""
+    }}
+}
+
 struct FilesList: View {
-    @EnvironmentObject var fileStore: FileStore
-    @Binding var selection: Set<File.ID>
-    @Binding var sortOrder: [KeyPathComparator<File>]
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: UnixFSNode.entity(), sortDescriptors: []) var nodes: FetchedResults<UnixFSNode>
+    @Binding var selection: Set<UnixFSNode.ID>
+    @Binding var sortOrder: [KeyPathComparator<UnixFSNode>]
     
     #if os(macOS)
     var body: some View {
         Table(selection: $selection, sortOrder: $sortOrder) {
-            TableColumn("Name", value: \.fileName) { file in
-                Text(file.fileName)
-            }
+            TableColumn("Name", value: \.wrappedName)
         } rows: {
-            ForEach(fileStore.files) { file in
-                TableRow(file)
-                    .itemProvider { file.itemProvider }
+            ForEach(nodes) { node in
+                TableRow(node)
             }
         }
     }
     #else
     var body: some View {
-        List(fileStore.files, selection: $selection, rowContent: { file in
-            Label(file.fileName, image: file.fileType.sysImage())
+        List(nodes, selection: $selection, rowContent: { node in
+            Text(node.wrappedName)
         })
     }
     #endif

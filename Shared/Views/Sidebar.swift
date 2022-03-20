@@ -28,6 +28,8 @@ enum PrimaryView: String {
 }
 
 struct Sidebar: View {
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: Folder.entity(), sortDescriptors: [], predicate: NSPredicate(format: "favorited == true")) var favorites: FetchedResults<Folder>
     @State var selected: PrimaryView? = .allfiles
     @State var showSettings = false
     @State var settingsTapped = false
@@ -46,11 +48,12 @@ struct Sidebar: View {
                     Label("Browse", systemImage: "network")
                 })
                 
-                Section("Favorites") {
-                    Label("Favorite 1", systemImage: "folder")
-                    Label("Favorite 2", systemImage: "folder")
-                    Label("Favorite 3", systemImage: "folder")
-                    Label("Favorite 4", systemImage: "folder")
+                if favorites.count > 0 {
+                    Section("Favorites") {
+                        ForEach(favorites) { favorite in
+                            Label(favorite.wrappedName, systemImage: "folder")
+                        }
+                    }
                 }
                 Section("Services") {
                     Label("Music", systemImage: "music.note")
