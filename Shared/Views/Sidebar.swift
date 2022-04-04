@@ -76,7 +76,11 @@ struct Sidebar: View {
                 if favorites.count > 0 {
                     Section("Favorites") {
                         ForEach(favorites) { favorite in
-                            Label(favorite.wrappedName, systemImage: "folder")
+                            NavigationLink {
+                                FilesView(folder: favorite)
+                            } label: {
+                                Label(favorite.wrappedName, systemImage: "folder")
+                            }
                         }
                     }
                 }
