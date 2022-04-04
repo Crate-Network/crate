@@ -7,6 +7,7 @@
 
 import FileProvider
 import UniformTypeIdentifiers
+import CoreData
 
 class FileProviderItem: NSObject, NSFileProviderItem {
 
@@ -14,13 +15,18 @@ class FileProviderItem: NSObject, NSFileProviderItem {
     // TODO: implement the accessors to return the values from your extension's backing model
     
     private let identifier: NSFileProviderItemIdentifier
+    private let node: UnixFSNode
     
     init(identifier: NSFileProviderItemIdentifier) {
         self.identifier = identifier
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UnixFSNode")
+        fetchRequest.predicate = NSPredicate(format: "cid == %@", identifier.rawValue)
+        let result = try! fetchRequest.execute()
+        self.node = result.last as! UnixFSNode
     }
     
     var itemIdentifier: NSFileProviderItemIdentifier {
-        return identifier
+        return NSFileProviderItemIdentifier(rawValue: node.cid!)
     }
     
     var parentItemIdentifier: NSFileProviderItemIdentifier {
@@ -28,7 +34,7 @@ class FileProviderItem: NSObject, NSFileProviderItem {
     }
     
     var capabilities: NSFileProviderItemCapabilities {
-        return [.allowsReading, .allowsWriting, .allowsRenaming, .allowsReparenting, .allowsTrashing, .allowsDeleting]
+        return [.allowsReading, .allowsWriting, .allowsRenaming, .allowsReparenting, .allowsDeleting]
     }
     
     var itemVersion: NSFileProviderItemVersion {
@@ -36,10 +42,10 @@ class FileProviderItem: NSObject, NSFileProviderItem {
     }
     
     var filename: String {
-        return identifier.rawValue
+        return node.name!
     }
     
     var contentType: UTType {
-        return identifier == NSFileProviderItemIdentifier.rootContainer ? .folder : .plainText
+        return ((node as? Folder) != nil) ? .folder : .plainText
     }
 }

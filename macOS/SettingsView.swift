@@ -16,8 +16,18 @@ struct SettingsView: View {
     @State var selectedSize: Size = .large
     @EnvironmentObject var ipfs: IPFSCore
     @EnvironmentObject var user: CrateUser
+    @State var registration: Bool = false
+    
     var body: some View {
         TabView {
+            Form {
+                
+                Toggle("Show in Finder", isOn: $registration)
+            }
+                .tabItem {
+                    Label("General", systemImage: "gear")
+                }
+            
             Form {
                 AccountSettingsView()
                     .frame(maxWidth: 350)
@@ -58,7 +68,20 @@ struct SettingsView: View {
                     Label("Network", systemImage: "point.3.connected.trianglepath.dotted")
                 }
         }
+        .onAppear {
+            Task { @MainActor in
+                self.registration = await CrateFinderRegistration.isRegistered()
+            }
+        }
+        .onChange(of: registration) { newValue in
+            if newValue {
+                CrateFinderRegistration.registerFileProvider()
+            } else {
+                CrateFinderRegistration.unregisterFileProvider()
+            }
+        }
     }
+        
 }
 
 struct SettingsView_Previews: PreviewProvider {

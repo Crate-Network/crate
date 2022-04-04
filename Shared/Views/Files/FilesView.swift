@@ -97,11 +97,11 @@ struct FilesView: View {
         if let rootFolder = rootFolder {
             self.folder = rootFolder
         } else {
-            let context = Environment.init(\.managedObjectContext).wrappedValue
+            let context = CoreDataManager.shared.persistentContainer.viewContext
             let f = Folder(context: context)
             f.root = true
             self.folder = f
-            try? context.save()
+            try! context.save()
         }
         self.showingRoot = true
     }
@@ -125,7 +125,7 @@ struct FilesView: View {
         }
         .navigationTitle(titleBar)
         #if os(macOS)
-        .navigationSubtitle(" Files")
+        .navigationSubtitle("\(folder.children?.count ?? 0) Files")
         #endif
         .toolbar {
             #if os(macOS)

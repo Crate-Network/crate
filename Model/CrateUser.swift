@@ -63,6 +63,9 @@ class CrateUser: ObservableObject {
         // firebaseUser exists
         loggedIn = true
         self.email = firebaseUser.email ?? ""
+        #if os(macOS)
+        CrateFinderRegistration.registerFileProvider()
+        #endif
         getUserDocumentRef(firebaseUser.uid).addSnapshotListener { docSnapshot, error in
             guard let document = docSnapshot else {
                 print("Error fetching document: \(error!)")
@@ -124,7 +127,10 @@ class CrateUser: ObservableObject {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UnixFSNode")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        let batchDelete = try context.execute(deleteRequest) as? NSBatchDeleteResult
+        let _ = try context.execute(deleteRequest) as? NSBatchDeleteResult
+        #if os(macOS)
+        CrateFinderRegistration.unregisterFileProvider()
+        #endif
         loggedIn = false
         firebaseUser = nil
         try FirebaseConstants.getAuth().signOut()

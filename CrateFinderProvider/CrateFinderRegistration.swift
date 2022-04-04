@@ -14,6 +14,13 @@ class CrateFinderRegistration {
         displayName: "Crate"
     )
     
+    static func isRegistered() async -> Bool {
+        let domains = try? await NSFileProviderManager.domains()
+        return domains?.contains(where: { domain in
+            domain.displayName == "Crate"
+        }) ?? false
+    }
+    
     static func registerFileProvider() {
         NSFileProviderManager.add(domain) {
             error in print("Error on registering Crate Finder Provider \(String(describing: error))")
