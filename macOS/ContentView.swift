@@ -16,15 +16,7 @@ struct ContentView: View {
                 .frame(minWidth: 250)
                 .environmentObject(navigationStack)
             
-            if navigationStack.stack.isEmpty {
-                FilesView()
-                    .frame(minWidth: 400, maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(navigationStack)
-            } else {
-                FilesView(folder: navigationStack.stack.last!)
-                    .frame(minWidth: 400, maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(navigationStack)
-            }
+            ProgressView()
         }
         .frame(minWidth: 400, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
     }

@@ -69,7 +69,7 @@ struct SortingTypePicker: View {
 
 struct FilesView: View {
     @State var searchText: String = ""
-    @State var selectedDisplay: FileDisplay = .icon
+    @AppStorage("preferredDisplay") var selectedDisplay: FileDisplay = .icon
     @State var selection = Set<UnixFSNode.ID>()
     @State var sortOrder: [KeyPathComparator<UnixFSNode>] = [
         .init(\.name, order: SortOrder.forward)

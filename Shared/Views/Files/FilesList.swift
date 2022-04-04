@@ -46,7 +46,7 @@ struct FilesList: View {
     
     #else
     var body: some View {
-        List(nodes, selection: $selection, rowContent: { node in
+        List(children, selection: $selection, rowContent: { node in
             NavigationLink(destination: {
                 Text(node.wrappedName)
             }, label: {

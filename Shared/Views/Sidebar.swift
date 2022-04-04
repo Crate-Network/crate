@@ -49,7 +49,7 @@ struct Sidebar: View {
     @FetchRequest(entity: Folder.entity(), sortDescriptors: [], predicate: NSPredicate(format: "favorited == true"))
     var favorites: FetchedResults<Folder>
     
-    @State var selected: PrimaryView? = .allcontent
+    @State var selected: PrimaryView? = .files
     @State var showSettings = false
     @State var settingsTapped = false
     
