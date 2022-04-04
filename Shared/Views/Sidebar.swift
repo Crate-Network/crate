@@ -24,20 +24,37 @@ struct Indicators: View {
 }
 
 enum PrimaryView: String {
-    case allfiles, browse, settings, account
+    case allcontent, files, browse, settings, account
 }
 
 struct Sidebar: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: Folder.entity(), sortDescriptors: [], predicate: NSPredicate(format: "favorited == true")) var favorites: FetchedResults<Folder>
-    @State var selected: PrimaryView? = .allfiles
+    @FetchRequest(entity: Folder.entity(), sortDescriptors: [], predicate: NSPredicate(format: "favorited == true"))
+    var favorites: FetchedResults<Folder>
+    
+    @State var selected: PrimaryView? = .allcontent
     @State var showSettings = false
     @State var settingsTapped = false
+    
+    #if os(macOS)
+    @EnvironmentObject var navigationStack: NavigationStack
+    #endif
+    
     var body: some View {
         VStack {
             List {
-                NavigationLink(tag: .allfiles, selection: $selected, destination: {
+                NavigationLink(tag: .files, selection: $selected, destination: {
+                    #if os(macOS)
+                    if navigationStack.stack.isEmpty {
+                        FilesView()
+                            .environmentObject(navigationStack)
+                    } else {
+                        FilesView(folder: navigationStack.stack.last!)
+                            .environmentObject(navigationStack)
+                    }
+                    #else
                     FilesView()
+                    #endif
                 }, label: {
                     Label("All Files", systemImage: "tray.full")
                 })
@@ -48,6 +65,14 @@ struct Sidebar: View {
                     Label("Browse", systemImage: "network")
                 })
                 
+//                Section("Crates") {
+//                    NavigationLink(tag: .files, selection: $selected, destination: {
+//                        FilesView()
+//                    }, label: {
+//                        Label("Files", systemImage: "shippingbox")
+//                    })
+//                }
+                
                 if favorites.count > 0 {
                     Section("Favorites") {
                         ForEach(favorites) { favorite in
@@ -55,10 +80,11 @@ struct Sidebar: View {
                         }
                     }
                 }
-                Section("Services") {
-                    Label("Music", systemImage: "music.note")
-                    Label("Photos", systemImage: "photo")
-                }
+                
+//                Section("Services") {
+//                    Label("Music", systemImage: "music.note")
+//                    Label("Photos", systemImage: "photo")
+//                }
                 
                 Divider()
                 HStack {

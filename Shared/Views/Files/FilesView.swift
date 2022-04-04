@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 enum FileDisplay: String, CaseIterable, Identifiable {
     case icon = "square.grid.2x2"
@@ -79,25 +80,75 @@ struct FilesView: View {
     @State var filename: String = ""
     
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: UnixFSNode.entity(), sortDescriptors: []) var nodes: FetchedResults<UnixFSNode>
+    @ObservedObject var folder: Folder
+    var titleBar: String = "All Files"
+    
+    let showingRoot: Bool
+    
+    #if os(macOS)
+    @EnvironmentObject var navigationStack: NavigationStack
+    #endif
+    
+    init() {
+        let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "root == true")
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let rootFolder = try? context.fetch(fetchRequest).first
+        if let rootFolder = rootFolder {
+            self.folder = rootFolder
+        } else {
+            let context = Environment.init(\.managedObjectContext).wrappedValue
+            let f = Folder(context: context)
+            f.root = true
+            self.folder = f
+            try? context.save()
+        }
+        self.showingRoot = true
+    }
+    
+    init(folder: Folder) {
+        self.titleBar = folder.wrappedName
+        self.folder = folder
+        self.showingRoot = false
+    }
     
     var body: some View {
         VStack {
             switch selectedDisplay {
             case .icon:
-                FilesGrid(selection: $selection)
+                FilesGrid(folder, with: $selection)
             case .list:
-                FilesList(selection: $selection, sortOrder: $sortOrder)
+                FilesList(folder, with: $selection, sortedBy: $sortOrder)
             case .column:
                 FilesColumn()
             }
         }
-        .navigationTitle("All Files")
+        .navigationTitle(titleBar)
         #if os(macOS)
-        .navigationSubtitle("23 Files")
+        .navigationSubtitle(" Files")
         #endif
         .toolbar {
+            #if os(macOS)
             ToolbarItem(placement: .navigation) {
+                Button(action: {
+                    navigationStack.moveBack()
+                }, label: {
+                    Image(systemName: "chevron.left")
+                })
+                .disabled(!navigationStack.canGoBack())
+                .keyboardShortcut("[", modifiers: .command)
+            }
+            ToolbarItem(placement: .navigation) {
+                Button(action: {
+                    navigationStack.moveForward()
+                }, label: {
+                    Image(systemName: "chevron.right")
+                })
+                .disabled(!navigationStack.canGoForward())
+                .keyboardShortcut("]", modifiers: .command)
+            }
+            #endif
+            ToolbarItem(placement: .primaryAction) {
                 Menu {
                     Button("New File", action: newFile)
                     Button("New Folder", action: newFolder)
@@ -110,25 +161,16 @@ struct FilesView: View {
             }
             ToolbarItemGroup {
                 #if os(iOS)
-                HStack {
-                    Menu {
-                        FileDisplayPicker(selectedDisplay:  $selectedDisplay)
-                    } label: {
-                        Image(systemName: selectedDisplay.rawValue)
-                    }
-                    Menu {
-                        SortingTypePicker()
-                    } label: {
-                        Image(systemName: "arrow.up.arrow.down")
-                    }
+                Menu {
+                    FileDisplayPicker(selectedDisplay:  $selectedDisplay)
+                    Divider()
+                    SortingTypePicker()
+                } label: {
+                    Image(systemName: selectedDisplay.rawValue)
                 }
                 #else
                 FileDisplayPicker(selectedDisplay: $selectedDisplay)
                 SortingTypePicker()
-                Spacer()
-//                Button(action: toggleRightSidebar, label: {
-//                    Image(systemName: "sidebar.trailing")
-//                })
                 #endif
             }
         }
@@ -144,6 +186,7 @@ struct FilesView: View {
                     file.name = filename == "" ? cid : filename
                     file.cid = cid
                     file.size = 80
+                    
                     try? moc.save()
                     sheetShown = false
                 }
@@ -156,6 +199,14 @@ struct FilesView: View {
         #else
         .searchable(text: $searchText)
         #endif
+        .onAppear {
+//            if folder == nil && showingRoot {
+//                let newRootFolder = Folder(context: moc)
+//                newRootFolder.root = true
+//                folder = newRootFolder
+//                try? moc.save()
+//            }
+        }
     }
     
 //    private func toggleRightSidebar() {
@@ -163,14 +214,16 @@ struct FilesView: View {
 //    }
     
     private func newFile() {
-        let file = File(context: moc)
-        file.name = "file.txt"
+        let newFile = File(context: moc)
+        newFile.name = "file.txt"
+        folder.addToChildren(newFile)
         try? moc.save()
     }
     
     private func newFolder() {
-        let folder = Folder(context: moc)
-        folder.name = "folder"
+        let newFolder = Folder(context: moc)
+        newFolder.name = "folder"
+        folder.addToChildren(newFolder)
         try? moc.save()
     }
     

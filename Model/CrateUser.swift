@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import CoreData
 
 public struct FBUserData: Codable {
     let firstName: String?
@@ -120,6 +121,10 @@ class CrateUser: ObservableObject {
     }
     
     func signOut() throws {
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UnixFSNode")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        let batchDelete = try context.execute(deleteRequest) as? NSBatchDeleteResult
         loggedIn = false
         firebaseUser = nil
         try FirebaseConstants.getAuth().signOut()

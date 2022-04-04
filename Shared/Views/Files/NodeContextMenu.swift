@@ -17,16 +17,13 @@ struct FileContextMenu: View {
 struct FolderContextMenu: View {
     @Environment(\.managedObjectContext) var moc
     var folder: Folder
-    var favoritedBinding: Binding<Bool> {
-        Binding {
-            folder.favorited
-        } set: { newValue in
-            folder.favorited = newValue
+    @State var favorited: Bool
+    var body: some View {
+        Button(favorited ? "Unfavorite" : "Favorite") {
+            favorited = !folder.favorited
+            folder.favorited = !folder.favorited
             try? moc.save()
         }
-    }
-    var body: some View {
-        Toggle("Favorited", isOn: favoritedBinding)
     }
 }
 
@@ -46,7 +43,7 @@ struct NodeContextMenu: View {
         Divider()
         
         if let folder = node as? Folder {
-            FolderContextMenu(folder: folder)
+            FolderContextMenu(folder: folder, favorited: folder.favorited)
         }
         
         if let file = node as? File {

@@ -24,6 +24,8 @@
 		7F2974BE27C5D22A00A3602D /* FilesIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2974BD27C5D22A00A3602D /* FilesIndicator.swift */; };
 		7F2974C227C5DB8400A3602D /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2974BB27C5D1E100A3602D /* StatusView.swift */; };
 		7F2974C327C5DB8700A3602D /* FilesIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2974BD27C5D22A00A3602D /* FilesIndicator.swift */; };
+		7F2AF53527EFA64E00DD6269 /* CrateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2AF53427EFA64E00DD6269 /* CrateType.swift */; };
+		7F2AF53627EFA64E00DD6269 /* CrateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2AF53427EFA64E00DD6269 /* CrateType.swift */; };
 		7F2BA10F27CC8728008FFEDF /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA10E27CC8728008FFEDF /* TabBar.swift */; };
 		7F2BA11227CC8D0E008FFEDF /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0FA16127C4185400C603F5 /* Sidebar.swift */; };
 		7F2BA11427CC8DD1008FFEDF /* CrateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA11327CC8DC6008FFEDF /* CrateApp.swift */; };
@@ -86,6 +88,8 @@
 		7F521DC227CF2612001D8A35 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BA11B27CC9DB1008FFEDF /* HomeView.swift */; };
 		7F521DC427CF2BA8001D8A35 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F521DC327CF2BA8001D8A35 /* BrowseView.swift */; };
 		7F521DC527CF2BA8001D8A35 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F521DC327CF2BA8001D8A35 /* BrowseView.swift */; };
+		7F636E6827FA67E800343698 /* NavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F636E6727FA67E800343698 /* NavigationStack.swift */; };
+		7F636E6A27FA6B2C00343698 /* FilesRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F636E6927FA6B2C00343698 /* FilesRootView.swift */; };
 		7F6AE50E27E61B7F00BE5BAA /* NodeContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */; };
 		7F6AE50F27E61B7F00BE5BAA /* NodeContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */; };
 		7F6AE51D27E6461F00BE5BAA /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6AE51C27E6461F00BE5BAA /* SwiftProtobuf */; };
@@ -214,6 +218,7 @@
 		7F2974B827C5C33F00A3602D /* FilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesView.swift; sourceTree = "<group>"; };
 		7F2974BB27C5D1E100A3602D /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		7F2974BD27C5D22A00A3602D /* FilesIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesIndicator.swift; sourceTree = "<group>"; };
+		7F2AF53427EFA64E00DD6269 /* CrateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrateType.swift; sourceTree = "<group>"; };
 		7F2BA10E27CC8728008FFEDF /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		7F2BA11327CC8DC6008FFEDF /* CrateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrateApp.swift; sourceTree = "<group>"; };
 		7F2BA11927CC9CD7008FFEDF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -245,6 +250,8 @@
 		7F4EC32327DD8A140082B254 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7F521DC327CF2BA8001D8A35 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
 		7F521DC727CF32CF001D8A35 /* Crate (macOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Crate (macOS).entitlements"; sourceTree = "<group>"; };
+		7F636E6727FA67E800343698 /* NavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStack.swift; sourceTree = "<group>"; };
+		7F636E6927FA6B2C00343698 /* FilesRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesRootView.swift; sourceTree = "<group>"; };
 		7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeContextMenu.swift; sourceTree = "<group>"; };
 		7F6AE52427E6474100BE5BAA /* UnixFS.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnixFS.pb.swift; sourceTree = "<group>"; };
 		7F6AE52C27E64A6300BE5BAA /* CrateModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CrateModel.xcdatamodel; sourceTree = "<group>"; };
@@ -390,6 +397,8 @@
 			children = (
 				7F4EC32327DD8A140082B254 /* ContentView.swift */,
 				7FACED9A27CC3CB30076A05F /* SettingsView.swift */,
+				7F636E6727FA67E800343698 /* NavigationStack.swift */,
+				7F636E6927FA6B2C00343698 /* FilesRootView.swift */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -458,6 +467,7 @@
 				7F6AE52F27E64A7C00BE5BAA /* CoreDataManager.swift */,
 				7F3AEF3927D83CC3003641CB /* CrateAuthentication.swift */,
 				7F41352427DE8DC0003DE25E /* CrateUser.swift */,
+				7F2AF53427EFA64E00DD6269 /* CrateType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -945,6 +955,7 @@
 				7FACED9D27CC45CB0076A05F /* SyncSettingsView.swift in Sources */,
 				7FACEDA027CC45DB0076A05F /* StorageSettingsView.swift in Sources */,
 				7F4008DC27DEB6B30031002E /* FirebaseConstants.swift in Sources */,
+				7F2AF53527EFA64E00DD6269 /* CrateType.swift in Sources */,
 				7F2BA11527CC9065008FFEDF /* FilesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -958,6 +969,8 @@
 				7F2974BC27C5D1E100A3602D /* StatusView.swift in Sources */,
 				7F4EC32727DD8E760082B254 /* Authenticate.swift in Sources */,
 				7F2BA12D27CDB974008FFEDF /* FilesGrid.swift in Sources */,
+				7F2AF53627EFA64E00DD6269 /* CrateType.swift in Sources */,
+				7F636E6827FA67E800343698 /* NavigationStack.swift in Sources */,
 				7F6AE50F27E61B7F00BE5BAA /* NodeContextMenu.swift in Sources */,
 				7F6AE53127E64A7C00BE5BAA /* CoreDataManager.swift in Sources */,
 				7F0FA16427C4185400C603F5 /* Sidebar.swift in Sources */,
@@ -975,6 +988,7 @@
 				7FACED9E27CC45CB0076A05F /* SyncSettingsView.swift in Sources */,
 				7F4008DD27DEB8380031002E /* FirebaseConstants.swift in Sources */,
 				7F41352627DE8DC0003DE25E /* CrateUser.swift in Sources */,
+				7F636E6A27FA6B2C00343698 /* FilesRootView.swift in Sources */,
 				7F6AE52627E6474100BE5BAA /* UnixFS.pb.swift in Sources */,
 				7F3AEF3727D2CEC5003641CB /* IPFSExternalCore.swift in Sources */,
 				7F41352027DE8BCF003DE25E /* ASAccount.swift in Sources */,

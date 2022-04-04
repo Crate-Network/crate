@@ -6,20 +6,33 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct FilesGrid: View {
+    @Environment(\.managedObjectContext) var moc
     @Binding var selection: Set<UnixFSNode.ID>
     @State var iconSize = 100.0
+    @ObservedObject var folder: Folder
+    @FetchRequest var children: FetchedResults<UnixFSNode>
     
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: UnixFSNode.entity(), sortDescriptors: []) var nodes: FetchedResults<UnixFSNode>
-
+    init(_ folder: Folder, with selection: Binding<Set<UnixFSNode.ID>>) {
+        self.folder    = folder
+        self._selection = selection
+        self._children  = FetchRequest(
+            entity: UnixFSNode.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(keyPath: \UnixFSNode.name, ascending: true)
+            ],
+            predicate: NSPredicate(format: "parent == %@", folder)
+        )
+    }
+    
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [
                 GridItem(.adaptive(minimum: iconSize, maximum: .infinity), spacing: 10)
             ], spacing: 2) {
-                ForEach(nodes) { node in
+                ForEach(children) { node in
                     NodeIcon(selection: $selection, size: iconSize, node: node)
                         .padding()
                 }
@@ -29,8 +42,9 @@ struct FilesGrid: View {
         #if os(macOS)
         .contextMenu {
             Button("New Folder") {
-                let folder = Folder(context: moc)
-                folder.name = "Untitled"
+                let newFolder = Folder(context: moc)
+                newFolder.name = "Untitled"
+                folder.addToChildren(newFolder)
                 try? moc.save()
             }
         }

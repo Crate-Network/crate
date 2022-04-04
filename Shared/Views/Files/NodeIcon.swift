@@ -14,13 +14,23 @@ struct NodeIcon: View {
     @FocusState var focusField: Bool
     @State var renaming: Bool = false
     @State var size: CGFloat
+    @State var isNavigatedTo: Bool = false
     
-    var node: UnixFSNode
+    @ObservedObject var node: UnixFSNode
     @State var nodeName: String = ""
+    
+    #if os(macOS)
+    @EnvironmentObject var navigationStack: NavigationStack
+    #endif
     
     var body: some View {
         VStack {
             if let folder = node as? Folder {
+                #if os(iOS)
+                NavigationLink(isActive: $isNavigatedTo) {
+                    FilesView(folder: folder)
+                } label: { }
+                #endif
                 FolderImage(selection: $selection, size: $size, folder: folder)
             } else if let file = node as? File {
                 FileImage(selection: $selection, size: $size, file: file)
@@ -37,7 +47,7 @@ struct NodeIcon: View {
             } else {
                 Text(node.wrappedName)
                     .fontWeight(.medium)
-                    .shadow(radius: 1)
+                    .foregroundColor(selection.contains(node.id) ? Color.white : Color(ColorType.headline.name))
                     .padding(.horizontal, 3)
                     .background {
                         if selection.contains(node.id) {
@@ -47,12 +57,20 @@ struct NodeIcon: View {
                     }
             }
         }
+        #if os(macOS)
         .gesture(TapGesture(count: 2).onEnded {
-            print("double clicked")
+            if let folder = node as? Folder {
+                navigationStack.push(folder)
+            }
         })
         .simultaneousGesture(TapGesture().onEnded {
             selection = [node.id]
         })
+        #else
+        .gesture(TapGesture().onEnded {
+            isNavigatedTo = true
+        })
+        #endif
         .contextMenu {
             NodeContextMenu(node: node, rename: {
                 renaming = true
@@ -75,17 +93,19 @@ struct NodeIcon: View {
 struct FileImage: View {
     @Binding var selection: Set<UnixFSNode.ID>
     @Binding var size: CGFloat
-    var file: File
+    @ObservedObject var file: File
     var body: some View {
-        Image(systemName: "doc")
+        Image(systemName: "doc.fill")
             .resizable()
             .scaledToFit()
             .padding()
+            .font(.system(size: 40, weight: .ultraLight, design: .default))
+            .foregroundColor(Color(ColorType.branding.name))
             .frame(width: size, height: size)
             .background {
                 if selection.contains(file.id) {
-                    RoundedRectangle(cornerRadius: 2)
-                        .foregroundColor(Color.init(white: 0.5, opacity: 0.5))
+                    RoundedRectangle(cornerRadius: 5)
+                        .foregroundColor(Color.init(white: 0.5, opacity: 0.3))
                 }
             }
     }
@@ -94,12 +114,14 @@ struct FileImage: View {
 struct FolderImage: View {
     @Binding var selection: Set<UnixFSNode.ID>
     @Binding var size: CGFloat
-    var folder: Folder
+    @ObservedObject var folder: Folder
     var body: some View {
-        Image(systemName: "folder")
+        Image(systemName: "folder.fill")
             .resizable()
             .scaledToFit()
             .padding()
+            .font(.system(size: 40, weight: .ultraLight, design: .default))
+            .foregroundColor(Color(ColorType.branding.name))
             .frame(width: size, height: size)
             .background {
                 if selection.contains(folder.id) {

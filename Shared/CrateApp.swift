@@ -34,7 +34,6 @@ struct CrateApp: App {
                     Authenticate()
                 }
                 .interactiveDismissDisabled()
-
         }
         .commands {
             SidebarCommands()
