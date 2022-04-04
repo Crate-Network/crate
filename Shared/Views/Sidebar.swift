@@ -27,6 +27,23 @@ enum PrimaryView: String {
     case allcontent, files, browse, settings, account
 }
 
+
+struct FileNavView: View {
+    #if os(macOS)
+    @EnvironmentObject var navigationStack: NavigationStack
+    #endif
+    @State var folder: Folder? = nil
+    var body: some View {
+        #if os(macOS)
+        FilesView(folder: navigationStack.stack.last ?? folder)
+            .onAppear { navigationStack.clear() }
+            .environmentObject(navigationStack)
+        #else
+        FilesView(folder: folder)
+        #endif
+    }
+}
+
 struct Sidebar: View {
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(entity: Folder.entity(), sortDescriptors: [], predicate: NSPredicate(format: "favorited == true"))
@@ -36,25 +53,11 @@ struct Sidebar: View {
     @State var showSettings = false
     @State var settingsTapped = false
     
-    #if os(macOS)
-    @EnvironmentObject var navigationStack: NavigationStack
-    #endif
-    
     var body: some View {
         VStack {
             List {
                 NavigationLink(tag: .files, selection: $selected, destination: {
-                    #if os(macOS)
-                    if navigationStack.stack.isEmpty {
-                        FilesView()
-                            .environmentObject(navigationStack)
-                    } else {
-                        FilesView(folder: navigationStack.stack.last!)
-                            .environmentObject(navigationStack)
-                    }
-                    #else
-                    FilesView()
-                    #endif
+                    FileNavView()
                 }, label: {
                     Label("All Files", systemImage: "tray.full")
                 })
@@ -77,7 +80,7 @@ struct Sidebar: View {
                     Section("Favorites") {
                         ForEach(favorites) { favorite in
                             NavigationLink {
-                                FilesView(folder: favorite)
+                                FileNavView(folder: favorite)
                             } label: {
                                 Label(favorite.wrappedName, systemImage: "folder")
                             }

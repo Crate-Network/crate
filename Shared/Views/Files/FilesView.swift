@@ -90,26 +90,30 @@ struct FilesView: View {
     #endif
     
     init() {
-        let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "root == true")
-        let context = CoreDataManager.shared.persistentContainer.viewContext
-        let rootFolder = try? context.fetch(fetchRequest).first
-        if let rootFolder = rootFolder {
-            self.folder = rootFolder
-        } else {
-            let context = CoreDataManager.shared.persistentContainer.viewContext
-            let f = Folder(context: context)
-            f.root = true
-            self.folder = f
-            try! context.save()
-        }
-        self.showingRoot = true
+        self.init(folder: nil)
     }
     
-    init(folder: Folder) {
-        self.titleBar = folder.wrappedName
-        self.folder = folder
-        self.showingRoot = false
+    init(folder: Folder?) {
+        if let folder = folder {
+            self.titleBar = folder.wrappedName
+            self.folder = folder
+            self.showingRoot = false
+        } else {
+            let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "root == true")
+            let context = CoreDataManager.shared.persistentContainer.viewContext
+            let rootFolder = try? context.fetch(fetchRequest).first
+            if let rootFolder = rootFolder {
+                self.folder = rootFolder
+            } else {
+                let context = CoreDataManager.shared.persistentContainer.viewContext
+                let f = Folder(context: context)
+                f.root = true
+                self.folder = f
+                try! context.save()
+            }
+            self.showingRoot = true
+        }
     }
     
     var body: some View {

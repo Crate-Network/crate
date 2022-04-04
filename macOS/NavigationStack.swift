@@ -37,4 +37,9 @@ class NavigationStack: ObservableObject {
     func canGoForward() -> Bool {
         return !forwardStack.isEmpty
     }
+    
+    func clear() {
+        stack = []
+        forwardStack = []
+    }
 }
