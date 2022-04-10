@@ -109,6 +109,7 @@ struct FilesView: View {
                 let context = CoreDataManager.shared.persistentContainer.viewContext
                 let f = Folder(context: context)
                 f.root = true
+                f.cid = "nothingyet"
                 self.folder = f
                 try! context.save()
             }
@@ -220,6 +221,7 @@ struct FilesView: View {
     private func newFile() {
         let newFile = File(context: moc)
         newFile.name = "file.txt"
+        newFile.cid = "sdfffff"
         folder.addToChildren(newFile)
         try? moc.save()
     }
@@ -227,6 +229,7 @@ struct FilesView: View {
     private func newFolder() {
         let newFolder = Folder(context: moc)
         newFolder.name = "folder"
+        newFolder.cid = "sfghhshsh"
         folder.addToChildren(newFolder)
         try? moc.save()
     }

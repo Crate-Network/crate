@@ -19,10 +19,7 @@ class FileProviderItem: NSObject, NSFileProviderItem {
     
     init(identifier: NSFileProviderItemIdentifier) {
         self.identifier = identifier
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UnixFSNode")
-        fetchRequest.predicate = NSPredicate(format: "cid == %@", identifier.rawValue)
-        let result = try! fetchRequest.execute()
-        self.node = result.last as! UnixFSNode
+        self.node = CrateDataProvider.fetchNode(for: identifier)
     }
     
     var itemIdentifier: NSFileProviderItemIdentifier {
@@ -30,6 +27,9 @@ class FileProviderItem: NSObject, NSFileProviderItem {
     }
     
     var parentItemIdentifier: NSFileProviderItemIdentifier {
+        if let parentCID = node.parent?.cid {
+            return NSFileProviderItemIdentifier(parentCID)
+        }
         return .rootContainer
     }
     
@@ -42,7 +42,7 @@ class FileProviderItem: NSObject, NSFileProviderItem {
     }
     
     var filename: String {
-        return node.name!
+        return node.name ?? "Crate Root"
     }
     
     var contentType: UTType {

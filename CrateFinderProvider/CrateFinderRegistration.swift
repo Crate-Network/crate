@@ -10,7 +10,7 @@ import FileProvider
 
 class CrateFinderRegistration {
     static let domain = NSFileProviderDomain(
-        identifier: NSFileProviderDomainIdentifier(rawValue: "group.com.chrisvanderloo.Crate"),
+        identifier: NSFileProviderDomainIdentifier(rawValue: CrateAppConstants.appGroup),
         displayName: "Crate"
     )
     
@@ -23,13 +23,13 @@ class CrateFinderRegistration {
     
     static func registerFileProvider() {
         NSFileProviderManager.add(domain) {
-            error in print("Error on registering Crate Finder Provider \(String(describing: error))")
+            error in if error != nil { print("Error on registering Crate Finder Provider \(String(describing: error))") }
         }
     }
     
     static func unregisterFileProvider() {
         NSFileProviderManager.remove(domain) {
-            error in print("Error on unregistering Crate Finder Provider \(String(describing: error))")
+            error in if error != nil { print("Error on unregistering Crate Finder Provider \(String(describing: error))") }
         }
     }
 }

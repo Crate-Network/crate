@@ -9,16 +9,21 @@ import FileProvider
 import UniformTypeIdentifiers
 
 class FileProviderItem: NSObject, NSFileProviderItem {
+    let node: UnixFSNode
 
     // TODO: implement an initializer to create an item from your extension's backing model
     // TODO: implement the accessors to return the values from your extension's backing model
     
+    init(_ node: UnixFSNode) {
+        self.node = node
+    }
+    
     var itemIdentifier: NSFileProviderItemIdentifier {
-        return NSFileProviderItemIdentifier("")
+        return NSFileProviderItemIdentifier(node.cid!)
     }
     
     var parentItemIdentifier: NSFileProviderItemIdentifier {
-        return NSFileProviderItemIdentifier("")
+        return NSFileProviderItemIdentifier(node.parent!)
     }
     
     var capabilities: NSFileProviderItemCapabilities {
@@ -26,11 +31,14 @@ class FileProviderItem: NSObject, NSFileProviderItem {
     }
     
     var filename: String {
-        return ""
+        return node.name!
     }
     
     var contentType: UTType {
-        return itemIdentifier == NSFileProviderItemIdentifier.rootContainer ? .folder : .plainText
+        if let folder = node as? Folder {
+            return .folder
+        }
+        return .plainText
     }
     
 }

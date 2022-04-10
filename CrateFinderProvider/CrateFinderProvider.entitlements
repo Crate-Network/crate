@@ -8,7 +8,15 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.chrisvanderloo.Crate</string>
+		<string>N43YW78JC6.com.chrisvanderloo.Crate.group</string>
+	</array>
+	<key>com.apple.security.network.client</key>
+	<true/>
+	<key>com.apple.security.network.server</key>
+	<true/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>N43YW78JC6.com.chrisvanderloo.Crate.group</string>
 	</array>
 </dict>
 </plist>

@@ -6,14 +6,16 @@
 //
 
 import FileProvider
+import CoreData
 
 class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
-    
     private let enumeratedItemIdentifier: NSFileProviderItemIdentifier
     private let anchor = NSFileProviderSyncAnchor("an anchor".data(using: .utf8)!)
+    private let enumeratedItem: Folder
     
     init(enumeratedItemIdentifier: NSFileProviderItemIdentifier) {
         self.enumeratedItemIdentifier = enumeratedItemIdentifier
+        self.enumeratedItem = CrateDataProvider.fetchNode(for: enumeratedItemIdentifier) as! Folder
         super.init()
     }
 
@@ -34,7 +36,11 @@ class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
          - inform the observer about the items returned by the server (possibly multiple times)
          - inform the observer that you are finished with this page
          */
-        observer.didEnumerate([FileProviderItem(identifier: NSFileProviderItemIdentifier("a file"))])
+        let children = enumeratedItem.children!.allObjects as! [UnixFSNode]
+        let enumeratedIdentifiers = children.map({ node in
+            FileProviderItem(identifier: NSFileProviderItemIdentifier(node.cid!))
+        })
+        observer.didEnumerate(enumeratedIdentifiers)
         observer.finishEnumerating(upTo: nil)
     }
     

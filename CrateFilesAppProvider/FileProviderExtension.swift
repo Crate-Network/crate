@@ -8,7 +8,6 @@
 import FileProvider
 
 class FileProviderExtension: NSFileProviderExtension {
-    
     var fileManager = FileManager()
     
     override init() {
@@ -19,6 +18,7 @@ class FileProviderExtension: NSFileProviderExtension {
         // resolve the given identifier to a record in the model
         
         // TODO: implement the actual lookup
+        console.log(identifier)
         return FileProviderItem()
     }
     

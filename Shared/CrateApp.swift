@@ -15,10 +15,34 @@ struct CrateApp: App {
     @StateObject var user: CrateUser = CrateUser()
     
     init() {
+        // initialize firebase
         FirebaseConstants.initialize()
         #if os(iOS)
+        // modify font for navigation bar
         UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "iA Writer Quattro S", size: 30)!]
         #endif
+        
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        
+        let rootFetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
+        rootFetchRequest.predicate = NSPredicate(format: "root == true")
+        let rootFolder = try? context.fetch(rootFetchRequest).first
+        if rootFolder == nil {
+            let f = Folder(context: context)
+            f.root = true
+            f.cid = "root_container"
+            try! context.save()
+        }
+        
+        let trashFetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
+        trashFetchRequest.predicate = NSPredicate(format: "trash == true")
+        let trashFolder = try? context.fetch(trashFetchRequest).first
+        if trashFolder == nil {
+            let f = Folder(context: context)
+            f.trash = true
+            f.cid = "trash_container"
+            try! context.save()
+        }
     }
     
     #if os(macOS)

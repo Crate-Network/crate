@@ -18,6 +18,7 @@ struct FirebaseConstants {
     
     static func initialize() {
         FirebaseApp.configure()
+        try! FirebaseConstants.getAuth().useUserAccessGroup(CrateAppConstants.appGroup)
     }
     
     static func getAuth() -> Auth {

@@ -43,9 +43,6 @@ struct Authenticate: View {
                         .frame(height: 44)
                     Divider().padding()
                     SignInWithEmail(showRest: $showRest, showAlert: $showAlert, error: $error, authentication: authentication)
-                    Button("Bypass") {
-                        user.loggedIn = true
-                    }
 //                    GoogleButton()
 //                    GitHubButton()
                     Spacer()

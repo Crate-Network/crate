@@ -9,10 +9,15 @@ import FileProvider
 import CoreData
 
 class FileProviderExtension: NSObject, NSFileProviderReplicatedExtension {
-    let user: CrateUser = CrateUser()
+    static var initialized: Bool = false
     
+    let user: CrateUser
     required init(domain: NSFileProviderDomain) {
-        // TODO: The containing application must create a domain using `NSFileProviderManager.add(_:, completionHandler:)`. The system will then launch the application extension process, call `FileProviderExtension.init(domain:)` to instantiate the extension for that domain, and call methods on the instance.
+        if !FileProviderExtension.initialized {
+            FirebaseConstants.initialize()
+        }
+        FileProviderExtension.initialized = true
+        self.user = CrateUser()
         super.init()
     }
     
@@ -31,6 +36,8 @@ class FileProviderExtension: NSObject, NSFileProviderReplicatedExtension {
     
     func fetchContents(for itemIdentifier: NSFileProviderItemIdentifier, version requestedVersion: NSFileProviderItemVersion?, request: NSFileProviderRequest, completionHandler: @escaping (URL?, NSFileProviderItem?, Error?) -> Void) -> Progress {
         // TODO: implement fetching of the contents for the itemIdentifier at the specified version
+        
+        print(itemIdentifier)
         
         completionHandler(nil, nil, NSError(domain: NSCocoaErrorDomain, code: NSFeatureUnsupportedError, userInfo:[:]))
         return Progress()
