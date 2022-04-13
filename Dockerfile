@@ -1,11 +1,9 @@
 FROM node AS build
 
-WORKDIR /app/
-COPY . .
-RUN npm install && npm run build
+WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn
 
-FROM node
-
-WORKDIR /app/
-COPY --from=build dist .
-CMD [ "node", "app.js" ]
+COPY . ./
+RUN yarn build
+CMD [ "node", "dist/app.js" ]
