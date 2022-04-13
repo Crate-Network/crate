@@ -1,27 +1,31 @@
 import express from "express";
-import fetch from "node-fetch";
+import dotenv from "dotenv";
+import winston from "winston";
+
+const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.json(),
+  defaultMeta: { service: "user-service" },
+  transports: [new winston.transports.Console({ stderrLevels: ["error"] })],
+});
+
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
 
 const app = express();
 
-(async () => {
-  const res = await fetch(
-    "https://2526cn5iroQNHchN3wbVgoWcyKd:2b3a78f8c9e5e2ea597ee65d7a42aa8f@filecoin.infura.io/",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: 1,
-        method: "Filecoin.WalletBalance",
-        params: [],
-      }),
-    }
-  );
-  const json = await res.json();
-  console.log(json);
-})();
+// (async () => {
+//   const docRefs = await firestore.collection("users").listDocuments();
+//   const docs = await Promise.all(docRefs.map(async (d) => d.get()));
+//   console.log(docs.map((d) => d.data()));
+// })();
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
 });
 
-app.listen(process.env.PORT || 3000);
+const port = process.env.PORT || 3030;
+app.listen(port, () => {
+  logger.info(`Listening on port ${port}`);
+});

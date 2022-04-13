@@ -6,3 +6,7 @@ node_modules
 
 # environment
 .env
+firebase.json
+
+# build
+dist
