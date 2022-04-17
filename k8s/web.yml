@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crate-web-in-progress
+  labels:
+    app: web-in-progress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-in-progress
+  template:
+    metadata:
+      labels:
+        app: web-in-progress
+    spec:
+      containers:
+      - name: web-in-progress
+        image: ghcr.io/crate-network/web-inprogress:latest
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: crate-web-in-progress
+spec:
+  selector:
+    app:  web-in-progress
+  type:  ClusterIP
+  ports:
+  - protocol:  TCP
+    port:  80
+    targetPort:  80
