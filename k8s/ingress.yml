@@ -23,13 +23,13 @@ spec:
             name: web-in-progress
             port: 
               number: 80
-  - host: gateway.crate.network
+  - host: crate.network
     http:
       paths:
       - pathType: Prefix
-        path: "/"
+        path: "/ipfs/"
         backend:
           service:
-            name: ipfs-cluster
+            name: ipfs-gateway
             port: 
-              number: 80
+              number: 10147
