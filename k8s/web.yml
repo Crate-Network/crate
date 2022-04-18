@@ -1,7 +1,8 @@
+# DEPLOYMENT
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crate-web-in-progress
+  name: web-in-progress
   labels:
     app: web-in-progress
 spec:
@@ -19,16 +20,42 @@ spec:
         image: ghcr.io/crate-network/web-inprogress:latest
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: ghcr
 ---
-kind: Service
+# SERVICE SETUP
 apiVersion: v1
+kind: Service
 metadata:
-  name: crate-web-in-progress
+  name: web-in-progress
 spec:
   selector:
-    app:  web-in-progress
-  type:  ClusterIP
+    app: web-in-progress
   ports:
-  - protocol:  TCP
-    port:  80
-    targetPort:  80
+  - port: 80
+    targetPort: 80
+---
+# INGRESS SETUP
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: crate-web-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+  - hosts:
+    - crate.network
+    secretName: crate-tls
+  rules:
+  - host: crate.network
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: web-in-progress
+            port: 
+              number: 80
