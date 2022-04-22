@@ -20,7 +20,7 @@ jobs:
       shell: bash
       env:
         FB_JSON: ${{ secrets.FIREBASE_JSON }}
-    - run: 'ls -la'
+    - run: 'ls -la && cat .firebase.json'
       shell: bash
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
