@@ -25,6 +25,7 @@ jobs:
       with:
         platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
         tags: ghcr.io/crate-network/web:latest,ghcr.io/crate-network/web:${{ env.PACKAGE_VERSION }}
+        push: true
         build-args:
           VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }},
           VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }},
