@@ -9,6 +9,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
+  ignore: ["./src/types/*.d.ts"],
   plugins: ["prettier", "@typescript-eslint"],
   rules: {
     "prettier/prettier": ["error"],
