@@ -11,11 +11,6 @@ import AuthenticationServices
 
 class ASAccount: NSObject, ASAuthorizationControllerDelegate {
     fileprivate var currentNonce: String?
-//    let userCallback: (_ auth: Auth, _ user: User) -> Void
-//
-//    init(callback: @escaping (_ auth: Auth, _ user: User) -> Void) {
-//        self.userCallback = callback
-//    }
     
     func startSignInWithAppleFlow() {
         let nonce = randomNonceString()
@@ -57,7 +52,6 @@ class ASAccount: NSObject, ASAuthorizationControllerDelegate {
                     return
                 }
                 // User is signed in to Firebase with Apple.
-//                self.userCallback(Auth.auth(), authResult!.user)
             }
         }
     }

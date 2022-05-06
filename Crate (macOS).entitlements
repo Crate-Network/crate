@@ -15,7 +15,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>N43YW78JC6.com.chrisvanderloo.Crate.group</string>
+		<string>$(TeamIdentifierPrefix)com.chrisvanderloo.Crate.group</string>
 	</array>
 	<key>com.apple.security.device.bluetooth</key>
 	<true/>

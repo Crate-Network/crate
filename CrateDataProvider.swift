@@ -7,15 +7,18 @@
 
 import Foundation
 import FileProviderUI
+import CoreData
 
 class CrateDataProvider {
-    private static let context: NSManagedObjectContext = CoreDataManager.shared.persistentContainer.viewContext
+    private static let context = CoreDataManager.shared.persistentContainer.viewContext
     
-    static func fetchNode(for identifier: NSFileProviderItemIdentifier) -> UnixFSNode {
+    static func fetchNode(for identifier: NSFileProviderItemIdentifier) throws -> UnixFSNode {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UnixFSNode")
         switch identifier {
+        #if os(macOS)
         case .trashContainer:
-            fetchRequest.predicate = NSPredicate(format: "trash == true")
+            throw CrateDataError.NOT_IMPLEMENTED
+        #endif
         case .rootContainer:
             fetchRequest.predicate = NSPredicate(format: "root == true")
         case .workingSet:
@@ -26,4 +29,16 @@ class CrateDataProvider {
         let result = try! self.context.fetch(fetchRequest)
         return result.last as! UnixFSNode
     }
+    
+    static func isAvailable(_ identifier: NSFileProviderItemIdentifier) -> Bool {
+        #if os(macOS)
+        return identifier != .trashContainer
+        #else
+        return true
+        #endif
+    }
+}
+
+enum CrateDataError: Error {
+    case NOT_IMPLEMENTED
 }

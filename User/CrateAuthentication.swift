@@ -10,17 +10,13 @@ import FirebaseAuth
 import SwiftUI
 
 class CrateAuthentication {
-    private var asAccount: ASAccount?
+    static private var asAccount: ASAccount = ASAccount()
     
-    init() {
-        asAccount = ASAccount()
+    static func signInWithApple() {
+        asAccount.startSignInWithAppleFlow()
     }
     
-    func signInWithApple() {
-        asAccount?.startSignInWithAppleFlow()
-    }
-    
-    func sendEmailLink(email: String) async throws {
+    static func signInWithEmail(email: String) async throws {
         try await FirebaseConstants.getAuth().sendSignInLink(toEmail: email, actionCodeSettings: FirebaseConstants.getActionCodeSettings())
         UserDefaults.standard.set(email, forKey: "Email")
     }

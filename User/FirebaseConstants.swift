@@ -15,9 +15,13 @@ struct FirebaseConstants {
     let auth: Auth
     let db: Firestore
     let actionCodeSettings: ActionCodeSettings
+    static var initialized: Bool = false
     
     static func initialize() {
-        FirebaseApp.configure()
+        if !FirebaseConstants.initialized {
+            FirebaseApp.configure()
+            initialized = true
+        }
         try! FirebaseConstants.getAuth().useUserAccessGroup(CrateAppConstants.appGroup)
     }
     

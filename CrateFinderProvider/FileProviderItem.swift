@@ -19,11 +19,11 @@ class FileProviderItem: NSObject, NSFileProviderItem {
     
     init(identifier: NSFileProviderItemIdentifier) {
         self.identifier = identifier
-        self.node = CrateDataProvider.fetchNode(for: identifier)
+        self.node = try! CrateDataProvider.fetchNode(for: identifier)
     }
     
     var itemIdentifier: NSFileProviderItemIdentifier {
-        return NSFileProviderItemIdentifier(rawValue: node.cid!)
+        return identifier
     }
     
     var parentItemIdentifier: NSFileProviderItemIdentifier {
@@ -38,7 +38,7 @@ class FileProviderItem: NSObject, NSFileProviderItem {
     }
     
     var itemVersion: NSFileProviderItemVersion {
-        NSFileProviderItemVersion(contentVersion: "a content version".data(using: .utf8)!, metadataVersion: "a metadata version".data(using: .utf8)!)
+        return NSFileProviderItemVersion(contentVersion: "a content version".data(using: .utf8)!, metadataVersion: "a metadata version".data(using: .utf8)!)
     }
     
     var filename: String {

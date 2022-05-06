@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 @main
 struct CrateApp: App {
@@ -31,16 +32,6 @@ struct CrateApp: App {
             let f = Folder(context: context)
             f.root = true
             f.cid = "root_container"
-            try! context.save()
-        }
-        
-        let trashFetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
-        trashFetchRequest.predicate = NSPredicate(format: "trash == true")
-        let trashFolder = try? context.fetch(trashFetchRequest).first
-        if trashFolder == nil {
-            let f = Folder(context: context)
-            f.trash = true
-            f.cid = "trash_container"
             try! context.save()
         }
     }

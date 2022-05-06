@@ -18,8 +18,8 @@ class FileProviderExtension: NSFileProviderExtension {
         // resolve the given identifier to a record in the model
         
         // TODO: implement the actual lookup
-        console.log(identifier)
-        return FileProviderItem()
+        return FileProviderItem(identifier: identifier)
+        
     }
     
     override func urlForItem(withPersistentIdentifier identifier: NSFileProviderItemIdentifier) -> URL? {

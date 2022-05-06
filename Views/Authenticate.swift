@@ -16,8 +16,7 @@ struct Authenticate: View {
     #endif
     @State var showAlert: Bool = false
     @State var error: String = ""
-    
-    var authentication: CrateAuthentication = CrateAuthentication()
+
     @EnvironmentObject var user: CrateUser
     @Environment(\.colorScheme) private var colorScheme
     
@@ -36,13 +35,13 @@ struct Authenticate: View {
                         .font(Font.custom("iA Writer Quattro S", size: 30))
                     
                     SignInWithAppleButton(.continue, onRequest: { req in
-                        authentication.signInWithApple()
+                        CrateAuthentication.signInWithApple()
                     }, onCompletion: { result in
                         print(result)
                     }).signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
                         .frame(height: 44)
                     Divider().padding()
-                    SignInWithEmail(showRest: $showRest, showAlert: $showAlert, error: $error, authentication: authentication)
+                    SignInWithEmail(showRest: $showRest, showAlert: $showAlert, error: $error)
 //                    GoogleButton()
 //                    GitHubButton()
                     Spacer()
@@ -136,7 +135,6 @@ struct SignInWithEmail: View {
     @State var email: String = ""
     @State var showEmailMsg: Bool = false
     
-    var authentication: CrateAuthentication
     var body: some View {
         VStack {
             TextField("Email", text: $email)
@@ -183,7 +181,7 @@ struct SignInWithEmail: View {
         Task { @MainActor in
             do {
                 print(self.email)
-                try await authentication.sendEmailLink(email: self.email)
+                try await CrateAuthentication.signInWithEmail(email: self.email)
                 self.showEmailMsg = true
             } catch {
                 print(error)

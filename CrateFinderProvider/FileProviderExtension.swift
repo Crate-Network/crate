@@ -9,14 +9,9 @@ import FileProvider
 import CoreData
 
 class FileProviderExtension: NSObject, NSFileProviderReplicatedExtension {
-    static var initialized: Bool = false
-    
     let user: CrateUser
     required init(domain: NSFileProviderDomain) {
-        if !FileProviderExtension.initialized {
-            FirebaseConstants.initialize()
-        }
-        FileProviderExtension.initialized = true
+        FirebaseConstants.initialize()
         self.user = CrateUser()
         super.init()
     }
@@ -26,18 +21,16 @@ class FileProviderExtension: NSObject, NSFileProviderReplicatedExtension {
     }
     
     func item(for identifier: NSFileProviderItemIdentifier, request: NSFileProviderRequest, completionHandler: @escaping (NSFileProviderItem?, Error?) -> Void) -> Progress {
-        // resolve the given identifier to a record in the model
-        
-        // TODO: implement the actual lookup
-
-        completionHandler(FileProviderItem(identifier: identifier), nil)
+        if CrateDataProvider.isAvailable(identifier) {
+            completionHandler(FileProviderItem(identifier: identifier), nil)
+        } else {
+            completionHandler(nil, CrateDataError.NOT_IMPLEMENTED)
+        }
         return Progress()
     }
     
     func fetchContents(for itemIdentifier: NSFileProviderItemIdentifier, version requestedVersion: NSFileProviderItemVersion?, request: NSFileProviderRequest, completionHandler: @escaping (URL?, NSFileProviderItem?, Error?) -> Void) -> Progress {
         // TODO: implement fetching of the contents for the itemIdentifier at the specified version
-        
-        print(itemIdentifier)
         
         completionHandler(nil, nil, NSError(domain: NSCocoaErrorDomain, code: NSFeatureUnsupportedError, userInfo:[:]))
         return Progress()
