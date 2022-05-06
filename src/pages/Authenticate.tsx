@@ -2,7 +2,6 @@ import Button from "components/Button"
 import FormBox from "components/FormBox"
 import FormInput from "components/FormInput"
 import AuthContext from "context/AuthContext"
-import { Google } from "@icons-pack/react-simple-icons"
 import AppleLogo from "assets/signin-apple-logo.svg"
 import {
   getRedirectResult,

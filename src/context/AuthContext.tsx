@@ -4,6 +4,14 @@ import { useEffect, useState } from "preact/hooks"
 import { FirebaseApp, initializeApp } from "firebase/app"
 import { Analytics, getAnalytics } from "firebase/analytics"
 import {
+  doc,
+  DocumentReference,
+  Firestore,
+  getDoc,
+  getFirestore,
+  onSnapshot,
+} from "firebase/firestore"
+import {
   getAuth,
   GoogleAuthProvider,
   GithubAuthProvider,
@@ -15,6 +23,7 @@ import {
   OAuthProvider,
 } from "firebase/auth"
 import firebaseConfig from "../../firebase"
+import UserModel from "models/UserModel"
 
 const actionCodeSettings = {
   // URL you want to redirect back to. The domain (www.example.com) for this
@@ -25,14 +34,15 @@ const actionCodeSettings = {
   handleCodeInApp: true,
 }
 
-type AuthObject = {
-  user: User | null
+export type AuthObject = {
+  user: (User & { doc: UserModel }) | null
   loggedIn: boolean
   setUser: (user: User) => void
   logout: () => void
   firebase?: FirebaseApp
   auth?: Auth
   analytics?: Analytics
+  db?: Firestore
   hasFullKey: boolean
   error: string | null
   providers: {
@@ -63,6 +73,9 @@ function AuthProvider(props) {
   const app = initializeApp(firebaseConfig)
   const analytics = getAnalytics(app)
   const auth = getAuth(app)
+  const db = getFirestore(app)
+
+  auth.currentUser?.getIdToken().then((token) => console.log(token))
 
   const { children } = props
   const [user, setUser] = useState<User | null>(auth.currentUser)
@@ -70,6 +83,22 @@ function AuthProvider(props) {
   const [loggedIn, setLoggedIn] = useState(
     localStorage.getItem("signedIn") === "true"
   )
+
+  const [userDoc, setUserDoc] = useState<UserModel>(null)
+  useEffect(() => {
+    if (!user) return
+    const userDocRef = doc(
+      db,
+      "users",
+      user.uid.toString()
+    ) as DocumentReference<UserModel>
+
+    getDoc(userDocRef).then((doc) => setUserDoc(doc.data()))
+    const unsub = onSnapshot(userDocRef, (doc) => {
+      setUserDoc(doc.data())
+    })
+    return () => unsub()
+  }, [user])
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -102,13 +131,14 @@ function AuthProvider(props) {
 
   const result: AuthObject = {
     ...contextDefault,
-    user,
+    user: user && userDoc ? { ...user, doc: userDoc } : null,
     setUser,
     logout,
     loggedIn,
     firebase: app,
     auth,
     analytics,
+    db,
     error,
     hasFullKey: false,
   }

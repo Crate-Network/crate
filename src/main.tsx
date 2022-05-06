@@ -12,6 +12,7 @@ import Browse from "pages/Browse"
 import Files from "./pages/Files"
 import Button from "components/Button"
 import NotFound from "pages/NotFound"
+import Settings from "pages/Settings"
 
 type FloatingError = {
   show: boolean
@@ -84,6 +85,12 @@ export function App() {
           component={<Files />}
           protect
         />
+        <Page
+          path="/settings"
+          title={"Crate - Settings"}
+          component={<Settings />}
+          protect
+        />
         <Page path="/browse" title={"Crate - Browse"} component={<Browse />} />
         <Page
           path="/login"
@@ -92,7 +99,7 @@ export function App() {
         />
         <Page
           path="/email-sign-in"
-          title={"Crate"}
+          title={"Crate - Authorize"}
           component={<EmailSignIn />}
         />
         <Page

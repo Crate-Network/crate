@@ -23,7 +23,7 @@ function CrateLogo() {
 }
 
 export default function Navigation() {
-  const { loggedIn, logout, user } = useContext(AuthContext)
+  const { loggedIn, user } = useContext(AuthContext)
   return (
     <>
       <div className="max-w-7xl mx-auto">
@@ -91,27 +91,18 @@ export default function Navigation() {
                     </>
                   ) : (
                     <>
-                      <span className="space-x-8">
-                        <Link
-                          href="/features"
-                          className="font-medium text-gray-500 dark:text-gray-300 hover:text-neutral-400"
-                        >
-                          Features
-                        </Link>
-                      </span>
                       <span className="space-x-4">
                         <Link
-                          href="/"
-                          className="font-medium text-neutral-50 rounded-md dark:bg-neutral-600 bg-neutral-400 py-3 px-6"
+                          href="/settings"
+                          className="font-medium text-neutral-50 rounded-md hover:text-neutral-300 bg-neutral-400 dark:bg-neutral-600 py-3 px-6"
                         >
-                          Files
+                          Settings
                         </Link>
                         <Link
-                          href="/login"
-                          onClick={logout}
-                          className="font-medium text-neutral-50 rounded-md hover:text-neutral-300 bg-red-500 py-3 px-6"
+                          href="/"
+                          className="font-medium text-neutral-50 rounded-md bg-orange-500 py-3 px-6"
                         >
-                          Logout
+                          All Files
                         </Link>
                       </span>
                     </>
