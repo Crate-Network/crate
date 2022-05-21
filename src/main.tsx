@@ -8,7 +8,7 @@ import Splash from "./pages/Splash"
 import Authenticate, { AuthenticateType } from "./pages/Authenticate"
 import Navigation from "./components/Navigation"
 import EmailSignIn from "pages/EmailSignIn"
-import Browse from "pages/Browse"
+import Community from "pages/Community"
 import Files from "./pages/Files"
 import Button from "components/Button"
 import NotFound from "pages/NotFound"
@@ -91,7 +91,11 @@ export function App() {
           component={<Settings />}
           protect
         />
-        <Page path="/browse" title={"Crate - Browse"} component={<Browse />} />
+        <Page
+          path="/community"
+          title={"Crate - Community"}
+          component={<Community />}
+        />
         <Page
           path="/login"
           title={"Login to Crate"}

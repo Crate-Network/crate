@@ -62,7 +62,7 @@ enum Pane {
 
 export default function Settings() {
   const { db, user, logout } = useContext<AuthObject>(AuthContext)
-  const [selectedPane, setSelectedPane] = useState(Pane.NETWORK)
+  const [selectedPane, setSelectedPane] = useState(Pane.ACCOUNT)
 
   function getProps(pane: Pane) {
     const o = {

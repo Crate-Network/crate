@@ -50,10 +50,10 @@ export default function Navigation() {
                 <div className="ml-10 pr-4 space-x-8">
                   <span className="space-x-8">
                     <Link
-                      href="/browse"
+                      href="/community"
                       className="font-medium text-gray-500 dark:text-gray-300 hover:text-neutral-400"
                     >
-                      Browse
+                      Community
                     </Link>
                   </span>
                   {!loggedIn ? (
@@ -93,16 +93,16 @@ export default function Navigation() {
                     <>
                       <span className="space-x-4">
                         <Link
+                          href="/"
+                          className="font-medium text-neutral-50 rounded-md bg-orange-500 py-3 px-6"
+                        >
+                          My Files
+                        </Link>
+                        <Link
                           href="/settings"
                           className="font-medium text-neutral-50 rounded-md hover:text-neutral-300 bg-neutral-400 dark:bg-neutral-600 py-3 px-6"
                         >
                           Settings
-                        </Link>
-                        <Link
-                          href="/"
-                          className="font-medium text-neutral-50 rounded-md bg-orange-500 py-3 px-6"
-                        >
-                          All Files
                         </Link>
                       </span>
                     </>
