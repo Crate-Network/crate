@@ -9,8 +9,8 @@ export default function Splash() {
   }
   return (
     <div>
-      <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-38 sm:px-6 md:mt-16 lg:mt-40 lg:px-8 xl:mt-60">
-        <div class="sm:text-center lg:text-left">
+      <main class="flex items-center justify-center mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-screen min-h-fit pb-24">
+        <div class="sm:text-center lg:text-left lg:w-full">
           <h1 class="text-4xl tracking-tight font-bold text-gray-800 dark:text-gray-100 sm:text-5xl md:text-6xl">
             <span class="block xl:inline">Cloud storage, </span>
             <span class="block font-extrabold text-orange-600 dark:text-orange-500 xl:inline">
