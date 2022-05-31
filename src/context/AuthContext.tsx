@@ -55,7 +55,7 @@ export type AuthObject = {
   }
 }
 
-const defaultUser: UserInfo & { doc: UserModel } = {
+const defaultUser: User & { doc: UserModel } = {
   displayName: "",
   email: "",
   phoneNumber: "",
@@ -63,6 +63,17 @@ const defaultUser: UserInfo & { doc: UserModel } = {
   providerId: "",
   uid: "",
   doc: { ...defaultUserModel },
+  emailVerified: false,
+  isAnonymous: true,
+  metadata: {},
+  providerData: [],
+  refreshToken: "",
+  tenantId: "",
+  delete: async () => null,
+  getIdToken: async () => null,
+  getIdTokenResult: async () => null,
+  reload: async () => null,
+  toJSON: null,
 }
 
 const contextDefault: AuthObject = {
@@ -141,7 +152,7 @@ function AuthProvider(props) {
 
   const logout = () => {
     signOut(auth)
-      .then(() => setUser({ ...defaultUser, doc: { ...defaultUserModel } }))
+      .then(() => setUser({ ...defaultUser }))
       .catch((err) => {
         setError(err.message)
       })
