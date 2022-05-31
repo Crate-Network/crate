@@ -1,14 +1,14 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core"
 import useClickOutside from "hooks/useClickOutside"
 import Anchor from "models/Anchor"
-import { FileModel } from "models/FileModel"
+import { FileEventListeners, FileModel } from "models/FileModel"
 import { useRef, useState } from "preact/hooks"
 
 type RightClickMenuProps = {
   file: FileModel
   close: () => void
   anchor: Anchor
-}
+} & FileEventListeners
 
 type SelectionOptions = {
   name: string
@@ -16,11 +16,18 @@ type SelectionOptions = {
   icon?: IconProp
 }
 
-const getSelectionOptions = (
-  file: FileModel,
-  close: () => void
-): (SelectionOptions | "divider")[] => {
-  const opt = (name: string, f?: () => void, icon?: IconProp) => {
+export default function RightClickMenu({
+  file,
+  close,
+  anchor,
+  onRenameRequest,
+  onDelete,
+}: RightClickMenuProps) {
+  const divRef = useRef()
+  useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
+  const { left, top } = anchor
+
+  const mOpt = (name: string, f?: () => void, icon?: IconProp) => {
     return {
       name,
       func: () => {
@@ -31,28 +38,19 @@ const getSelectionOptions = (
     }
   }
 
-  return [
-    opt("Open"),
-    opt("Download"),
+  const opts: (SelectionOptions | "divider")[] = [
+    mOpt("Open"),
+    mOpt("Download"),
     "divider",
-    opt("Delete"),
+    mOpt("Delete"),
     "divider",
-    opt("Inspect"),
-    opt("Rename"),
-    opt("Copy CID"),
+    mOpt("Inspect"),
+    mOpt("Rename"),
+    mOpt("Copy CID"),
     "divider",
-    opt("Share"),
+    mOpt("Share"),
   ]
-}
 
-export default function RightClickMenu({
-  file,
-  close,
-  anchor,
-}: RightClickMenuProps) {
-  const divRef = useRef()
-  useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
-  const { left, top } = anchor
   return (
     <div
       ref={divRef}
@@ -60,7 +58,7 @@ export default function RightClickMenu({
       style={{ left, top }}
       onContextMenu={close}
     >
-      {getSelectionOptions(file, close).map((e) => {
+      {opts.map((e) => {
         if (e === "divider") {
           return (
             <span className="mx-1 bg-slate-500 dark:bg-slate-300 h-px my-1 bg-opacity-20 rounded-sm" />

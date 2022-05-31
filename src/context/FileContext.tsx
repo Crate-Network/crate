@@ -6,12 +6,12 @@ import { FileAction, FileMutator } from "models/FileMutator"
 
 type FileContextType = {
   files: FileModel[]
-  dispatchFile: (mutator: FileMutator) => void
+  dispatchFileAction: (mutator: FileMutator) => void
 }
 
 const FileContext = createContext<FileContextType>({
   files: [],
-  dispatchFile: () => null,
+  dispatchFileAction: () => null,
 })
 
 const defaultFiles = Array.from({ length: 50 }, () => ({
@@ -44,7 +44,7 @@ function FileProvider({ children }) {
   }, [files])
 
   return (
-    <FileContext.Provider value={{ files, dispatchFile: dispatch }}>
+    <FileContext.Provider value={{ files, dispatchFileAction: dispatch }}>
       {children}
     </FileContext.Provider>
   )
