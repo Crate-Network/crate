@@ -7,10 +7,10 @@ import useClickOutside from "hooks/useClickOutside"
 import RightClickMenu from "./RightClickMenu"
 import Anchor from "models/Anchor"
 
-enum IconState {
-  EMPTY,
-  HOVERED,
-  SELECTED,
+type IconState = "empty" | "selected" | "hovered"
+const getIconState = (selected: boolean, hovered: boolean): IconState => {
+  if (selected) return "selected"
+  return hovered ? "hovered" : "empty"
 }
 
 function FileIcon({ file }: { file: FileModel }) {
@@ -25,11 +25,6 @@ function FileIcon({ file }: { file: FileModel }) {
       return
     }
     dispatchSelection({ t: "setone", id: file.id })
-  }
-
-  const getIconState = () => {
-    if (selected) return IconState.SELECTED
-    return hovered ? IconState.HOVERED : IconState.EMPTY
   }
 
   useClickOutside(
@@ -53,7 +48,7 @@ function FileIcon({ file }: { file: FileModel }) {
     setAnchorPos(null)
   }
 
-  const iconState = getIconState()
+  const iconState = getIconState(selected, hovered)
   return (
     <>
       <div
@@ -66,12 +61,8 @@ function FileIcon({ file }: { file: FileModel }) {
       >
         <div
           className={"flex justify-center items-center rounded-md m-1 w-24 h-24 ".concat(
-            iconState === IconState.HOVERED
-              ? "bg-opacity-10 bg-neutral-500 "
-              : "",
-            iconState === IconState.SELECTED
-              ? "bg-opacity-40 bg-neutral-500 "
-              : ""
+            iconState === "hovered" ? "bg-opacity-10 bg-neutral-500 " : "",
+            iconState === "selected" ? "bg-opacity-40 bg-neutral-500 " : ""
           )}
         >
           <FontAwesomeIcon
@@ -82,13 +73,11 @@ function FileIcon({ file }: { file: FileModel }) {
         </div>
         <span
           className={"px-1 font-medium text-sm rounded-md ".concat(
-            iconState === IconState.HOVERED
-              ? "bg-opacity-10 bg-neutral-500 "
-              : "",
-            iconState === IconState.SELECTED ? "bg-orange-500 text-white " : ""
+            iconState === "hovered" ? "bg-opacity-10 bg-neutral-500 " : "",
+            iconState === "selected" ? "bg-orange-500 text-white " : ""
           )}
         >
-          FileName
+          {file.name}
         </span>
       </div>
       {contextShown && (
@@ -100,13 +89,15 @@ function FileIcon({ file }: { file: FileModel }) {
 
 export function GridView({ files }: FileViewProps) {
   return (
-    <div
-      className="grid w-full"
-      style={{ gridTemplateColumns: "repeat(auto-fit, minmax(9rem, 1fr))" }}
-    >
-      {files.map((el) => (
-        <FileIcon file={el} />
-      ))}
+    <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700">
+      <div
+        className="grid w-full"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(9rem, 1fr))" }}
+      >
+        {files.map((el) => (
+          <FileIcon file={el} />
+        ))}
+      </div>
     </div>
   )
 }
