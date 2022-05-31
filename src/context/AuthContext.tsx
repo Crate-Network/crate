@@ -21,11 +21,13 @@ import {
   User,
   getRedirectResult,
   OAuthProvider,
+  UserInfo,
 } from "firebase/auth"
 import firebaseConfig from "../../firebase"
-import UserModel from "models/UserModel"
+import UserModel, { defaultUserModel } from "models/UserModel"
 
-const actionCodeSettings = {
+type ActionCodeSettingType = { url: string; handleCodeInApp: boolean }
+const actionCodeSettings: ActionCodeSettingType = {
   // URL you want to redirect back to. The domain (www.example.com) for this
   // URL must be in the authorized domains list in the Firebase Console.
   url: import.meta.env.PROD
@@ -35,7 +37,7 @@ const actionCodeSettings = {
 }
 
 export type AuthObject = {
-  user: (User & { doc: UserModel }) | null
+  user: UserInfo & { doc: UserModel }
   loggedIn: boolean
   setUser: (user: User) => void
   logout: () => void
@@ -43,21 +45,33 @@ export type AuthObject = {
   auth?: Auth
   analytics?: Analytics
   db?: Firestore
+  actionCodeSettings: ActionCodeSettingType
   hasFullKey: boolean
   error: string | null
   providers: {
     google: GoogleAuthProvider
     github: GithubAuthProvider
+    apple: OAuthProvider
   }
 }
 
-const contextDefault = {
+const defaultUser: UserInfo & { doc: UserModel } = {
+  displayName: "",
+  email: "",
+  phoneNumber: "",
+  photoURL: "",
+  providerId: "",
+  uid: "",
+  doc: { ...defaultUserModel },
+}
+
+const contextDefault: AuthObject = {
   user: null,
   loggedIn: false,
   setUser: () => null,
   logout: () => null,
-  hasFullKey: false,
   actionCodeSettings,
+  hasFullKey: false,
   error: null,
   providers: {
     google: new GoogleAuthProvider(),
@@ -75,16 +89,16 @@ function AuthProvider(props) {
   const auth = getAuth(app)
   const db = getFirestore(app)
 
-  auth.currentUser?.getIdToken().then((token) => console.log(token))
+  // auth.currentUser?.getIdToken().then((token) => console.log(token))
 
   const { children } = props
-  const [user, setUser] = useState<User | null>(auth.currentUser)
+  const [user, setUser] = useState<User>(auth.currentUser)
   const [error, setError] = useState<string | null>(null)
   const [loggedIn, setLoggedIn] = useState(
     localStorage.getItem("signedIn") === "true"
   )
 
-  const [userDoc, setUserDoc] = useState<UserModel>(null)
+  const [userDoc, setUserDoc] = useState<UserModel>(defaultUserModel)
   useEffect(() => {
     if (!user) return
     const userDocRef = doc(
@@ -93,7 +107,9 @@ function AuthProvider(props) {
       user.uid.toString()
     ) as DocumentReference<UserModel>
 
-    getDoc(userDocRef).then((doc) => setUserDoc(doc.data()))
+    getDoc(userDocRef)
+      .then((doc) => setUserDoc(doc.data()))
+      .catch((err) => setError(err.message))
     const unsub = onSnapshot(userDocRef, (doc) => {
       setUserDoc(doc.data())
     })
@@ -125,13 +141,15 @@ function AuthProvider(props) {
 
   const logout = () => {
     signOut(auth)
-      .then(() => setUser(null))
-      .catch(setError)
+      .then(() => setUser({ ...defaultUser, doc: { ...defaultUserModel } }))
+      .catch((err) => {
+        setError(err.message)
+      })
   }
 
   const result: AuthObject = {
     ...contextDefault,
-    user: user && userDoc ? { ...user, doc: userDoc } : null,
+    user: { ...user, doc: userDoc },
     setUser,
     logout,
     loggedIn,
