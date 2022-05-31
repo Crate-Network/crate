@@ -1,12 +1,12 @@
 import { FileModel } from "models/FileModel"
-import { v4 as uuidv4 } from "uuid"
 import { createContext } from "preact"
-import { useReducer, useState } from "preact/hooks"
+import { useContext, useReducer, useState } from "preact/hooks"
 import { GridView } from "./files/GridView"
 import { ListView } from "./files/ListView"
 import { SearchBar, UploadButton, ViewBar, ViewMode } from "./files/Toolbar"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import FileContext from "context/FileContext"
 
 type SelectionType = "add" | "remove" | "setone"
 type DispatchMethod = { t: SelectionType; id: string }
@@ -33,10 +33,6 @@ export type FileViewProps = {
   files: FileModel[]
 }
 
-const fileArray = Array.from({ length: 5 }, () => ({
-  id: uuidv4(),
-})) as FileModel[]
-
 export default function Files() {
   const [selection, dispatchSelect] = useReducer<string[], DispatchMethod>(
     selectionReducer,
@@ -44,11 +40,12 @@ export default function Files() {
   )
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.LIST)
   const [inspectorActive, setInspectorVisible] = useState(true)
+  const { files } = useContext(FileContext)
   return (
     <SelectionContext.Provider value={[selection, dispatchSelect]}>
-      <main className="flex flex-row mt-10 mx-auto max-w-7xl px-4 md:mt-16 lg:px-8">
+      <main className="flex flex-row mx-auto max-w-7xl px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">
         <div className="grow">
-          <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold sm:mt-12 md:mt-16 lg:mt-20">
+          <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
             Files
           </h1>
           <div className="flex justify-between">
@@ -56,16 +53,16 @@ export default function Files() {
             <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
             <UploadButton />
           </div>
-          <div className="mt-8 p-2 sm:p-4 md:p-8 bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700">
+          <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700">
             {viewMode === ViewMode.LIST ? (
-              <ListView files={fileArray} />
+              <ListView files={files} />
             ) : (
-              <GridView files={fileArray} />
+              <GridView files={files} />
             )}
           </div>
         </div>
         <div
-          className={`bg-white dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-12 mr-12 hidden lg:block transition-all overflow-hidden ${
+          className={`bg-white dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-12 mr-12 hidden lg:block transition-all overflow-hidden h-fit ${
             inspectorActive ? "w-56" : "w-0"
           }`}
         >
@@ -78,6 +75,7 @@ export default function Files() {
               <FontAwesomeIcon icon={faXmark} />
             </button>
           </div>
+          <div className="p-2">Options</div>
         </div>
       </main>
     </SelectionContext.Provider>
