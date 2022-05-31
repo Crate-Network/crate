@@ -3,16 +3,17 @@ import { Inputs, MutableRef, useEffect } from "preact/hooks"
 export default function useClickOutside(
   ref: MutableRef<HTMLElement>,
   onClickOutside: (e: MouseEvent) => void,
-  deps: Inputs
+  opts?: { deps?: Inputs; events?: (keyof DocumentEventMap)[] }
 ) {
+  const { deps, events } = { events: ["click"], ...opts }
   useEffect(() => {
     const detectClick = (e) => {
       if (!ref.current || ref.current.contains(e.target)) return
       onClickOutside(e)
     }
-    document.addEventListener("click", detectClick)
+    events.forEach((evt) => document.addEventListener(evt, detectClick))
     return () => {
-      document.removeEventListener("click", detectClick)
+      events.forEach((evt) => document.removeEventListener(evt, detectClick))
     }
   }, deps)
 }
