@@ -1,7 +1,7 @@
 import { FileModel } from "models/FileModel"
 import { v4 as uuidv4 } from "uuid"
 import { createContext } from "preact"
-import { Reducer, useReducer } from "preact/hooks"
+import { Reducer, useEffect, useReducer } from "preact/hooks"
 import { FileAction, FileMutator } from "models/FileMutator"
 
 type FileContextType = {
@@ -16,6 +16,7 @@ const FileContext = createContext<FileContextType>({
 
 const defaultFiles = Array.from({ length: 50 }, () => ({
   id: uuidv4(),
+  name: "file.txt",
 })) as FileModel[]
 
 const fileReducer: Reducer<FileModel[], FileMutator> = (
@@ -37,6 +38,11 @@ const fileReducer: Reducer<FileModel[], FileMutator> = (
 
 function FileProvider({ children }) {
   const [files, dispatch] = useReducer(fileReducer, [...defaultFiles])
+
+  useEffect(() => {
+    // TODO: synchronize file changes with server
+  }, [files])
+
   return (
     <FileContext.Provider value={{ files, dispatchFile: dispatch }}>
       {children}
