@@ -48,21 +48,22 @@ const PageInterior = (props) => {
     <>
       {header ? header : <Navigation />}
       <div
-        className={`absolute flex justify-between align-middle transition-all duration-300 mx-auto left-0 right-0 w-4/12 p-4 bg-redwood-300 z-10 rounded-lg text-white ${
-          errorObj.show ? "top-8" : "-top-32"
+        className={`fixed flex justify-between items-center align-middle transition-all duration-300 mx-auto left-0 right-0 -top-16 w-4/12 p-4 bg-red-500 bg-opacity-90 shadow-md backdrop-blur-lg z-10 rounded-lg text-white ${
+          errorObj.show ? "translate-y-full" : "-translate-y-full"
         }`}
       >
         <span class="text-lg p-1">
           <b>Error: </b>
           {errorObj.message}
         </span>
-        <Button
+        <button
+          className="font-medium text-neutral-50 rounded-md bg-neutral-400 py-3 px-6"
           onClick={() =>
             setErrorObj((current) => ({ ...current, show: false }))
           }
         >
           Dismiss
-        </Button>
+        </button>
       </div>
       {component}
     </>
