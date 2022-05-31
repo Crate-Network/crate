@@ -1,7 +1,7 @@
 export default function FormInput(props) {
   return (
     <input
-      class="
+      className="
         form-control
         block
         w-full
@@ -23,7 +23,7 @@ export default function FormInput(props) {
         dark:focus:text-neutral-50 
         dark:focus:bg-gray-700
         focus:text-gray-700 focus:bg-white 
-        focus:border-blue-600 focus:outline-none
+        focus:border-blue-600 focus:outline-none placeholder:text-gray-400
       "
       {...props}
     />
