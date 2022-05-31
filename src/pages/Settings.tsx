@@ -77,9 +77,9 @@ export default function Settings() {
       case Pane.NOTIFICATIONS:
         return { ...o, icon: faBell, text: "Notifications" }
       case Pane.BILLING:
-        return { ...o, icon: faFileInvoiceDollar, text: "Billing" }
+        return { ...o, icon: faFileInvoiceDollar, text: "Plan & Billing" }
       case Pane.ACCOUNT:
-        return { ...o, icon: faUser, text: "Account" }
+        return { ...o, icon: faUser, text: "Profile" }
       case Pane.SECURITY:
         return { ...o, icon: faLock, text: "Security" }
       case Pane.STORAGE:
@@ -104,34 +104,36 @@ export default function Settings() {
   const { firstName, lastName, organization } = user.doc
 
   return (
-    <main className="mt-6 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold sm:mt-12 md:mt-16 lg:mt-20">
+    <main className="mt-6 sm:mt-12 md:mt-16 lg:mt-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
         Settings
       </h1>
       <div className="flex flex-wrap w-full rounded-lg">
         <div className="w-5/12 lg:w-4/12 xl:w-3/12 bg-white dark:bg-stone-800 rounded-lg p-3 shadow-lg">
-          <div className="flex items-center space-x-4 p-2 mb-5">
-            <div className="h-12 w-12 bg-slate-200 dark:bg-stone-700 rounded-full flex items-center justify-center flex-shrink-0">
-              <FontAwesomeIcon icon={faUser} />
-            </div>
-            <div className="overflow-ellipsis overflow-hidden whitespace-nowrap">
-              <h4 className="overflow-ellipsis overflow-hidden whitespace-nowrap w-full font-semibold text-lg text-gray-700 dark:text-gray-100 font-poppins tracking-wide">
-                {firstName ? `${firstName} ${lastName}` : user.email}
-              </h4>
-              <span className="overflow-ellipsis overflow-hidden whitespace-nowraptext-sm tracking-wide flex items-center space-x-1">
-                <span className="text-gray-600 dark:text-gray-200">
-                  {organization}
+          {typeof firstName === "string" && (
+            <div className="flex items-center space-x-4 p-2 mb-5">
+              <div className="h-12 w-12 bg-slate-200 dark:bg-stone-700 rounded-full flex items-center justify-center flex-shrink-0">
+                <FontAwesomeIcon icon={faUser} />
+              </div>
+              <div className="overflow-ellipsis overflow-hidden whitespace-nowrap">
+                <h4 className="overflow-ellipsis overflow-hidden whitespace-nowrap w-full font-semibold text-md text-gray-700 dark:text-gray-100 font-poppins tracking-wide">
+                  {firstName ? `${firstName} ${lastName}` : user.email}
+                </h4>
+                <span className="overflow-ellipsis overflow-hidden whitespace-nowraptext-sm tracking-wide flex items-center space-x-1">
+                  <span className="text-gray-600 dark:text-gray-200 text-md">
+                    {organization}
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
-          </div>
+          )}
           <ul className="space-y-2 text-sm">
             <SidebarButton {...getProps(Pane.ACCOUNT)} />
             <SidebarButton {...getProps(Pane.SECURITY)} />
+            <SidebarButton {...getProps(Pane.BILLING)} />
             <SidebarButton {...getProps(Pane.STORAGE)} />
             <SidebarButton {...getProps(Pane.NETWORK)} />
             <SidebarButton {...getProps(Pane.NOTIFICATIONS)} />
-            <SidebarButton {...getProps(Pane.BILLING)} />
             <SidebarButton
               icon={faArrowRightFromBracket}
               text="Logout"
