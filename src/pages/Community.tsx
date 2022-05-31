@@ -3,8 +3,10 @@ import { Link } from "preact-router"
 export default function Community() {
   return (
     <div>
-      <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-        <h1>Community</h1>
+      <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold sm:mt-12 md:mt-16 lg:mt-20">
+          Community
+        </h1>
       </main>
     </div>
   )
