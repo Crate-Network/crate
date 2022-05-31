@@ -53,13 +53,12 @@ export default function Files() {
             <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
             <UploadButton />
           </div>
-          <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700">
-            {viewMode === ViewMode.LIST ? (
-              <ListView files={files} />
-            ) : (
-              <GridView files={files} />
-            )}
-          </div>
+
+          {viewMode === ViewMode.LIST ? (
+            <ListView files={files} />
+          ) : (
+            <GridView files={files} />
+          )}
         </div>
         <div
           className={`bg-white dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-8 hidden lg:block transition-all overflow-hidden h-fit ${
