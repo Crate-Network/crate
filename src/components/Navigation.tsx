@@ -96,7 +96,7 @@ export default function Navigation() {
                           href="/"
                           className="font-medium text-neutral-50 rounded-md bg-orange-500 py-3 px-6"
                         >
-                          My Files
+                          Files
                         </Link>
                         <Link
                           href="/settings"
