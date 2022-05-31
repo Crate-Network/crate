@@ -35,7 +35,7 @@ const PageInterior = (props) => {
   useEffect(() => {
     setErrorObj({
       show: !!error,
-      message: error,
+      message: typeof error === "string" ? error : JSON.stringify(error),
     })
   }, [error])
 
@@ -74,9 +74,11 @@ const Page = (props) => (
   </AuthProvider>
 )
 
+const Providers = ({ children }) => <AuthProvider>{children}</AuthProvider>
+
 export function App() {
   return (
-    <AuthProvider>
+    <Providers>
       <Router>
         <Page path="/" title={"Crate"} component={<Splash />} />
         <Page
@@ -113,7 +115,7 @@ export function App() {
         />
         <Page default component={<NotFound />} />
       </Router>
-    </AuthProvider>
+    </Providers>
   )
 }
 
