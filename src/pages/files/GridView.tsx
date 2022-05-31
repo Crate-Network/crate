@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { FileModel } from "models/FileModel"
 import { useContext, useRef, useState } from "preact/hooks"
 import useClickOutside from "hooks/useClickOutside"
+import RightClickMenu from "./RightClickMenu"
+import Anchor from "models/Anchor"
 
 enum IconState {
   EMPTY,
@@ -36,45 +38,63 @@ function FileIcon({ file }: { file: FileModel }) {
       if (e.ctrlKey || e.metaKey) return
       dispatchSelection({ t: "remove", id: file.id })
     },
-    [selected]
+    { deps: [selected] }
   )
+
+  const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
+  const contextShown = Boolean(anchorPos)
+  const onContextMenu = (e: MouseEvent) => {
+    e.preventDefault()
+    setAnchorPos({ top: e.pageY, left: e.pageX })
+    if (!selection.includes(file.id))
+      dispatchSelection({ t: "setone", id: file.id })
+  }
+  const handleClose = () => {
+    setAnchorPos(null)
+  }
 
   const iconState = getIconState()
   return (
-    <div
-      className={"flex flex-col justify-center items-center w-36 h-36"}
-      onClick={setSelected}
-      onMouseOver={() => setHovered(true)}
-      onMouseOut={() => setHovered(false)}
-      ref={iconRef}
-    >
+    <>
       <div
-        className={"flex justify-center items-center rounded-md m-1 w-24 h-24 ".concat(
-          iconState === IconState.HOVERED
-            ? "bg-opacity-10 bg-neutral-500 "
-            : "",
-          iconState === IconState.SELECTED
-            ? "bg-opacity-40 bg-neutral-500 "
-            : ""
-        )}
+        className={"flex flex-col justify-center items-center w-36 h-36"}
+        onClick={setSelected}
+        onContextMenu={onContextMenu}
+        onMouseOver={() => setHovered(true)}
+        onMouseOut={() => setHovered(false)}
+        ref={iconRef}
       >
-        <FontAwesomeIcon
-          icon={faFile}
-          className="w-16 h-16 m-2"
-          color="rgb(249,115,22)"
-        />
+        <div
+          className={"flex justify-center items-center rounded-md m-1 w-24 h-24 ".concat(
+            iconState === IconState.HOVERED
+              ? "bg-opacity-10 bg-neutral-500 "
+              : "",
+            iconState === IconState.SELECTED
+              ? "bg-opacity-40 bg-neutral-500 "
+              : ""
+          )}
+        >
+          <FontAwesomeIcon
+            icon={faFile}
+            className="w-16 h-16 m-2"
+            color="rgb(249,115,22)"
+          />
+        </div>
+        <span
+          className={"px-1 font-medium text-sm rounded-md ".concat(
+            iconState === IconState.HOVERED
+              ? "bg-opacity-10 bg-neutral-500 "
+              : "",
+            iconState === IconState.SELECTED ? "bg-orange-500 text-white " : ""
+          )}
+        >
+          FileName
+        </span>
       </div>
-      <span
-        className={"px-1 font-medium text-sm rounded-md ".concat(
-          iconState === IconState.HOVERED
-            ? "bg-opacity-10 bg-neutral-500 "
-            : "",
-          iconState === IconState.SELECTED ? "bg-orange-500 text-white " : ""
-        )}
-      >
-        FileName
-      </span>
-    </div>
+      {contextShown && (
+        <RightClickMenu file={file} close={handleClose} anchor={anchorPos} />
+      )}
+    </>
   )
 }
 
