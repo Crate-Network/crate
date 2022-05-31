@@ -12,7 +12,6 @@ type SelectionType = "add" | "remove" | "setone"
 type DispatchMethod = { t: SelectionType; id: string }
 function selectionReducer(prev: string[], f: DispatchMethod) {
   const { id, t } = f
-  console.log(prev, f)
   switch (t) {
     case "setone":
       return [id]
@@ -39,11 +38,12 @@ export default function Files() {
     []
   )
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.LIST)
-  const [inspectorActive, setInspectorVisible] = useState(true)
+  const [fileToInspect, inspect] = useState<null | FileModel>(null)
+  const inspectorActive = Boolean(fileToInspect)
   const { files } = useContext(FileContext)
   return (
     <SelectionContext.Provider value={[selection, dispatchSelect]}>
-      <main className="flex flex-row mx-auto max-w-7xl px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">
+      <main className="flex flex-row mx-auto max-w-7xl px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8 overflow-hidden">
         <div className="grow">
           <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
             Files
@@ -62,17 +62,18 @@ export default function Files() {
           </div>
         </div>
         <div
-          className={`bg-white dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-12 mr-12 hidden lg:block transition-all overflow-hidden h-fit ${
+          className={`bg-white dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-8 hidden lg:block transition-all overflow-hidden h-fit ${
             inspectorActive ? "w-56" : "w-0"
           }`}
         >
           <div className="flex flex-row items-center justify-between border-b w-56">
             <h2 className="font-iaQuattro text-xl font-bold ml-2">Inspector</h2>
             <button
-              onClick={() => setInspectorVisible(false)}
+              onClick={() => inspect(null)}
               className="bg-orange-500 h-8 w-8 m-2 rounded-md hover:shadow-lg active:shadow-md text-white transition-shadow"
             >
               <FontAwesomeIcon icon={faXmark} />
+              {fileToInspect && <span>{fileToInspect.id}</span>}
             </button>
           </div>
           <div className="p-2">Options</div>
