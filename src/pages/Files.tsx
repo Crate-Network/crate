@@ -130,7 +130,7 @@ export default function Files() {
           <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
             Files
           </h1>
-          <div className="flex justify-between">
+          <div id="file-toolbar" className="flex justify-between">
             <SearchBar />
             <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
             <UploadButton />
@@ -143,7 +143,8 @@ export default function Files() {
           )}
         </div>
         <div
-          className={`bg-white top-0 dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-8 hidden lg:sticky lg:block transition-all h-fit ${
+          id="file-inspector"
+          className={`bg-white top-8 dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-8 hidden lg:sticky lg:block transition-all h-fit ${
             showInspector ? "w-72 opacity-100" : "w-0 opacity-0"
           }`}
         >

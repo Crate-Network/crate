@@ -8,16 +8,17 @@ import { FileEventListeners, FileModel } from "models/FileModel"
 import { FileAction } from "models/FileMutator"
 import { FilesPageContext } from "pages/Files"
 import { useContext, useRef } from "preact/hooks"
+import { JSXInternal } from "preact/src/jsx"
 
 type RightClickMenuProps = {
   file: FileModel
-  close: () => void
+  close: (e: MouseEvent) => void
   anchor: Anchor
 } & FileEventListeners
 
 type SelectionOptions = {
   name: string
-  func: () => void
+  func: (e: MouseEvent) => void
 }
 
 export default function RightClickMenu({
@@ -26,7 +27,8 @@ export default function RightClickMenu({
   anchor,
   onRenameRequest,
   onDelete,
-}: RightClickMenuProps) {
+  ...props
+}: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
   const divRef = useRef()
   useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
   const { left, top } = anchor
@@ -37,9 +39,9 @@ export default function RightClickMenu({
       ? "none"
       : {
           name,
-          func: () => {
+          func: (e: MouseEvent) => {
             if (f) f()
-            close()
+            close(e)
           },
         }
 
@@ -65,6 +67,7 @@ export default function RightClickMenu({
       className="flex flex-col p-1 shadow-md text-sm dark:border-slate-800 rounded-md absolute w-48 backdrop-blur-lg bg-white dark:bg-slate-900 bg-opacity-40 dark:bg-opacity-50"
       style={{ left, top }}
       onContextMenu={close}
+      {...props}
     >
       {opts.map((e) => {
         if (e === "divider") {

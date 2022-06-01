@@ -85,15 +85,6 @@ function FileIcon({ file }: { file: FileModel }) {
     dispatchSelection({ t: "setone", id: file.id })
   }
 
-  useClickOutside(
-    iconRef,
-    (e) => {
-      if (e.ctrlKey || e.metaKey) return
-      dispatchSelection({ t: "remove", id: file.id })
-    },
-    { deps: [selected] }
-  )
-
   const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
   const contextShown = Boolean(anchorPos)
   const onContextMenu = (e: MouseEvent) => {
@@ -102,9 +93,25 @@ function FileIcon({ file }: { file: FileModel }) {
     if (!selection.includes(file.id))
       dispatchSelection({ t: "setone", id: file.id })
   }
-  const handleClose = () => {
+
+  const handleClose = (e) => {
     setAnchorPos(null)
   }
+
+  useClickOutside(
+    iconRef,
+    (e) => {
+      if (e.ctrlKey || e.metaKey || anchorPos !== null) return
+      dispatchSelection({ t: "remove", id: file.id })
+    },
+    {
+      deps: [selected, anchorPos],
+      exclude: [
+        document.getElementById("file-toolbar"),
+        document.getElementById("file-inspector"),
+      ],
+    }
+  )
 
   const iconState = getIconState(selected || editingName, hovered)
   return (
