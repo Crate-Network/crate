@@ -94,7 +94,7 @@ export default function Navigation() {
                       <span className="space-x-4">
                         <Link
                           href="/"
-                          className="font-medium text-neutral-50 rounded-md bg-orange-500 py-3 px-6"
+                          className="font-medium text-neutral-50 rounded-md bg-orange-500 hover:bg-orange-600 active:bg-orange-700 transition-all py-3 px-6"
                         >
                           Files
                         </Link>
