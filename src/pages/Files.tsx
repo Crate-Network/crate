@@ -125,7 +125,7 @@ export default function Files() {
         showInspector: () => setShowInspector(true),
       }}
     >
-      <main className="flex flex-row mx-auto max-w-7xl px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8 overflow-hidden">
+      <main className="flex flex-row mx-auto max-w-7xl px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">
         <div className="grow">
           <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
             Files
