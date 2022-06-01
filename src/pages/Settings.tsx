@@ -110,20 +110,22 @@ export default function Settings() {
       </h1>
       <div className="flex flex-wrap w-full rounded-lg">
         <div className="w-5/12 lg:w-4/12 xl:w-3/12 bg-white dark:bg-stone-800 rounded-lg p-3 shadow-lg">
-          {typeof firstName === "string" && (
+          {user.email !== "" && (
             <div className="flex items-center space-x-4 p-2 mb-5">
               <div className="h-12 w-12 bg-slate-200 dark:bg-stone-700 rounded-full flex items-center justify-center flex-shrink-0">
                 <FontAwesomeIcon icon={faUser} />
               </div>
               <div className="overflow-ellipsis overflow-hidden whitespace-nowrap">
                 <h4 className="overflow-ellipsis overflow-hidden whitespace-nowrap w-full font-semibold text-md text-gray-700 dark:text-gray-100 font-poppins tracking-wide">
-                  {firstName ? `${firstName} ${lastName}` : user.email}
+                  {firstName !== "" ? `${firstName} ${lastName}` : user.email}
                 </h4>
-                <span className="overflow-ellipsis overflow-hidden whitespace-nowraptext-sm tracking-wide flex items-center space-x-1">
-                  <span className="text-gray-600 dark:text-gray-200 text-md">
-                    {organization}
+                {organization !== "" && (
+                  <span className="overflow-ellipsis overflow-hidden whitespace-nowraptext-sm tracking-wide flex items-center space-x-1">
+                    <span className="text-gray-600 dark:text-gray-200 text-md">
+                      {organization}
+                    </span>
                   </span>
-                </span>
+                )}
               </div>
             </div>
           )}
