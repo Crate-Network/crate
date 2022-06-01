@@ -1,11 +1,11 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core"
 import {
-  faFaceGrin,
+  faFileText,
   faImage,
   faImagePortrait,
   faRobot,
+  faVideoCamera,
 } from "@fortawesome/free-solid-svg-icons"
-import { VNode } from "preact"
 import { JSXInternal } from "preact/src/jsx"
 
 export type SidebarProps = {
@@ -19,8 +19,6 @@ export type SidebarProps = {
 export enum CommunityPage {
   FEATURED,
   ALL_CATEGORIES,
-  CATEGORY,
-  SUBCATEGORY,
 }
 
 export type Category = {
@@ -58,8 +56,9 @@ export const makeCategory = (
 
 export const categories: Category[] = [
   makeCategory("Machine Learning", "ml", faRobot, [
-    makeChildCat("Language", "language", faFaceGrin),
+    makeChildCat("Text", "text", faFileText),
     makeChildCat("Images", "image", faImage),
+    makeChildCat("Video", "video", faVideoCamera),
   ]),
   makeCategory("Wallpapers", "wallpaper", faImagePortrait),
 ]

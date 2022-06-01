@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "components/Button"
-import { categories, SidebarProps } from "models/Community"
+import { categories, CommunityPage, SidebarProps } from "models/Community"
 import { Link } from "preact-router"
 import { useState } from "preact/hooks"
 
@@ -40,21 +40,25 @@ function SidebarButton({
             </span>
             <span>{text}</span>
           </span>
-          {selected && <span className="bg-orange-400 w-0.5 h-5 block" />}
-          {children && (
-            <div
-              className="w-5 h-5 flex justify-center rounded-md items-center bg-gray-200 hover:bg-gray-300 dark:hover:bg-stone-500"
-              onClick={toggleExpanded}
-            >
-              <span
-                className={`transition-all ${
-                  expanded ? "rotate-0" : "rotate-90"
-                }`}
+          <div className="flex flex-row space-x-2">
+            {children && (
+              <div
+                className="w-5 h-5 flex justify-center rounded-md items-center bg-gray-200 hover:bg-gray-300 dark:hover:bg-stone-500"
+                onClick={toggleExpanded}
               >
-                <FontAwesomeIcon icon={faCaretDown} />
-              </span>
-            </div>
-          )}
+                <span
+                  className={`transition-all ${
+                    expanded ? "rotate-0" : "rotate-90"
+                  }`}
+                >
+                  <FontAwesomeIcon icon={faCaretDown} />
+                </span>
+              </div>
+            )}
+            {!children && selected && (
+              <span className="bg-orange-400 w-0.5 h-5 block" />
+            )}
+          </div>
         </a>
       </li>
       {expanded && <div className="ml-4">{children}</div>}
@@ -63,6 +67,9 @@ function SidebarButton({
 }
 
 export default function Community() {
+  const [pane, setPane] = useState<string | CommunityPage>(
+    CommunityPage.FEATURED
+  )
   return (
     <div>
       <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -78,17 +85,45 @@ export default function Community() {
         <div className="flex flex-wrap w-full rounded-lg">
           <div className="w-5/12 lg:w-4/12 xl:w-3/12 bg-white dark:bg-stone-800 rounded-lg p-3 shadow-lg">
             <ul className="space-y-2 text-sm">
-              <SidebarButton icon={faStar} text="Featured" />
-              <SidebarButton icon={faBox} text="All Categories" />
+              <SidebarButton
+                icon={faStar}
+                text="Featured"
+                selected={pane === CommunityPage.FEATURED}
+                onClick={() => setPane(CommunityPage.FEATURED)}
+              />
+              <SidebarButton
+                icon={faBox}
+                text="All Categories"
+                selected={pane === CommunityPage.ALL_CATEGORIES}
+                onClick={() => setPane(CommunityPage.ALL_CATEGORIES)}
+              />
               <div className="h-px bg-stone-200 mt-4 mb-4" />
               <div className="text-md font-semibold">Categories</div>
               {categories.map((category) => {
                 const { name, icon, key, children } = category
-                if (!children) return <SidebarButton icon={icon} text={name} />
+                if (!children)
+                  return (
+                    <SidebarButton
+                      icon={icon}
+                      text={name}
+                      selected={key === pane}
+                      onClick={() => setPane(key)}
+                    />
+                  )
                 return (
-                  <SidebarButton icon={icon} text={name}>
-                    {children.map(({ name, icon }) => (
-                      <SidebarButton icon={icon} text={name} />
+                  <SidebarButton
+                    icon={icon}
+                    text={name}
+                    selected={key === pane}
+                    onClick={() => setPane(key)}
+                  >
+                    {children.map(({ name, icon, key: childKey }) => (
+                      <SidebarButton
+                        icon={icon}
+                        text={name}
+                        selected={childKey === pane}
+                        onClick={() => setPane(childKey)}
+                      />
                     ))}
                   </SidebarButton>
                 )
