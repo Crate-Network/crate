@@ -5,6 +5,6 @@ export type FileModel = {
 }
 
 export type FileEventListeners = {
-  onRenameRequest?: (finish: (newName: string) => void) => void
+  onRenameRequest?: () => void
   onDelete?: () => void
 }
