@@ -1,4 +1,4 @@
-import { FileModel } from "models/FileModel"
+import { FileModel, FileType } from "models/FileModel"
 import { v4 as uuidv4 } from "uuid"
 import { createContext } from "preact"
 import { Reducer, useEffect, useReducer } from "preact/hooks"
@@ -16,7 +16,10 @@ const FileContext = createContext<FileContextType>({
 
 const defaultFiles = Array.from({ length: 50 }, () => ({
   id: uuidv4(),
-  name: "file.txt",
+  fullName: "file.txt",
+  name: "file",
+  extension: "txt",
+  type: FileType.FILE,
   cid: "QmQ5vhrL7uv6tuoN9KeVBwd4PwfQkXdVVmDLUZuTNxqgvm",
 })) as FileModel[]
 
@@ -29,8 +32,11 @@ const fileReducer: Reducer<FileModel[], FileMutator> = (
     case FileAction.DELETE:
       return prevState.filter((el) => el.id !== file.id)
     case FileAction.RENAME:
+      const { name: fullName } = mutation
+      const name = fullName.slice(0, fullName.indexOf("."))
+      const extension = fullName.slice(fullName.indexOf(".") + 1)
       return prevState.map((el) =>
-        el.id === file.id ? { ...el, name: mutation.name } : el
+        el.id === file.id ? { ...el, fullName, name, extension } : el
       )
     default:
       return prevState

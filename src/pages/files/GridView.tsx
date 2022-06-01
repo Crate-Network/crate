@@ -117,7 +117,9 @@ function FileIcon({ file }: { file: FileModel }) {
   return (
     <>
       <div
-        className={"flex flex-col justify-center items-center w-36 h-36"}
+        className={
+          "flex flex-col justify-center items-center w-36 h-36 select-none"
+        }
         onClick={setSelected}
         onContextMenu={onContextMenu}
         onMouseOver={() => setHovered(true)}
@@ -138,7 +140,7 @@ function FileIcon({ file }: { file: FileModel }) {
         </div>
         {editingName ? (
           <NameInput
-            oldName={file.name}
+            oldName={file.fullName}
             onCancel={() => {
               setEditingName(false)
             }}
@@ -154,7 +156,7 @@ function FileIcon({ file }: { file: FileModel }) {
           />
         ) : (
           <span
-            className={"px-1 font-medium text-sm rounded-md ".concat(
+            className={"px-1 font-medium text-sm rounded-md select-text ".concat(
               iconState === "hovered" ? "bg-opacity-10 bg-neutral-500 " : "",
               iconState === "selected" ? "bg-orange-500 text-white " : ""
             )}

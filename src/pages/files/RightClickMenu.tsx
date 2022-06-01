@@ -45,18 +45,18 @@ export default function RightClickMenu({
           },
         }
 
+  const copyCID = () => navigator.clipboard.writeText(file.cid)
+  const copyUID = () => navigator.clipboard.writeText(file.id)
   const opts: (SelectionOptions | "divider" | "none")[] = [
     mOpt("Open"),
     mOpt("Download"),
     "divider",
     mOpt("Delete"),
     "divider",
-    mOpt("Inspect", () => {
-      showInspector()
-      dispatchSelection({ t: "setone", id: file.id })
-    }),
+    mOpt("Inspect", showInspector),
     mOpt("Rename", onRenameRequest, !onRenameRequest),
-    mOpt("Copy CID"),
+    mOpt("Copy CID", copyCID),
+    mOpt("Copy UID", copyUID),
     "divider",
     mOpt("Share"),
   ]
@@ -64,7 +64,7 @@ export default function RightClickMenu({
   return (
     <div
       ref={divRef}
-      className="flex flex-col p-1 shadow-md text-sm dark:border-slate-800 rounded-md absolute w-48 backdrop-blur-lg bg-white dark:bg-slate-900 bg-opacity-40 dark:bg-opacity-50"
+      className="flex flex-col p-1 shadow-md text-sm dark:border-slate-800 rounded-md absolute w-48 backdrop-blur-lg bg-white dark:bg-slate-900 bg-opacity-40 dark:bg-opacity-50 select-none"
       style={{ left, top }}
       onContextMenu={close}
       {...props}

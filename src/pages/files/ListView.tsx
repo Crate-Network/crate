@@ -21,10 +21,16 @@ export function FileRow({ file }: { file: FileModel }) {
   useClickOutside(
     rowRef,
     (e) => {
-      if (e.ctrlKey || e.metaKey) return
+      if (e.ctrlKey || e.metaKey || anchorPos !== null) return
       dispatchSelection({ t: "remove", id: file.id })
     },
-    { deps: [selected] }
+    {
+      deps: [selected],
+      exclude: [
+        document.getElementById("file-toolbar"),
+        document.getElementById("file-inspector"),
+      ],
+    }
   )
 
   const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
@@ -44,9 +50,13 @@ export function FileRow({ file }: { file: FileModel }) {
       <tr
         onClick={setSelected}
         onContextMenu={onContextMenu}
-        className="border-b border-opacity-30 hover:bg-slate-200 active:bg-slate-300 select-none cursor-pointer"
+        className={`border-b border-opacity-30 ${
+          selected
+            ? "bg-orange-500 text-white"
+            : "hover:bg-slate-200 active:bg-slate-300"
+        } select-none cursor-pointer`}
       >
-        <td>{file.name}</td>
+        <td className="p-2 pb-1 pt-1">{file.name}</td>
         <td></td>
         <td></td>
       </tr>
@@ -64,9 +74,15 @@ export function ListView({ files }: FileViewProps) {
       <table className="min-w-full text-left">
         <thead className="border-b border-opacity-30">
           <tr>
-            <th scope="col">File Name</th>
-            <th scope="col">Date</th>
-            <th scope="col">Size</th>
+            <th className="p-2" scope="col">
+              File Name
+            </th>
+            <th className="p-2" scope="col">
+              Date
+            </th>
+            <th className="p-2" scope="col">
+              Size
+            </th>
           </tr>
         </thead>
         <tbody>

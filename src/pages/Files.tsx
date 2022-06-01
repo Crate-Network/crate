@@ -11,8 +11,14 @@ import { GridView } from "./files/GridView"
 import { ListView } from "./files/ListView"
 import { SearchBar, UploadButton, ViewBar, ViewMode } from "./files/Toolbar"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCopy, faXmark } from "@fortawesome/free-solid-svg-icons"
+import {
+  faCopy,
+  faGreaterThan,
+  faLessThan,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons"
 import FileContext from "context/FileContext"
+import { Link } from "preact-router"
 
 type SelectionType = "add" | "remove" | "setone"
 type DispatchMethod = { t: SelectionType; id: string }
@@ -42,7 +48,8 @@ export type FileViewProps = {
 
 function FileInspectorFileBody({ file }) {
   const rows: [string, string, string?, boolean?][] = [
-    ["Name", file.name],
+    ["Name", file.fullName],
+    ["Extension", file.extension],
     ["UID", file.id, "text-xs font-mono break-all", true],
     ["CID", file.cid, "text-xs font-mono break-all", true],
   ]
@@ -74,10 +81,39 @@ function FileInspectorFileBody({ file }) {
   )
 }
 
+function Breadcrumbs() {
+  const path = ["folder1", "folder2"]
+  return (
+    <div className="mb-4 font-bold text-sm text-slate-700 dark:text-slate-200">
+      <Link
+        className="cursor-pointer hover:text-slate-400 hover:underline"
+        href="/"
+      >
+        All Files
+      </Link>
+      {path.map((el) => (
+        <>
+          <span className="font-light inline-block ml-2 mr-2">&gt;</span>
+          <Link className="cursor-pointer hover:text-slate-400 hover:underline">
+            {el}
+          </Link>
+        </>
+      ))}
+    </div>
+  )
+}
+
 function FileInspector({ close }: { close: () => void }) {
   const { selection } = useContext(FilesPageContext)
   const { files } = useContext(FileContext)
   const selectedFiles = selection.map((id) => files.find((v) => v.id === id))
+  const [fileIndex, setFileIndex] = useState(0)
+  const maxIndex = selectedFiles.length - 1
+
+  useEffect(() => {
+    if (maxIndex < fileIndex) setFileIndex(maxIndex)
+    if (fileIndex < 0) setFileIndex(0)
+  }, [maxIndex, fileIndex])
 
   return (
     <div className="w-72">
@@ -94,9 +130,28 @@ function FileInspector({ close }: { close: () => void }) {
         <FileInspectorFileBody file={selectedFiles[0]} />
       )}
       {selectedFiles.length > 1 && (
-        <span className="text-sm m-2 italic inline-block">
-          Multiple files are selected.
-        </span>
+        <>
+          <FileInspectorFileBody file={selectedFiles[fileIndex]} />
+          <div className="flex justify-center items-center">
+            <button
+              disabled={fileIndex === 0}
+              onClick={() => setFileIndex((i) => i - 1)}
+              className="bg-slate-500 select-none disabled:bg-neutral-200 dark:disabled:bg-neutral-800 hover:bg-slate-600 active:bg-slate-700 transition-all rounded-md shadow-sm h-8 w-8 text-white"
+            >
+              <FontAwesomeIcon icon={faLessThan} />
+            </button>
+            <span className="font-bold m-2 italic inline-block w-12 text-center">
+              {fileIndex + 1} / {maxIndex + 1}
+            </span>
+            <button
+              disabled={fileIndex === maxIndex}
+              onClick={() => setFileIndex((i) => i + 1)}
+              className="bg-slate-500 select-none disabled:bg-neutral-200 dark:disabled:bg-neutral-800 hover:bg-slate-600 active:bg-slate-700 transition-all rounded-md shadow-sm h-8 w-8 text-white"
+            >
+              <FontAwesomeIcon icon={faGreaterThan} />
+            </button>
+          </div>
+        </>
       )}
       {selectedFiles.length === 0 && (
         <span className="text-sm m-2 italic inline-block">
@@ -112,8 +167,14 @@ export default function Files() {
     selectionReducer,
     []
   )
-  const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.LIST)
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    (localStorage.getItem("view-mode") as ViewMode) || ViewMode.LIST
+  )
   const [showInspector, setShowInspector] = useState(false)
+
+  useEffect(() => {
+    localStorage.setItem("view-mode", viewMode)
+  }, [viewMode])
 
   const { files } = useContext(FileContext)
 
@@ -130,6 +191,7 @@ export default function Files() {
           <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
             Files
           </h1>
+          <Breadcrumbs />
           <div id="file-toolbar" className="flex justify-between">
             <SearchBar />
             <ViewBar viewMode={viewMode} setViewMode={setViewMode} />

@@ -86,8 +86,8 @@ export function SearchBar() {
 }
 
 export enum ViewMode {
-  LIST,
-  GRID,
+  LIST = "list",
+  GRID = "grid",
 }
 
 export function ViewBar({ viewMode, setViewMode }) {
