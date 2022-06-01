@@ -7,7 +7,13 @@ import Anchor from "models/Anchor"
 import { FileEventListeners, FileModel } from "models/FileModel"
 import { FileAction } from "models/FileMutator"
 import { FilesPageContext } from "pages/Files"
-import { useContext, useRef } from "preact/hooks"
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "preact/hooks"
 import { JSXInternal } from "preact/src/jsx"
 
 type RightClickMenuProps = {
@@ -29,10 +35,27 @@ export default function RightClickMenu({
   onDelete,
   ...props
 }: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
-  const divRef = useRef()
+  const divRef = useRef<HTMLDivElement>()
   useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
-  const { left, top } = anchor
+  const [adjAnchor, setAnchor] = useState<Anchor>(anchor)
+  const { left, top } = adjAnchor
   const { showInspector, dispatchSelection } = useContext(FilesPageContext)
+  const { dispatchFileAction } = useContext(FileContext)
+
+  useEffect(() => {
+    if (!divRef.current) return
+    const { offsetHeight, offsetWidth } = divRef.current
+    const { scrollTop, scrollLeft, clientHeight, clientWidth } =
+      document.documentElement
+    const docBottom = scrollTop + clientHeight
+    const menuBottom = top + offsetHeight
+    const docRight = scrollLeft + clientWidth
+    const menuRight = left + offsetWidth
+    setAnchor({
+      top: top - (menuBottom > docBottom ? menuBottom - docBottom : 0),
+      left: left - (menuRight > docRight ? menuRight - docRight : 0),
+    })
+  }, [anchor])
 
   const mOpt = (name: string, f?: () => void, hide: boolean = false) =>
     hide
@@ -47,11 +70,13 @@ export default function RightClickMenu({
 
   const copyCID = () => navigator.clipboard.writeText(file.cid)
   const copyUID = () => navigator.clipboard.writeText(file.id)
+  const deleteFile = () =>
+    dispatchFileAction({ action: FileAction.DELETE, file })
   const opts: (SelectionOptions | "divider" | "none")[] = [
     mOpt("Open"),
     mOpt("Download"),
     "divider",
-    mOpt("Delete"),
+    mOpt("Delete", deleteFile),
     "divider",
     mOpt("Inspect", showInspector),
     mOpt("Rename", onRenameRequest, !onRenameRequest),
@@ -64,7 +89,7 @@ export default function RightClickMenu({
   return (
     <div
       ref={divRef}
-      className="flex flex-col p-1 shadow-md text-sm dark:border-slate-800 rounded-md absolute w-48 backdrop-blur-lg bg-white dark:bg-slate-900 bg-opacity-40 dark:bg-opacity-50 select-none"
+      className="flex flex-col p-1 shadow-md transition-all text-sm dark:border-slate-800 rounded-md absolute w-48 backdrop-blur-lg bg-white dark:bg-slate-900 bg-opacity-40 dark:bg-opacity-50 select-none"
       style={{ left, top }}
       onContextMenu={close}
       {...props}

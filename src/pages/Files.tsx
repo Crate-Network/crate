@@ -107,7 +107,9 @@ function Breadcrumbs() {
 function FileInspector({ close }: { close: () => void }) {
   const { selection } = useContext(FilesPageContext)
   const { files } = useContext(FileContext)
-  const selectedFiles = selection.map((id) => files.find((v) => v.id === id))
+  const selectedFiles: FileModel[] = selection
+    .map((id) => files.find((v) => v.id === id))
+    .filter((v) => v !== undefined)
   const [fileIndex, setFileIndex] = useState(0)
   const maxIndex = selectedFiles.length - 1
 
@@ -164,10 +166,20 @@ function FileInspector({ close }: { close: () => void }) {
 }
 
 export default function Files() {
+  const { files } = useContext(FileContext)
   const [selection, dispatchSelection] = useReducer<string[], DispatchMethod>(
     selectionReducer,
     []
   )
+
+  useEffect(() => {
+    selection.forEach((v) => {
+      if (files.some((f) => f.id === v)) return
+      console.log("Removing " + v)
+      dispatchSelection({ t: "remove", id: v })
+    })
+  }, [files])
+
   const [viewMode, setViewMode] = useState<ViewMode>(
     (localStorage.getItem("view-mode") as ViewMode) || ViewMode.LIST
   )
@@ -176,8 +188,6 @@ export default function Files() {
   useEffect(() => {
     localStorage.setItem("view-mode", viewMode)
   }, [viewMode])
-
-  const { files } = useContext(FileContext)
 
   return (
     <FilesPageContext.Provider
@@ -208,10 +218,10 @@ export default function Files() {
         <div
           id="file-inspector"
           className={`bg-white overflow-x-hidden top-8 dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-8 hidden lg:block lg:sticky transition-all duration-300 h-fit ${
-            showInspector ? "opacity-100 w-72" : "opacity-0 w-0"
+            showInspector ? "opacity-100 w-80" : "opacity-0 w-0"
           }`}
         >
-          <div className="w-72">
+          <div className="w-80">
             <FileInspector
               close={() => {
                 setShowInspector(false)

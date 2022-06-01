@@ -15,7 +15,7 @@ const FileContext = createContext<FileContextType>({
   dispatchFileAction: () => null,
 })
 
-const defaultFiles: FileModel[] = Array.from({ length: 50 }, () => ({
+const defaultFiles: FileModel[] = Array.from({ length: 10 }, () => ({
   id: uuidv4(),
   fullName: "file.txt",
   name: "file",
@@ -26,6 +26,7 @@ const defaultFiles: FileModel[] = Array.from({ length: 50 }, () => ({
   cid: "QmQ5vhrL7uv6tuoN9KeVBwd4PwfQkXdVVmDLUZuTNxqgvm",
   date: new Date(),
   size: 0,
+  cumulativeSize: 0,
   unixFS: new UnixFS({
     type: "file",
     data: new Uint8Array([2, 3, 4, 5]),
