@@ -13,7 +13,8 @@ export default function useClickOutside(
   useEffect(() => {
     const detectClick = (e) => {
       if (!ref.current || ref.current.contains(e.target)) return
-      if (exclude && exclude.some((n) => n.contains(e.target))) return
+      if (exclude && exclude.some((n) => n && e.target && n.contains(e.target)))
+        return
       onClickOutside(e)
     }
     events.forEach((evt) => document.addEventListener(evt, detectClick))
