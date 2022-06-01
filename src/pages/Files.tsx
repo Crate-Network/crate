@@ -117,7 +117,7 @@ function FileInspector({ close }: { close: () => void }) {
   }, [maxIndex, fileIndex])
 
   return (
-    <div className="w-72">
+    <>
       <div className="flex flex-row items-center justify-between border-b">
         <h2 className="font-iaQuattro text-xl font-bold ml-2">Inspector</h2>
         <button
@@ -159,7 +159,7 @@ function FileInspector({ close }: { close: () => void }) {
           No files are selected.
         </span>
       )}
-    </div>
+    </>
   )
 }
 
@@ -207,15 +207,17 @@ export default function Files() {
         </div>
         <div
           id="file-inspector"
-          className={`bg-white top-8 dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-8 hidden lg:sticky lg:block transition-all h-fit ${
-            showInspector ? "w-72 opacity-100" : "w-0 opacity-0"
+          className={`bg-white overflow-x-hidden top-8 dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-8 hidden lg:block lg:sticky transition-all duration-300 h-fit ${
+            showInspector ? "opacity-100 w-72" : "opacity-0 w-0"
           }`}
         >
-          <FileInspector
-            close={() => {
-              setShowInspector(false)
-            }}
-          />
+          <div className="w-72">
+            <FileInspector
+              close={() => {
+                setShowInspector(false)
+              }}
+            />
+          </div>
         </div>
       </main>
     </FilesPageContext.Provider>
