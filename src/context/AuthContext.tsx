@@ -160,7 +160,7 @@ function AuthProvider(props) {
 
   const result: AuthObject = {
     ...contextDefault,
-    user: { ...user, doc: { ...userDoc }, ...defaultUser },
+    user: { ...defaultUser, ...user, doc: { ...userDoc } },
     setUser,
     logout,
     loggedIn,
