@@ -1,11 +1,14 @@
-import { FileViewProps, SelectionContext } from "../Files"
+import { FileViewProps, FilesPageContext } from "../Files"
 import { faFile } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { FileModel } from "models/FileModel"
-import { useContext, useRef, useState } from "preact/hooks"
+import { useContext, useEffect, useRef, useState } from "preact/hooks"
 import useClickOutside from "hooks/useClickOutside"
 import RightClickMenu from "./RightClickMenu"
 import Anchor from "models/Anchor"
+import FormInput from "components/FormInput"
+import FileContext from "context/FileContext"
+import { FileAction } from "models/FileMutator"
 
 type IconState = "empty" | "selected" | "hovered"
 const getIconState = (selected: boolean, hovered: boolean): IconState => {
@@ -13,9 +16,64 @@ const getIconState = (selected: boolean, hovered: boolean): IconState => {
   return hovered ? "hovered" : "empty"
 }
 
+function NameInput({
+  oldName,
+  onComplete,
+  onCancel,
+}: {
+  oldName: string
+  onComplete: (newName: string) => void
+  onCancel: () => void
+}) {
+  const fiRef = useRef<HTMLInputElement>()
+  const [val, setVal] = useState(oldName)
+
+  useEffect(() => {
+    if (!fiRef.current) return
+    fiRef.current.focus()
+  }, [])
+
+  useEffect(() => {
+    const keyPressListener = (e) => {
+      if (e.key === "Escape") {
+        onCancel()
+      } else if (e.key === "Enter") {
+        onComplete(val)
+      }
+    }
+    document.addEventListener("keydown", keyPressListener)
+    return () => document.removeEventListener("keydown", keyPressListener)
+  }, [val])
+
+  useClickOutside(
+    fiRef,
+    (e) => {
+      if (!fiRef.current) return
+      onComplete(val)
+    },
+    { deps: [val] }
+  )
+
+  return (
+    <input
+      className="text-sm h-5 text-center border-gray-500"
+      type="text"
+      ref={fiRef}
+      value={val}
+      autoFocus={true}
+      onInput={(e) => {
+        if (e && e.target) setVal((e.target as any).value)
+      }}
+    />
+  )
+}
+
 function FileIcon({ file }: { file: FileModel }) {
   const [hovered, setHovered] = useState(false)
-  const [selection, dispatchSelection] = useContext(SelectionContext)
+  const { selection, dispatchSelection } = useContext(FilesPageContext)
+  const { dispatchFileAction } = useContext(FileContext)
+  const [editingName, setEditingName] = useState(false)
+
   const iconRef = useRef()
   const selected = selection.includes(file.id)
 
@@ -48,7 +106,7 @@ function FileIcon({ file }: { file: FileModel }) {
     setAnchorPos(null)
   }
 
-  const iconState = getIconState(selected, hovered)
+  const iconState = getIconState(selected || editingName, hovered)
   return (
     <>
       <div
@@ -71,17 +129,40 @@ function FileIcon({ file }: { file: FileModel }) {
             color="rgb(249,115,22)"
           />
         </div>
-        <span
-          className={"px-1 font-medium text-sm rounded-md ".concat(
-            iconState === "hovered" ? "bg-opacity-10 bg-neutral-500 " : "",
-            iconState === "selected" ? "bg-orange-500 text-white " : ""
-          )}
-        >
-          {file.name}
-        </span>
+        {editingName ? (
+          <NameInput
+            oldName={file.name}
+            onCancel={() => {
+              setEditingName(false)
+            }}
+            onComplete={(newName) => {
+              setEditingName(false)
+              if (newName === "") return
+              dispatchFileAction({
+                file,
+                action: FileAction.RENAME,
+                name: newName,
+              })
+            }}
+          />
+        ) : (
+          <span
+            className={"px-1 font-medium text-sm rounded-md ".concat(
+              iconState === "hovered" ? "bg-opacity-10 bg-neutral-500 " : "",
+              iconState === "selected" ? "bg-orange-500 text-white " : ""
+            )}
+          >
+            {file.name}
+          </span>
+        )}
       </div>
       {contextShown && (
-        <RightClickMenu file={file} close={handleClose} anchor={anchorPos} />
+        <RightClickMenu
+          file={file}
+          close={handleClose}
+          anchor={anchorPos}
+          onRenameRequest={() => setEditingName(true)}
+        />
       )}
     </>
   )

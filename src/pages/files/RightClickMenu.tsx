@@ -1,8 +1,13 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core"
+import { faPencil } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import FileContext from "context/FileContext"
 import useClickOutside from "hooks/useClickOutside"
 import Anchor from "models/Anchor"
 import { FileEventListeners, FileModel } from "models/FileModel"
-import { useRef, useState } from "preact/hooks"
+import { FileAction } from "models/FileMutator"
+import { FilesPageContext } from "pages/Files"
+import { useContext, useRef } from "preact/hooks"
 
 type RightClickMenuProps = {
   file: FileModel
@@ -13,7 +18,6 @@ type RightClickMenuProps = {
 type SelectionOptions = {
   name: string
   func: () => void
-  icon?: IconProp
 }
 
 export default function RightClickMenu({
@@ -26,26 +30,30 @@ export default function RightClickMenu({
   const divRef = useRef()
   useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
   const { left, top } = anchor
+  const { showInspector, dispatchSelection } = useContext(FilesPageContext)
 
-  const mOpt = (name: string, f?: () => void, icon?: IconProp) => {
-    return {
-      name,
-      func: () => {
-        if (f) f()
-        close()
-      },
-      icon,
-    }
-  }
+  const mOpt = (name: string, f?: () => void, hide: boolean = false) =>
+    hide
+      ? "none"
+      : {
+          name,
+          func: () => {
+            if (f) f()
+            close()
+          },
+        }
 
-  const opts: (SelectionOptions | "divider")[] = [
+  const opts: (SelectionOptions | "divider" | "none")[] = [
     mOpt("Open"),
     mOpt("Download"),
     "divider",
     mOpt("Delete"),
     "divider",
-    mOpt("Inspect"),
-    mOpt("Rename"),
+    mOpt("Inspect", () => {
+      showInspector()
+      dispatchSelection({ t: "setone", id: file.id })
+    }),
+    mOpt("Rename", onRenameRequest, !onRenameRequest),
     mOpt("Copy CID"),
     "divider",
     mOpt("Share"),
@@ -63,17 +71,17 @@ export default function RightClickMenu({
           return (
             <span className="mx-1 bg-slate-500 dark:bg-slate-300 h-px my-1 bg-opacity-20 rounded-sm" />
           )
-        } else {
-          const { name, func, icon } = e
+        } else if (e !== "none") {
+          const { name, func } = e
           return (
             <span
               className="px-3 py-1 hover:bg-orange-400 hover:text-white rounded-md cursor-pointer"
-              onClick={e.func}
+              onClick={func}
             >
               {name}
             </span>
           )
-        }
+        } else return null
       })}
     </div>
   )

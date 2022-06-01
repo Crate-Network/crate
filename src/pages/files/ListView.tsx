@@ -2,11 +2,11 @@ import useClickOutside from "hooks/useClickOutside"
 import Anchor from "models/Anchor"
 import { FileModel } from "models/FileModel"
 import { useContext, useRef, useState } from "preact/hooks"
-import { FileViewProps, SelectionContext } from "../Files"
+import { FileViewProps, FilesPageContext } from "../Files"
 import RightClickMenu from "./RightClickMenu"
 
 export function FileRow({ file }: { file: FileModel }) {
-  const [selection, dispatchSelection] = useContext(SelectionContext)
+  const { selection, dispatchSelection } = useContext(FilesPageContext)
   const rowRef = useRef()
   const selected = selection.includes(file.id)
 
@@ -49,7 +49,6 @@ export function FileRow({ file }: { file: FileModel }) {
         <td>{file.name}</td>
         <td></td>
         <td></td>
-        <td>{file.cid}</td>
       </tr>
 
       {contextShown && (
@@ -68,7 +67,6 @@ export function ListView({ files }: FileViewProps) {
             <th scope="col">File Name</th>
             <th scope="col">Date</th>
             <th scope="col">Size</th>
-            <th scope="col">CID</th>
           </tr>
         </thead>
         <tbody>
