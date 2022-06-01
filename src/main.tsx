@@ -49,7 +49,9 @@ const PageInterior = (props) => {
       {header ? header : <Navigation />}
       <div
         className={`fixed flex justify-between items-center align-middle transition-all duration-300 mx-auto left-0 right-0 -top-16 w-4/12 p-4 bg-red-500 bg-opacity-90 shadow-md backdrop-blur-lg z-10 rounded-lg text-white ${
-          errorObj.show ? "translate-y-full" : "-translate-y-full"
+          errorObj.show
+            ? "translate-y-full opacity-100"
+            : "-translate-y-full opacity-0"
         }`}
       >
         <span class="text-lg p-1">
