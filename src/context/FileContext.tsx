@@ -17,6 +17,7 @@ const FileContext = createContext<FileContextType>({
 const defaultFiles = Array.from({ length: 50 }, () => ({
   id: uuidv4(),
   name: "file.txt",
+  cid: "QmQ5vhrL7uv6tuoN9KeVBwd4PwfQkXdVVmDLUZuTNxqgvm",
 })) as FileModel[]
 
 const fileReducer: Reducer<FileModel[], FileMutator> = (
