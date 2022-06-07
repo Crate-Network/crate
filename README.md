@@ -1,1 +1,1 @@
-# CRATE
+![Crate Logo](https://crate.network/assets/sprite.c4ffe053.svg)
