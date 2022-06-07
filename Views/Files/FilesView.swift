@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import UniformTypeIdentifiers
 
 enum FileDisplay: String, CaseIterable, Identifiable {
     case icon = "square.grid.2x2"
@@ -69,7 +70,7 @@ struct SortingTypePicker: View {
 
 struct FilesView: View {
     @State var searchText: String = ""
-    @AppStorage("preferredDisplay") var selectedDisplay: FileDisplay = .icon
+    @State var selectedDisplay: FileDisplay = .icon
     @State var selection = Set<UnixFSNode.ID>()
     @State var sortOrder: [KeyPathComparator<UnixFSNode>] = [
         .init(\.name, order: SortOrder.forward)
@@ -78,6 +79,7 @@ struct FilesView: View {
     @State var sheetShown: Bool = false
     @State var cid: String = ""
     @State var filename: String = ""
+    @State var isTargeted: Bool = false
     
     @Environment(\.managedObjectContext) var moc
     @ObservedObject var folder: Folder
@@ -128,6 +130,28 @@ struct FilesView: View {
                 FilesColumn()
             }
         }
+        .onDrop(of: [UTType.plainText, UTType.fileURL], isTargeted: $isTargeted, perform: { providers in
+            providers.forEach { item in
+                if (item.registeredTypeIdentifiers().contains { $0 == UTType.plainText.identifier
+                }) {
+                    print("text")
+                } else if (item.registeredTypeIdentifiers().contains { $0 == UTType.fileURL.identifier
+                }) {
+                    item.loadFileRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { url, err in
+                        if let err = err {
+                            print(err)
+                        }
+                        guard url != nil else {
+                            print("Failed to unwrap URL")
+                            return
+                        }
+                        // url exists
+                        
+                    }
+                }
+            }
+            return true
+        })
         .navigationTitle(titleBar)
         #if os(macOS)
         .navigationSubtitle("\(folder.children?.count ?? 0) Files")
@@ -204,14 +228,6 @@ struct FilesView: View {
         #else
         .searchable(text: $searchText)
         #endif
-        .onAppear {
-//            if folder == nil && showingRoot {
-//                let newRootFolder = Folder(context: moc)
-//                newRootFolder.root = true
-//                folder = newRootFolder
-//                try? moc.save()
-//            }
-        }
     }
     
 //    private func toggleRightSidebar() {

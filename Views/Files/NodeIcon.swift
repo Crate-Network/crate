@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct NodeIcon: View {
     @Environment(\.managedObjectContext) var moc
@@ -82,6 +83,9 @@ struct NodeIcon: View {
                 renaming = false
             }
         }
+        .onDrag {
+            return NSItemProvider(item: node.cid! as NSString, typeIdentifier: "public.plain-text")
+        }
     }
     
     private func setName(name: String) {
@@ -115,6 +119,7 @@ struct FolderImage: View {
     @Binding var selection: Set<UnixFSNode.ID>
     @Binding var size: CGFloat
     @ObservedObject var folder: Folder
+    @State var isTargeted: Bool = false
     var body: some View {
         Image(systemName: "folder.fill")
             .resizable()
@@ -124,10 +129,16 @@ struct FolderImage: View {
             .foregroundColor(Color(ColorType.branding.name))
             .frame(width: size, height: size)
             .background {
-                if selection.contains(folder.id) {
+                if selection.contains(folder.id) || isTargeted {
                     RoundedRectangle(cornerRadius: 2)
                         .foregroundColor(Color.init(white: 0.5, opacity: 0.5))
                 }
+            }
+            .onDrop(of: [UTType.plainText, UTType.fileURL], isTargeted: $isTargeted) { (providers: [NSItemProvider]) in
+                providers.forEach { (itemProvider: NSItemProvider) in
+                    print(itemProvider.description)
+                }
+                return true
             }
     }
 }

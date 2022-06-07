@@ -142,8 +142,6 @@
 		7F6AE50E27E61B7F00BE5BAA /* NodeContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */; };
 		7F6AE50F27E61B7F00BE5BAA /* NodeContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */; };
 		7F6AE51D27E6461F00BE5BAA /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6AE51C27E6461F00BE5BAA /* SwiftProtobuf */; };
-		7F6AE52527E6474100BE5BAA /* UnixFS.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52427E6474100BE5BAA /* UnixFS.pb.swift */; };
-		7F6AE52627E6474100BE5BAA /* UnixFS.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52427E6474100BE5BAA /* UnixFS.pb.swift */; };
 		7F6AE52927E647B700BE5BAA /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6AE52827E647B700BE5BAA /* SwiftProtobuf */; };
 		7F6AE52D27E64A6300BE5BAA /* CrateModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52B27E64A6300BE5BAA /* CrateModel.xcdatamodeld */; };
 		7F6AE52E27E64A6300BE5BAA /* CrateModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F6AE52B27E64A6300BE5BAA /* CrateModel.xcdatamodeld */; };
@@ -161,6 +159,7 @@
 		7FB8AC6F27DEE55A0004AF9B /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 7FB8AC6E27DEE55A0004AF9B /* FirebaseFirestoreSwift-Beta */; };
 		7FB8AC7127DEE5DC0004AF9B /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 7FB8AC7027DEE5DC0004AF9B /* FirebaseFirestoreCombine-Community */; };
 		7FB8AC7327DEE5DC0004AF9B /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 7FB8AC7227DEE5DC0004AF9B /* FirebaseFirestoreSwift-Beta */; };
+		7FEAB1262828149F00F12F13 /* QuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEAB1232828149000F12F13 /* QuickLookView.swift */; };
 		7FEB711327CBEEA200177AC6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3FBB127C5FAB6003E2F02 /* SettingsView.swift */; };
 		7FF73B6627E2BE5900927583 /* NodeIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF73B6527E2BE5900927583 /* NodeIcon.swift */; };
 		7FF73B6727E2BE5900927583 /* NodeIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF73B6527E2BE5900927583 /* NodeIcon.swift */; };
@@ -300,7 +299,6 @@
 		7F521DC727CF32CF001D8A35 /* Crate (macOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Crate (macOS).entitlements"; sourceTree = "<group>"; };
 		7F636E6727FA67E800343698 /* NavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStack.swift; sourceTree = "<group>"; };
 		7F6AE50D27E61B7F00BE5BAA /* NodeContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeContextMenu.swift; sourceTree = "<group>"; };
-		7F6AE52427E6474100BE5BAA /* UnixFS.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnixFS.pb.swift; sourceTree = "<group>"; };
 		7F6AE52C27E64A6300BE5BAA /* CrateModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CrateModel.xcdatamodel; sourceTree = "<group>"; };
 		7F6AE52F27E64A7C00BE5BAA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7F976D0927D07EDA0020506A /* ipfs-core.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "ipfs-core.js"; sourceTree = "<group>"; };
@@ -308,6 +306,7 @@
 		7FACED9A27CC3CB30076A05F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7FB3FB9E27C5E061003E2F02 /* IPFSCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPFSCore.swift; sourceTree = "<group>"; };
 		7FB3FBB127C5FAB6003E2F02 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		7FEAB1232828149000F12F13 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
 		7FF73B6527E2BE5900927583 /* NodeIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeIcon.swift; sourceTree = "<group>"; };
 		7FF954B027D0403B0095EE6A /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		83765CA22676ADC300318CDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -449,6 +448,7 @@
 				7F2BA11927CC9CD7008FFEDF /* ContentView.swift */,
 				7F2BA10E27CC8728008FFEDF /* TabBar.swift */,
 				7F2BA11B27CC9DB1008FFEDF /* HomeView.swift */,
+				7FEAB1232828149000F12F13 /* QuickLookView.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -548,14 +548,6 @@
 			path = Brand;
 			sourceTree = "<group>";
 		};
-		7F6AE52727E6474400BE5BAA /* Protobuf */ = {
-			isa = PBXGroup;
-			children = (
-				7F6AE52427E6474100BE5BAA /* UnixFS.pb.swift */,
-			);
-			path = Protobuf;
-			sourceTree = "<group>";
-		};
 		7F976D0827D07EC90020506A /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -631,7 +623,6 @@
 				7F4008DA27DEB6A40031002E /* Server */,
 				7F6AE51027E6369700BE5BAA /* Brand */,
 				7FEB711127CBEB7E00177AC6 /* Views */,
-				7F6AE52727E6474400BE5BAA /* Protobuf */,
 				83765CB52676ADC400318CDB /* Tests iOS */,
 				83765CBF2676ADC400318CDB /* Tests macOS */,
 				83765CA82676ADC300318CDB /* Products */,
@@ -1036,6 +1027,7 @@
 				7F521DC127CF1E50001D8A35 /* ContentView.swift in Sources */,
 				7F2974C327C5DB8700A3602D /* FilesIndicator.swift in Sources */,
 				7F2BA13C27CDC292008FFEDF /* IPFSGateway.swift in Sources */,
+				7FEAB1262828149F00F12F13 /* QuickLookView.swift in Sources */,
 				7F2BA10F27CC8728008FFEDF /* TabBar.swift in Sources */,
 				7F26497A2801F9E10038F71D /* CrateAppConstants.swift in Sources */,
 				7FACED8C27CBF19F0076A05F /* IPFSIndicator.swift in Sources */,
@@ -1055,7 +1047,6 @@
 				7F3B7A8D2807BBD2002E6DE4 /* AccountSettingsView.swift in Sources */,
 				7F3B7A912807BBD2002E6DE4 /* SyncSettingsView.swift in Sources */,
 				7F3AEF3327D1BD7C003641CB /* IPFSJSCore.swift in Sources */,
-				7F6AE52527E6474100BE5BAA /* UnixFS.pb.swift in Sources */,
 				7FF73B6627E2BE5900927583 /* NodeIcon.swift in Sources */,
 				7FB3FB9F27C5E061003E2F02 /* IPFSCore.swift in Sources */,
 				7F3AEF3627D2CEC5003641CB /* IPFSExternalCore.swift in Sources */,
@@ -1093,7 +1084,6 @@
 				7F6AE52E27E64A6300BE5BAA /* CrateModel.xcdatamodeld in Sources */,
 				7F4008DD27DEB8380031002E /* FirebaseConstants.swift in Sources */,
 				7F41352627DE8DC0003DE25E /* CrateUser.swift in Sources */,
-				7F6AE52627E6474100BE5BAA /* UnixFS.pb.swift in Sources */,
 				7F636E6B27FA710800343698 /* CrateFinderRegistration.swift in Sources */,
 				7F3AEF3727D2CEC5003641CB /* IPFSExternalCore.swift in Sources */,
 				7F41352027DE8BCF003DE25E /* ASAccount.swift in Sources */,

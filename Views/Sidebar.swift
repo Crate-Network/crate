@@ -68,14 +68,6 @@ struct Sidebar: View {
                     Label("Browse", systemImage: "network")
                 })
                 
-//                Section("Crates") {
-//                    NavigationLink(tag: .files, selection: $selected, destination: {
-//                        FilesView()
-//                    }, label: {
-//                        Label("Files", systemImage: "shippingbox")
-//                    })
-//                }
-                
                 if favorites.count > 0 {
                     Section("Favorites") {
                         ForEach(favorites) { favorite in
@@ -87,11 +79,7 @@ struct Sidebar: View {
                         }
                     }
                 }
-                
-//                Section("Services") {
-//                    Label("Music", systemImage: "music.note")
-//                    Label("Photos", systemImage: "photo")
-//                }
+    
                 
                 Divider()
                 HStack {
