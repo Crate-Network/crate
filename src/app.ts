@@ -5,40 +5,30 @@ if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
 
-import { applicationDefault, initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
-import { getAuth } from "firebase-admin/auth";
-
-import ipfs from "./routes/ipfs";
-import pinning from "./routes/pinning-backend";
+import { auth } from "./firebase";
+import pinning from "./routes/pinning-route";
 import logger from "./logger";
+import { DecodedIdToken } from "firebase-admin/auth";
 
 const args = process.argv.slice(2);
-
-const firebaseApp = initializeApp({
-  credential: applicationDefault(),
-});
-const firestore = getFirestore(firebaseApp);
-const auth = getAuth();
-
 const app = express();
 
-if (!args.includes("--dev")) {
-  app.use(async (req, res, next) => {
-    const authHeader = req.headers.authorization;
+app.use(async (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-    if (!authHeader) {
-      res.sendStatus(403);
-      return;
-    }
+  if (!authHeader) {
+    res.sendStatus(403);
+    return;
+  }
 
-    const [type, token] = authHeader.split(" ");
+  const [type, token] = authHeader.split(" ");
 
-    if (!token || type !== "Bearer") {
-      res.status(403).send("Invalid request.");
-      return;
-    }
+  if (!token || type !== "Bearer") {
+    res.status(403).send("Invalid request.");
+    return;
+  }
 
+  if (process.env.NODE_ENV === "production") {
     auth
       .verifyIdToken(token)
       .then((decodedToken) => {
@@ -49,14 +39,18 @@ if (!args.includes("--dev")) {
         res.status(403).send("Token unauthorized.");
         logger.error(err);
       });
-  });
-}
-
-app.get("/", (req, res) => {
-  res.send("Hello world!");
+  } else {
+    req.token = { uid: "devAccount" } as DecodedIdToken;
+    next();
+  }
 });
 
-app.use("/ipfs", ipfs);
+app.get("/", (req, res) => {
+  res.send(
+    `Crate pinning service backend, authenticated for ${req.token.uid}.`
+  );
+});
+
 app.use("/pins", pinning);
 
 const port = process.env.PORT || 3030;

@@ -2,8 +2,6 @@ import { Router } from "express";
 import logger from "../logger";
 import filecoinClient from "../pinning/filecoin";
 
-console.log(filecoinClient !== null);
-
 const router = Router();
 
 router.get("/", (req, res) => {
