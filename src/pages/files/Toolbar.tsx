@@ -6,9 +6,29 @@ import { useRef } from "preact/hooks"
 
 export function UploadButton() {
   const input = useRef(null)
-  const onUpload = (e) => {
-    console.log(e)
+  const onUpload = async (e) => {
+    const fileInput: HTMLInputElement = e.target
+    const { files } = fileInput
+    if (!files) return
+
+    const fileArr: {
+      path: string
+      content: Uint8Array
+    }[] = []
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files.item(i)
+      fileArr.push({
+        path: "/" + file.name,
+        content: new Uint8Array(await file.arrayBuffer()),
+      })
+    }
+
+    // for await (const entry of importer(fileArr, blockstore)) {
+    //   console.info(entry)
+    // }
   }
+
   const onStartUpload = (e) => {
     if (!input.current) return
     input.current.click()
