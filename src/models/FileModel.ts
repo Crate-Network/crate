@@ -1,5 +1,3 @@
-import { UnixFS } from "ipfs-unixfs"
-
 export enum FileType {
   RAW,
   FILE,
@@ -8,9 +6,9 @@ export enum FileType {
 
 export type FileModel = {
   // unique ID of this particular file
-  id: string
+  readonly id: string
   // CID from the contents of the file
-  cid: string
+  readonly cid: string
   // name without extension
   name: string
   // full file name
@@ -24,11 +22,9 @@ export type FileModel = {
   // the encryption key for this file
   encKey: string
   // the size of the file
-  size: number
+  readonly size: number
   // if folder, size of all children, otherwise cumulativeSize == size
-  cumulativeSize: number
-  // the unixFS node for the file (if downloaded)
-  unixFS?: UnixFS
+  readonly cumulativeSize: number
 }
 
 export type FileEventListeners = {
