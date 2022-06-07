@@ -1,1 +1,1 @@
-![Crate Logo](https://crate.network/assets/sprite.c4ffe053.svg)
+![Crate Logo](https://github.com/Crate-Network/crate/blob/main/mac-icon.png?raw=true)
