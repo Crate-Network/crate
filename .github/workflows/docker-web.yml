@@ -3,8 +3,17 @@ name: Docker Build
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'web/**'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'web/**'
+
+defaults:
+  run:
+    shell: bash
+    working-directory: web
 
 jobs:
 

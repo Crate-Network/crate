@@ -1,10 +1,19 @@
-name: Docker Build
+name: Build Pinning Service
 
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'services/pinning/**'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'services/pinning/**'
+  
+defaults:
+  run:
+    shell: bash
+    working-directory: services/pinning
 
 jobs:
 
