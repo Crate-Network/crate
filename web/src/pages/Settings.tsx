@@ -15,8 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import AuthContext, { AuthObject } from "context/AuthContext"
 import { route } from "preact-router"
 import { useContext, useState } from "preact/hooks"
-import Account from "./settings/Account"
-import Security from "./settings/Security"
+import Account from "../components/settings/Account"
+import Security from "../components/settings/Security"
 
 function SidebarButton({
   selected,

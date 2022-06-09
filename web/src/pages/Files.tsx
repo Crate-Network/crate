@@ -7,9 +7,14 @@ import {
   useReducer,
   useState,
 } from "preact/hooks"
-import { GridView } from "./files/GridView"
-import { ListView } from "./files/ListView"
-import { SearchBar, UploadButton, ViewBar, ViewMode } from "./files/Toolbar"
+import { GridView } from "../components/files/GridView"
+import { ListView } from "../components/files/ListView"
+import {
+  SearchBar,
+  UploadButton,
+  ViewBar,
+  ViewMode,
+} from "../components/files/Toolbar"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faCopy,

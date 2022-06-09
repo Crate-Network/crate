@@ -1,4 +1,4 @@
-import { FileViewProps, FilesPageContext } from "../Files"
+import { FileViewProps, FilesPageContext } from "../../pages/Files"
 import { faFile } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { FileModel } from "models/FileModel"

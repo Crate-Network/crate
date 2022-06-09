@@ -2,7 +2,7 @@ import useClickOutside from "hooks/useClickOutside"
 import Anchor from "models/Anchor"
 import { FileModel } from "models/FileModel"
 import { useContext, useRef, useState } from "preact/hooks"
-import { FileViewProps, FilesPageContext } from "../Files"
+import { FileViewProps, FilesPageContext } from "../../pages/Files"
 import RightClickMenu from "./RightClickMenu"
 
 export function FileRow({ file }: { file: FileModel }) {
