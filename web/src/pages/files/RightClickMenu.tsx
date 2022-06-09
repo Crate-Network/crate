@@ -68,7 +68,12 @@ export default function RightClickMenu({
           },
         }
 
-  const openFile = () => window.open("https://crate.network/ipfs/" + file.cid, "_blank")
+  const openFile = () => {
+    window.open(`https://crate.network/ipfs/${file.cid}?filename=${file.fullName}`, "_blank")
+  }
+  const downloadFile = () => {
+    window.open(`https://crate.network/ipfs/${file.cid}?filename=${file.fullName}&download=true`, "_blank")
+  }
   const copyCID = () => navigator.clipboard.writeText(file.cid)
   const copyUID = () => navigator.clipboard.writeText(file.id)
   const deleteFile = () =>
@@ -76,7 +81,7 @@ export default function RightClickMenu({
 
   const opts: (SelectionOptions | "divider" | "none")[] = [
     mOpt("Open", openFile),
-    mOpt("Download"),
+    mOpt("Download", downloadFile),
     "divider",
     mOpt("Delete", deleteFile),
     "divider",
