@@ -68,12 +68,14 @@ export default function RightClickMenu({
           },
         }
 
+  const openFile = () => window.open("https://crate.network/ipfs/" + file.cid, "_blank")
   const copyCID = () => navigator.clipboard.writeText(file.cid)
   const copyUID = () => navigator.clipboard.writeText(file.id)
   const deleteFile = () =>
     dispatchFileAction({ action: FileAction.DELETE, file })
+
   const opts: (SelectionOptions | "divider" | "none")[] = [
-    mOpt("Open"),
+    mOpt("Open", openFile),
     mOpt("Download"),
     "divider",
     mOpt("Delete", deleteFile),
