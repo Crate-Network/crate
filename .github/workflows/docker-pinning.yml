@@ -9,17 +9,14 @@ on:
     branches: [ main ]
     paths:
       - 'services/pinning/**'
-  
-defaults:
-  run:
-    shell: bash
-    working-directory: services/pinning
-
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./services/pinning
 
     steps:
     - uses: actions/checkout@v3

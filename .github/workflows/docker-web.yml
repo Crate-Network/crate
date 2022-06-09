@@ -10,16 +10,14 @@ on:
     paths:
       - 'web/**'
 
-defaults:
-  run:
-    shell: bash
-    working-directory: web
-
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web
 
     steps:
     - uses: actions/checkout@v3
