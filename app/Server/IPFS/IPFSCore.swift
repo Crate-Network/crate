@@ -16,10 +16,9 @@ public let defaultEndpoint: URL = URL(string: "http://127.0.0.1:8080/ipfs/")!
 class IPFSCore: ObservableObject {
     @Published var status: IPFSStatus = .disconnected
     @Published var gateway: IPFSGateway = .crate
-    @Published var useInternal = false
     
     private var provider: IPFSProvider {
-        useInternal ? IPFSJSCore(self) : IPFSExternalCore(self)
+        IPFSExternalCore(self)
     }
     
     func getData(_ cid: String) async throws -> Data {
