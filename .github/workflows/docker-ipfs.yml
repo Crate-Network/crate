@@ -36,5 +36,5 @@ jobs:
         build-args: |
           PINATA_KEY=${{ secrets.PINATA_KEY }}
         platforms: linux/arm64/v8,linux/amd64
-        tags: ghcr.io/crate-network/go-ipfs:latest,ghcr.io/crate-network/go-ipfs:${{ env.PACKAGE_VERSION }}
+        tags: ghcr.io/crate-network/ipfs:latest,ghcr.io/crate-network/ipfs:${{ env.PACKAGE_VERSION }}
         push: true
