@@ -46,11 +46,10 @@ app.use(async (req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.send(
-    `Crate pinning service backend, authenticated for ${req.token.uid}.`
-  );
+  res.send(`Crate service backend, authenticated for ${req.token.uid}.`);
 });
 
+app.use("/ipfs", ipfs);
 app.use("/pins", pinning);
 
 const port = process.env.PORT || 3030;
