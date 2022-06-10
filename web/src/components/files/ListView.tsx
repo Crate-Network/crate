@@ -53,7 +53,7 @@ export function FileRow({ file }: { file: FileModel }) {
         className={`border-b border-opacity-30 ${
           selected
             ? "bg-orange-500 text-white"
-            : "hover:bg-slate-200 active:bg-slate-300"
+            : "hover:bg-neutral-200 active:bg-neutral-300"
         } select-none cursor-pointer`}
       >
         <td className="p-2 pb-1 pt-1">{file.name}</td>
@@ -70,7 +70,7 @@ export function FileRow({ file }: { file: FileModel }) {
 
 export function ListView({ files }: FileViewProps) {
   return (
-    <div className="mt-8 shadow-sm bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700">
+    <div className="mt-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
       <table className="min-w-full text-left">
         <thead className="border-b border-opacity-30">
           <tr>

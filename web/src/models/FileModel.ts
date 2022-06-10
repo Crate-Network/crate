@@ -26,8 +26,3 @@ export type FileModel = {
   // if folder, size of all children, otherwise cumulativeSize == size
   readonly cumulativeSize: number
 }
-
-export type FileEventListeners = {
-  onRenameRequest?: () => void
-  onDelete?: () => void
-}

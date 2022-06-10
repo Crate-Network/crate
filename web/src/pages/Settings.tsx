@@ -112,7 +112,7 @@ export default function Settings() {
         <div className="w-5/12 lg:w-4/12 xl:w-3/12 bg-white dark:bg-stone-800 rounded-lg p-3 shadow-lg">
           {user.email !== "" && (
             <div className="flex items-center space-x-4 p-2 mb-5">
-              <div className="h-12 w-12 bg-slate-200 dark:bg-stone-700 rounded-full flex items-center justify-center flex-shrink-0">
+              <div className="h-12 w-12 bg-neutral-200 dark:bg-stone-700 rounded-full flex items-center justify-center flex-shrink-0">
                 <FontAwesomeIcon icon={faUser} />
               </div>
               <div className="overflow-ellipsis overflow-hidden whitespace-nowrap">

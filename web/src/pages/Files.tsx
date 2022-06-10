@@ -71,7 +71,7 @@ function FileInspectorFileBody({ file }) {
               {value}{" "}
               {copy && (
                 <span
-                  className="rounded-sm p-0.5 hover:bg-slate-300 active:bg-slate-400 dark:hover:bg-slate-600 dark:active:bg-slate-700 transition-all dark:text-white cursor-pointer"
+                  className="rounded-sm p-0.5 hover:bg-neutral-300 active:bg-neutral-400 dark:hover:bg-neutral-600 dark:active:bg-neutral-700 transition-all dark:text-white cursor-pointer"
                   onClick={() => {
                     navigator.clipboard.writeText(value)
                   }}
@@ -90,9 +90,9 @@ function FileInspectorFileBody({ file }) {
 function Breadcrumbs() {
   const path = ["folder1", "folder2"]
   return (
-    <div className="mb-4 font-bold text-sm text-slate-700 dark:text-slate-200">
+    <div className="mb-4 font-bold text-sm text-neutral-700 dark:text-neutral-200">
       <Link
-        className="cursor-pointer hover:text-slate-400 hover:underline"
+        className="cursor-pointer hover:text-neutral-400 hover:underline"
         href="/"
       >
         All Files
@@ -100,7 +100,7 @@ function Breadcrumbs() {
       {path.map((el) => (
         <>
           <span className="font-light inline-block ml-2 mr-2">&gt;</span>
-          <Link className="cursor-pointer hover:text-slate-400 hover:underline">
+          <Link className="cursor-pointer hover:text-neutral-400 hover:underline">
             {el}
           </Link>
         </>
@@ -144,7 +144,7 @@ function FileInspector({ close }: { close: () => void }) {
             <button
               disabled={fileIndex === 0}
               onClick={() => setFileIndex((i) => i - 1)}
-              className="bg-slate-500 select-none disabled:bg-neutral-200 dark:disabled:bg-neutral-800 hover:bg-slate-600 active:bg-slate-700 transition-all rounded-md shadow-sm h-8 w-8 text-white"
+              className="bg-neutral-500 select-none disabled:bg-neutral-200 dark:disabled:bg-neutral-800 hover:bg-neutral-600 active:bg-neutral-700 transition-all rounded-md shadow-sm h-8 w-8 text-white"
             >
               <FontAwesomeIcon icon={faLessThan} />
             </button>
@@ -154,7 +154,7 @@ function FileInspector({ close }: { close: () => void }) {
             <button
               disabled={fileIndex === maxIndex}
               onClick={() => setFileIndex((i) => i + 1)}
-              className="bg-slate-500 select-none disabled:bg-neutral-200 dark:disabled:bg-neutral-800 hover:bg-slate-600 active:bg-slate-700 transition-all rounded-md shadow-sm h-8 w-8 text-white"
+              className="bg-neutral-500 select-none disabled:bg-neutral-200 dark:disabled:bg-neutral-800 hover:bg-neutral-600 active:bg-neutral-700 transition-all rounded-md shadow-sm h-8 w-8 text-white"
             >
               <FontAwesomeIcon icon={faGreaterThan} />
             </button>
@@ -222,7 +222,7 @@ export default function Files() {
         </div>
         <div
           id="file-inspector"
-          className={`bg-white overflow-x-hidden top-8 dark:bg-slate-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-8 hidden lg:block lg:sticky transition-all duration-300 h-fit ${
+          className={`bg-white overflow-x-hidden top-8 dark:bg-neutral-800 rounded-md shadow-md sm:mt-12 md:mt-16 lg:mt-20 ml-8 hidden lg:block lg:sticky transition-all duration-300 h-fit ${
             showInspector ? "opacity-100 w-80" : "opacity-0 w-0"
           }`}
         >

@@ -132,7 +132,7 @@ export default function Community() {
           </div>
 
           <div className="w-7/12 lg:w-8/12 xl:w-9/12 rounded-md ">
-            <div className="p-6 ml-4 rounded-md bg-white dark:bg-stone-800 dark:text-white text-neutral-900 border border-slate-200 dark:border-slate-700">
+            <div className="p-6 ml-4 rounded-md bg-white dark:bg-stone-800 dark:text-white text-neutral-900 border border-neutral-200 dark:border-neutral-700">
               <span>Placeholder</span>
             </div>
           </div>

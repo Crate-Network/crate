@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import FileContext from "context/FileContext"
 import useClickOutside from "hooks/useClickOutside"
 import Anchor from "models/Anchor"
-import { FileEventListeners, FileModel } from "models/FileModel"
+import { FileModel } from "models/FileModel"
 import { FileAction } from "models/FileMutator"
 import { FilesPageContext } from "pages/Files"
 import {
@@ -20,7 +20,8 @@ type RightClickMenuProps = {
   file: FileModel
   close: (e: MouseEvent) => void
   anchor: Anchor
-} & FileEventListeners
+  onRenameRequest?: () => void
+}
 
 type SelectionOptions = {
   name: string
@@ -32,7 +33,6 @@ export default function RightClickMenu({
   close,
   anchor,
   onRenameRequest,
-  onDelete,
   ...props
 }: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
   const divRef = useRef<HTMLDivElement>()
@@ -100,7 +100,7 @@ export default function RightClickMenu({
   return (
     <div
       ref={divRef}
-      className="flex flex-col p-1 shadow-md transition-all text-sm dark:border-slate-800 rounded-md absolute w-48 backdrop-blur-lg bg-white dark:bg-slate-900 bg-opacity-40 dark:bg-opacity-50 select-none"
+      className="flex flex-col p-1 shadow-md transition-all text-sm dark:border-neutral-800 rounded-md absolute w-48 backdrop-blur-lg bg-white dark:bg-neutral-900 bg-opacity-40 dark:bg-opacity-50 select-none"
       style={{ left, top }}
       onContextMenu={close}
       {...props}
@@ -108,7 +108,7 @@ export default function RightClickMenu({
       {opts.map((e) => {
         if (e === "divider") {
           return (
-            <span className="mx-1 bg-slate-500 dark:bg-slate-300 h-px my-1 bg-opacity-20 rounded-sm" />
+            <span className="mx-1 bg-neutral-500 dark:bg-neutral-300 h-px my-1 bg-opacity-20 rounded-sm" />
           )
         } else if (e !== "none") {
           const { name, func } = e

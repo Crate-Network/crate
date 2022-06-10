@@ -180,7 +180,7 @@ function FileIcon({ file }: { file: FileModel }) {
 
 export function GridView({ files }: FileViewProps) {
   return (
-    <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700">
+    <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
       <div
         className="grid w-full"
         style={{ gridTemplateColumns: "repeat(auto-fit, minmax(9rem, 1fr))" }}
