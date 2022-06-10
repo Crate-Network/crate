@@ -10,21 +10,36 @@ updates:
     directory: "services/pinning"
     schedule:
       interval: "daily"
+      allowed_updates:
+      - match:
+          update_type: "security"
   - package-ecosystem: "npm"
     directory: "web"
     schedule:
       interval: "daily"
+      allowed_updates:
+      - match:
+          update_type: "security"
 # docker checks
   - package-ecosystem: "docker"
     directory: "services/pinning"
     schedule:
       interval: "daily"
+      allowed_updates:
+      - match:
+          update_type: "security"
   - package-ecosystem: "docker"
     directory: "web"
     schedule:
       interval: "daily"
+      allowed_updates:
+      - match:
+          update_type: "security"
   - package-ecosystem: "docker"
     directory: "services/ipfs"
     schedule:
       interval: "daily"
+      allowed_updates:
+      - match:
+          update_type: "security"
 
