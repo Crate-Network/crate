@@ -1,14 +1,14 @@
-name: Build Pinning Service
+name: Build Crate API
 
 on:
   push:
     branches: [ main ]
     paths:
-      - 'services/pinning/**'
+      - 'services/api/**'
   pull_request:
     branches: [ main ]
     paths:
-      - 'services/pinning/**'
+      - 'services/api/**'
 jobs:
 
   build:
@@ -32,7 +32,7 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.10.0
       with:
-        context: ./services/pinning
+        context: ./services/api
         platforms: linux/arm64/v8,linux/amd64
-        tags: ghcr.io/crate-network/pinning:latest,ghcr.io/crate-network/pinning:${{ env.PACKAGE_VERSION }}
+        tags: ghcr.io/crate-network/server:latest,ghcr.io/crate-network/server:${{ env.PACKAGE_VERSION }}
         push: true
