@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 import { auth } from "./firebase";
+import ipfs from "./routes/ipfs-route";
 import pinning from "./routes/pinning-route";
 import logger from "./logger";
 import { DecodedIdToken } from "firebase-admin/auth";
