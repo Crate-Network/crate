@@ -1,0 +1,30 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+# js/npm checks
+  - package-ecosystem: "npm"
+    directory: "services/pinning"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "web"
+    schedule:
+      interval: "daily"
+# docker checks
+  - package-ecosystem: "docker"
+    directory: "services/pinning"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "web"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "services/ipfs"
+    schedule:
+      interval: "daily"
+
