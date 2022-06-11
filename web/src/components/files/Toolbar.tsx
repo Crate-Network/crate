@@ -63,7 +63,7 @@ export function UploadButton() {
 
 export function SearchBar() {
   return (
-    <div className="flex flex-col justify-between w-full max-w-2xl mr-8">
+    <div className="flex-1 flex-col justify-between">
       <label
         htmlFor="search"
         className="text-sm font-medium text-gray-700 dark:text-gray-400"
@@ -112,7 +112,7 @@ export enum ViewMode {
 
 export function ViewBar({ viewMode, setViewMode }) {
   return (
-    <div className="flex flex-col justify-between mr-8">
+    <div className="flex flex-col justify-between">
       <label
         htmlFor="view-mode"
         className="text-sm font-medium text-gray-700 dark:text-gray-400"
@@ -145,5 +145,85 @@ export function ViewBar({ viewMode, setViewMode }) {
         </button>
       </div>
     </div>
+  )
+}
+
+export enum SortBy {
+  NAME,
+  KIND,
+  DATE_CREATED,
+  DATE_MODIFIED,
+  SIZE,
+}
+
+export enum SortDirection {
+  UP,
+  DOWN,
+}
+
+export function SortBar() {
+  return (
+    <>
+      <div className="flex flex-col justify-between">
+        <label
+          htmlFor="view-mode"
+          className="text-sm font-medium text-gray-700 dark:text-gray-400"
+        >
+          Sorting
+        </label>
+        <div
+          className="inline-flex shadow-sm rounded overflow-hidden"
+          id="view-mode"
+        >
+          <button
+            className={`${
+              viewMode === ViewMode.GRID
+                ? "bg-neutral-300 dark:bg-neutral-600"
+                : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+            }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
+            onClick={() => setViewMode(ViewMode.GRID)}
+          >
+            <FontAwesomeIcon icon={faGrip} />
+          </button>
+          <button
+            className={`${
+              viewMode === ViewMode.LIST
+                ? "bg-neutral-300 dark:bg-neutral-600"
+                : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+            }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
+            onClick={() => setViewMode(ViewMode.LIST)}
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-col justify-between">
+        <div
+          className="inline-flex shadow-sm rounded overflow-hidden"
+          id="view-mode"
+        >
+          <button
+            className={`${
+              viewMode === ViewMode.GRID
+                ? "bg-neutral-300 dark:bg-neutral-600"
+                : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+            }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
+            onClick={() => setViewMode(ViewMode.GRID)}
+          >
+            <FontAwesomeIcon icon={faGrip} />
+          </button>
+          <button
+            className={`${
+              viewMode === ViewMode.LIST
+                ? "bg-neutral-300 dark:bg-neutral-600"
+                : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+            }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
+            onClick={() => setViewMode(ViewMode.LIST)}
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </button>
+        </div>
+      </div>
+    </>
   )
 }
