@@ -11,6 +11,8 @@ import { GridView } from "../components/files/GridView"
 import { ListView } from "../components/files/ListView"
 import {
   SearchBar,
+  SortBar,
+  SortBy,
   UploadButton,
   ViewBar,
   ViewMode,
@@ -24,6 +26,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import FileContext from "context/FileContext"
 import { Link } from "preact-router"
+import useStoredState from "hooks/useStoredState"
 
 type SelectionType = "add" | "remove" | "setone"
 type DispatchMethod = { t: SelectionType; id: string }
@@ -185,14 +188,12 @@ export default function Files() {
     })
   }, [files])
 
-  const [viewMode, setViewMode] = useState<ViewMode>(
-    (localStorage.getItem("view-mode") as ViewMode) || ViewMode.LIST
+  const [viewMode, setViewMode] = useStoredState<ViewMode>(
+    ViewMode.LIST,
+    "view-mode"
   )
+  const [sortBy, setSortBy] = useStoredState<SortBy>(SortBy.NAME, "sort-order")
   const [showInspector, setShowInspector] = useState(false)
-
-  useEffect(() => {
-    localStorage.setItem("view-mode", viewMode)
-  }, [viewMode])
 
   return (
     <FilesPageContext.Provider
@@ -213,10 +214,12 @@ export default function Files() {
             className="flex justify-between space-x-8 lg:space-x-24 2xl:space-x-48"
           >
             <SearchBar />
+
             <div className="flex space-x-8">
+              <SortBar sortBy={} setSortBy={} />
               <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
-              <UploadButton />
             </div>
+            <UploadButton />
           </div>
 
           {viewMode === ViewMode.LIST ? (
