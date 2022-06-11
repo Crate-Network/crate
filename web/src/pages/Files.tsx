@@ -202,16 +202,21 @@ export default function Files() {
         showInspector: () => setShowInspector(true),
       }}
     >
-      <main className="flex flex-row mx-auto max-w-7xl px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">
+      <main className="flex flex-row mx-auto 2xl:px-32 px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">
         <div className="grow">
           <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
             Files
           </h1>
           <Breadcrumbs />
-          <div id="file-toolbar" className="flex justify-between">
+          <div
+            id="file-toolbar"
+            className="flex justify-between space-x-8 lg:space-x-24 2xl:space-x-48"
+          >
             <SearchBar />
-            <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
-            <UploadButton />
+            <div className="flex space-x-8">
+              <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
+              <UploadButton />
+            </div>
           </div>
 
           {viewMode === ViewMode.LIST ? (

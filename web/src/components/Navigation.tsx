@@ -26,10 +26,10 @@ export default function Navigation() {
   const { loggedIn, user } = useContext(AuthContext)
   return (
     <>
-      <div className="max-w-7xl mx-auto">
+      <div className="px-4 sm:px-6 lg:px-8 2xl:px-24 mx-auto">
         <div className="relative z-10 pb-8">
           <div>
-            <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
+            <div className="relative pt-6">
               <nav
                 className="relative flex items-center justify-between sm:h-10"
                 aria-label="Global"

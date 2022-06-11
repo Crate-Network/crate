@@ -72,7 +72,7 @@ export default function Community() {
   )
   return (
     <div>
-      <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <main class="mx-auto 2xl:px-32 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold sm:mt-12 md:mt-16 lg:mt-20">
             Community
@@ -82,8 +82,8 @@ export default function Community() {
             &nbsp;&nbsp;Submit
           </Button>
         </div>
-        <div className="flex flex-wrap w-full rounded-lg">
-          <div className="w-5/12 lg:w-4/12 xl:w-3/12 bg-white dark:bg-stone-800 rounded-lg p-3 shadow-lg">
+        <div className="flex">
+          <div className="w-72 xl:w-96 bg-white dark:bg-stone-800 rounded-lg p-3 shadow-lg">
             <ul className="space-y-2 text-sm">
               <SidebarButton
                 icon={faStar}
@@ -131,7 +131,7 @@ export default function Community() {
             </ul>
           </div>
 
-          <div className="w-7/12 lg:w-8/12 xl:w-9/12 rounded-md ">
+          <div className="rounded-md flex-1 ">
             <div className="p-6 ml-4 rounded-md bg-white dark:bg-stone-800 dark:text-white text-neutral-900 border border-neutral-200 dark:border-neutral-700">
               <span>Placeholder</span>
             </div>
