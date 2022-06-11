@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks"
+import { StateUpdater, useEffect, useState } from "preact/hooks"
 
 export default function useStoredState<T extends string>(
   defaultValue: T,
@@ -12,5 +12,5 @@ export default function useStoredState<T extends string>(
     localStorage.setItem(id, val)
   }, [val])
 
-  return [val, setVal]
+  return [val, setVal] as [T, StateUpdater<T>]
 }

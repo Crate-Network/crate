@@ -178,8 +178,6 @@ export enum SortDirection {
 }
 
 type SortBarProps = {
-  sortDirection: SortDirection
-  setSortDirection: StateUpdater<SortDirection>
   sortBy: SortBy
   setSortBy: StateUpdater<SortBy>
 }

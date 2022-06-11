@@ -216,7 +216,7 @@ export default function Files() {
             <SearchBar />
 
             <div className="flex space-x-8">
-              <SortBar sortBy={} setSortBy={} />
+              <SortBar sortBy={sortBy} setSortBy={setSortBy} />
               <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
             </div>
             <UploadButton />
