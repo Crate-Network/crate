@@ -2,7 +2,8 @@ import { faUpload, faGrip, faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "components/Button"
 import FormInput from "components/FormInput"
-import { useRef } from "preact/hooks"
+import { StateUpdater, useRef } from "preact/hooks"
+import { JSXInternal } from "preact/src/jsx"
 
 export function UploadButton() {
   const input = useRef(null)
@@ -105,6 +106,33 @@ export function SearchBar() {
   )
 }
 
+function MultiSelectBar<T>({
+  selected,
+  setSelected,
+  elements,
+}: {
+  selected: T
+  setSelected: StateUpdater<T>
+  elements: { item: T; element: JSXInternal.Element }[]
+}) {
+  return (
+    <>
+      {elements.map(({ item, element }) => (
+        <button
+          className={`${
+            item === selected
+              ? "bg-neutral-300 dark:bg-neutral-600"
+              : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+          }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
+          onClick={() => setSelected(item)}
+        >
+          {element}
+        </button>
+      ))}
+    </>
+  )
+}
+
 export enum ViewMode {
   LIST = "list",
   GRID = "grid",
@@ -123,45 +151,40 @@ export function ViewBar({ viewMode, setViewMode }) {
         className="inline-flex shadow-sm rounded overflow-hidden"
         id="view-mode"
       >
-        <button
-          className={`${
-            viewMode === ViewMode.GRID
-              ? "bg-neutral-300 dark:bg-neutral-600"
-              : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-          }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
-          onClick={() => setViewMode(ViewMode.GRID)}
-        >
-          <FontAwesomeIcon icon={faGrip} />
-        </button>
-        <button
-          className={`${
-            viewMode === ViewMode.LIST
-              ? "bg-neutral-300 dark:bg-neutral-600"
-              : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-          }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
-          onClick={() => setViewMode(ViewMode.LIST)}
-        >
-          <FontAwesomeIcon icon={faBars} />
-        </button>
+        <MultiSelectBar
+          selected={viewMode}
+          setSelected={setViewMode}
+          elements={[
+            { item: ViewMode.GRID, element: <FontAwesomeIcon icon={faGrip} /> },
+            { item: ViewMode.LIST, element: <FontAwesomeIcon icon={faBars} /> },
+          ]}
+        />
       </div>
     </div>
   )
 }
 
 export enum SortBy {
-  NAME,
-  KIND,
-  DATE_CREATED,
-  DATE_MODIFIED,
-  SIZE,
+  NAME = "Name",
+  KIND = "Kind",
+  DATE_CREATED = "Date Created",
+  DATE_MODIFIED = "Date Modified",
+  SIZE = "Size",
 }
 
 export enum SortDirection {
-  UP,
-  DOWN,
+  UP = "Up",
+  DOWN = "Down",
 }
 
-export function SortBar() {
+type SortBarProps = {
+  sortDirection: SortDirection
+  setSortDirection: StateUpdater<SortDirection>
+  sortBy: SortBy
+  setSortBy: StateUpdater<SortBy>
+}
+
+export function SortBar({ sortBy, setSortBy }: SortBarProps) {
   return (
     <>
       <div className="flex flex-col justify-between">
@@ -174,55 +197,13 @@ export function SortBar() {
         <div
           className="inline-flex shadow-sm rounded overflow-hidden"
           id="view-mode"
-        >
-          <button
-            className={`${
-              viewMode === ViewMode.GRID
-                ? "bg-neutral-300 dark:bg-neutral-600"
-                : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-            }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
-            onClick={() => setViewMode(ViewMode.GRID)}
-          >
-            <FontAwesomeIcon icon={faGrip} />
-          </button>
-          <button
-            className={`${
-              viewMode === ViewMode.LIST
-                ? "bg-neutral-300 dark:bg-neutral-600"
-                : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-            }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
-            onClick={() => setViewMode(ViewMode.LIST)}
-          >
-            <FontAwesomeIcon icon={faBars} />
-          </button>
-        </div>
+        ></div>
       </div>
       <div className="flex flex-col justify-between">
         <div
           className="inline-flex shadow-sm rounded overflow-hidden"
           id="view-mode"
-        >
-          <button
-            className={`${
-              viewMode === ViewMode.GRID
-                ? "bg-neutral-300 dark:bg-neutral-600"
-                : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-            }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
-            onClick={() => setViewMode(ViewMode.GRID)}
-          >
-            <FontAwesomeIcon icon={faGrip} />
-          </button>
-          <button
-            className={`${
-              viewMode === ViewMode.LIST
-                ? "bg-neutral-300 dark:bg-neutral-600"
-                : "bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-            }  text-neutral-800 dark:text-neutral-200 py-2 px-4`}
-            onClick={() => setViewMode(ViewMode.LIST)}
-          >
-            <FontAwesomeIcon icon={faBars} />
-          </button>
-        </div>
+        ></div>
       </div>
     </>
   )
