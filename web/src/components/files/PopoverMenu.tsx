@@ -51,8 +51,10 @@ export function PopoverMenu({
   return (
     <div
       ref={divRef}
-      className={`flex flex-col p-1 z-20 transition-all shadow-md text-sm dark:border-neutral-800 rounded-md absolute w-48 backdrop-blur-lg bg-white dark:bg-neutral-900 bg-opacity-40 dark:bg-opacity-50 select-none ${
-        initialMenuScale ? "" : "-translate-x-1/2 -translate-y-1/2 scale-0"
+      className={`flex flex-col p-1 z-20 transition-all duration-150 shadow-md text-sm dark:border-neutral-800 rounded-md absolute w-48 backdrop-blur-lg bg-white dark:bg-neutral-900 bg-opacity-40 dark:bg-opacity-50 select-none ${
+        initialMenuScale
+          ? "opacity-1"
+          : "opacity-0 -translate-x-1/4 -translate-y-1/4 scale-50"
       }`}
       style={{ left, top }}
       onContextMenu={close}
