@@ -42,17 +42,17 @@ export default function RightClickMenu({
     dispatchFileAction({ action: FileAction.DELETE, file })
 
   const opts = [
-    makeOpt("Open", openFile),
-    makeOpt("Download", downloadFile),
+    makeOpt("Open", close, openFile),
+    makeOpt("Download", close, downloadFile),
     "divider",
-    makeOpt("Delete", deleteFile),
+    makeOpt("Delete", close, deleteFile),
     "divider",
-    makeOpt("Inspect", showInspector),
-    makeOpt("Rename", onRenameRequest, !onRenameRequest),
-    makeOpt("Copy CID", copyCID),
-    makeOpt("Copy UID", copyUID),
+    makeOpt("Inspect", close, showInspector),
+    makeOpt("Rename", close, onRenameRequest, !onRenameRequest),
+    makeOpt("Copy CID", close, copyCID),
+    makeOpt("Copy UID", close, copyUID),
     "divider",
-    makeOpt("Share"),
+    makeOpt("Share", close),
   ].filter((v) => v !== "none") as (SelectionOptions | "divider")[]
 
   return <PopoverMenu close={close} anchor={anchor} opts={opts} {...props} />

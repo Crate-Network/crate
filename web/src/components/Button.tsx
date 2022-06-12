@@ -11,7 +11,6 @@ export default function Button(props) {
         font-normal
         rounded
         transition
-        ease-in-out
         focus:text-gray-700 
         focus:bg-white 
         focus:border-blue-600 

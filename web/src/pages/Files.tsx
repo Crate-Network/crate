@@ -13,7 +13,7 @@ import {
   SearchBar,
   SortBar,
   SortBy,
-  UploadButton,
+  AddBox,
   ViewBar,
   ViewMode,
 } from "../components/files/Toolbar"
@@ -211,15 +211,15 @@ export default function Files() {
           <Breadcrumbs />
           <div
             id="file-toolbar"
-            className="flex justify-between space-x-8 lg:space-x-24 2xl:space-x-48"
+            className="flex justify-between space-x-0 md:space-x-8 lg:space-x-24 2xl:space-x-48 flex-col md:flex-row"
           >
             <SearchBar />
 
-            <div className="flex space-x-8">
+            <div className="flex space-x-8 justify-end mt-4 md:mt-0">
+              <AddBox />
               <SortBar sortBy={sortBy} setSortBy={setSortBy} />
               <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
             </div>
-            <UploadButton />
           </div>
 
           {viewMode === ViewMode.LIST ? (

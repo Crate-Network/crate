@@ -1,13 +1,21 @@
-import { faUpload, faGrip, faBars } from "@fortawesome/free-solid-svg-icons"
+import {
+  faUpload,
+  faGrip,
+  faBars,
+  faAdd,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "components/Button"
 import FormInput from "components/FormInput"
 import { StateUpdater, useRef } from "preact/hooks"
 import { JSXInternal } from "preact/src/jsx"
-import Dropdown from "./Dropdown"
+import Dropdown, { FuncInput } from "./Dropdown"
+import { makeOpt } from "./PopoverMenu"
 
-export function UploadButton() {
+export function AddBox() {
   const input = useRef(null)
+
   const onUpload = async (e) => {
     const fileInput: HTMLInputElement = e.target
     const { files } = fileInput
@@ -35,23 +43,28 @@ export function UploadButton() {
     if (!input.current) return
     input.current.click()
   }
+
+  const mOpt = (n, f) => ({ name: n, onClick: f })
+  const dropdownOptions: FuncInput[] = [
+    mOpt("New File", () => {}),
+    mOpt("New Folder", () => {}),
+    "divider",
+    mOpt("Upload", () => {}),
+    mOpt("Add from IPFS", () => {}),
+  ]
+
   return (
     <div className="flex flex-col justify-between">
       <label
         htmlFor="search"
         className="text-sm font-medium text-gray-700 dark:text-gray-400"
       >
-        Upload
+        Add Files
       </label>
-      <Button
-        className="font-medium text-neutral-50 rounded-md hover:text-neutral-300 bg-neutral-400 dark:bg-neutral-600 w-32 h-10"
-        type="button"
-        id="upload-button"
-        onClick={onStartUpload}
-      >
-        <FontAwesomeIcon icon={faUpload} />
-        &nbsp;&nbsp;&nbsp;Upload
-      </Button>
+      <Dropdown
+        options={dropdownOptions}
+        display={<FontAwesomeIcon icon={faAdd} />}
+      />
       <input
         className="hidden"
         type="file"
@@ -68,7 +81,7 @@ export function SearchBar() {
     <div className="flex-1 flex-col justify-between">
       <label
         htmlFor="search"
-        className="text-sm font-medium text-gray-700 dark:text-gray-400"
+        className="text-sm font-medium text-gray-700 dark:text-gray-400 md:block hidden"
       >
         Search
       </label>
@@ -197,10 +210,14 @@ export function SortBar({ sortBy, setSortBy }: SortBarProps) {
           className="inline-flex shadow-sm rounded overflow-hidden"
           id="view-mode"
         >
-          <Dropdown />
+          <Dropdown
+            options={Object.values(SortBy)}
+            current={sortBy}
+            setValue={setSortBy}
+          />
         </div>
       </div>
-      <div className="flex flex-col justify-between">
+      {/* <div className="flex flex-col justify-between">
         <span />
         <div
           className="inline-flex shadow-sm rounded overflow-hidden"
@@ -208,7 +225,7 @@ export function SortBar({ sortBy, setSortBy }: SortBarProps) {
         >
           Test2
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

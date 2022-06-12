@@ -18,6 +18,7 @@ export type PopoverMenuItemsObj = { opts: PopoverMenuItem[] }
 
 export function makeOpt(
   name: string,
+  closeFunc: (e: MouseEvent) => void,
   f?: () => void,
   hide: boolean = false
 ): PopoverMenuItem {
@@ -27,7 +28,7 @@ export function makeOpt(
         name,
         func: (e: MouseEvent) => {
           if (f) f()
-          close(e)
+          closeFunc(e)
         },
       }
 }
