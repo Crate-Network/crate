@@ -4,6 +4,7 @@ import Button from "components/Button"
 import FormInput from "components/FormInput"
 import { StateUpdater, useRef } from "preact/hooks"
 import { JSXInternal } from "preact/src/jsx"
+import Dropdown from "./Dropdown"
 
 export function UploadButton() {
   const input = useRef(null)
@@ -195,13 +196,18 @@ export function SortBar({ sortBy, setSortBy }: SortBarProps) {
         <div
           className="inline-flex shadow-sm rounded overflow-hidden"
           id="view-mode"
-        ></div>
+        >
+          <Dropdown />
+        </div>
       </div>
       <div className="flex flex-col justify-between">
+        <span />
         <div
           className="inline-flex shadow-sm rounded overflow-hidden"
           id="view-mode"
-        ></div>
+        >
+          Test2
+        </div>
       </div>
     </>
   )

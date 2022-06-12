@@ -13,8 +13,23 @@ export type PopoverMenuProps = {
   anchor: Anchor
 } & JSXInternal.HTMLAttributes<HTMLDivElement>
 
-export type PopoverMenuItems = {
-  opts: (SelectionOptions | "divider")[]
+export type PopoverMenuItem = SelectionOptions | "divider" | "none"
+export type PopoverMenuItemsObj = { opts: PopoverMenuItem[] }
+
+export function makeOpt(
+  name: string,
+  f?: () => void,
+  hide: boolean = false
+): PopoverMenuItem {
+  return hide
+    ? "none"
+    : {
+        name,
+        func: (e: MouseEvent) => {
+          if (f) f()
+          close(e)
+        },
+      }
 }
 
 export function PopoverMenu({
@@ -22,7 +37,7 @@ export function PopoverMenu({
   anchor,
   opts,
   ...props
-}: PopoverMenuItems & PopoverMenuProps) {
+}: PopoverMenuItemsObj & PopoverMenuProps) {
   const divRef = useRef<HTMLDivElement>()
   useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
   const [adjAnchor, setAnchor] = useState<Anchor>(anchor)
@@ -65,7 +80,7 @@ export function PopoverMenu({
           return (
             <span className="mx-1 bg-neutral-500 dark:bg-neutral-300 h-px my-1 bg-opacity-20 rounded-sm" />
           )
-        } else {
+        } else if (e !== "none") {
           const { name, func } = e
           return (
             <span
@@ -76,6 +91,7 @@ export function PopoverMenu({
             </span>
           )
         }
+        return null
       })}
     </div>
   )
