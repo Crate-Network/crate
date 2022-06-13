@@ -1,7 +1,8 @@
 {
-  "name": "crate-web",
+  "name": "@crate/web",
   "private": true,
   "version": "1.0.0",
+  "author": "Christian van der Loo",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -19,7 +20,8 @@
     "ipfs-unixfs-importer": "^9.0.10",
     "preact-router": "^4.0.1",
     "uuid": "^8.3.2",
-    "vite-plugin-magical-svg": "^1.0.2"
+    "vite-plugin-magical-svg": "^1.0.2",
+    "@crate/common": "^1.0.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.1.7",

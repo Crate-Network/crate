@@ -1,5 +1,3 @@
-import { FileModel } from "./FileModel"
-
 type UserModel = {
   devices: string[]
   firstName: string

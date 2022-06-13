@@ -1,7 +1,7 @@
 import { FileViewProps, FilesPageContext } from "../../pages/Files"
 import { faFile } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { FileModel } from "models/FileModel"
+import { FileModel } from "@crate/common"
 import { useContext, useEffect, useRef, useState } from "preact/hooks"
 import useClickOutside from "hooks/useClickOutside"
 import RightClickMenu from "./RightClickMenu"

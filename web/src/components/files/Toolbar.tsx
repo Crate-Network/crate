@@ -8,18 +8,22 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "components/Button"
 import FormInput from "components/FormInput"
-import { StateUpdater, useRef } from "preact/hooks"
+import { StateUpdater, useEffect, useRef, useState } from "preact/hooks"
 import { JSXInternal } from "preact/src/jsx"
 import Dropdown, { FuncInput } from "./Dropdown"
 import { makeOpt } from "./PopoverMenu"
 
 export function AddBox() {
-  const input = useRef(null)
+  const [inputEl, setInputEl] = useState<HTMLInputElement>(null)
 
   const onUpload = async (e) => {
     const fileInput: HTMLInputElement = e.target
     const { files } = fileInput
-    if (!files) return
+    if (!files || files.length === 0) {
+      console.log("cancelled")
+      e.target.remove()
+      return
+    }
 
     const fileArr: {
       path: string
@@ -32,24 +36,37 @@ export function AddBox() {
         path: "/" + file.name,
         content: new Uint8Array(await file.arrayBuffer()),
       })
+      console.log(fileArr)
     }
 
     // for await (const entry of importer(fileArr, blockstore)) {
     //   console.info(entry)
     // }
+
+    e.target.remove()
   }
 
-  const onStartUpload = (e) => {
-    if (!input.current) return
-    input.current.click()
-  }
+  useEffect(() => {
+    const inputEl = document.createElement("input")
+    inputEl.className = "hidden"
+    inputEl.onchange = onUpload
+    inputEl.type = "file"
+    inputEl.multiple = true
+    setInputEl(inputEl)
+    return () => {
+      setInputEl(null)
+      inputEl.remove()
+    }
+  })
 
   const mOpt = (n, f) => ({ name: n, onClick: f })
   const dropdownOptions: FuncInput[] = [
     mOpt("New File", () => {}),
     mOpt("New Folder", () => {}),
     "divider",
-    mOpt("Upload", () => {}),
+    mOpt("Upload", () => {
+      if (inputEl) inputEl.click()
+    }),
     mOpt("Add from IPFS", () => {}),
   ]
 
@@ -64,13 +81,6 @@ export function AddBox() {
       <Dropdown
         options={dropdownOptions}
         display={<FontAwesomeIcon icon={faAdd} />}
-      />
-      <input
-        className="hidden"
-        type="file"
-        ref={input}
-        onChangeCapture={onUpload}
-        multiple
       />
     </div>
   )

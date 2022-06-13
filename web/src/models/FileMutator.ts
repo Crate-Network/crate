@@ -1,4 +1,4 @@
-import { FileModel } from "./FileModel"
+import { FileModel } from "@crate/common"
 
 export enum FileAction {
   CREATE,

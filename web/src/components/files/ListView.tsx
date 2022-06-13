@@ -1,6 +1,6 @@
 import useClickOutside from "hooks/useClickOutside"
 import Anchor from "models/Anchor"
-import { FileModel } from "models/FileModel"
+import { FileModel } from "@crate/common"
 import { useContext, useRef, useState } from "preact/hooks"
 import { FileViewProps, FilesPageContext } from "../../pages/Files"
 import RightClickMenu from "./RightClickMenu"

@@ -18,6 +18,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
   },
-  "include": ["src"],
+  "include": ["src", "../shared/types/FileModel.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

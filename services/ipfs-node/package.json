@@ -1,4 +1,5 @@
 {
-  "name": "crate-ipfs",
+  "name": "@crate/ipfs",
+  "author": "Christian van der Loo",
   "version": "0.13.0"
 }

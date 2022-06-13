@@ -1,5 +1,5 @@
 import FileContext from "context/FileContext"
-import { FileModel } from "models/FileModel"
+import { FileModel } from "@crate/common"
 import { FileAction } from "models/FileMutator"
 import { FilesPageContext } from "pages/Files"
 import { useContext } from "preact/hooks"

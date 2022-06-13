@@ -1,12 +1,6 @@
-import { FileModel } from "models/FileModel"
+import { FileModel } from "@crate/common"
 import { createContext } from "preact"
-import {
-  StateUpdater,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "preact/hooks"
+import { useContext, useEffect, useReducer, useState } from "preact/hooks"
 import { GridView } from "../components/files/GridView"
 import { ListView } from "../components/files/ListView"
 import {
