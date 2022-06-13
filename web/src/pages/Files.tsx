@@ -38,16 +38,6 @@ function selectionReducer(prev: string[], f: DispatchMethod) {
   }
 }
 
-export const FilesPageContext = createContext<{
-  selection: string[]
-  dispatchSelection: (a: DispatchMethod) => void
-  showInspector: () => void
-}>({ selection: [], dispatchSelection: () => null, showInspector: () => null })
-
-export type FileViewProps = {
-  files: FileModel[]
-}
-
 function FileInspectorFileBody({ file }) {
   const rows: [string, string, string?, boolean?][] = [
     ["Name", file.fullName],
@@ -104,6 +94,16 @@ function Breadcrumbs() {
       ))}
     </div>
   )
+}
+
+export const FilesPageContext = createContext<{
+  selection: string[]
+  dispatchSelection: (a: DispatchMethod) => void
+  showInspector: () => void
+}>({ selection: [], dispatchSelection: () => null, showInspector: () => null })
+
+export type FileViewProps = {
+  files: FileModel[]
 }
 
 function FileInspector({ close }: { close: () => void }) {
