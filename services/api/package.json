@@ -1,6 +1,7 @@
 {
   "name": "@crate/api",
   "version": "0.1.0",
+  "private": true,
   "author": "Christian van der Loo",
   "devDependencies": {
     "@types/express": "^4.17.13",

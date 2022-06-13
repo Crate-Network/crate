@@ -1,7 +1,7 @@
 export enum FileType {
-  RAW,
-  FILE,
-  DIRECTORY,
+  RAW = 0,
+  FILE = 1,
+  DIRECTORY = 2,
 }
 
 export type FileModel = {

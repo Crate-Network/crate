@@ -24,7 +24,7 @@ import {
   UserInfo,
 } from "firebase/auth"
 import firebaseConfig from "../../firebase"
-import UserModel, { defaultUserModel } from "models/UserModel"
+import { UserModel } from "@crate/common"
 
 type ActionCodeSettingType = { url: string; handleCodeInApp: boolean }
 const actionCodeSettings: ActionCodeSettingType = {
@@ -53,6 +53,16 @@ export type AuthObject = {
     github: GithubAuthProvider
     apple: OAuthProvider
   }
+}
+
+const defaultUserModel: UserModel = {
+  devices: [],
+  firstName: "",
+  lastName: "",
+  organization: "",
+  recoveryKey: "",
+  signedDataKey: {},
+  uses2FA: false,
 }
 
 const defaultUser: User & { doc: UserModel } = {

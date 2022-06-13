@@ -1,4 +1,4 @@
-import { FileModel, FileType } from "models/FileModel"
+import { FileModel, FileType } from "@crate/common"
 import { v4 as uuidv4 } from "uuid"
 import { createContext } from "preact"
 import { Reducer, useEffect, useReducer } from "preact/hooks"

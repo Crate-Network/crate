@@ -1,1 +1,2 @@
-export * from "./FileModel";
+export * from "./FileModel"
+export * from "./UserModel"

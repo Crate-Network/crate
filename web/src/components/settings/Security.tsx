@@ -2,7 +2,7 @@ import FormInput from "components/FormInput"
 import { useCallback, useContext } from "preact/hooks"
 import { doc, DocumentReference, setDoc } from "firebase/firestore"
 import AuthContext, { AuthObject } from "context/AuthContext"
-import UserModel from "models/UserModel"
+import { UserModel } from "@crate/common"
 
 export default function Security() {
   const { db, user } = useContext<AuthObject>(AuthContext)

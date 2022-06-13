@@ -2,11 +2,13 @@
   "name": "@crate/common",
   "version": "1.0.0",
   "author": "Christian van der Loo",
+  "private": true,
   "description": "Shared types and models between Crate applications.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc --incremental"
+    "build": "tsc",
+    "dev": "tsc --watch"
   },
   "license": "MIT",
   "devDependencies": {
