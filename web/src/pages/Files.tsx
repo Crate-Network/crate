@@ -112,9 +112,9 @@ function FileInspector({ close }: { close: () => void }) {
   const selectedFiles: FileModel[] = selection
     .map((id) => files.find((v) => v.id === id))
     .filter((v) => v !== undefined)
+
   const [fileIndex, setFileIndex] = useState(0)
   const maxIndex = selectedFiles.length - 1
-
   useEffect(() => {
     if (maxIndex < fileIndex) setFileIndex(maxIndex)
     if (fileIndex < 0) setFileIndex(0)
