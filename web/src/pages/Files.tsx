@@ -173,7 +173,6 @@ export default function Files() {
   useEffect(() => {
     selection.forEach((v) => {
       if (v in files) return
-      console.log("Removing " + v)
       dispatchSelection({ t: "remove", id: v })
     })
   }, [files])

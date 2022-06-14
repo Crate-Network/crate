@@ -1,11 +1,16 @@
 import FormInput from "components/FormInput"
 import { useCallback, useContext } from "preact/hooks"
 import { doc, DocumentReference, setDoc } from "firebase/firestore"
-import AuthContext, { AuthObject } from "context/AuthContext"
 import { UserModel } from "@crate/common"
+import { db } from "vendor/firebase"
+import shallow from "zustand/shallow"
+import { useUserStore } from "store/UserStore"
 
 export default function Security() {
-  const { db, user } = useContext<AuthObject>(AuthContext)
+  const [user, userDoc] = useUserStore(
+    (state) => [state.user, state.userDoc],
+    shallow
+  )
 
   const update2FA = useCallback(
     (e) => {
@@ -14,12 +19,12 @@ export default function Security() {
         "users",
         user.uid.toString()
       ) as DocumentReference<UserModel>
-      setDoc(userDocRef, { ...user.doc, uses2FA: e.target.checked })
+      setDoc(userDocRef, { ...userDoc, uses2FA: e.target.checked })
     },
-    [user.doc]
+    [userDoc]
   )
 
-  const { uses2FA } = user.doc
+  const { uses2FA } = userDoc
 
   return (
     <div className="space-y-4">

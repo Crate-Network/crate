@@ -1,7 +1,6 @@
 import Button from "components/Button"
 import FormBox from "components/FormBox"
 import FormInput from "components/FormInput"
-import AuthContext from "context/AuthContext"
 import AppleLogo from "assets/signin-apple-logo.svg"
 import {
   getRedirectResult,
@@ -10,7 +9,9 @@ import {
   UserCredential,
 } from "firebase/auth"
 import { Link, route } from "preact-router"
-import { useContext, useEffect, useState } from "preact/hooks"
+import { useState } from "preact/hooks"
+import { actionCodeSettings, auth, providers } from "vendor/firebase"
+import { useUserStore } from "store/UserStore"
 
 export enum AuthenticateType {
   REGISTER = "Register",
@@ -18,8 +19,7 @@ export enum AuthenticateType {
 }
 
 export default function Authenticate({ type }: { type: AuthenticateType }) {
-  const { auth, actionCodeSettings, providers, setUser, loggedIn } =
-    useContext(AuthContext)
+  const loggedIn = useUserStore((state) => state.signedIn)
 
   if (loggedIn) route("/files", true)
 

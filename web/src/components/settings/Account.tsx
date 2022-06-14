@@ -1,11 +1,16 @@
 import FormInput from "components/FormInput"
 import { useCallback, useContext } from "preact/hooks"
 import { doc, DocumentReference, setDoc } from "firebase/firestore"
-import AuthContext, { AuthObject } from "context/AuthContext"
 import { UserModel } from "@crate/common"
+import { db } from "vendor/firebase"
+import { useUserStore } from "store/UserStore"
+import shallow from "zustand/shallow"
 
 export default function Profile() {
-  const { db, user } = useContext<AuthObject>(AuthContext)
+  const [user, userDoc] = useUserStore(
+    (state) => [state.user, state.userDoc],
+    shallow
+  )
 
   const updateUserDoc = useCallback(
     (newDoc: Partial<UserModel>) => {
@@ -14,12 +19,12 @@ export default function Profile() {
         "users",
         user.uid.toString()
       ) as DocumentReference<UserModel>
-      setDoc(userDocRef, { ...user.doc, ...newDoc })
+      setDoc(userDocRef, { ...userDoc, ...newDoc })
     },
-    [user.doc]
+    [userDoc]
   )
 
-  const { firstName, lastName, organization } = user.doc
+  const { firstName, lastName, organization } = userDoc
 
   return (
     <div className="space-y-4">

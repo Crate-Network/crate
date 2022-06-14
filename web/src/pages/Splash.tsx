@@ -1,9 +1,9 @@
-import AuthContext from "context/AuthContext"
 import { Link, route } from "preact-router"
 import { useContext } from "preact/hooks"
+import { useUserStore } from "store/UserStore"
 
 export default function Splash() {
-  const { loggedIn } = useContext(AuthContext)
+  const loggedIn = useUserStore((state) => state.signedIn)
   if (loggedIn) {
     route("/files", true)
   }

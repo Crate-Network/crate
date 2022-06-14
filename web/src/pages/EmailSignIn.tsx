@@ -1,11 +1,11 @@
-import AuthContext from "context/AuthContext"
 import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth"
 import { route } from "preact-router"
-import { useContext, useEffect } from "preact/hooks"
+import { useEffect } from "preact/hooks"
+import { useErrorStore } from "store/ErrorStore"
+import { auth } from "vendor/firebase"
 
 export default function EmailLanding() {
-  const { auth, setUser } = useContext(AuthContext)
-
+  const showError = useErrorStore((state) => state.showMessage)
   useEffect(() => {
     if (isSignInWithEmailLink(auth, window.location.href)) {
       // Additional state parameters can also be passed via URL.
@@ -21,20 +21,10 @@ export default function EmailLanding() {
       }
       // The client SDK will parse the code from the link for you.
       signInWithEmailLink(auth, email, window.location.href)
-        .then((result) => {
-          // Clear email from storage.
+        .then(() => {
           window.localStorage.removeItem("emailForSignIn")
-          // You can access the new user via result.user
-          // Additional user info profile not available via:
-          // result.additionealUserInfo.profile == null
-          // You can check if the user is new or existing:
-          // result.additionalUserInfo.isNewUser
-          setUser(result.user)
         })
-        .catch((error) => {
-          // Some error occurred, you can inspect the code: error.code
-          // Common errors could be invalid email and invalid or expired OTPs.
-        })
+        .catch((error) => showError(error.message))
     }
     route("/", true)
   }, [])

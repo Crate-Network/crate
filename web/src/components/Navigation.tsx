@@ -1,10 +1,8 @@
 import BrightCrateLogo from "assets/light-crate.svg"
 import DarkCrateLogo from "assets/dark-crate.svg"
-import { useContext, useEffect, useState } from "preact/hooks"
-import AuthContext from "context/AuthContext"
+import { useEffect, useState } from "preact/hooks"
 import { Link } from "preact-router"
-import { signOut } from "firebase/auth"
-import Button from "./Button"
+import { useUserStore } from "store/UserStore"
 
 function CrateLogo() {
   const [useDark, setUseDark] = useState(false)
@@ -23,7 +21,7 @@ function CrateLogo() {
 }
 
 export default function Navigation() {
-  const { loggedIn, user } = useContext(AuthContext)
+  const loggedIn = useUserStore((state) => state.signedIn)
   return (
     <>
       <div className="px-4 sm:px-6 lg:px-8 2xl:px-24 mx-auto">

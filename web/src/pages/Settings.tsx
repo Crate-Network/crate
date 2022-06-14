@@ -12,9 +12,9 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import AuthContext, { AuthObject } from "context/AuthContext"
 import { route } from "preact-router"
-import { useContext, useState } from "preact/hooks"
+import { useState } from "preact/hooks"
+import { useUserStore } from "store/UserStore"
 import Account from "../components/settings/Account"
 import Security from "../components/settings/Security"
 
@@ -61,7 +61,8 @@ enum Pane {
 }
 
 export default function Settings() {
-  const { db, user, logout } = useContext<AuthObject>(AuthContext)
+  const { user, userDoc, logout } = useUserStore()
+
   const [selectedPane, setSelectedPane] = useState(Pane.ACCOUNT)
 
   function getProps(pane: Pane) {
@@ -101,7 +102,7 @@ export default function Settings() {
   if (!user)
     return <div className="text-center w-full italic mt-6">Loading...</div>
 
-  const { firstName, lastName, organization } = user.doc
+  const { firstName, lastName, organization } = userDoc
 
   return (
     <main className="mt-6 sm:mt-12 md:mt-16 lg:mt-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
