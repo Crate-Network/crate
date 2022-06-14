@@ -20,7 +20,6 @@ export function AddBox() {
     const fileInput: HTMLInputElement = e.target
     const { files } = fileInput
     if (!files || files.length === 0) {
-      console.log("cancelled")
       e.target.remove()
       return
     }
@@ -36,7 +35,6 @@ export function AddBox() {
         path: "/" + file.name,
         content: new Uint8Array(await file.arrayBuffer()),
       })
-      console.log(fileArr)
     }
 
     // for await (const entry of importer(fileArr, blockstore)) {
