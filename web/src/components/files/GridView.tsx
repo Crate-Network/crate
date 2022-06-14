@@ -1,4 +1,4 @@
-import { FileViewProps, FilesPageContext } from "../../pages/Files"
+import { FilesPageContext } from "../../pages/Files"
 import { faFile } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { FileModel } from "@crate/common"
@@ -7,8 +7,8 @@ import useClickOutside from "hooks/useClickOutside"
 import RightClickMenu from "./RightClickMenu"
 import Anchor from "models/Anchor"
 import FormInput from "components/FormInput"
-import FileContext from "context/FileContext"
 import { FileAction } from "models/FileMutator"
+import { useFileStore } from "store/FileStore"
 
 type IconState = "empty" | "selected" | "hovered"
 const getIconState = (selected: boolean, hovered: boolean): IconState => {
@@ -71,7 +71,7 @@ function NameInput({
 function FileIcon({ file }: { file: FileModel }) {
   const [hovered, setHovered] = useState(false)
   const { selection, dispatchSelection } = useContext(FilesPageContext)
-  const { dispatchFileAction } = useContext(FileContext)
+  const renameFile = useFileStore((state) => state.renameFile)
   const [editingName, setEditingName] = useState(false)
 
   const iconRef = useRef()
@@ -148,11 +148,7 @@ function FileIcon({ file }: { file: FileModel }) {
             onComplete={(newName) => {
               setEditingName(false)
               if (newName === "") return
-              dispatchFileAction({
-                file,
-                action: FileAction.RENAME,
-                name: newName,
-              })
+              renameFile(file, newName)
             }}
           />
         ) : (
@@ -178,14 +174,15 @@ function FileIcon({ file }: { file: FileModel }) {
   )
 }
 
-export function GridView({ files }: FileViewProps) {
+export function GridView() {
+  const files = useFileStore((state) => state.files)
   return (
     <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
       <div
         className="grid w-full"
         style={{ gridTemplateColumns: "repeat(auto-fit, minmax(9rem, 1fr))" }}
       >
-        {files.map((el) => (
+        {Object.values(files).map((el) => (
           <FileIcon file={el} />
         ))}
       </div>

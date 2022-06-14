@@ -13,7 +13,6 @@ import Files from "./pages/Files"
 import Button from "components/Button"
 import NotFound from "pages/NotFound"
 import Settings from "pages/Settings"
-import { FileProvider } from "context/FileContext"
 
 type FloatingError = {
   show: boolean
@@ -78,15 +77,9 @@ const Page = (props) => (
   </AuthProvider>
 )
 
-const Providers = ({ children }) => (
-  <AuthProvider>
-    <FileProvider>{children}</FileProvider>
-  </AuthProvider>
-)
-
 export function App() {
   return (
-    <Providers>
+    <AuthProvider>
       <Router>
         <Page path="/" title={"Crate"} component={<Splash />} />
         <Page
@@ -123,7 +116,7 @@ export function App() {
         />
         <Page default component={<NotFound />} />
       </Router>
-    </Providers>
+    </AuthProvider>
   )
 }
 

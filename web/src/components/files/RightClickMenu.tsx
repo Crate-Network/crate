@@ -1,4 +1,3 @@
-import FileContext from "context/FileContext"
 import { FileModel } from "@crate/common"
 import { FileAction } from "models/FileMutator"
 import { FilesPageContext } from "pages/Files"
@@ -10,6 +9,7 @@ import {
   PopoverMenuProps,
   SelectionOptions,
 } from "./PopoverMenu"
+import { useFileStore } from "store/FileStore"
 
 type RightClickMenuProps = {
   file: FileModel
@@ -24,7 +24,7 @@ export default function RightClickMenu({
   ...props
 }: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
   const { showInspector, dispatchSelection } = useContext(FilesPageContext)
-  const { dispatchFileAction } = useContext(FileContext)
+  const deleteFile = useFileStore((state) => state.deleteFile)
 
   const openFile = () =>
     window.open(
@@ -38,14 +38,12 @@ export default function RightClickMenu({
     )
   const copyCID = () => navigator.clipboard.writeText(file.cid)
   const copyUID = () => navigator.clipboard.writeText(file.id)
-  const deleteFile = () =>
-    dispatchFileAction({ action: FileAction.DELETE, file })
 
   const opts = [
     makeOpt("Open", close, openFile),
     makeOpt("Download", close, downloadFile),
     "divider",
-    makeOpt("Delete", close, deleteFile),
+    makeOpt("Delete", close, () => deleteFile(file)),
     "divider",
     makeOpt("Inspect", close, showInspector),
     makeOpt("Rename", close, onRenameRequest, !onRenameRequest),

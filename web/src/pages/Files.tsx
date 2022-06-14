@@ -18,9 +18,9 @@ import {
   faLessThan,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons"
-import FileContext from "context/FileContext"
 import { Link } from "preact-router"
 import useStoredState from "hooks/useStoredState"
+import { useFileStore } from "store/FileStore"
 
 type SelectionType = "add" | "remove" | "setone"
 type DispatchMethod = { t: SelectionType; id: string }
@@ -102,15 +102,11 @@ export const FilesPageContext = createContext<{
   showInspector: () => void
 }>({ selection: [], dispatchSelection: () => null, showInspector: () => null })
 
-export type FileViewProps = {
-  files: FileModel[]
-}
-
 function FileInspector({ close }: { close: () => void }) {
   const { selection } = useContext(FilesPageContext)
-  const { files } = useContext(FileContext)
+  const files = useFileStore((state) => state.files)
   const selectedFiles: FileModel[] = selection
-    .map((id) => files.find((v) => v.id === id))
+    .map((id) => files[id])
     .filter((v) => v !== undefined)
 
   const [fileIndex, setFileIndex] = useState(0)
@@ -168,7 +164,7 @@ function FileInspector({ close }: { close: () => void }) {
 }
 
 export default function Files() {
-  const { files } = useContext(FileContext)
+  const files = useFileStore((state) => state.files)
   const [selection, dispatchSelection] = useReducer<string[], DispatchMethod>(
     selectionReducer,
     []
@@ -176,7 +172,7 @@ export default function Files() {
 
   useEffect(() => {
     selection.forEach((v) => {
-      if (files.some((f) => f.id === v)) return
+      if (v in files) return
       console.log("Removing " + v)
       dispatchSelection({ t: "remove", id: v })
     })
@@ -216,11 +212,7 @@ export default function Files() {
             </div>
           </div>
 
-          {viewMode === ViewMode.LIST ? (
-            <ListView files={files} />
-          ) : (
-            <GridView files={files} />
-          )}
+          {viewMode === ViewMode.LIST ? <ListView /> : <GridView />}
         </div>
         <div
           id="file-inspector"

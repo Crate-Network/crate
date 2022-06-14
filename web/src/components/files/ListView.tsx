@@ -2,8 +2,9 @@ import useClickOutside from "hooks/useClickOutside"
 import Anchor from "models/Anchor"
 import { FileModel } from "@crate/common"
 import { useContext, useRef, useState } from "preact/hooks"
-import { FileViewProps, FilesPageContext } from "../../pages/Files"
+import { FilesPageContext } from "../../pages/Files"
 import RightClickMenu from "./RightClickMenu"
+import { useFileStore } from "store/FileStore"
 
 export function FileRow({ file }: { file: FileModel }) {
   const { selection, dispatchSelection } = useContext(FilesPageContext)
@@ -68,7 +69,8 @@ export function FileRow({ file }: { file: FileModel }) {
   )
 }
 
-export function ListView({ files }: FileViewProps) {
+export function ListView() {
+  const files = useFileStore((state) => state.files)
   return (
     <div className="mt-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
       <table className="min-w-full text-left">
@@ -86,7 +88,7 @@ export function ListView({ files }: FileViewProps) {
           </tr>
         </thead>
         <tbody>
-          {files.map((file) => (
+          {Object.values(files).map((file) => (
             <FileRow file={file} />
           ))}
         </tbody>
