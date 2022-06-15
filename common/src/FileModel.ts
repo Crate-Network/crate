@@ -1,10 +1,10 @@
-export enum FileType {
+export const enum FileType {
   RAW = 0,
   FILE = 1,
   DIRECTORY = 2,
 }
 
-export type FileModel = {
+type BaseFileModel = {
   // unique ID of this particular file
   readonly id: string
   // CID from the contents of the file
@@ -26,3 +26,19 @@ export type FileModel = {
   // if folder, size of all children, otherwise cumulativeSize == size
   readonly cumulativeSize: number
 }
+
+export type FileModel = (
+  | {
+      type: FileType.FILE
+      contents?: Uint8Array
+    }
+  | {
+      type: FileType.DIRECTORY
+      children: FileModel[]
+    }
+  | {
+      type: FileType.RAW
+      contents?: Uint8Array
+    }
+) &
+  BaseFileModel

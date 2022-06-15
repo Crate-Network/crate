@@ -1,4 +1,4 @@
 FROM node:16
-WORKDIR /
+WORKDIR /app
 COPY . .
 RUN yarn && yarn bootstrap
