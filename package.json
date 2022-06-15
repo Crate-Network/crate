@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "lerna run dev --parallel",
     "build": "lerna run build",
+    "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
     "new-version": "lerna version --conventional-commits",
     "diff": "lerna diff"
