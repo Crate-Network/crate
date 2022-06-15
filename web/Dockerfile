@@ -11,6 +11,6 @@ ARG VITE_FIREBASE_MEASUREMENT_ID
 
 RUN yarn build
 
-FROM nginx:1.20.2-alpine
+FROM nginx:1.21.6-alpine
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /web/dist /etc/nginx/html/
