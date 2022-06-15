@@ -1,4 +1,4 @@
-export const enum FileType {
+export enum FileType {
   RAW = 0,
   FILE = 1,
   DIRECTORY = 2,
