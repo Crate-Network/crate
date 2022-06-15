@@ -43,7 +43,7 @@ function SidebarButton({
           <div className="flex flex-row space-x-2">
             {children && (
               <div
-                className="w-5 h-5 flex justify-center rounded-md items-center bg-gray-200 hover:bg-gray-300 dark:hover:bg-stone-500"
+                className="w-5 h-5 flex justify-center rounded-md items-center bg-gray-200 hover:bg-gray-300 dark:bg-stone-600 dark:hover:bg-stone-500"
                 onClick={toggleExpanded}
               >
                 <span
