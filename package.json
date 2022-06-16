@@ -3,7 +3,7 @@
   "author": "Christian van der Loo",
   "private": true,
   "devDependencies": {
-    "lerna": "^5.1.1"
+    "nx": "14.3.5"
   },
   "workspaces": [
     "services/*",
@@ -11,11 +11,22 @@
     "web"
   ],
   "scripts": {
-    "dev": "lerna run dev --parallel",
-    "build": "lerna run build",
-    "bootstrap": "lerna bootstrap",
-    "test": "lerna run test",
-    "new-version": "lerna version --conventional-commits",
-    "diff": "lerna diff"
+    "build": "nx run-many --target=build --all",
+    "build:web": "nx build web",
+    "build:since": "nx affected --target=build",
+    "test:all": "nx run-many --target=test --all",
+    "test:web": "nx test web",
+    "test:since": "nx affected --target=test",
+    "dev": "nx run-many --target=dev --all",
+    "dev:web": "nx dev app1"
+  },
+  "dependencies": {
+    "@jscutlery/semver": "^2.25.2",
+    "@nrwl/js": "^14.3.5",
+    "@nrwl/react": "^14.3.5",
+    "@nx-tools/nx-docker": "^3.0.0",
+    "@nxext/vite": "^14.0.0",
+    "@trumbitta/nx-plugin-openapi": "^1.10.1",
+    "@trumbitta/nx-plugin-unused-deps": "^1.10.1"
   }
 }
