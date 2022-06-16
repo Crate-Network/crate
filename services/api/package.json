@@ -34,31 +34,6 @@
     "*.{js,ts}": "eslint --cache --fix",
     "*.{js,ts,css,md}": "prettier --write"
   },
-  "docker": {
-    "executor": "@nx-tools/nx-docker:build",
-    "options": {
-      "push": true,
-      "platforms": [
-        "linux/amd64",
-        "linux/arm64"
-      ],
-      "metadata": {
-        "images": [
-          "ghcr.io/crate-network/server"
-        ],
-        "tags": [
-          "type=schedule",
-          "type=ref,event=branch",
-          "type=ref,event=tag",
-          "type=ref,event=pr",
-          "type=semver,pattern={{version}}",
-          "type=semver,pattern={{major}}.{{minor}}",
-          "type=semver,pattern={{major}}",
-          "type=sha"
-        ]
-      }
-    }
-  },
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts --dev",
