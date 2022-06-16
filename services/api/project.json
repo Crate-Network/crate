@@ -1,0 +1,36 @@
+{
+  "root": "services/api/",
+  "sourceRoot": "services/api/",
+  "projectType": "application",
+  "targets": {
+    "docker": {
+      "executor": "@nx-tools/nx-docker:build",
+      "options": {
+        "push": true,
+        "platforms": ["linux/amd64", "linux/arm64"],
+        "metadata": {
+          "images": ["ghcr.io/crate-network/server"],
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=semver,pattern={{version}}",
+            "type=semver,pattern={{major}}.{{minor}}",
+            "type=semver,pattern={{major}}",
+            "type=sha"
+          ]
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [],
+      "dependsOn": ["build"],
+      "options": {
+        "jestConfig": "libs/mylib/jest.config.js",
+        "tsConfig": "libs/mylib/tsconfig.spec.json"
+      }
+    }
+  }
+}
