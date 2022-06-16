@@ -18,7 +18,7 @@
     "test:web": "nx test web",
     "test:since": "nx affected --target=test",
     "dev": "nx run-many --target=dev --all",
-    "dev:web": "nx dev app1"
+    "dev:web": "nx dev web"
   },
   "dependencies": {
     "@jscutlery/semver": "^2.25.2",
