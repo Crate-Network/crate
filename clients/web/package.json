@@ -9,6 +9,31 @@
     "preview": "vite preview",
     "deploy": "gh-pages -d dist"
   },
+  "docker": {
+    "executor": "@nx-tools/nx-docker:build",
+    "options": {
+      "push": true,
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "metadata": {
+        "images": [
+          "ghcr.io/crate-network/ipfs"
+        ],
+        "tags": [
+          "type=schedule",
+          "type=ref,event=branch",
+          "type=ref,event=tag",
+          "type=ref,event=pr",
+          "type=semver,pattern={{version}}",
+          "type=semver,pattern={{major}}.{{minor}}",
+          "type=semver,pattern={{major}}",
+          "type=sha"
+        ]
+      }
+    }
+  },
   "dependencies": {
     "@crate/common": "*",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",

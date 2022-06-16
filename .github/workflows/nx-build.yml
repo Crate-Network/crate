@@ -1,4 +1,4 @@
-name: Build Web
+name: Build Docker Images
 
 on:
   push:
@@ -11,8 +11,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Save package version to environment
-        uses: nyaa8/package-version@v1.0.3
+      - name: Create File
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: "clients/web/.env.local"
+          FILE_BASE64: ${{ secrets.WEB_ENV }}
+      - name: Create File
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: "services/api/.env"
+          FILE_BASE64: ${{ secrets.API_ENV }}
+      - name: Create File
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: "services/api/firebase.json"
+          FILE_BASE64: ${{ secrets.API_FIREBASE_JSON }}\
+      - name: Install dependencies
+        uses: DerYeger/yarn-setup-action@master
+        with:
+          node-version: 16
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -23,18 +40,5 @@ jobs:
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build and push web image
-        uses: docker/build-push-action@v2.10.0
-        with:
-          context: ./web
-          platforms: linux/arm64/v8,linux/amd64
-          tags: ghcr.io/crate-network/web:latest,ghcr.io/crate-network/web:${{ env.PACKAGE_VERSION }}
-          push: true
-          build-args:
-            VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }},
-            VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }},
-            VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }},
-            VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }},
-            VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }},
-            VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }},
-            VITE_FIREBASE_MEASUREMENT_ID=${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
+      - name: "nx build"
+        run: npx nx affected --target=docker
