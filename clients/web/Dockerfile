@@ -1,5 +1,7 @@
-FROM ghcr.io/crate-network/base:latest as build
+FROM node:16 as build
 WORKDIR /app/web
+
+COPY . .
 
 ARG VITE_FIREBASE_API_KEY
 ARG VITE_FIREBASE_AUTH_DOMAIN

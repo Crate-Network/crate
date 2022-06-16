@@ -1,4 +1,5 @@
 {
+  "name": "@crate/api",
   "root": "services/api/",
   "sourceRoot": "services/api/",
   "projectType": "application",

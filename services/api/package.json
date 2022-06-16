@@ -1,5 +1,5 @@
 {
-  "name": "@crate/api",
+  "name": "@crate/server",
   "version": "0.1.0",
   "private": true,
   "author": "Christian van der Loo",

@@ -1,6 +1,5 @@
 {
-  "root": "services/web/",
-  "sourceRoot": "services/web/",
+  "name": "@crate/web",
   "projectType": "application",
   "targets": {
     "docker": {

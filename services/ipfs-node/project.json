@@ -1,4 +1,5 @@
 {
+  "name": "@crate/ipfs",
   "root": "services/ipfs-node/",
   "sourceRoot": "services/ipfs-node/",
   "projectType": "application",
