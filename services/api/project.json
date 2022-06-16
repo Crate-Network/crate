@@ -11,6 +11,7 @@
         "platforms": ["linux/amd64", "linux/arm64"],
         "metadata": {
           "images": ["ghcr.io/crate-network/server"],
+          "context": "services/api",
           "tags": [
             "type=schedule",
             "type=ref,event=branch",

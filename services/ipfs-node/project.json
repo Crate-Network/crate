@@ -9,6 +9,7 @@
       "options": {
         "push": true,
         "platforms": ["linux/amd64", "linux/arm64"],
+        "context": "services/ipfs-node",
         "metadata": {
           "images": ["ghcr.io/crate-network/ipfs"],
           "tags": [
