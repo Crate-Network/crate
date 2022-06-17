@@ -24,7 +24,7 @@ jobs:
       - name: Create File
         uses: finnp/create-file-action@1.0.0
         env:
-          FILE_NAME: "services/api/firebase.json"
+          FILE_NAME: "services/server/firebase.json"
           FILE_BASE64: ${{ secrets.API_FIREBASE_JSON }}\
       - name: Install dependencies
         uses: DerYeger/yarn-setup-action@master
