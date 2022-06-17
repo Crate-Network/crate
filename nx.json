@@ -14,6 +14,9 @@
     },
     "docker": {
       "dependsOn": ["build"]
+    },
+    "dev": {
+      "dependsOn": ["^build"]
     }
   },
   "affected": {
