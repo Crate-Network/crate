@@ -1,16 +1,21 @@
 {
   "name": "@crate/server",
-  "sourceRoot": "services/server/",
+  "sourceRoot": "packages/server/",
   "projectType": "application",
   "targets": {
     "docker": {
       "executor": "@nx-tools/nx-docker:build",
       "options": {
         "push": true,
-        "platforms": ["linux/amd64", "linux/arm64"],
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
         "metadata": {
-          "images": ["ghcr.io/crate-network/server"],
-          "context": "services/server",
+          "images": [
+            "ghcr.io/crate-network/server"
+          ],
+          "context": "packages/server",
           "tags": [
             "latest",
             "type=schedule",
@@ -28,7 +33,9 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": [],
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "jestConfig": "libs/mylib/jest.config.js",
         "tsConfig": "libs/mylib/tsconfig.spec.json"

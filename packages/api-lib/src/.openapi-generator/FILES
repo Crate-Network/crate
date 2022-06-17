@@ -1,0 +1,14 @@
+.openapi-generator-ignore
+apis/PinsApi.ts
+apis/index.ts
+index.ts
+models/Failure.ts
+models/FailureError.ts
+models/Pin.ts
+models/PinMeta.ts
+models/PinResults.ts
+models/PinStatus.ts
+models/Status.ts
+models/TextMatchingStrategy.ts
+models/index.ts
+runtime.ts

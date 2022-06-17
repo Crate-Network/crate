@@ -1,0 +1,20 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "@crate/api-lib",
+  "sourceRoot": "packages/api-lib/src",
+  "projectType": "library",
+  "targets": {
+    "generate-sources": {
+      "executor": "@trumbitta/nx-plugin-openapi:generate-api-lib-sources",
+      "options": {
+        "useDockerBuild": true,
+        "generator": "typescript-fetch",
+        "sourceSpecPathOrUrl": "packages/api-spec/src/crate-spec.openapi.yml",
+        "additionalProperties": "",
+        "globalProperties": ""
+      }
+    }
+  },
+  "implicitDependencies": ["api-spec"],
+  "tags": []
+}

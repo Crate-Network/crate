@@ -1,16 +1,21 @@
 {
   "name": "@crate/ipfs",
-  "sourceRoot": "services/ipfs-node/",
+  "sourceRoot": "packages/ipfs-node/",
   "projectType": "application",
   "targets": {
     "docker": {
       "executor": "@nx-tools/nx-docker:build",
       "options": {
         "push": true,
-        "platforms": ["linux/amd64", "linux/arm64"],
-        "context": "services/ipfs-node",
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
+        "context": "packages/ipfs-node",
         "metadata": {
-          "images": ["ghcr.io/crate-network/ipfs"],
+          "images": [
+            "ghcr.io/crate-network/ipfs"
+          ],
           "tags": [
             "latest",
             "type=schedule",

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import logger from "../logger";
-import filecoinClient from "../pinning/filecoin";
+import filecoinClient from "../pinning/filecoin-client";
 
 const router = Router();
 
