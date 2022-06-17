@@ -15,7 +15,8 @@
     "@nx-tools/docker-metadata": "^3.0.0",
     "@nx-tools/nx-docker": "^3.0.0",
     "@nxext/vite": "^14.0.0",
-    "@trumbitta/nx-plugin-openapi": "^1.10.1",
+    "@openapitools/openapi-generator-cli": "2.3.7",
+    "@trumbitta/nx-plugin-openapi": "^1.11.0",
     "@types/jest": "27.4.1",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "~5.24.0",
@@ -29,7 +30,7 @@
     "ts-node": "~10.8.0"
   },
   "workspaces": [
-    "services/*",
+    "packages/*",
     "clients/*",
     "libs/*"
   ],
@@ -46,5 +47,6 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
-  }
+  },
+  "version": "0.0.3"
 }
