@@ -1,0 +1,5 @@
+{
+  "name": "@crate/common",
+  "sourceRoot": "libs/common/",
+  "projectType": "library"
+}

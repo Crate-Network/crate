@@ -11,16 +11,14 @@
     "@typescript-eslint/parser": "^5.19.0",
     "eslint": "^8.13.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prettier": "^4.0.0",
     "lint-staged": "^12.3.7",
     "nodemon": "^2.0.15",
-    "prettier": "^2.6.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   },
   "dependencies": {
+    "@crate/common": "*",
     "@filecoin-shipyard/lotus-client-provider-nodejs": "^1.1.1",
     "@filecoin-shipyard/lotus-client-rpc": "^1.2.0",
     "@filecoin-shipyard/lotus-client-schema": "^4.2.0",
@@ -31,12 +29,13 @@
     "winston": "^3.7.2"
   },
   "lint-staged": {
-    "*.{js,ts}": "eslint --cache --fix",
-    "*.{js,ts,css,md}": "prettier --write"
+    "*.{js,ts}": "eslint --cache --fix"
   },
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts --dev",
     "build": "tsc"
-  }
+  },
+  "main": "./../../src/main.js",
+  "typings": "./../../src/main.d.ts"
 }

@@ -11,6 +11,9 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"]
+    },
+    "docker": {
+      "dependsOn": ["^build"]
     }
   },
   "affected": {

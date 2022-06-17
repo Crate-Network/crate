@@ -1,5 +1,6 @@
 {
   "name": "@crate/web",
+  "sourceRoot": "./clients/web/",
   "projectType": "application",
   "targets": {
     "docker": {
@@ -11,6 +12,7 @@
           "images": ["ghcr.io/crate-network/web"],
           "context": "clients/web",
           "tags": [
+            "latest",
             "type=schedule",
             "type=ref,event=branch",
             "type=ref,event=tag",
@@ -30,6 +32,12 @@
       "options": {
         "jestConfig": "libs/mylib/jest.config.js",
         "tsConfig": "libs/mylib/tsconfig.spec.json"
+      }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
       }
     }
   }

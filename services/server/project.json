@@ -1,7 +1,6 @@
 {
-  "name": "@crate/api",
-  "root": "services/api/",
-  "sourceRoot": "services/api/",
+  "name": "@crate/server",
+  "sourceRoot": "services/server/",
   "projectType": "application",
   "targets": {
     "docker": {
@@ -11,8 +10,9 @@
         "platforms": ["linux/amd64", "linux/arm64"],
         "metadata": {
           "images": ["ghcr.io/crate-network/server"],
-          "context": "services/api",
+          "context": "services/server",
           "tags": [
+            "latest",
             "type=schedule",
             "type=ref,event=branch",
             "type=ref,event=tag",
@@ -32,6 +32,12 @@
       "options": {
         "jestConfig": "libs/mylib/jest.config.js",
         "tsConfig": "libs/mylib/tsconfig.spec.json"
+      }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "@crate/common",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "Christian van der Loo",
   "private": true,
   "description": "Shared types and models between Crate applications.",
@@ -11,7 +11,8 @@
     "dev": "tsc --watch"
   },
   "license": "MIT",
-  "devDependencies": {
-    "typescript": "^3.5.3"
+  "dependencies": {
+    "@types/node": "^18.0.0",
+    "typescript": "^4.7.3"
   }
 }

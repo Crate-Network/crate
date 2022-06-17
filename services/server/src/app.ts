@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 
+import { FileType } from "@crate/common";
+
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
@@ -11,7 +13,7 @@ import pinning from "./routes/pinning-route";
 import logger from "./logger";
 import { DecodedIdToken } from "firebase-admin/auth";
 
-const args = process.argv.slice(2);
+const args = process.argv.slice(FileType.DIRECTORY);
 const app = express();
 
 app.use(async (req, res, next) => {
