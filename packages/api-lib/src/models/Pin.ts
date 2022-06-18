@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Crate Network API
- * ## About this spec  The Crate API exposes several endpoints which allows the Crate macOS, iOS,  iPadOS and web clients to interact with Crate\'s IPFS cluster without the  clients needing to run IPFS clients of their own. Crate Network implements  the IPFS Pinning API specification at the `/pins` endpoint, as described by  the spec found [on GitHub](https://github.com/ipfs/pinning-services-api-spec/blob/3196b0b466752a3626b716969703cbd48cb9bcf7/ipfs-pinning-service.yaml).  The pinning API accepts a Bearer authorization token retrieved from your Crate account. This identifies your user and adds the pinned content to  your files on Crate. This version of the API is modified to include  metadata, all of which is optional so that Crate continues to conform to  the IPFS spec.  The Filecoin replication service is handled via the pinning API. Instead of  using expensive, centralized cloud storage as the backend, Crate safely  replicates content onto other decentralized networks. When a request comes  to the pinning service to retrieve the content, Crate will prioritize  cached content, otherwise falling back to the Filecoin network to retrieve your files. 
+ * ## About this spec  The Crate API exposes several endpoints which allows the Crate macOS, iOS,  iPadOS and web clients to interact with Crate\'s IPFS cluster without the  clients needing to run IPFS clients of their own. Crate Network implements  the IPFS Pinning API specification at the `/pins` endpoint, as described by  the spec found [on GitHub](https://github.com/ipfs/pinning-services-api-spec/blob/3196b0b466752a3626b716969703cbd48cb9bcf7/ipfs-pinning-service.yaml).  The pinning API accepts a Bearer authorization token retrieved from your Crate account. This identifies your user and adds the pinned content to  your files on Crate. This version of the API is modified to include  metadata, all of which is optional so that Crate continues to conform to  the IPFS spec.  The Filecoin replication service is handled via the pinning API. Instead of  using untrusted centralized cloud storage as the backend, Crate safely  replicates content onto other decentralized networks. When a request comes  to the pinning service to retrieve the content, Crate will prioritize  cached content, otherwise falling back to the Filecoin network to retrieve your files. 
  *
  * The version of the OpenAPI document: 1.0.0
  * 
@@ -13,13 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    PinMeta,
-    PinMetaFromJSON,
-    PinMetaFromJSONTyped,
-    PinMetaToJSON,
-} from './PinMeta';
-
 /**
  * Pin object
  * @export
@@ -45,11 +38,11 @@ export interface Pin {
      */
     origins?: Set<string>;
     /**
-     * 
-     * @type {PinMeta}
+     * Optional metadata for pin object
+     * @type {{ [key: string]: string; }}
      * @memberof Pin
      */
-    meta?: PinMeta;
+    meta?: { [key: string]: string; };
 }
 
 /**
@@ -75,7 +68,7 @@ export function PinFromJSONTyped(json: any, ignoreDiscriminator: boolean): Pin {
         'cid': json['cid'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'origins': !exists(json, 'origins') ? undefined : json['origins'],
-        'meta': !exists(json, 'meta') ? undefined : PinMetaFromJSON(json['meta']),
+        'meta': !exists(json, 'meta') ? undefined : json['meta'],
     };
 }
 
@@ -91,7 +84,7 @@ export function PinToJSON(value?: Pin | null): any {
         'cid': value.cid,
         'name': value.name,
         'origins': value.origins,
-        'meta': PinMetaToJSON(value.meta),
+        'meta': value.meta,
     };
 }
 

@@ -5,7 +5,6 @@ index.ts
 models/Failure.ts
 models/FailureError.ts
 models/Pin.ts
-models/PinMeta.ts
 models/PinResults.ts
 models/PinStatus.ts
 models/Status.ts

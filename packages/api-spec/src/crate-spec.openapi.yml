@@ -18,7 +18,7 @@ info:
     the IPFS spec.
 
     The Filecoin replication service is handled via the pinning API. Instead of 
-    using expensive, centralized cloud storage as the backend, Crate safely 
+    using untrusted centralized cloud storage as the backend, Crate safely 
     replicates content onto other decentralized networks. When a request comes 
     to the pinning service to retrieve the content, Crate will prioritize 
     cached content, otherwise falling back to the Filecoin network to retrieve
@@ -288,12 +288,6 @@ components:
     PinMeta:
       description: Optional metadata for pin object
       type: object
-      properties:
-        backend:
-          description: The backend to use when storing the pin
-          type: string
-          enum:
-            - qyeye
       additionalProperties:
         type: string
         minProperties: 0
@@ -430,7 +424,7 @@ components:
       in: query
       required: false
       content:
-        application/json: # ?meta={"foo":"bar"}
+        application/json:
           schema:
             $ref: "#/components/schemas/PinMeta"
 
