@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.1.0...@crate/web-0.2.0) (2022-06-19)
+
+
+### Features
+
+* add new folder ([54eebc8](https://github.com/Crate-Network/crate/commit/54eebc81d5f65b4f26114b0f8d40c4f567759602))
+* added new file functionality ([8f5bb34](https://github.com/Crate-Network/crate/commit/8f5bb34baa195d7c500775da0a13207530450c4b))
+* folder icons ([1c2e2d8](https://github.com/Crate-Network/crate/commit/1c2e2d88abdd78925b532d68dbde7524b3ffd5dc))
+* updated placeholder in new folder popup ([a6b05dd](https://github.com/Crate-Network/crate/commit/a6b05ddc142cbaa279e9427e747e8060feb2f2be))
+
 # [0.1.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.0.1...@crate/web-0.1.0) (2022-06-19)
 
 
