@@ -46,3 +46,12 @@ export async function makeFile(fullName: string, type: FileType) {
       : { ...file, links: [], cumulativeSize: 0 }
   ) as FileModel
 }
+
+export function duplicateFile(file: FileModel) {
+  return {
+    ...file,
+    fullName: file.name + " copy" + file.extension ? "." + file.extension : "",
+    name: file.name + " copy",
+    date: new Date(),
+  }
+}

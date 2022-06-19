@@ -9,7 +9,7 @@ import {
 } from "./PopoverMenu"
 import { useFileStore } from "store/FileStore"
 import Anchor from "models/Anchor"
-import { Popover, PopoverButtonRow } from "components/Popover"
+import { duplicateFile } from "@crate/common"
 
 type RightClickMenuProps = {
   close?: (e: MouseEvent) => void
@@ -24,16 +24,16 @@ export default function RightClickMenu({
   ...props
 }: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
   const files = useFileStore((state) => state.files)
-  const { inspect, selection } = useContext(FilesPageContext)
-
+  const addFile = useFileStore((state) => state.addFile)
   const deleteFile = useFileStore((state) => state.deleteFile)
+
+  const { inspect, selection } = useContext(FilesPageContext)
+  const file = files[selection[0]]
   const deleteFiles = () => {
     selection.forEach((fileKey) => {
       deleteFile(files[fileKey])
     })
   }
-
-  const file = files[selection[0]]
 
   const openFile = () =>
     window.open(
@@ -53,10 +53,11 @@ export default function RightClickMenu({
     "divider",
     makeOpt("Delete", close, deleteFiles),
     "divider",
-    makeOpt("Inspect", close, inspect),
     makeOpt("Rename", close, onRenameRequest, !onRenameRequest),
-    makeOpt("Copy CID", close, copyCID),
+    makeOpt("Duplicate", close, () => addFile(duplicateFile(file))),
     "divider",
+    makeOpt("Inspect", close, inspect),
+    makeOpt("Copy CID", close, copyCID),
     makeOpt("Share", close),
   ].filter((v) => v !== "none") as (SelectionOptions | "divider")[]
 
