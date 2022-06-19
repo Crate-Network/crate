@@ -31,8 +31,7 @@
   },
   "workspaces": [
     "packages/*",
-    "clients/*",
-    "libs/*"
+    "clients/*"
   ],
   "scripts": {
     "build": "nx run-many --target=build --all",
