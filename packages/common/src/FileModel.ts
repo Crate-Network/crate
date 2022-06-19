@@ -1,3 +1,5 @@
+import Hash from "ipfs-only-hash"
+
 export enum FileType {
   FILE = "file",
   DIRECTORY = "directory",
@@ -15,14 +17,28 @@ export type FileModel = {
   // type of file
   type: FileType
   // the encryption key for this file, signed by the user's data key
-  signedEncryptionKey: string
+  signedEncryptionKey?: string
   // the size of the file/folder
   size: number
   // date created
   date: Date
   // -- only relevant for FileType.DIRECTORY --
   // CIDs of children
-  links: string[]
+  links?: string[]
   // size of all contained files/folders
-  cumulativeSize: number
+  cumulativeSize?: number
+}
+
+export async function makeFile(fullName: string, type: FileType) {
+  const cid = await Hash.of("")
+  const [name, extension] = fullName.split(".")
+  return {
+    cid,
+    name,
+    fullName,
+    extension,
+    type,
+    size: 0,
+    date: new Date(),
+  } as FileModel
 }

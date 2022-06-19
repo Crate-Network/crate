@@ -1,17 +1,43 @@
-import {
-  faUpload,
-  faGrip,
-  faBars,
-  faAdd,
-  faCaretDown,
-} from "@fortawesome/free-solid-svg-icons"
+import { faGrip, faBars, faAdd } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Button from "components/Button"
 import FormInput from "components/FormInput"
-import { StateUpdater, useEffect, useRef, useState } from "preact/hooks"
+import { Popover, PopoverButtonRow } from "components/Popover"
+import { StateUpdater, useEffect, useState } from "preact/hooks"
 import { JSXInternal } from "preact/src/jsx"
 import Dropdown, { FuncInput } from "./Dropdown"
-import { makeOpt } from "./PopoverMenu"
+import sanitizeFilename from "sanitize-filename"
+import { useFileStore } from "store/FileStore"
+import { FileType, makeFile } from "@crate/common"
+
+function NewFileBody({ dismiss }: { dismiss: () => void }) {
+  const addFile = useFileStore((state) => state.addFile)
+  const [name, setName] = useState("")
+  const invalid = sanitizeFilename(name) !== name
+  const confirm = async () => {
+    addFile(await makeFile(name, FileType.FILE))
+    dismiss()
+  }
+  return (
+    <>
+      <div className="p-2 w-96">
+        <h1 className="text-xl font-bold mb-2">New File</h1>
+        <FormInput
+          placeholder="filename"
+          value={name}
+          onInput={(e) => {
+            setName(e.target.value)
+          }}
+        />
+      </div>
+      <PopoverButtonRow
+        actions={[
+          ["Done", confirm, invalid],
+          ["Cancel", dismiss],
+        ]}
+      />
+    </>
+  )
+}
 
 export function AddBox() {
   const [inputEl, setInputEl] = useState<HTMLInputElement>(null)
@@ -55,17 +81,34 @@ export function AddBox() {
       setInputEl(null)
       inputEl.remove()
     }
-  })
+  }, [])
+
+  enum PopoverWindow {
+    NEW_FILE,
+    NEW_FOLDER,
+    ADD_IPFS,
+  }
+  const [popover, setPopover] = useState<PopoverWindow | null>(null)
+
+  useEffect(() => {
+    const listener = (ev) => {
+      if (ev.key === "Escape") setPopover(null)
+    }
+    window.addEventListener("keydown", listener)
+    return () => {
+      window.removeEventListener("keydown", listener)
+    }
+  }, [])
 
   const mOpt = (n, f) => ({ name: n, onClick: f })
   const dropdownOptions: FuncInput[] = [
-    mOpt("New File", () => {}),
-    mOpt("New Folder", () => {}),
+    mOpt("New File", () => setPopover(PopoverWindow.NEW_FILE)),
+    mOpt("New Folder", () => setPopover(PopoverWindow.NEW_FOLDER)),
     "divider",
     mOpt("Upload", () => {
       if (inputEl) inputEl.click()
     }),
-    mOpt("Add from IPFS", () => {}),
+    mOpt("Add from IPFS", () => setPopover(PopoverWindow.ADD_IPFS)),
   ]
 
   return (
@@ -80,6 +123,13 @@ export function AddBox() {
         options={dropdownOptions}
         display={<FontAwesomeIcon icon={faAdd} />}
       />
+      {popover !== null && (
+        <Popover key={popover}>
+          {popover === PopoverWindow.NEW_FILE && (
+            <NewFileBody dismiss={() => setPopover(null)} />
+          )}
+        </Popover>
+      )}
     </div>
   )
 }

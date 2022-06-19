@@ -60,7 +60,6 @@ const fileStateCreator: StateCreator<FileState> = (set): FileState => {
 }
 
 export const useFileStore = create<FileState>()(fileStateCreator)
-
 useFileStore.subscribe(({ files }, prev) => {
   const diff = Object.values(files).filter(
     (f) => !(f.fullName in prev.files && equal(f, prev.files[f.fullName]))

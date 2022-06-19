@@ -9,6 +9,7 @@ import {
 } from "./PopoverMenu"
 import { useFileStore } from "store/FileStore"
 import Anchor from "models/Anchor"
+import { Popover, PopoverButtonRow } from "components/Popover"
 
 type RightClickMenuProps = {
   close?: (e: MouseEvent) => void

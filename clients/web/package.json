@@ -10,8 +10,8 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "@crate/common": "*",
     "@crate/api-lib": "*",
+    "@crate/common": "*",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
@@ -27,6 +27,7 @@
     "ipfs-unixfs-exporter": "^7.0.11",
     "ipfs-unixfs-importer": "^9.0.10",
     "preact-router": "^4.0.1",
+    "sanitize-filename": "^1.6.3",
     "uuid": "^8.3.2",
     "vite-plugin-magical-svg": "^1.0.2",
     "zustand": "^4.0.0-rc.1"

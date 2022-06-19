@@ -42,7 +42,6 @@ function FileInspectorFileBody({ file }) {
   const rows: [string, string, string?, boolean?][] = [
     ["Name", file.fullName],
     ["Extension", file.extension],
-    ["UID", file.id, "text-xs font-mono break-all", true],
     ["CID", file.cid, "text-xs font-mono break-all", true],
   ]
   return (
