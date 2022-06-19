@@ -27,6 +27,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "firebase-admin": "^10.0.2",
+    "ipfs-http-client": "^57.0.1",
     "node-fetch": "^2.6.7",
     "winston": "^3.7.2"
   },
@@ -35,7 +36,7 @@
   },
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "nodemon src/app.ts --dev",
-    "build": "esbuild src/app.ts --platform=node --bundle --minify --outfile=dist/index.js"
+    "dev": "nodemon src/init.ts --dev",
+    "build": "esbuild src/init.ts --platform=node --external:electron --bundle --minify --outfile=dist/index.js"
   }
 }
