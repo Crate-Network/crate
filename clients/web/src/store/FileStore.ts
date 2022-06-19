@@ -59,12 +59,29 @@ const fileStateCreator: StateCreator<FileState> = (set): FileState => {
   }
 }
 
+type Operation = "create" | "update" | "delete"
+const getOp = (difference: number): Operation => {
+  if (difference < 0) return "delete"
+  else if (difference === 0) return "update"
+  return "create"
+}
+
 export const useFileStore = create<FileState>()(fileStateCreator)
 useFileStore.subscribe(({ files }, prev) => {
-  const diff = Object.values(files).filter(
-    (f) => !(f.fullName in prev.files && equal(f, prev.files[f.fullName]))
+  const op = getOp(
+    Object.values(files).length - Object.values(prev.files).length
   )
+  // get files that were added or modified
+  const diff =
+    op === "delete"
+      ? Object.values(prev.files).filter(
+          (f) => !(f.fullName in files && equal(f, files[f.fullName]))
+        )
+      : Object.values(files).filter(
+          (f) => !(f.fullName in prev.files && equal(f, prev.files[f.fullName]))
+        )
+
   if (diff.length === 0) return
 
-  console.log(diff)
+  console.log(op, diff)
 })
