@@ -118,7 +118,8 @@ function FileIcon({ file }: { file: FileModel }) {
         className="flex flex-col justify-center items-center w-36 h-36 select-none"
         onClick={setSelected}
         onDblClick={() => {
-          window.open("https://crate.network/ipfs/" + file.cid, "_blank")
+          if (file.type === FileType.FILE && !editingName)
+            window.open("https://crate.network/ipfs/" + file.cid, "_blank")
         }}
         onContextMenu={onContextMenu}
         onMouseOver={() => setHovered(true)}
