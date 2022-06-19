@@ -119,7 +119,10 @@ function FileIcon({ file }: { file: FileModel }) {
         onClick={setSelected}
         onDblClick={() => {
           if (file.type === FileType.FILE && !editingName)
-            window.open("https://crate.network/ipfs/" + file.cid, "_blank")
+            window.open(
+              "https://crate.network/ipfs/" + file.cid.toString(),
+              "_blank"
+            )
         }}
         onContextMenu={onContextMenu}
         onMouseOver={() => setHovered(true)}

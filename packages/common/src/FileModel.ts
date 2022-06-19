@@ -1,4 +1,5 @@
 import Hash from "ipfs-only-hash"
+import { CID } from "multiformats/cid"
 
 export enum FileType {
   FILE = "file",
@@ -7,7 +8,7 @@ export enum FileType {
 
 export type FileModel = {
   // CID from the contents of the file
-  cid: string
+  cid: CID
   // name without extension
   name: string
   // full file name
@@ -30,7 +31,7 @@ export type FileModel = {
 }
 
 export async function makeFile(fullName: string, type: FileType) {
-  const cid = await Hash.of("")
+  const cid = CID.parse(await Hash.of(""))
   const [name, extension] = fullName.split(".")
   const file = {
     cid,
