@@ -7,14 +7,9 @@
       "executor": "@nx-tools/nx-docker:build",
       "options": {
         "push": true,
-        "platforms": [
-          "linux/amd64",
-          "linux/arm64"
-        ],
+        "platforms": ["linux/amd64", "linux/arm64"],
         "metadata": {
-          "images": [
-            "ghcr.io/crate-network/web"
-          ],
+          "images": ["ghcr.io/crate-network/web"],
           "context": "./clients/web",
           "tags": [
             "latest",
@@ -33,9 +28,7 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": [],
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "options": {
         "jestConfig": "libs/mylib/jest.config.js",
         "tsConfig": "libs/mylib/tsconfig.spec.json"
@@ -44,7 +37,7 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "preset": "angular"
+        "preset": "conventional"
       }
     }
   }
