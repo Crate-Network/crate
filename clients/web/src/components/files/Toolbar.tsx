@@ -30,7 +30,7 @@ function NewFileBody({
           New {type === FileType.FILE ? "File" : "Folder"}
         </h1>
         <FormInput
-          placeholder="filename"
+          placeholder={type === FileType.FILE ? "file name" : "folder name"}
           value={name}
           onInput={(e) => {
             setName(e.target.value)
