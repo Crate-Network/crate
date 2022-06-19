@@ -1,7 +1,7 @@
 import { FilesPageContext } from "../../pages/Files"
-import { faFile } from "@fortawesome/free-solid-svg-icons"
+import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { FileModel } from "@crate/common"
+import { FileModel, FileType } from "@crate/common"
 import { useContext, useEffect, useRef, useState } from "preact/hooks"
 import useClickOutside from "hooks/useClickOutside"
 import RightClickMenu from "./RightClickMenu"
@@ -132,7 +132,7 @@ function FileIcon({ file }: { file: FileModel }) {
           )}
         >
           <FontAwesomeIcon
-            icon={faFile}
+            icon={file.type === FileType.FILE ? faFile : faFolder}
             className="w-16 h-16 m-2"
             color="rgb(249,115,22)"
           />
