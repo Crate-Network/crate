@@ -6,8 +6,6 @@ import { useContext, useEffect, useRef, useState } from "preact/hooks"
 import useClickOutside from "hooks/useClickOutside"
 import RightClickMenu from "./RightClickMenu"
 import Anchor from "models/Anchor"
-import FormInput from "components/FormInput"
-import { FileAction } from "models/FileMutator"
 import { useFileStore } from "store/FileStore"
 
 type IconState = "empty" | "selected" | "hovered"
@@ -75,23 +73,23 @@ function FileIcon({ file }: { file: FileModel }) {
   const [editingName, setEditingName] = useState(false)
 
   const iconRef = useRef()
-  const selected = selection.includes(file.id)
+  const selected = selection.includes(file.fullName)
 
   const setSelected = (e) => {
     if (e.ctrlKey || e.metaKey) {
-      dispatchSelection({ t: "add", id: file.id })
+      dispatchSelection({ t: "add", id: file.fullName })
       return
     }
-    dispatchSelection({ t: "setone", id: file.id })
+    dispatchSelection({ t: "setone", id: file.fullName })
   }
 
   const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
   const contextShown = Boolean(anchorPos)
   const onContextMenu = (e: MouseEvent) => {
     e.preventDefault()
+    if (!selection.includes(file.fullName))
+      dispatchSelection({ t: "setone", id: file.fullName })
     setAnchorPos({ top: e.pageY, left: e.pageX })
-    if (!selection.includes(file.id))
-      dispatchSelection({ t: "setone", id: file.id })
   }
 
   const handleClose = (e) => {
@@ -102,7 +100,7 @@ function FileIcon({ file }: { file: FileModel }) {
     iconRef,
     (e) => {
       if (e.ctrlKey || e.metaKey || anchorPos !== null) return
-      dispatchSelection({ t: "remove", id: file.id })
+      dispatchSelection({ t: "remove", id: file.fullName })
     },
     {
       deps: [selected, anchorPos],
@@ -164,7 +162,6 @@ function FileIcon({ file }: { file: FileModel }) {
       </div>
       {contextShown && (
         <RightClickMenu
-          file={file}
           close={handleClose}
           anchor={anchorPos}
           onRenameRequest={() => setEditingName(true)}

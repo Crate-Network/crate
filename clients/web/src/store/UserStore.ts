@@ -7,13 +7,11 @@ import { persist, subscribeWithSelector } from "zustand/middleware"
 import { useErrorStore } from "./ErrorStore"
 
 const defaultUserModel: UserModel = {
-  devices: [],
   firstName: "",
   lastName: "",
   organization: "",
-  recoveryKey: "",
-  signedDataKey: {},
   uses2FA: false,
+  dataKey: "",
 }
 
 interface FirebaseState {

@@ -1,5 +1,3 @@
-import { FileModel } from "@crate/common"
-import { FileAction } from "models/FileMutator"
 import { FilesPageContext } from "pages/Files"
 import { useContext } from "preact/hooks"
 import { JSXInternal } from "preact/src/jsx"
@@ -10,21 +8,31 @@ import {
   SelectionOptions,
 } from "./PopoverMenu"
 import { useFileStore } from "store/FileStore"
+import Anchor from "models/Anchor"
 
 type RightClickMenuProps = {
-  file: FileModel
+  close?: (e: MouseEvent) => void
+  anchor?: Anchor
   onRenameRequest?: () => void
 } & PopoverMenuProps
 
 export default function RightClickMenu({
-  file,
   close,
   anchor,
   onRenameRequest,
   ...props
 }: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
-  const { showInspector, dispatchSelection } = useContext(FilesPageContext)
+  const files = useFileStore((state) => state.files)
+  const { inspect, selection } = useContext(FilesPageContext)
+
   const deleteFile = useFileStore((state) => state.deleteFile)
+  const deleteFiles = () => {
+    selection.forEach((fileKey) => {
+      deleteFile(files[fileKey])
+    })
+  }
+
+  const file = files[selection[0]]
 
   const openFile = () =>
     window.open(
@@ -37,18 +45,16 @@ export default function RightClickMenu({
       "_blank"
     )
   const copyCID = () => navigator.clipboard.writeText(file.cid)
-  const copyUID = () => navigator.clipboard.writeText(file.id)
 
   const opts = [
     makeOpt("Open", close, openFile),
     makeOpt("Download", close, downloadFile),
     "divider",
-    makeOpt("Delete", close, () => deleteFile(file)),
+    makeOpt("Delete", close, deleteFiles),
     "divider",
-    makeOpt("Inspect", close, showInspector),
+    makeOpt("Inspect", close, inspect),
     makeOpt("Rename", close, onRenameRequest, !onRenameRequest),
     makeOpt("Copy CID", close, copyCID),
-    makeOpt("Copy UID", close, copyUID),
     "divider",
     makeOpt("Share", close),
   ].filter((v) => v !== "none") as (SelectionOptions | "divider")[]

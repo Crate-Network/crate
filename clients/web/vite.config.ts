@@ -8,6 +8,9 @@ export default defineConfig({
   esbuild: {
     jsxFactory: "h",
     jsxFragment: "Fragment",
+    define: {
+      this: "window",
+    },
   },
   plugins: [
     preact(),

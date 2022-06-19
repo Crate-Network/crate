@@ -42,7 +42,6 @@ function FileInspectorFileBody({ file }) {
   const rows: [string, string, string?, boolean?][] = [
     ["Name", file.fullName],
     ["Extension", file.extension],
-    ["Encrypted", file.encrypted.toString()],
     ["UID", file.id, "text-xs font-mono break-all", true],
     ["CID", file.cid, "text-xs font-mono break-all", true],
   ]
@@ -99,8 +98,8 @@ function Breadcrumbs() {
 export const FilesPageContext = createContext<{
   selection: string[]
   dispatchSelection: (a: DispatchMethod) => void
-  showInspector: () => void
-}>({ selection: [], dispatchSelection: () => null, showInspector: () => null })
+  inspect: () => void
+}>({ selection: [], dispatchSelection: () => null, inspect: () => null })
 
 function FileInspector({ close }: { close: () => void }) {
   const { selection } = useContext(FilesPageContext)
@@ -177,6 +176,7 @@ export default function Files() {
     })
   }, [files])
 
+  const inspect = () => setShowInspector(true)
   const [viewMode, setViewMode] = useStoredState<ViewMode>(
     ViewMode.LIST,
     "view-mode"
@@ -189,7 +189,7 @@ export default function Files() {
       value={{
         selection,
         dispatchSelection,
-        showInspector: () => setShowInspector(true),
+        inspect,
       }}
     >
       <main className="flex flex-row mx-auto 2xl:px-32 px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">

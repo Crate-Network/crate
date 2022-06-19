@@ -3,9 +3,9 @@ export enum FileType {
   DIRECTORY = "directory",
 }
 
-type BaseFileModel = {
+export type FileModel = {
   // CID from the contents of the file
-  readonly cid: string
+  cid: string
   // name without extension
   name: string
   // full file name
@@ -14,22 +14,15 @@ type BaseFileModel = {
   extension?: string
   // type of file
   type: FileType
-  // whether the contents of this file are encrypted
-  encrypted: boolean
-  // the encryption key for this file
-  encKey: string
-  // the size of the file
-  readonly size: number
+  // the encryption key for this file, signed by the user's data key
+  signedEncryptionKey: string
+  // the size of the file/folder
+  size: number
+  // date created
+  date: Date
+  // -- only relevant for FileType.DIRECTORY --
+  // CIDs of children
+  links: string[]
+  // size of all contained files/folders
+  cumulativeSize: number
 }
-
-export type FileModel = (
-  | {
-      type: FileType.FILE
-    }
-  | {
-      type: FileType.DIRECTORY
-      links: string[]
-      cumulativeSize: number
-    }
-) &
-  BaseFileModel

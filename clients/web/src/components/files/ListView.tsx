@@ -9,21 +9,21 @@ import { useFileStore } from "store/FileStore"
 export function FileRow({ file }: { file: FileModel }) {
   const { selection, dispatchSelection } = useContext(FilesPageContext)
   const rowRef = useRef()
-  const selected = selection.includes(file.id)
+  const selected = selection.includes(file.fullName)
 
   const setSelected = (e) => {
     if (e.ctrlKey || e.metaKey) {
-      dispatchSelection({ t: "add", id: file.id })
+      dispatchSelection({ t: "add", id: file.fullName })
       return
     }
-    dispatchSelection({ t: "setone", id: file.id })
+    dispatchSelection({ t: "setone", id: file.fullName })
   }
 
   useClickOutside(
     rowRef,
     (e) => {
       if (e.ctrlKey || e.metaKey || anchorPos !== null) return
-      dispatchSelection({ t: "remove", id: file.id })
+      dispatchSelection({ t: "remove", id: file.fullName })
     },
     {
       deps: [selected],
@@ -39,8 +39,8 @@ export function FileRow({ file }: { file: FileModel }) {
   const onContextMenu = (e: MouseEvent) => {
     e.preventDefault()
     setAnchorPos({ top: e.pageY, left: e.pageX })
-    if (!selection.includes(file.id))
-      dispatchSelection({ t: "setone", id: file.id })
+    if (!selection.includes(file.fullName))
+      dispatchSelection({ t: "setone", id: file.fullName })
   }
   const handleClose = () => {
     setAnchorPos(null)
