@@ -41,6 +41,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Docker images with Nx
-        run: npx nx affected --target=build
+        run: npx nx run-many --target=version --all && npx nx run-many --target=docker --all
         env:
           INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
