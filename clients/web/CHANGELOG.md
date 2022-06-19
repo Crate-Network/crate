@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.2.0...@crate/web-0.3.0) (2022-06-19)
+
+
+### Features
+
+* check for CRUD operation on FileStore change ([848ea0c](https://github.com/Crate-Network/crate/commit/848ea0cab2089f54e5d8c16f367db4cdaf974662))
+* handle empty filestore ([fc1f20f](https://github.com/Crate-Network/crate/commit/fc1f20f608e9f1234655e6c420cde1f119ff45e1))
+* handle errors at store level ([fc75345](https://github.com/Crate-Network/crate/commit/fc7534520ceef9b6b181c433772e056216b978d7))
+
+
+### Bug Fixes
+
+* added syncing boolean ([9b5bb70](https://github.com/Crate-Network/crate/commit/9b5bb70cd6b1ba75dc6c63c2207dd7dff8b62eb7))
+
 ## [0.2.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.1.0...@crate/web-0.2.0) (2022-06-19)
 
 
