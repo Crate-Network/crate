@@ -32,13 +32,17 @@ export type FileModel = {
 export async function makeFile(fullName: string, type: FileType) {
   const cid = await Hash.of("")
   const [name, extension] = fullName.split(".")
-  return {
+  const file = {
     cid,
     name,
     fullName,
-    extension,
     type,
     size: 0,
     date: new Date(),
-  } as FileModel
+  }
+  return (
+    type === FileType.FILE
+      ? { ...file, extension }
+      : { ...file, links: [], cumulativeSize: 0 }
+  ) as FileModel
 }
