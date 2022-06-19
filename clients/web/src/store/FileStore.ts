@@ -6,23 +6,6 @@ import equal from "deep-equal"
 import { FileError, FileErrorType } from "error/FileError"
 import { useErrorStore } from "./ErrorStore"
 
-const defaultFiles: Record<string, FileModel> = {}
-Array.from(
-  { length: 10 },
-  (_, idx): FileModel => ({
-    fullName: `file${idx}.txt`,
-    name: `file${idx}`,
-    extension: "txt",
-    signedEncryptionKey: "something",
-    type: FileType.FILE,
-    cid: "QmQ5vhrL7uv6tuoN9KeVBwd4PwfQkXdVVmDLUZuTNxqgvm",
-    date: new Date(),
-    size: 0,
-    links: [],
-    cumulativeSize: 0,
-  })
-).forEach((file) => (defaultFiles[file.fullName] = file))
-
 interface FileState {
   files: Record<string, FileModel>
   deleteFile: (file: FileModel) => void
@@ -40,7 +23,7 @@ const fileStateCreator: StateCreator<FileState> = (set): FileState => {
   }
 
   return {
-    files: { ...defaultFiles },
+    files: {},
     deleteFile: (file: FileModel) =>
       mutate(({ files }) => {
         delete files[file.fullName]

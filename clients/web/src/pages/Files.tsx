@@ -82,6 +82,8 @@ export default function Files() {
   const [sortBy, setSortBy] = useStoredState<SortBy>(SortBy.NAME, "sort-order")
   const [showInspector, setShowInspector] = useState(false)
 
+  const noFiles = Object.values(files).length === 0
+
   return (
     <FilesPageContext.Provider
       value={{
@@ -108,8 +110,11 @@ export default function Files() {
               <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
             </div>
           </div>
-
-          {viewMode === ViewMode.LIST ? <ListView /> : <GridView />}
+          {noFiles && (
+            <div className="w-full text-center italic mt-8">No files yet!</div>
+          )}
+          {!noFiles && viewMode === ViewMode.LIST && <ListView />}
+          {!noFiles && viewMode === ViewMode.GRID && <GridView />}
         </div>
         <div
           id="file-inspector"
