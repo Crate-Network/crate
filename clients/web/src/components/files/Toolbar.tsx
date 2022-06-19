@@ -9,18 +9,26 @@ import sanitizeFilename from "sanitize-filename"
 import { useFileStore } from "store/FileStore"
 import { FileType, makeFile } from "@crate/common"
 
-function NewFileBody({ dismiss }: { dismiss: () => void }) {
+function NewFileBody({
+  dismiss,
+  type,
+}: {
+  dismiss: () => void
+  type: FileType
+}) {
   const addFile = useFileStore((state) => state.addFile)
   const [name, setName] = useState("")
   const invalid = sanitizeFilename(name) !== name
   const confirm = async () => {
-    addFile(await makeFile(name, FileType.FILE))
+    addFile(await makeFile(name, type))
     dismiss()
   }
   return (
     <>
       <div className="p-2 w-96">
-        <h1 className="text-xl font-bold mb-2">New File</h1>
+        <h1 className="text-xl font-bold mb-2">
+          New {type === FileType.FILE ? "File" : "Folder"}
+        </h1>
         <FormInput
           placeholder="filename"
           value={name}
@@ -125,8 +133,16 @@ export function AddBox() {
       />
       {popover !== null && (
         <Popover key={popover}>
-          {popover === PopoverWindow.NEW_FILE && (
-            <NewFileBody dismiss={() => setPopover(null)} />
+          {(popover === PopoverWindow.NEW_FILE ||
+            popover === PopoverWindow.NEW_FOLDER) && (
+            <NewFileBody
+              dismiss={() => setPopover(null)}
+              type={
+                popover === PopoverWindow.NEW_FILE
+                  ? FileType.FILE
+                  : FileType.DIRECTORY
+              }
+            />
           )}
         </Popover>
       )}
