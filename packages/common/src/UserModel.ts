@@ -19,4 +19,9 @@ type UserSecurity = {
   dataKey: string | null
 }
 
-export type UserModel = UserInfo & UserSecurity
+type UserFiles = {
+  // CID of the user's current file root
+  rootCID: string | null
+}
+
+export type UserModel = UserInfo & UserSecurity & UserFiles

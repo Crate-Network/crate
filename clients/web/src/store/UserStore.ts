@@ -12,6 +12,10 @@ const defaultUserModel: UserModel = {
   organization: "",
   uses2FA: false,
   dataKey: "",
+  devices: {},
+  signedDataKey: {},
+  recoveryKey: null,
+  rootCID: null,
 }
 
 interface FirebaseState {
@@ -19,6 +23,7 @@ interface FirebaseState {
   user: User | null
   userDoc: UserModel | null
   logout: () => Promise<void>
+  updateUser: (newDoc: Partial<UserModel>) => void
 }
 
 const firebaseStateCreator: StateCreator<
@@ -38,6 +43,9 @@ const firebaseStateCreator: StateCreator<
     } catch (err) {
       useErrorStore.getState().showMessage(err.message)
     }
+  },
+  updateUser: (newDoc: Partial<UserModel>) => {
+    set({ userDoc: { ...defaultUserModel, ...newDoc } })
   },
 })
 
@@ -60,17 +68,16 @@ useUserStore.subscribe(
       user.uid.toString()
     ) as DocumentReference<UserModel>
 
-    const update = (newDoc: UserModel) =>
-      useUserStore.setState({ userDoc: { ...defaultUserModel, ...newDoc } })
-
     try {
       const doc = await getDoc(userDocRef)
-      update(doc.data())
+      useUserStore.getState().updateUser(doc.data())
     } catch (err) {
       useErrorStore.getState().showMessage(err.message)
     }
 
-    const unsub = onSnapshot(userDocRef, (doc) => update(doc.data()))
+    const unsub = onSnapshot(userDocRef, (doc) =>
+      useUserStore.getState().updateUser(doc.data())
+    )
     return unsub
   }
 )
