@@ -19,7 +19,7 @@
       "dependsOn": ["^generate-sources", "^build"]
     },
     "docker": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["build"]
     },
     "dev": {
       "dependsOn": ["^build"]
