@@ -1,10 +1,10 @@
 import { FileModel, FileType } from "@crate/common"
 import produce from "immer"
 import { WritableDraft } from "immer/dist/internal"
-import { v4 as uuidv4 } from "uuid"
 import create, { StateCreator } from "zustand"
 import equal from "deep-equal"
 import { FileError, FileErrorType } from "error/FileError"
+import { useErrorStore } from "./ErrorStore"
 
 const defaultFiles: Record<string, FileModel> = {}
 Array.from(
@@ -31,8 +31,13 @@ interface FileState {
 }
 
 const fileStateCreator: StateCreator<FileState> = (set): FileState => {
-  const mutate = (f: (draft: WritableDraft<FileState>) => void) =>
-    set(produce(f))
+  const mutate = (f: (draft: WritableDraft<FileState>) => void) => {
+    try {
+      set(produce(f))
+    } catch (e) {
+      useErrorStore.getState().showMessage((e as FileError).message)
+    }
+  }
 
   return {
     files: { ...defaultFiles },
@@ -42,6 +47,8 @@ const fileStateCreator: StateCreator<FileState> = (set): FileState => {
       }),
     addFile: (file: FileModel) =>
       mutate(({ files }) => {
+        if (file.fullName in files)
+          throw new FileError(FileErrorType.EXISTS, file)
         files[file.fullName] = file
       }),
     renameFile: (file: FileModel, newName: string) =>
@@ -66,6 +73,7 @@ const getOp = (difference: number): Operation => {
   return "create"
 }
 
+// synchronize local state with server on change
 export const useFileStore = create<FileState>()(fileStateCreator)
 useFileStore.subscribe(({ files }, prev) => {
   const op = getOp(
