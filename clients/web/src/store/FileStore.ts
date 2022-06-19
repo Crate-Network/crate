@@ -8,6 +8,7 @@ import { useErrorStore } from "./ErrorStore"
 
 interface FileState {
   files: Record<string, FileModel>
+  syncing: boolean
   deleteFile: (file: FileModel) => void
   addFile: (file: FileModel) => void
   renameFile: (file: FileModel, newName: string) => void
@@ -24,6 +25,7 @@ const fileStateCreator: StateCreator<FileState> = (set): FileState => {
 
   return {
     files: {},
+    syncing: false,
     deleteFile: (file: FileModel) =>
       mutate(({ files }) => {
         delete files[file.fullName]
