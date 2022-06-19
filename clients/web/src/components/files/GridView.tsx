@@ -178,7 +178,7 @@ export function GridView() {
     <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
       <div
         className="grid w-full"
-        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(9rem, 1fr))" }}
+        style={{ gridTemplateColumns: "repeat(auto-fill, minmax(9rem, 1fr))" }}
       >
         {Object.values(files).map((el) => (
           <FileIcon file={el} />
