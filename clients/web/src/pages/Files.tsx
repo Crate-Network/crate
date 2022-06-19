@@ -1,6 +1,6 @@
 import { FileModel } from "@crate/common"
 import { createContext } from "preact"
-import { useContext, useEffect, useReducer, useState } from "preact/hooks"
+import { useEffect, useReducer, useState } from "preact/hooks"
 import { GridView } from "../components/files/GridView"
 import { ListView } from "../components/files/ListView"
 import {
@@ -11,16 +11,10 @@ import {
   ViewBar,
   ViewMode,
 } from "../components/files/Toolbar"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faCopy,
-  faGreaterThan,
-  faLessThan,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons"
 import { Link } from "preact-router"
 import useStoredState from "hooks/useStoredState"
 import { useFileStore } from "store/FileStore"
+import { FileInspector } from "../components/files/FileInspector"
 
 type SelectionType = "add" | "remove" | "setone"
 type DispatchMethod = { t: SelectionType; id: string }
@@ -36,40 +30,6 @@ function selectionReducer(prev: string[], f: DispatchMethod) {
     default:
       return prev
   }
-}
-
-function FileInspectorFileBody({ file }) {
-  const rows: [string, string, string?, boolean?][] = [
-    ["Name", file.fullName],
-    ["Extension", file.extension],
-    ["CID", file.cid, "text-xs font-mono break-all", true],
-  ]
-  return (
-    <div className="p-2 text-sm">
-      <table>
-        {rows.map(([title, value, classes, copy]) => (
-          <tr>
-            <td className="font-semibold text-gray-600 dark:text-gray-300 text-right pr-4 align-top">
-              {title}
-            </td>
-            <td className={typeof classes === "string" ? classes : ""}>
-              {value}{" "}
-              {copy && (
-                <span
-                  className="rounded-sm p-0.5 hover:bg-neutral-300 active:bg-neutral-400 dark:hover:bg-neutral-600 dark:active:bg-neutral-700 transition-all dark:text-white cursor-pointer"
-                  onClick={() => {
-                    navigator.clipboard.writeText(value)
-                  }}
-                >
-                  <FontAwesomeIcon icon={faCopy} />
-                </span>
-              )}
-            </td>
-          </tr>
-        ))}
-      </table>
-    </div>
-  )
 }
 
 function Breadcrumbs() {
@@ -97,69 +57,8 @@ function Breadcrumbs() {
 export const FilesPageContext = createContext<{
   selection: string[]
   dispatchSelection: (a: DispatchMethod) => void
-  inspect: () => void
+  inspect: (files?: FileModel[]) => void
 }>({ selection: [], dispatchSelection: () => null, inspect: () => null })
-
-function FileInspector({ close }: { close: () => void }) {
-  const { selection } = useContext(FilesPageContext)
-  const files = useFileStore((state) => state.files)
-  const selectedFiles: FileModel[] = selection
-    .map((id) => files[id])
-    .filter((v) => v !== undefined)
-
-  const [fileIndex, setFileIndex] = useState(0)
-  const maxIndex = selectedFiles.length - 1
-  useEffect(() => {
-    if (maxIndex < fileIndex) setFileIndex(maxIndex)
-    if (fileIndex < 0) setFileIndex(0)
-  }, [maxIndex, fileIndex])
-
-  return (
-    <>
-      <div className="flex flex-row items-center justify-between border-b">
-        <h2 className="font-iaQuattro text-xl font-bold ml-2">Inspector</h2>
-        <button
-          onClick={close}
-          className="bg-orange-500 h-8 w-8 m-2 rounded-md hover:shadow-lg active:shadow-md text-white transition-shadow"
-        >
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
-      </div>
-      {selectedFiles.length === 1 && (
-        <FileInspectorFileBody file={selectedFiles[0]} />
-      )}
-      {selectedFiles.length > 1 && (
-        <>
-          <FileInspectorFileBody file={selectedFiles[fileIndex]} />
-          <div className="flex justify-center items-center">
-            <button
-              disabled={fileIndex === 0}
-              onClick={() => setFileIndex((i) => i - 1)}
-              className="bg-neutral-500 select-none disabled:bg-neutral-200 dark:disabled:bg-neutral-800 hover:bg-neutral-600 active:bg-neutral-700 transition-all rounded-md shadow-sm h-8 w-8 text-white"
-            >
-              <FontAwesomeIcon icon={faLessThan} />
-            </button>
-            <span className="font-bold m-2 italic inline-block w-12 text-center">
-              {fileIndex + 1} / {maxIndex + 1}
-            </span>
-            <button
-              disabled={fileIndex === maxIndex}
-              onClick={() => setFileIndex((i) => i + 1)}
-              className="bg-neutral-500 select-none disabled:bg-neutral-200 dark:disabled:bg-neutral-800 hover:bg-neutral-600 active:bg-neutral-700 transition-all rounded-md shadow-sm h-8 w-8 text-white"
-            >
-              <FontAwesomeIcon icon={faGreaterThan} />
-            </button>
-          </div>
-        </>
-      )}
-      {selectedFiles.length === 0 && (
-        <span className="text-sm m-2 italic inline-block">
-          No files are selected.
-        </span>
-      )}
-    </>
-  )
-}
 
 export default function Files() {
   const files = useFileStore((state) => state.files)
