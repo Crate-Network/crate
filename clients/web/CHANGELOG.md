@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.3.0...@crate/web-0.4.0) (2022-06-19)
+
+
+### Features
+
+* duplicate file ([b860750](https://github.com/Crate-Network/crate/commit/b860750325d67d4f84789a946feafde7de8ddba6))
+* ignore dblClick if renaming or directory ([a963f70](https://github.com/Crate-Network/crate/commit/a963f70ba955df37ab523e74a388bbd7aee4f89a))
+
+
+### Bug Fixes
+
+* grid view correctly scales on one row ([d89bb76](https://github.com/Crate-Network/crate/commit/d89bb76efb2fe600e6b5f14ca5726bc6039374ce))
+
 ## [0.3.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.2.0...@crate/web-0.3.0) (2022-06-19)
 
 
