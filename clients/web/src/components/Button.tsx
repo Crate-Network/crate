@@ -7,7 +7,7 @@ export default function Button(props) {
         bg-clip-padding
         px-3
         py-1.5
-        text-base
+        text-white
         font-normal
         rounded
         transition
