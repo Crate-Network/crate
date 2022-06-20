@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/Crate-Network/crate/compare/@crate/common-0.2.0...@crate/common-0.3.0) (2022-06-20)
+
+
+### Features
+
+* added renameFile, restructured common ([bf0e9e8](https://github.com/Crate-Network/crate/commit/bf0e9e8219f5f8377f5adb40c167483b6827caa1))
+
 ## [0.2.0](https://github.com/Crate-Network/crate/compare/@crate/common-0.1.0...@crate/common-0.2.0) (2022-06-19)
 
 
