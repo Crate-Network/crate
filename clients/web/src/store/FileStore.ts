@@ -1,9 +1,14 @@
-import { FileModel, FileType, renameFile } from "@crate/common"
+import {
+  FileModel,
+  FileType,
+  renameFile,
+  FileError,
+  FileErrorType,
+} from "@crate/common"
 import produce from "immer"
 import { WritableDraft } from "immer/dist/internal"
 import create, { StateCreator } from "zustand"
 import equal from "deep-equal"
-import { FileError, FileErrorType } from "error/FileError"
 import { useErrorStore } from "./ErrorStore"
 
 interface FileState {

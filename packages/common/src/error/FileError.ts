@@ -2,6 +2,8 @@ import { FileModel } from "@crate/common"
 
 export enum FileErrorType {
   EXISTS = "File with name already exists",
+  FILE_INVALID = "Invalid usage, expected to be of type FileType.FOLDER",
+  FOLDER_INVALID = "Invalid usage, expected to be of type FileType.FILE",
 }
 
 export class FileError extends Error {
