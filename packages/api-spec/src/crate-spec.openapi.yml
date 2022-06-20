@@ -28,6 +28,19 @@ servers:
   - url: https://crate.network/api/v1
 
 paths:
+  /file/{cid}:
+    get:
+      description: Get FileModel object for a particular CID.
+      tags:
+        - files
+      responses:
+        "200":
+          description: Successful response (FileModel object)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileModel"
+
   /pins:
     get:
       summary: List pin objects
@@ -180,6 +193,55 @@ paths:
 
 components:
   schemas:
+    CID:
+      description: Content Identifier (CID)
+      type: string
+      example: "Qm..."
+
+    FileModel:
+      description: A file object as represented on @crate/web
+      type: object
+      required:
+        - cid
+        - name
+        - type
+        - size
+        - date
+      properties:
+        cid:
+          $ref: "#/components/schemas/CID"
+        name:
+          description: Full name of file, with extension
+          type: string
+          maxLength: 255
+          example: "PreciousData.pdf"
+        type:
+          description: Whether this is a file or directory
+          enum:
+            - "directory"
+            - "file"
+        signedEncryptionKey:
+          description: |
+            Encryption key for the file in string format, parsed from binary
+            representation in UTF-8. This key has been encrypted by the user's
+            data key.
+          type: string
+        size:
+          description: The size of the file.
+          type: number
+        date:
+          description: The date that this file was last modified in ISO-8601.
+          type: string
+        links:
+          description: |
+            The CIDs linked to from this directory (safe to ignore for files).
+          type: array
+          items:
+            $ref: "#/components/schemas/CID"
+        cumulativeSize:
+          description: The size of the directory and all contained files.
+          type: number
+
     PinResults:
       description: Response used for listing pin objects matching request
       type: object
@@ -237,9 +299,7 @@ components:
         - cid
       properties:
         cid:
-          description: Content Identifier (CID) to be pinned recursively
-          type: string
-          example: "QmCIDToBePinned"
+          $ref: "#/components/schemas/CID"
         name:
           description: Optional name for pinned data; can be used for lookups later
           type: string
