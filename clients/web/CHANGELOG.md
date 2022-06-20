@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.5.1](https://github.com/Crate-Network/crate/compare/@crate/web-0.5.0...@crate/web-0.5.1) (2022-06-20)
+
+
+### Bug Fixes
+
+* tweaked FileError in use ([79553ff](https://github.com/Crate-Network/crate/commit/79553ffd713f8a1989a1c5cbd194a5cb6482fa4c))
+
 ## [0.5.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.4.0...@crate/web-0.5.0) (2022-06-20)
 
 
