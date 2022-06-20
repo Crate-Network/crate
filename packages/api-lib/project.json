@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "@crate/api-lib",
-  "sourceRoot": "packages/api-lib/src",
+  "sourceRoot": "./packages/api-lib/src",
   "projectType": "library",
   "targets": {
     "generate-sources": {

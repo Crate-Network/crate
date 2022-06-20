@@ -1,6 +1,7 @@
 import { CID } from "multiformats/cid"
 import Hash from "ipfs-only-hash"
 import { FileModel, FileType } from "../model"
+import { FileDescriptor } from "@crate/api-lib"
 
 export async function createFile(
   fullName: string,
@@ -46,3 +47,5 @@ export function duplicateFile(file: FileModel): FileModel {
     date: new Date(),
   }
 }
+
+export function fromFileDescriptor(fileDesc: FileDescriptor): FileModel {}
