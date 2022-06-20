@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "ESNext",
     "sourceMap": true,
     "importHelpers": true,
-    "module": "commonjs",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "outDir": "dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
@@ -26,5 +25,10 @@
         "packages/api-lib/src/index.ts"
       ]
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "*/**/*.test.ts",
+    "*/**/*.spec.ts"
+  ]
 }

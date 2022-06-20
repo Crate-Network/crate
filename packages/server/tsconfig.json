@@ -1,11 +1,10 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
+    "baseUrl": "./",
+    "rootDir": "src",
+    "outDir": "dist",
     "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "typeRoots" : ["./src/types", "./node_modules/@types"]
   }
 }
