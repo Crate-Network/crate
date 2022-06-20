@@ -7,7 +7,7 @@ import { JSXInternal } from "preact/src/jsx"
 import Dropdown, { FuncInput } from "./Dropdown"
 import sanitizeFilename from "sanitize-filename"
 import { useFileStore } from "store/FileStore"
-import { FileType, makeFile } from "@crate/common"
+import { FileType, createFile } from "@crate/common"
 
 function NewFileBody({
   dismiss,
@@ -20,7 +20,7 @@ function NewFileBody({
   const [name, setName] = useState("")
   const invalid = sanitizeFilename(name) !== name
   const confirm = async () => {
-    addFile(await makeFile(name, type))
+    addFile(await createFile(name, type))
     dismiss()
   }
   return (
