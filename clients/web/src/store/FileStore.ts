@@ -37,13 +37,12 @@ const fileStateCreator: StateCreator<FileState> = (set): FileState => {
       }),
     addFile: (file: FileModel) =>
       mutate(({ files }) => {
-        if (file.fullName in files)
-          throw new FileError(FileErrorType.EXISTS, file)
+        if (file.fullName in files) throw new FileError(FileErrorType.EXISTS)
         files[file.fullName] = file
       }),
     renameFile: (file: FileModel, newName: string) =>
       mutate(({ files }) => {
-        if (newName in files) throw new FileError(FileErrorType.EXISTS, file)
+        if (newName in files) throw new FileError(FileErrorType.EXISTS)
         files[newName] = renameFile(file, newName)
         delete files[file.fullName]
       }),
