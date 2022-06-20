@@ -19,6 +19,9 @@
     "declaration": true,
     "resolveJsonModule": true,
     "paths": {
+      "@/api-docs": [
+        "packages/api-docs/src/index.ts"
+      ],
       "@/api-lib": [
         "packages/api-lib/src/index.ts"
       ]
