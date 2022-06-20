@@ -199,11 +199,6 @@ paths:
 
 components:
   schemas:
-    CID:
-      description: Content Identifier (CID)
-      type: string
-      example: "Qm..."
-
     FileDescriptor:
       description: A file object as represented on @crate/web
       type: object
@@ -247,6 +242,11 @@ components:
         cumulativeSize:
           description: The size of the directory and all contained files.
           type: number
+
+    CID:
+      description: Content Identifier (CID)
+      type: string
+      example: "Qm..."
 
     PinResults:
       description: Response used for listing pin objects matching request
