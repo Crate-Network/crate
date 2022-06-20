@@ -1,4 +1,3 @@
-import Hash from "ipfs-only-hash"
 import { CID } from "multiformats/cid"
 
 export enum FileType {
@@ -8,7 +7,7 @@ export enum FileType {
 
 export type FileModel = {
   // CID from the contents of the file
-  cid: CID
+  cid: string
   // name without extension
   name: string
   // full file name
@@ -28,31 +27,4 @@ export type FileModel = {
   links?: string[]
   // size of all contained files/folders
   cumulativeSize?: number
-}
-
-export async function makeFile(fullName: string, type: FileType) {
-  const cid = CID.parse(await Hash.of(""))
-  const [name, extension] = fullName.split(".")
-  const file = {
-    cid,
-    name,
-    fullName,
-    type,
-    size: 0,
-    date: new Date(),
-  }
-  return (
-    type === FileType.FILE
-      ? { ...file, extension }
-      : { ...file, links: [], cumulativeSize: 0 }
-  ) as FileModel
-}
-
-export function duplicateFile(file: FileModel) {
-  return {
-    ...file,
-    fullName: file.name + " copy" + file.extension ? "." + file.extension : "",
-    name: file.name + " copy",
-    date: new Date(),
-  }
 }

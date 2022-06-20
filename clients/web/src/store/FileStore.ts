@@ -1,4 +1,4 @@
-import { FileModel, FileType } from "@crate/common"
+import { FileModel, FileType, renameFile } from "@crate/common"
 import produce from "immer"
 import { WritableDraft } from "immer/dist/internal"
 import create, { StateCreator } from "zustand"
@@ -39,13 +39,7 @@ const fileStateCreator: StateCreator<FileState> = (set): FileState => {
     renameFile: (file: FileModel, newName: string) =>
       mutate(({ files }) => {
         if (newName in files) throw new FileError(FileErrorType.EXISTS, file)
-        const [name, extension] = newName.split(".")
-        files[newName] = {
-          ...files[file.fullName],
-          fullName: newName,
-          name,
-          extension,
-        }
+        files[newName] = renameFile(file, newName)
         delete files[file.fullName]
       }),
   }

@@ -6,7 +6,7 @@ export function FileInspectorFileBody({ file }: { file: FileModel }) {
   const rows = [
     ["Name", file.fullName],
     file.extension ? ["Extension", file.extension] : null,
-    ["CID", file.cid.toString(), "text-xs font-mono break-all", true],
+    ["CID", file.cid, "text-xs font-mono break-all", true],
   ].filter((el) => el !== null) as [string, string, string?, boolean?][]
 
   return (

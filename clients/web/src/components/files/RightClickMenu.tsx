@@ -45,7 +45,7 @@ export default function RightClickMenu({
       `https://crate.network/ipfs/${file.cid}?filename=${file.fullName}&download=true`,
       "_blank"
     )
-  const copyCID = () => navigator.clipboard.writeText(file.cid.toString())
+  const copyCID = () => navigator.clipboard.writeText(file.cid)
 
   const opts = [
     makeOpt("Open", close, openFile),

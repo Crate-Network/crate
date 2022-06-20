@@ -1,2 +1,2 @@
-export * from "./FileModel"
-export * from "./UserModel"
+export * from "./model"
+export * from "./lib"

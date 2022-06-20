@@ -1848,7 +1848,7 @@
     cborg "^1.5.4"
     multiformats "^9.5.4"
 
-"@ipld/dag-pb@^2.0.2", "@ipld/dag-pb@^2.1.3":
+"@ipld/dag-pb@^2.0.2", "@ipld/dag-pb@^2.1.17", "@ipld/dag-pb@^2.1.3":
   version "2.1.17"
   resolved "https://registry.yarnpkg.com/@ipld/dag-pb/-/dag-pb-2.1.17.tgz#baafe2fc6bbd1654c402a804ea54b8860cfb2912"
   integrity sha512-AmzOdmdv5hT8iGsrbpzm5R0Fvk7DEbtwcglG2gJLvW9q3zwb+E681hY4EwEELypM1Rfnp/JDA9dGqYcpEi/iAg==
