@@ -69,6 +69,12 @@ export interface FileDescriptor {
      * @memberof FileDescriptor
      */
     cumulativeSize?: number;
+    /**
+     * Permissions for file.
+     * @type {number}
+     * @memberof FileDescriptor
+     */
+    mode?: number;
 }
 
 
@@ -114,6 +120,7 @@ export function FileDescriptorFromJSONTyped(json: any, ignoreDiscriminator: bool
         'date': json['date'],
         'links': !exists(json, 'links') ? undefined : json['links'],
         'cumulativeSize': !exists(json, 'cumulativeSize') ? undefined : json['cumulativeSize'],
+        'mode': !exists(json, 'mode') ? undefined : json['mode'],
     };
 }
 
@@ -134,6 +141,7 @@ export function FileDescriptorToJSON(value?: FileDescriptor | null): any {
         'date': value.date,
         'links': value.links,
         'cumulativeSize': value.cumulativeSize,
+        'mode': value.mode,
     };
 }
 

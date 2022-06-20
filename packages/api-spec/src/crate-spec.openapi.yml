@@ -242,6 +242,9 @@ components:
         cumulativeSize:
           description: The size of the directory and all contained files.
           type: number
+        mode:
+          description: Permissions for file.
+          type: number
 
     CID:
       description: Content Identifier (CID)
