@@ -34,7 +34,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: "#/components/parameters/cid"
+          $ref: "#/components/schemas/CID"
     get:
       description: Get FileDescriptor object for a particular CID.
       tags:
@@ -210,9 +210,7 @@ components:
         - date
       properties:
         cid:
-          description: Content Identifier (CID)
-          type: string
-          example: "Qm..."
+          $ref: "#/components/schemas/CID"
         name:
           description: Full name of file, with extension
           type: string
@@ -240,12 +238,15 @@ components:
             The CIDs linked to from this directory (safe to ignore for files).
           type: array
           items:
-            description: Content Identifier (CID)
-            type: string
-            example: "Qm..."
+            $ref: "#/components/schemas/CID"
         cumulativeSize:
           description: The size of the directory and all contained files.
           type: number
+
+    CID:
+      description: Content Identifier (CID)
+      type: string
+      example: "Qm..."
 
     PinResults:
       description: Response used for listing pin objects matching request
@@ -304,9 +305,7 @@ components:
         - cid
       properties:
         cid:
-          description: Content Identifier (CID)
-          type: string
-          example: "Qm..."
+          $ref: "#/components/schemas/CID"
         name:
           description: Optional name for pinned data; can be used for lookups later
           type: string
