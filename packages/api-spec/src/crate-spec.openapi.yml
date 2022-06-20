@@ -29,17 +29,23 @@ servers:
 
 paths:
   /file/{cid}:
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/parameters/cid"
     get:
-      description: Get FileModel object for a particular CID.
+      description: Get FileDescriptor object for a particular CID.
       tags:
         - files
       responses:
         "200":
-          description: Successful response (FileModel object)
+          description: Successful response (FileDescriptor object)
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FileModel"
+                $ref: "#/components/schemas/FileDescriptor"
 
   /pins:
     get:
@@ -198,7 +204,7 @@ components:
       type: string
       example: "Qm..."
 
-    FileModel:
+    FileDescriptor:
       description: A file object as represented on @crate/web
       type: object
       required:
