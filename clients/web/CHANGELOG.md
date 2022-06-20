@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.4.0...@crate/web-0.5.0) (2022-06-20)
+
+
+### Features
+
+* added renameFile, restructured common ([bf0e9e8](https://github.com/Crate-Network/crate/commit/bf0e9e8219f5f8377f5adb40c167483b6827caa1))
+* updated User to include rootCID ([315fd2e](https://github.com/Crate-Network/crate/commit/315fd2e4116c14d8edaa3602fc04d055d434b80a))
+* use CID object instead of string ([59b934b](https://github.com/Crate-Network/crate/commit/59b934be6b3f6d3f124f9724fc8e7c9bc89121dd))
+
+
+### Bug Fixes
+
+* renamed toolbar makeFile to createFile ([a01512e](https://github.com/Crate-Network/crate/commit/a01512e2261ad5470d8709245a555ee7561918ca))
+
 ## [0.4.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.3.0...@crate/web-0.4.0) (2022-06-19)
 
 
