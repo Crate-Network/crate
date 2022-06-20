@@ -2,6 +2,7 @@
 /* eslint-disable */
 export * from './Failure';
 export * from './FailureError';
+export * from './FileDescriptor';
 export * from './Pin';
 export * from './PinResults';
 export * from './PinStatus';

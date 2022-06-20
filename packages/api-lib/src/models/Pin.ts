@@ -20,7 +20,7 @@ import { exists, mapValues } from '../runtime';
  */
 export interface Pin {
     /**
-     * Content Identifier (CID) to be pinned recursively
+     * Content Identifier (CID)
      * @type {string}
      * @memberof Pin
      */
