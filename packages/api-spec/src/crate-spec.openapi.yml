@@ -210,7 +210,9 @@ components:
         - date
       properties:
         cid:
-          $ref: "#/components/schemas/CID"
+          description: Content Identifier (CID)
+          type: string
+          example: "Qm..."
         name:
           description: Full name of file, with extension
           type: string
@@ -238,15 +240,12 @@ components:
             The CIDs linked to from this directory (safe to ignore for files).
           type: array
           items:
-            $ref: "#/components/schemas/CID"
+            description: Content Identifier (CID)
+            type: string
+            example: "Qm..."
         cumulativeSize:
           description: The size of the directory and all contained files.
           type: number
-
-    CID:
-      description: Content Identifier (CID)
-      type: string
-      example: "Qm..."
 
     PinResults:
       description: Response used for listing pin objects matching request
@@ -305,7 +304,9 @@ components:
         - cid
       properties:
         cid:
-          $ref: "#/components/schemas/CID"
+          description: Content Identifier (CID)
+          type: string
+          example: "Qm..."
         name:
           description: Optional name for pinned data; can be used for lookups later
           type: string
