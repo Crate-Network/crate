@@ -42,6 +42,7 @@
     "test:since": "nx affected --target=test",
     "dev": "nx run-many --target=dev --all",
     "dev:web": "nx dev web",
+    "docker": "nx run-many --target=docker --all",
     "prepare": "husky install"
   },
   "dependencies": {
