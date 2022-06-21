@@ -43,7 +43,7 @@
     "dev": "nx run-many --target=dev --all",
     "dev:web": "nx dev web",
     "docker": "nx run-many --target=docker --all",
-    "docs": "nx run-many --target=generate-sources --all",
+    "docs": "nx run-many --target=generate-sources --all && nx run @crate/api-lib:build",
     "prepare": "husky install"
   },
   "dependencies": {
