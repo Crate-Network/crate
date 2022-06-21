@@ -4,8 +4,8 @@ import { FileModel } from "@crate/common"
 
 export function FileInspectorFileBody({ file }: { file: FileModel }) {
   const rows = [
-    ["Name", file.fullName],
-    file.extension ? ["Extension", file.extension] : null,
+    ["Name", file.name],
+    file.name.includes(".") ? ["Extension", file.name.split(".", 2)[1]] : null,
     ["CID", file.cid, "text-xs font-mono break-all", true],
   ].filter((el) => el !== null) as [string, string, string?, boolean?][]
 

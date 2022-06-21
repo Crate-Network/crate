@@ -1,5 +1,5 @@
 import { FileError, FileErrorType } from "../error"
-import { FileModel, FileType } from "../model"
+import { FileModel, FileModelTypeEnum as FileType } from "@crate/api-lib"
 import { UnixFS as _UnixFS, parseMtime } from "ipfs-unixfs"
 import { CID as _CID } from "multiformats/cid"
 import { encode, decode, prepare } from "@ipld/dag-pb"
@@ -18,9 +18,10 @@ export class CID extends _CID {
     return { ...file, cid: (await CID.fromFile(file)).toString() }
   }
 }
+
 export class Block {
   static fromFile(file: FileModel, content?: Uint8Array): Uint8Array {
-    if (file.type === FileType.FILE && !content) {
+    if (file.type === "file" && !content) {
       console.error("Pass file contents as second parameter for files.")
       throw new FileError(FileErrorType.FILE_INVALID)
     }
@@ -46,14 +47,13 @@ export class Block {
     const isDir = ufs.type === "directory"
     return {
       cid: (await CID.fromBlock(bytes)).toString(),
-      fullName: "",
       name: "",
-      extension: "",
       size: ufs.fileSize(),
-      date: new Date(ufs.mtime.secs),
+      mode: ufs.mode,
+      date: ufs.mtime ? new Date(ufs.mtime.secs) : new Date(),
       ...(isDir
         ? {
-            type: FileType.DIRECTORY,
+            type: "directory",
             links: dag.Links.map((link) => ({
               cid: link.Hash.toString(),
               name: link.Name,
@@ -62,7 +62,7 @@ export class Block {
             cumulativeSize: dag.Links.reduce((a, b) => a + b.Tsize, 0),
           }
         : {
-            type: FileType.FILE,
+            type: "file",
           }),
     }
   }
@@ -71,13 +71,13 @@ export class Block {
 export class UnixFS extends _UnixFS {
   static from(type: FileType, date: Date, content?: Uint8Array) {
     return new UnixFS({
-      type: type === FileType.DIRECTORY ? "directory" : "file",
+      type,
       data: content,
       hashType: undefined,
       fanout: undefined,
       blockSizes: [],
       mtime: parseMtime(date),
-      mode: type === FileType.DIRECTORY ? 493 : 420,
+      mode: type === "directory" ? 493 : 420,
     })
   }
 }

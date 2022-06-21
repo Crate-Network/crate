@@ -27,18 +27,18 @@ const fileStateCreator: StateCreator<FileState> = (set): FileState => {
     syncing: false,
     deleteFile: (file: FileModel) =>
       mutate(({ files }) => {
-        delete files[file.fullName]
+        delete files[file.name]
       }),
     addFile: (file: FileModel) =>
       mutate(({ files }) => {
-        if (file.fullName in files) throw new FileError(FileErrorType.EXISTS)
-        files[file.fullName] = file
+        if (file.name in files) throw new FileError(FileErrorType.EXISTS)
+        files[file.name] = file
       }),
     renameFile: (file: FileModel, newName: string) =>
       mutate(({ files }) => {
         if (newName in files) throw new FileError(FileErrorType.EXISTS)
         files[newName] = renameFile(file, newName)
-        delete files[file.fullName]
+        delete files[file.name]
       }),
   }
 }

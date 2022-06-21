@@ -37,12 +37,12 @@ export default function RightClickMenu({
 
   const openFile = () =>
     window.open(
-      `https://crate.network/ipfs/${file.cid}?filename=${file.fullName}`,
+      `https://crate.network/ipfs/${file.cid}?filename=${file.name}`,
       "_blank"
     )
   const downloadFile = () =>
     window.open(
-      `https://crate.network/ipfs/${file.cid}?filename=${file.fullName}&download=true`,
+      `https://crate.network/ipfs/${file.cid}?filename=${file.name}&download=true`,
       "_blank"
     )
   const copyCID = () => navigator.clipboard.writeText(file.cid)

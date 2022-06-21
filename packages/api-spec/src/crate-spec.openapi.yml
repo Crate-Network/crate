@@ -30,30 +30,33 @@ servers:
 paths:
   /file:
     get:
+      summary: Fetches FileModel for a CID or path
       parameters:
         - name: path
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/CID"
+            description: File path
+            example: /dir1/dir2/file.txt
+            type: string
         - name: cid
           in: query
           required: false
           schema:
             $ref: "#/components/schemas/CID"
       description: |
-        Get FileDescriptor object a file/directory specified by either a CID or
+        Get FileModel object a file/directory specified by either a CID or
         the path from the root of the user's filesystem. If neither are 
-        specified, we return the FileDescriptor for the root directory.
+        specified, we return the FileModel for the root directory.
       tags:
         - files
       responses:
         "200":
-          description: Successful response (FileDescriptor object)
+          description: Successful response (FileModel object)
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FileDescriptor"
+                $ref: "#/components/schemas/FileModel"
     post:
       parameters:
         - name: path
@@ -79,11 +82,11 @@ paths:
                     format: binary
       responses:
         "200":
-          description: Successful response (FileDescriptor object)
+          description: Successful response (FileModel object)
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FileDescriptor"
+                $ref: "#/components/schemas/FileModel"
 
   /pins:
     get:
@@ -237,7 +240,7 @@ paths:
 
 components:
   schemas:
-    FileDescriptor:
+    FileModel:
       description: A file object as represented on @crate/web
       type: object
       required:
@@ -246,9 +249,14 @@ components:
         - type
         - size
         - date
+        - mode
       properties:
         cid:
           $ref: "#/components/schemas/CID"
+        name:
+          description: File name without extension
+          type: string
+          example: file.txt
         type:
           description: Whether this is a file or directory
           type: string

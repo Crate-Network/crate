@@ -27,10 +27,10 @@ function NewFileBody({
     <>
       <div className="p-2 w-96">
         <h1 className="text-xl font-bold mb-2">
-          New {type === FileType.FILE ? "File" : "Folder"}
+          New {type === "file" ? "File" : "Folder"}
         </h1>
         <FormInput
-          placeholder={type === FileType.FILE ? "file name" : "folder name"}
+          placeholder={type === "file" ? "file name" : "folder name"}
           value={name}
           onInput={(e) => {
             setName(e.target.value)
@@ -137,11 +137,7 @@ export function AddBox() {
             popover === PopoverWindow.NEW_FOLDER) && (
             <NewFileBody
               dismiss={() => setPopover(null)}
-              type={
-                popover === PopoverWindow.NEW_FILE
-                  ? FileType.FILE
-                  : FileType.DIRECTORY
-              }
+              type={popover === PopoverWindow.NEW_FILE ? "file" : "directory"}
             />
           )}
         </Popover>

@@ -1,6 +1,6 @@
 import express from "express";
 import { auth } from "./firebase";
-import ipfs from "./routes/ipfs-route";
+import files from "./routes/files-route";
 import pinning from "./routes/pinning-route";
 import logger from "./logger";
 import { DecodedIdToken } from "firebase-admin/auth";
@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
   res.send(`Crate service backend, authenticated for ${req.token.uid}.`);
 });
 
-app.use("/ipfs", ipfs);
+app.use("/file", files);
 app.use("/pins", pinning);
 
 const port = process.env.PORT || 3030;

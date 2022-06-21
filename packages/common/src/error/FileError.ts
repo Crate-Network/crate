@@ -4,7 +4,7 @@ export enum FileErrorType {
   INVALID = "Invalid function usage.",
   EXISTS = "File with name already exists",
   FILE_INVALID = "Invalid usage, expected to be of type FileType.FOLDER",
-  FOLDER_INVALID = "Invalid usage, expected to be of type FileType.FILE",
+  FOLDER_INVALID = 'Invalid usage, expected to be of type "file"',
   NO_DATA = "Data field expected but not found on data block.",
 }
 

@@ -56,88 +56,94 @@ export interface FailureError {
 /**
  * A file object as represented on @crate/web
  * @export
- * @interface FileDescriptor
+ * @interface FileModel
  */
-export interface FileDescriptor {
+export interface FileModel {
     /**
      * Content Identifier (CID)
      * @type {string}
-     * @memberof FileDescriptor
+     * @memberof FileModel
      */
     'cid': string;
     /**
+     * File name without extension
+     * @type {string}
+     * @memberof FileModel
+     */
+    'name': string;
+    /**
      * Whether this is a file or directory
      * @type {string}
-     * @memberof FileDescriptor
+     * @memberof FileModel
      */
-    'type': FileDescriptorTypeEnum;
+    'type': FileModelTypeEnum;
     /**
      * Encryption key for the file in string format, parsed from binary representation in UTF-8. This key has been encrypted by the user\'s data key. 
      * @type {string}
-     * @memberof FileDescriptor
+     * @memberof FileModel
      */
     'signedEncryptionKey'?: string;
     /**
      * The size of the file.
      * @type {number}
-     * @memberof FileDescriptor
+     * @memberof FileModel
      */
     'size': number;
     /**
      * The date that this file was last modified in ISO-8601.
      * @type {string}
-     * @memberof FileDescriptor
+     * @memberof FileModel
      */
     'date': string;
     /**
      * The CIDs linked to from this directory. 
-     * @type {Array<FileDescriptorLinksInner>}
-     * @memberof FileDescriptor
+     * @type {Array<FileModelLinksInner>}
+     * @memberof FileModel
      */
-    'links'?: Array<FileDescriptorLinksInner>;
+    'links'?: Array<FileModelLinksInner>;
     /**
      * The size of the directory and all contained files.
      * @type {number}
-     * @memberof FileDescriptor
+     * @memberof FileModel
      */
     'cumulativeSize'?: number;
     /**
      * Permissions for file.
      * @type {number}
-     * @memberof FileDescriptor
+     * @memberof FileModel
      */
-    'mode'?: number;
+    'mode': number;
 }
 
-export const FileDescriptorTypeEnum = {
+export const FileModelTypeEnum = {
     Directory: 'directory',
     File: 'file'
 } as const;
 
-export type FileDescriptorTypeEnum = typeof FileDescriptorTypeEnum[keyof typeof FileDescriptorTypeEnum];
+export type FileModelTypeEnum = typeof FileModelTypeEnum[keyof typeof FileModelTypeEnum];
 
 /**
  * Structure for linked items in a directory. Name can vary from  directory to directory. 
  * @export
- * @interface FileDescriptorLinksInner
+ * @interface FileModelLinksInner
  */
-export interface FileDescriptorLinksInner {
+export interface FileModelLinksInner {
     /**
      * Content Identifier (CID)
      * @type {string}
-     * @memberof FileDescriptorLinksInner
+     * @memberof FileModelLinksInner
      */
     'cid': string;
     /**
      * Name of linked file.
      * @type {string}
-     * @memberof FileDescriptorLinksInner
+     * @memberof FileModelLinksInner
      */
     'name': string;
     /**
      * Size of linked file.
      * @type {number}
-     * @memberof FileDescriptorLinksInner
+     * @memberof FileModelLinksInner
      */
     'size': number;
 }
@@ -274,7 +280,8 @@ export type TextMatchingStrategy = typeof TextMatchingStrategy[keyof typeof Text
 export const FilesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Get FileDescriptor object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileDescriptor for the root directory. 
+         * Get FileModel object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileModel for the root directory. 
+         * @summary Fetches FileModel for a CID or path
          * @param {string} [path] 
          * @param {string} [cid] 
          * @param {*} [options] Override http request option.
@@ -376,13 +383,14 @@ export const FilesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FilesApiAxiosParamCreator(configuration)
     return {
         /**
-         * Get FileDescriptor object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileDescriptor for the root directory. 
+         * Get FileModel object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileModel for the root directory. 
+         * @summary Fetches FileModel for a CID or path
          * @param {string} [path] 
          * @param {string} [cid] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async fileGet(path?: string, cid?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileDescriptor>> {
+        async fileGet(path?: string, cid?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileModel>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.fileGet(path, cid, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -393,7 +401,7 @@ export const FilesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async filePost(path?: string, files?: Array<any>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileDescriptor>> {
+        async filePost(path?: string, files?: Array<any>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileModel>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.filePost(path, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -408,13 +416,14 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = FilesApiFp(configuration)
     return {
         /**
-         * Get FileDescriptor object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileDescriptor for the root directory. 
+         * Get FileModel object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileModel for the root directory. 
+         * @summary Fetches FileModel for a CID or path
          * @param {string} [path] 
          * @param {string} [cid] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        fileGet(path?: string, cid?: string, options?: any): AxiosPromise<FileDescriptor> {
+        fileGet(path?: string, cid?: string, options?: any): AxiosPromise<FileModel> {
             return localVarFp.fileGet(path, cid, options).then((request) => request(axios, basePath));
         },
         /**
@@ -424,7 +433,7 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filePost(path?: string, files?: Array<any>, options?: any): AxiosPromise<FileDescriptor> {
+        filePost(path?: string, files?: Array<any>, options?: any): AxiosPromise<FileModel> {
             return localVarFp.filePost(path, files, options).then((request) => request(axios, basePath));
         },
     };
@@ -438,7 +447,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
  */
 export class FilesApi extends BaseAPI {
     /**
-     * Get FileDescriptor object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileDescriptor for the root directory. 
+     * Get FileModel object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileModel for the root directory. 
+     * @summary Fetches FileModel for a CID or path
      * @param {string} [path] 
      * @param {string} [cid] 
      * @param {*} [options] Override http request option.

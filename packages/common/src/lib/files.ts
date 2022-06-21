@@ -1,60 +1,37 @@
 import { CID } from "multiformats/cid"
 import Hash from "ipfs-only-hash"
-import { FileModel, FileType } from "../model"
-import { FileDescriptor } from "@crate/api-lib"
+import { FileModel, FileModelTypeEnum as FileType } from "@crate/api-lib"
 
 export async function createFile(
-  fullName: string,
+  name: string,
   type: FileType
 ): Promise<FileModel> {
   const cid = CID.parse(await Hash.of("")).toString()
-  const [name, extension] = fullName.split(".")
   const file = {
     cid,
     name,
-    fullName,
     type,
+    mode: 420,
     size: 0,
-    date: new Date(),
+    date: new Date().toISOString(),
   }
-  return type === FileType.FILE
-    ? { ...file, extension }
+  return type === "file"
+    ? { ...file }
     : { ...file, links: [], cumulativeSize: 0 }
 }
 
 export function renameFile(file: FileModel, newName: string): FileModel {
-  const [name, extension] = newName.split(".")
-  return file.type === FileType.FILE
-    ? {
-        ...file,
-        fullName: newName,
-        name,
-        extension,
-      }
-    : {
-        ...file,
-        fullName: newName,
-        name: newName,
-        extension: undefined,
-      }
-}
-
-export function duplicateFile(file: FileModel): FileModel {
   return {
     ...file,
-    fullName: file.name + " copy" + file.extension ? "." + file.extension : "",
-    name: file.name + " copy",
-    date: new Date(),
+    name: newName,
   }
 }
 
-export function fromFileDesc(fileDesc: FileDescriptor): FileModel {
+export function duplicateFile(file: FileModel): FileModel {
+  const [name, ...rest] = file.name.split(".")
   return {
-    ...fileDesc,
-    type: fileDesc.type as FileType,
-    date: new Date(fileDesc.date),
-    fullName: "",
-    extension: "",
-    name: "",
+    ...file,
+    name: name + " copy." + rest.join("."),
+    date: new Date().toISOString(),
   }
 }

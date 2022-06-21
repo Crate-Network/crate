@@ -73,22 +73,22 @@ function FileIcon({ file }: { file: FileModel }) {
   const [editingName, setEditingName] = useState(false)
 
   const iconRef = useRef()
-  const selected = selection.includes(file.fullName)
+  const selected = selection.includes(file.name)
 
   const setSelected = (e) => {
     if (e.ctrlKey || e.metaKey) {
-      dispatchSelection({ t: "add", id: file.fullName })
+      dispatchSelection({ t: "add", id: file.name })
       return
     }
-    dispatchSelection({ t: "setone", id: file.fullName })
+    dispatchSelection({ t: "setone", id: file.name })
   }
 
   const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
   const contextShown = Boolean(anchorPos)
   const onContextMenu = (e: MouseEvent) => {
     e.preventDefault()
-    if (!selection.includes(file.fullName))
-      dispatchSelection({ t: "setone", id: file.fullName })
+    if (!selection.includes(file.name))
+      dispatchSelection({ t: "setone", id: file.name })
     setAnchorPos({ top: e.pageY, left: e.pageX })
   }
 
@@ -100,7 +100,7 @@ function FileIcon({ file }: { file: FileModel }) {
     iconRef,
     (e) => {
       if (e.ctrlKey || e.metaKey || anchorPos !== null) return
-      dispatchSelection({ t: "remove", id: file.fullName })
+      dispatchSelection({ t: "remove", id: file.name })
     },
     {
       deps: [selected, anchorPos],
@@ -118,7 +118,7 @@ function FileIcon({ file }: { file: FileModel }) {
         className="flex flex-col justify-center items-center w-36 h-36 select-none"
         onClick={setSelected}
         onDblClick={() => {
-          if (file.type === FileType.FILE && !editingName)
+          if (file.type === "file" && !editingName)
             window.open("https://crate.network/ipfs/" + file.cid, "_blank")
         }}
         onContextMenu={onContextMenu}
@@ -133,14 +133,14 @@ function FileIcon({ file }: { file: FileModel }) {
           )}
         >
           <FontAwesomeIcon
-            icon={file.type === FileType.FILE ? faFile : faFolder}
+            icon={file.type === "file" ? faFile : faFolder}
             className="w-16 h-16 m-2"
             color="rgb(249,115,22)"
           />
         </div>
         {editingName ? (
           <NameInput
-            oldName={file.fullName}
+            oldName={file.name}
             onCancel={() => {
               setEditingName(false)
             }}
@@ -157,7 +157,7 @@ function FileIcon({ file }: { file: FileModel }) {
               iconState === "selected" ? "bg-orange-500 text-white " : ""
             )}
           >
-            {file.name}
+            {file.name.split(".")[0]}
           </span>
         )}
       </div>
