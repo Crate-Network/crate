@@ -1,10 +1,4 @@
-import {
-  FileModel,
-  FileType,
-  renameFile,
-  FileError,
-  FileErrorType,
-} from "@crate/common"
+import { FileModel, renameFile, FileError, FileErrorType } from "@crate/common"
 import produce from "immer"
 import { WritableDraft } from "immer/dist/internal"
 import create, { StateCreator } from "zustand"

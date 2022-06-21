@@ -211,11 +211,6 @@ components:
       properties:
         cid:
           $ref: "#/components/schemas/CID"
-        name:
-          description: Full name of file, with extension
-          type: string
-          maxLength: 255
-          example: "PreciousData.pdf"
         type:
           description: Whether this is a file or directory
           type: string
@@ -253,6 +248,7 @@ components:
               name:
                 description: Name of linked file.
                 type: string
+                maxLength: 255
                 example: file.txt
               size:
                 description: Size of linked file.

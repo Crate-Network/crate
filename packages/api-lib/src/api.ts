@@ -66,12 +66,6 @@ export interface FileDescriptor {
      */
     'cid': string;
     /**
-     * Full name of file, with extension
-     * @type {string}
-     * @memberof FileDescriptor
-     */
-    'name': string;
-    /**
      * Whether this is a file or directory
      * @type {string}
      * @memberof FileDescriptor

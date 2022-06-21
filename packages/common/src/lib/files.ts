@@ -49,14 +49,12 @@ export function duplicateFile(file: FileModel): FileModel {
 }
 
 export function fromFileDesc(fileDesc: FileDescriptor): FileModel {
-  return renameFile(
-    {
-      ...fileDesc,
-      type: fileDesc.type as FileType,
-      date: new Date(fileDesc.date),
-      fullName: "",
-      extension: "",
-    },
-    fileDesc.name
-  )
+  return {
+    ...fileDesc,
+    type: fileDesc.type as FileType,
+    date: new Date(fileDesc.date),
+    fullName: "",
+    extension: "",
+    name: "",
+  }
 }
