@@ -274,16 +274,14 @@ export type TextMatchingStrategy = typeof TextMatchingStrategy[keyof typeof Text
 export const FilesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Get FileDescriptor object for a particular CID.
-         * @param {string} cid 
+         * Get FileDescriptor object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileDescriptor for the root directory. 
+         * @param {string} [path] 
+         * @param {string} [cid] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        fileCidGet: async (cid: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cid' is not null or undefined
-            assertParamExists('fileCidGet', 'cid', cid)
-            const localVarPath = `/file/{cid}`
-                .replace(`{${"cid"}}`, encodeURIComponent(String(cid)));
+        fileGet: async (path?: string, cid?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/file`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -299,11 +297,68 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (path !== undefined) {
+                localVarQueryParameter['path'] = path;
+            }
+
+            if (cid !== undefined) {
+                localVarQueryParameter['cid'] = cid;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Upload one or many files/directories to a path specified in the query parameters. If ignored, this will save the files to the root directory. 
+         * @param {string} [path] 
+         * @param {Array<any>} [files] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filePost: async (path?: string, files?: Array<any>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/file`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication accessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (path !== undefined) {
+                localVarQueryParameter['path'] = path;
+            }
+
+            if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
+
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -321,13 +376,25 @@ export const FilesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FilesApiAxiosParamCreator(configuration)
     return {
         /**
-         * Get FileDescriptor object for a particular CID.
-         * @param {string} cid 
+         * Get FileDescriptor object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileDescriptor for the root directory. 
+         * @param {string} [path] 
+         * @param {string} [cid] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async fileCidGet(cid: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileDescriptor>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.fileCidGet(cid, options);
+        async fileGet(path?: string, cid?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileDescriptor>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fileGet(path, cid, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Upload one or many files/directories to a path specified in the query parameters. If ignored, this will save the files to the root directory. 
+         * @param {string} [path] 
+         * @param {Array<any>} [files] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async filePost(path?: string, files?: Array<any>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileDescriptor>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.filePost(path, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -341,13 +408,24 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = FilesApiFp(configuration)
     return {
         /**
-         * Get FileDescriptor object for a particular CID.
-         * @param {string} cid 
+         * Get FileDescriptor object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileDescriptor for the root directory. 
+         * @param {string} [path] 
+         * @param {string} [cid] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        fileCidGet(cid: string, options?: any): AxiosPromise<FileDescriptor> {
-            return localVarFp.fileCidGet(cid, options).then((request) => request(axios, basePath));
+        fileGet(path?: string, cid?: string, options?: any): AxiosPromise<FileDescriptor> {
+            return localVarFp.fileGet(path, cid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Upload one or many files/directories to a path specified in the query parameters. If ignored, this will save the files to the root directory. 
+         * @param {string} [path] 
+         * @param {Array<any>} [files] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filePost(path?: string, files?: Array<any>, options?: any): AxiosPromise<FileDescriptor> {
+            return localVarFp.filePost(path, files, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -360,14 +438,27 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
  */
 export class FilesApi extends BaseAPI {
     /**
-     * Get FileDescriptor object for a particular CID.
-     * @param {string} cid 
+     * Get FileDescriptor object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileDescriptor for the root directory. 
+     * @param {string} [path] 
+     * @param {string} [cid] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilesApi
      */
-    public fileCidGet(cid: string, options?: AxiosRequestConfig) {
-        return FilesApiFp(this.configuration).fileCidGet(cid, options).then((request) => request(this.axios, this.basePath));
+    public fileGet(path?: string, cid?: string, options?: AxiosRequestConfig) {
+        return FilesApiFp(this.configuration).fileGet(path, cid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Upload one or many files/directories to a path specified in the query parameters. If ignored, this will save the files to the root directory. 
+     * @param {string} [path] 
+     * @param {Array<any>} [files] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilesApi
+     */
+    public filePost(path?: string, files?: Array<any>, options?: AxiosRequestConfig) {
+        return FilesApiFp(this.configuration).filePost(path, files, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

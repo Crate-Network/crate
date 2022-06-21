@@ -217,7 +217,8 @@ your files.</p>
   <div class="method-summary"></div>
   <h4><a href="#Files">Files</a></h4>
   <ul>
-  <li><a href="#fileCidGet"><code><span class="http-method">get</span> /file/{cid}</code></a></li>
+  <li><a href="#fileGet"><code><span class="http-method">get</span> /file</code></a></li>
+  <li><a href="#filePost"><code><span class="http-method">post</span> /file</code></a></li>
   </ul>
   <h4><a href="#Pins">Pins</a></h4>
   <ul>
@@ -229,24 +230,101 @@ your files.</p>
   </ul>
 
   <h1><a name="Files">Files</a></h1>
-  <div class="method"><a name="fileCidGet"/>
+  <div class="method"><a name="fileGet"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /file/{cid}</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">fileCidGet</span>)</div>
-    <div class="method-notes">Get FileDescriptor object for a particular CID.</div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /file</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">fileGet</span>)</div>
+    <div class="method-notes">Get FileDescriptor object a file/directory specified by either a CID or
+the path from the root of the user's filesystem. If neither are
+specified, we return the FileDescriptor for the root directory.</div>
 
-    <h3 class="field-label">Path parameters</h3>
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
     <div class="field-items">
-      <div class="param">cid (required)</div>
+      <div class="param">path (optional)</div>
 
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  default: null </div>
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  default: null </div><div class="param">cid (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  default: null </div>
     </div>  <!-- field-items -->
 
 
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#FileDescriptor">FileDescriptor</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "date" : "date",
+  "mode" : 1.4658129805029452,
+  "size" : 0.8008281904610115,
+  "cumulativeSize" : 6.027456183070403,
+  "links" : [ {
+    "size" : 145,
+    "name" : "file.txt",
+    "cid" : "Qm..."
+  }, {
+    "size" : 145,
+    "name" : "file.txt",
+    "cid" : "Qm..."
+  } ],
+  "type" : "directory",
+  "cid" : "Qm...",
+  "signedEncryptionKey" : "signedEncryptionKey"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful response (FileDescriptor object)
+        <a href="#FileDescriptor">FileDescriptor</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="filePost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /file</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">filePost</span>)</div>
+    <div class="method-notes">Upload one or many files/directories to a path specified in the query
+parameters. If ignored, this will save the files to the root directory.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>multipart/form-data</code></li>
+    </ul>
 
 
 
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">path (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+      <div class="param">files (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  default: null format: binary</div>
+    </div>  <!-- field-items -->
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">

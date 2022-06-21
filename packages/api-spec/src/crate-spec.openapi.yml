@@ -28,17 +28,55 @@ servers:
   - url: https://crate.network/api/v1
 
 paths:
-  /file/{cid}:
-    parameters:
-      - name: cid
-        in: path
-        required: true
-        schema:
-          $ref: "#/components/schemas/CID"
+  /file:
     get:
-      description: Get FileDescriptor object for a particular CID.
+      parameters:
+        - name: path
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/CID"
+        - name: cid
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/CID"
+      description: |
+        Get FileDescriptor object a file/directory specified by either a CID or
+        the path from the root of the user's filesystem. If neither are 
+        specified, we return the FileDescriptor for the root directory.
       tags:
         - files
+      responses:
+        "200":
+          description: Successful response (FileDescriptor object)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileDescriptor"
+    post:
+      parameters:
+        - name: path
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/CID"
+      description: |
+        Upload one or many files/directories to a path specified in the query
+        parameters. If ignored, this will save the files to the root directory.
+      tags:
+        - files
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
       responses:
         "200":
           description: Successful response (FileDescriptor object)
