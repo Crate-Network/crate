@@ -22,9 +22,9 @@ export type FileModel = {
   size: number
   // date created
   date: Date
-  // -- only relevant for FileType.DIRECTORY --
+  // -- only relevant for FileType.DIRECTORY, we ignore IPFS file chunking --
   // CIDs of children
-  links?: string[]
+  links?: { cid: string; name: string; size: number }[]
   // size of all contained files/folders
   cumulativeSize?: number
 }
