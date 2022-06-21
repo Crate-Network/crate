@@ -8,7 +8,7 @@
       "executor": "@trumbitta/nx-plugin-openapi:generate-api-lib-sources",
       "options": {
         "useDockerBuild": true,
-        "generator": "typescript-fetch",
+        "generator": "typescript-axios",
         "sourceSpecPathOrUrl": "packages/api-spec/src/crate-spec.openapi.yml",
         "additionalProperties": "",
         "globalProperties": ""

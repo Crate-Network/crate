@@ -13,28 +13,59 @@
  */
 
 
+import { Configuration } from "./configuration";
+// Some imports not used depending on template conditions
+// @ts-ignore
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+
+export const BASE_PATH = "https://crate.network/api/v1".replace(/\/+$/, "");
+
 /**
- * Status a pin object can have at a pinning service
+ *
  * @export
  */
-export const Status = {
-    Queued: 'queued',
-    Pinning: 'pinning',
-    Pinned: 'pinned',
-    Failed: 'failed'
-} as const;
-export type Status = typeof Status[keyof typeof Status];
+export const COLLECTION_FORMATS = {
+    csv: ",",
+    ssv: " ",
+    tsv: "\t",
+    pipes: "|",
+};
 
-
-export function StatusFromJSON(json: any): Status {
-    return StatusFromJSONTyped(json, false);
+/**
+ *
+ * @export
+ * @interface RequestArgs
+ */
+export interface RequestArgs {
+    url: string;
+    options: AxiosRequestConfig;
 }
 
-export function StatusFromJSONTyped(json: any, ignoreDiscriminator: boolean): Status {
-    return json as Status;
-}
+/**
+ *
+ * @export
+ * @class BaseAPI
+ */
+export class BaseAPI {
+    protected configuration: Configuration | undefined;
 
-export function StatusToJSON(value?: Status | null): any {
-    return value as any;
-}
+    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected axios: AxiosInstance = globalAxios) {
+        if (configuration) {
+            this.configuration = configuration;
+            this.basePath = configuration.basePath || this.basePath;
+        }
+    }
+};
 
+/**
+ *
+ * @export
+ * @class RequiredError
+ * @extends {Error}
+ */
+export class RequiredError extends Error {
+    name: "RequiredError" = "RequiredError";
+    constructor(public field: string, msg?: string) {
+        super(msg);
+    }
+}
