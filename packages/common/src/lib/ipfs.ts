@@ -50,7 +50,9 @@ export class Block {
       name: "",
       size: ufs.fileSize(),
       mode: ufs.mode,
-      date: ufs.mtime ? new Date(ufs.mtime.secs) : new Date(),
+      date: ufs.mtime
+        ? new Date(ufs.mtime.secs).toISOString()
+        : new Date().toISOString(),
       ...(isDir
         ? {
             type: "directory",
@@ -69,14 +71,14 @@ export class Block {
 }
 
 export class UnixFS extends _UnixFS {
-  static from(type: FileType, date: Date, content?: Uint8Array) {
+  static from(type: FileType, isoDate: string, content?: Uint8Array) {
     return new UnixFS({
       type,
       data: content,
       hashType: undefined,
       fanout: undefined,
       blockSizes: [],
-      mtime: parseMtime(date),
+      mtime: parseMtime(isoDate),
       mode: type === "directory" ? 493 : 420,
     })
   }
