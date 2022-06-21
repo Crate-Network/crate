@@ -264,7 +264,15 @@ your files.</p>
   "size" : 0.8008281904610115,
   "cumulativeSize" : 6.027456183070403,
   "name" : "PreciousData.pdf",
-  "links" : [ "Qm...", "Qm..." ],
+  "links" : [ {
+    "size" : 145,
+    "name" : "file.txt",
+    "cid" : "Qm..."
+  }, {
+    "size" : 145,
+    "name" : "file.txt",
+    "cid" : "Qm..."
+  } ],
   "type" : "directory",
   "cid" : "Qm...",
   "signedEncryptionKey" : "signedEncryptionKey"
@@ -750,6 +758,7 @@ your files.</p>
     <li><a href="#Failure"><code>Failure</code> - </a></li>
     <li><a href="#Failure_error"><code>Failure_error</code> - </a></li>
     <li><a href="#FileDescriptor"><code>FileDescriptor</code> - </a></li>
+    <li><a href="#FileDescriptor_links_inner"><code>FileDescriptor_links_inner</code> - </a></li>
     <li><a href="#Pin"><code>Pin</code> - </a></li>
     <li><a href="#PinResults"><code>PinResults</code> - </a></li>
     <li><a href="#PinStatus"><code>PinStatus</code> - </a></li>
@@ -786,9 +795,18 @@ representation in UTF-8. This key has been encrypted by the user's
 data key. </div>
 <div class="param">size </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The size of the file. </div>
 <div class="param">date </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The date that this file was last modified in ISO-8601. </div>
-<div class="param">links (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> The CIDs linked to from this directory (safe to ignore for files). </div>
+<div class="param">links (optional)</div><div class="param-desc"><span class="param-type"><a href="#FileDescriptor_links_inner">array[FileDescriptor_links_inner]</a></span> The CIDs linked to from this directory (safe to ignore for files). </div>
 <div class="param">cumulativeSize (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> The size of the directory and all contained files. </div>
 <div class="param">mode (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> Permissions for file. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="FileDescriptor_links_inner"><code>FileDescriptor_links_inner</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">cid </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Content Identifier (CID) </div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">size </div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
