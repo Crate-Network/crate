@@ -54,11 +54,12 @@ export class Block {
       ...(isDir
         ? {
             type: FileType.DIRECTORY,
-            links: dag.Links.map((link) => link.Hash.toString()),
-            cumulativeSize: dag.Links.map((link) => link.Tsize).reduce(
-              (a, b) => a + b,
-              0
-            ),
+            links: dag.Links.map((link) => ({
+              cid: link.Hash.toString(),
+              name: link.Name,
+              size: link.Tsize,
+            })),
+            cumulativeSize: dag.Links.reduce((a, b) => a + b.Tsize, 0),
           }
         : {
             type: FileType.FILE,
