@@ -218,6 +218,7 @@ components:
           example: "PreciousData.pdf"
         type:
           description: Whether this is a file or directory
+          type: string
           enum:
             - "directory"
             - "file"
@@ -235,10 +236,29 @@ components:
           type: string
         links:
           description: |
-            The CIDs linked to from this directory (safe to ignore for files).
+            The CIDs linked to from this directory.
           type: array
           items:
-            $ref: "#/components/schemas/CID"
+            description: |
+              Structure for linked items in a directory. Name can vary from 
+              directory to directory.
+            type: object
+            required:
+              - "cid"
+              - "name"
+              - "size"
+            properties:
+              cid:
+                $ref: "#/components/schemas/CID"
+              name:
+                description: Name of linked file.
+                type: string
+                example: file.txt
+              size:
+                description: Size of linked file.
+                type: number
+                example: 145
+
         cumulativeSize:
           description: The size of the directory and all contained files.
           type: number
