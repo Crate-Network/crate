@@ -267,14 +267,17 @@ components:
           description: |
             Encryption key for the file in string format, parsed from binary
             representation in UTF-8. This key has been encrypted by the user's
-            data key.
+            data key. If this exists, it means the file is for private
+            consumption.
           type: string
         size:
           description: The size of the file.
           type: number
+          example: 1048576
         date:
           description: The date that this file was last modified in ISO-8601.
           type: string
+          example: 2022-06-23T22:45:19.790Z
         links:
           description: |
             The CIDs linked to from this directory.
