@@ -1,6 +1,6 @@
 import { Router } from "express";
 import logger from "../logger";
-import filecoinClient from "../pinning/filecoin-client";
+import { uuid } from "uuidv4";
 
 const router = Router();
 
@@ -10,8 +10,14 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+  console.log(req.body);
   const fcRes = "Add a pin object.";
-  res.send(fcRes);
+  res.send({
+    requestid: uuid(),
+    status: "queued",
+    created: new Date().toISOString(),
+    pin: {},
+  });
 });
 
 router.get(/\/(.+)$/, (req, res) => {

@@ -1,6 +1,7 @@
 import express from "express";
 import { auth } from "./firebase";
 import files from "./routes/files-route";
+import fileUpload from "express-fileupload";
 import pinning from "./routes/pinning-route";
 import logger from "./logger";
 import { DecodedIdToken } from "firebase-admin/auth";
@@ -40,9 +41,12 @@ app.use(async (req, res, next) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.send(`Crate service backend, authenticated for ${req.token.uid}.`);
-});
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
 
 app.use("/file", files);
 app.use("/pins", pinning);

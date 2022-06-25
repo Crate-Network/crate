@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { client } from "../files/ipfs";
-import fileUpload from "express-fileupload";
+import ipfs from "../clients/ipfs";
+import filecoin from "../clients/filecoin";
 import path from "path";
+import { FileModel } from "@crate/api-lib";
 import { Block } from "@crate/common";
 
 const router = Router();
@@ -9,13 +10,6 @@ const router = Router();
 router.get("/", async (req, res) => {
   res.send("Got!");
 });
-
-router.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
-);
 
 router.post("/", async (req, res) => {
   if (!req.files.files || Object.keys(req.files).length === 0) {
@@ -25,22 +19,33 @@ router.post("/", async (req, res) => {
   // parse files, forward to IPFS to get the CID
   const { files: origFiles } = req.files;
   const files = Array.isArray(origFiles) ? origFiles : [origFiles];
-  files.forEach(async (file) => {
-    const res = await client.add(file.data);
-    const block = await client.block.get(res.cid);
-    console.log(block);
-    try {
-      console.log(await Block.toFile(block));
-    } catch (e) {
-      console.log(e);
-    }
-  });
+  const models = await Promise.all(
+    files.map(async (file): Promise<FileModel> => {
+      try {
+        const res = await ipfs.add(file.data);
+        const pin = await ipfs.pin.remote.add(res.cid, {
+          name: file.name,
+          service: "crate",
+        });
+        console.log(pin);
+        const block = await ipfs.block.get(res.cid);
+        console.log(block);
+        console.log(await Block.toFile(block));
+        return {
+          cid: res.cid.toString(),
+          name: file.name,
+          type: "file",
+          size: 10,
+          date: new Date().toISOString(),
+          mode: 420,
+        };
+      } catch (e) {
+        console.log(e);
+      }
+    })
+  );
 
-  const pathObj = req.query.path
-    ? path.parse(req.query.path as string)
-    : path.parse("/");
-
-  res.send(pathObj.base);
+  res.send(models);
 });
 
 export default router;

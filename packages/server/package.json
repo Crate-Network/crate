@@ -1,47 +1,35 @@
 {
   "name": "@crate/server",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "author": "Christian van der Loo",
-  "devDependencies": {
-    "@types/express": "^4.17.13",
-    "@types/node": "^17.0.23",
-    "@types/node-fetch": "^2.6.1",
-    "@typescript-eslint/eslint-plugin": "^5.19.0",
-    "@typescript-eslint/parser": "^5.19.0",
-    "esbuild": "^0.14.45",
-    "esbuild-node-tsc": "^1.8.6",
-    "eslint": "^8.13.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "lint-staged": "^12.3.7",
-    "nodemon": "^2.0.15",
-    "ts-node": "^10.8.1",
-    "typescript": "^4.6.3"
-  },
-  "dependencies": {
-    "@crate/common": "*",
-    "@filecoin-shipyard/lotus-client-provider-nodejs": "^1.1.1",
-    "@filecoin-shipyard/lotus-client-rpc": "^1.2.0",
-    "@filecoin-shipyard/lotus-client-schema": "^4.2.0",
-    "@ipld/dag-pb": "^2.1.17",
-    "@types/express-fileupload": "^1.2.2",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "express-fileupload": "^1.4.0",
-    "firebase-admin": "^10.0.2",
-    "ipfs-http-client": "^57.0.1",
-    "ipfs-unixfs": "^6.0.9",
-    "multiformats": "^9.6.5",
-    "node-fetch": "^2.6.7",
-    "winston": "^3.7.2"
-  },
   "lint-staged": {
     "*.{js,ts}": "eslint --cache --fix"
   },
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon src/init.ts --dev",
-    "build": "esbuild src/init.ts --platform=node --external:electron --bundle --minify --outfile=dist/index.js"
+    "build": "esbuild src/init.ts --bundle --platform=node --outfile=dist/index.js"
+  },
+  "devDependencies": {
+    "@types/express-fileupload": "^1.2.2",
+    "esbuild": "^0.14.47",
+    "node-ts": "^5.1.2",
+    "nodemon": "^2.0.18"
+  },
+  "dependencies": {
+    "@filecoin-shipyard/lotus-client-provider-nodejs": "^1.1.1",
+    "@filecoin-shipyard/lotus-client-rpc": "^1.2.0",
+    "@filecoin-shipyard/lotus-client-schema": "^4.2.0",
+    "@ipld/dag-pb": "^2.1.17",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-fileupload": "^1.4.0",
+    "firebase-admin": "^11.0.0",
+    "ipfs-http-client": "^57.0.1",
+    "ipfs-unixfs": "^6.0.9",
+    "node-fetch": "^3.2.6",
+    "uuidv4": "^6.2.13",
+    "winston": "^3.8.0"
   }
 }

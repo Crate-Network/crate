@@ -5,7 +5,7 @@ node_modules
 .eslintcache
 
 # environment
-.env
+.env*
 firebase.json
 
 # build
