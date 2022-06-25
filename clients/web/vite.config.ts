@@ -5,6 +5,12 @@ import magicalSvg from "vite-plugin-magical-svg"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      // string shorthand
+      "/api/v1": "http://localhost:3030",
+    },
+  },
   esbuild: {
     jsxFactory: "h",
     jsxFragment: "Fragment",

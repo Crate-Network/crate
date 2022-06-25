@@ -54,28 +54,19 @@ export function AddBox() {
     const fileInput: HTMLInputElement = e.target
     const { files } = fileInput
     if (!files || files.length === 0) {
-      e.target.remove()
       return
     }
 
-    const fileArr: {
-      path: string
-      content: Uint8Array
-    }[] = []
-
+    const formData = new FormData()
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i)
-      fileArr.push({
-        path: "/" + file.name,
-        content: new Uint8Array(await file.arrayBuffer()),
-      })
+      formData.append("files", file, file.name)
     }
 
-    // for await (const entry of importer(fileArr, blockstore)) {
-    //   console.info(entry)
-    // }
-
-    e.target.remove()
+    fetch("/api/v1/files", {
+      method: "POST",
+      body: formData,
+    })
   }
 
   useEffect(() => {
