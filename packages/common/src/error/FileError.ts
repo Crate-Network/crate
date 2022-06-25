@@ -1,4 +1,4 @@
-import { FileModel } from "../model"
+import { FileModel } from "@crate/api-lib"
 
 export enum FileErrorType {
   INVALID = "Invalid function usage.",
