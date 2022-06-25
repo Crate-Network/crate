@@ -1,1 +1,1 @@
-ipfs pin remote service add crate https://api.pinata.cloud/psa $PINATA_KEY
+ipfs pin remote service add crate https://localhost:3030/ xxx
