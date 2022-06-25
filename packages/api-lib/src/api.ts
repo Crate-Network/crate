@@ -78,7 +78,7 @@ export interface FileModel {
      */
     'type': FileModelTypeEnum;
     /**
-     * Encryption key for the file in string format, parsed from binary representation in UTF-8. This key has been encrypted by the user\'s data key. 
+     * Encryption key for the file in string format, parsed from binary representation in UTF-8. This key has been encrypted by the user\'s data key. If this exists, it means the file is for private consumption. 
      * @type {string}
      * @memberof FileModel
      */
@@ -401,7 +401,7 @@ export const FilesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async filePost(path?: string, files?: Array<any>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileModel>> {
+        async filePost(path?: string, files?: Array<any>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FileModel>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.filePost(path, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -433,7 +433,7 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filePost(path?: string, files?: Array<any>, options?: any): AxiosPromise<FileModel> {
+        filePost(path?: string, files?: Array<any>, options?: any): AxiosPromise<Array<FileModel>> {
             return localVarFp.filePost(path, files, options).then((request) => request(axios, basePath));
         },
     };
