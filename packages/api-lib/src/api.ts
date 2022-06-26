@@ -66,7 +66,7 @@ export interface FileModel {
      */
     'cid': string;
     /**
-     * File name without extension
+     * File/folder name
      * @type {string}
      * @memberof FileModel
      */
@@ -107,12 +107,6 @@ export interface FileModel {
      * @memberof FileModel
      */
     'cumulativeSize'?: number;
-    /**
-     * Permissions for file.
-     * @type {number}
-     * @memberof FileModel
-     */
-    'mode': number;
 }
 
 export const FileModelTypeEnum = {

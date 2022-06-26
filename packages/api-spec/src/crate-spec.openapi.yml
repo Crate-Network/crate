@@ -252,14 +252,13 @@ components:
         - type
         - size
         - date
-        - mode
       properties:
         cid:
           $ref: "#/components/schemas/CID"
         name:
-          description: File name without extension
+          description: File/folder name
           type: string
-          example: file.txt
+          example: dir
         type:
           description: Whether this is a file or directory
           type: string
@@ -306,12 +305,8 @@ components:
                 description: Size of linked file.
                 type: number
                 example: 145
-
         cumulativeSize:
           description: The size of the directory and all contained files.
-          type: number
-        mode:
-          description: Permissions for file.
           type: number
 
     CID:
