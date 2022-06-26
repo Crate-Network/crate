@@ -16,7 +16,7 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^generate-sources", "^build"]
+      "dependsOn": ["generate-sources", "^build"]
     },
     "docker": {
       "dependsOn": ["build"]
