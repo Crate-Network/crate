@@ -8,7 +8,11 @@ export default defineConfig({
   server: {
     proxy: {
       // string shorthand
-      "/api/v1": "http://localhost:3030",
+      "/api/v1": {
+        target: "http://localhost:3030",
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
   esbuild: {

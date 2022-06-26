@@ -3,6 +3,6 @@
   "author": "Christian van der Loo",
   "version": "0.0.2",
   "scripts": {
-    "dev": "docker compose up --build"
+    "dev": "docker compose up --build -d"
   }
 }

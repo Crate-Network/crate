@@ -7,7 +7,7 @@ import { Block } from "@crate/common";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", (req, res) => {
   res.send("Got!");
 });
 
@@ -21,29 +21,24 @@ router.post("/", async (req, res) => {
   const files = Array.isArray(origFiles) ? origFiles : [origFiles];
   const models = await Promise.all(
     files.map(async (file): Promise<FileModel> => {
-      try {
-        const res = await ipfs.add(file.data);
-        const pin = await ipfs.pin.remote.add(res.cid, {
-          name: file.name,
-          service: "crate",
-        });
-        console.log(pin);
-        const block = await ipfs.block.get(res.cid);
-        console.log(block);
-        console.log(await Block.toFile(block));
-        return {
-          cid: res.cid.toString(),
-          name: file.name,
-          type: "file",
-          size: 10,
-          date: new Date().toISOString(),
-          mode: 420,
-        };
-      } catch (e) {
-        console.log(e);
-      }
+      const res = await ipfs.add(file.data);
+      await ipfs.pin.add(res.cid);
+      // const pin = await ipfs.pin.remote.add(res.cid, {
+      //   name: file.name,
+      //   service: "crate",
+      // });
+      return {
+        cid: res.cid.toString(),
+        name: file.name,
+        type: "file",
+        size: file.size,
+        date: new Date().toISOString(),
+        mode: 420,
+      };
     })
-  );
+  ).catch((e) => {
+    res.status(500).send(e);
+  });
 
   res.send(models);
 });

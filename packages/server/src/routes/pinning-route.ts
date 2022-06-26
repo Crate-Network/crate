@@ -10,7 +10,6 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  console.log(req.body);
   const fcRes = "Add a pin object.";
   res.send({
     requestid: uuid(),

@@ -5,10 +5,15 @@ import fileUpload from "express-fileupload";
 import pinning from "./routes/pinning-route";
 import logger from "./logger";
 import { DecodedIdToken } from "firebase-admin/auth";
+import morgan from "morgan";
 
 const args = process.argv.slice(2);
 const app = express();
 
+const API_VERSION = "v1";
+const API_ROUTE = `/api/${API_VERSION}`;
+
+app.use(morgan("tiny"));
 app.use(async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
@@ -48,8 +53,8 @@ app.use(
   })
 );
 
-app.use("/file", files);
-app.use("/pins", pinning);
+app.use(`${API_ROUTE}/file`, files);
+app.use(`${API_ROUTE}/pins`, pinning);
 
 const port = process.env.PORT || 3030;
 app.listen(port, () => {
