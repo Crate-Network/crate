@@ -7,21 +7,9 @@ import shallow from "zustand/shallow"
 import { useUserStore } from "store/UserStore"
 
 export default function Security() {
-  const [user, userDoc] = useUserStore(
-    (state) => [state.user, state.userDoc],
+  const [userDoc, updateUser] = useUserStore(
+    (state) => [state.userDoc, state.updateUser],
     shallow
-  )
-
-  const update2FA = useCallback(
-    (e) => {
-      const userDocRef = doc(
-        db,
-        "users",
-        user.uid.toString()
-      ) as DocumentReference<UserModel>
-      setDoc(userDocRef, { ...userDoc, uses2FA: e.target.checked })
-    },
-    [userDoc]
   )
 
   const { uses2FA } = userDoc
@@ -38,7 +26,9 @@ export default function Security() {
             type="checkbox"
             value=""
             checked={uses2FA}
-            onInput={update2FA}
+            onInput={(e: any) =>
+              updateUser({ ...userDoc, uses2FA: e.target.checked })
+            }
             role="switch"
             id="check2FA"
           />

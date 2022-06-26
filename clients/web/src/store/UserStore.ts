@@ -1,6 +1,12 @@
 import { UserModel } from "@crate/common"
 import { onAuthStateChanged, signOut, User } from "firebase/auth"
-import { doc, DocumentReference, getDoc, onSnapshot } from "firebase/firestore"
+import {
+  doc,
+  DocumentReference,
+  getDoc,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore"
 import { auth, db } from "vendor/firebase"
 import create, { StateCreator } from "zustand"
 import { persist, subscribeWithSelector } from "zustand/middleware"
@@ -45,7 +51,7 @@ const firebaseStateCreator: StateCreator<
     }
   },
   updateUser: (newDoc: Partial<UserModel>) => {
-    set({ userDoc: { ...defaultUserModel, ...newDoc } })
+    set(({ userDoc }) => ({ userDoc: { ...userDoc, ...newDoc } }))
   },
 })
 
@@ -79,6 +85,19 @@ useUserStore.subscribe(
       useUserStore.getState().updateUser(doc.data())
     )
     return unsub
+  }
+)
+
+useUserStore.subscribe(
+  (state) => [state.userDoc, state.user] as [UserModel, User],
+  ([userDoc, user]) => {
+    const userDocRef = doc(
+      db,
+      "users",
+      user.uid.toString()
+    ) as DocumentReference<UserModel>
+
+    setDoc(userDocRef, userDoc)
   }
 )
 
