@@ -7,14 +7,16 @@ import { JSXInternal } from "preact/src/jsx"
 import Dropdown, { FuncInput } from "./Dropdown"
 import sanitizeFilename from "sanitize-filename"
 import { useFileStore } from "store/FileStore"
-import { FileType, createFile } from "@crate/common"
+import { createFile } from "@crate/common"
+import { FileModelTypeEnum } from "@crate/api-lib"
+import FileAPI from "api/files"
 
 function NewFileBody({
   dismiss,
   type,
 }: {
   dismiss: () => void
-  type: FileType
+  type: FileModelTypeEnum
 }) {
   const addFile = useFileStore((state) => state.addFile)
   const [name, setName] = useState("")
@@ -49,38 +51,27 @@ function NewFileBody({
 
 export function AddBox() {
   const [inputEl, setInputEl] = useState<HTMLInputElement>(null)
+  const [isSelectingFile, setIsSelectingFile] = useState(false)
 
-  const onUpload = async (e) => {
+  const onUpload = (e) => {
     const fileInput: HTMLInputElement = e.target
     const { files } = fileInput
-    if (!files || files.length === 0) {
-      return
-    }
-
-    const formData = new FormData()
-    for (let i = 0; i < files.length; i++) {
-      const file = files.item(i)
-      formData.append("files", file, file.name)
-    }
-
-    fetch("/api/v1/files", {
-      method: "POST",
-      body: formData,
-    })
+    FileAPI.upload(files)
+    setIsSelectingFile(false)
   }
 
   useEffect(() => {
-    const inputEl = document.createElement("input")
-    inputEl.className = "hidden"
-    inputEl.onchange = onUpload
-    inputEl.type = "file"
-    inputEl.multiple = true
-    setInputEl(inputEl)
+    const inpt = document.createElement("input")
+    inpt.className = "hidden"
+    inpt.onchange = onUpload
+    inpt.type = "file"
+    inpt.multiple = true
+    setInputEl(inpt)
     return () => {
       setInputEl(null)
-      inputEl.remove()
+      inpt.remove()
     }
-  }, [])
+  }, [isSelectingFile])
 
   enum PopoverWindow {
     NEW_FILE,
@@ -105,7 +96,10 @@ export function AddBox() {
     mOpt("New Folder", () => setPopover(PopoverWindow.NEW_FOLDER)),
     "divider",
     mOpt("Upload", () => {
-      if (inputEl) inputEl.click()
+      if (inputEl) {
+        inputEl.click()
+        setIsSelectingFile(true)
+      }
     }),
     mOpt("Add from IPFS", () => setPopover(PopoverWindow.ADD_IPFS)),
   ]
