@@ -10,6 +10,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@babel/plugin-transform-react-jsx-source": "^7.16.7",
     "@crate/api-lib": "*",
     "@crate/common": "*",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
