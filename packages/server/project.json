@@ -25,15 +25,6 @@
         }
       }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [],
-      "dependsOn": ["build"],
-      "options": {
-        "jestConfig": "packages/server/jest.config.js",
-        "tsConfig": "packages/server/tsconfig.spec.json"
-      }
-    },
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {

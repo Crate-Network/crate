@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "jest --watch",
+    "test": "jest",
     "lint": "eslint . --max-warnings=0"
   },
   "license": "MIT",
