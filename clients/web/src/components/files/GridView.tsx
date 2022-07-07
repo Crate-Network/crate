@@ -6,7 +6,6 @@ import RightClickMenu from "./RightClickMenu"
 import Anchor from "models/Anchor"
 import { useFileStore, VisibleFiles } from "store/FileStore"
 import shallow from "zustand/shallow"
-import { FileModel } from "@crate/api-lib"
 import { useStore as useFVStore } from "store/FileViewStore"
 
 type IconState = "empty" | "selected" | "hovered"
@@ -67,7 +66,11 @@ function NameInput({
   )
 }
 
-function FileIcon({ file }: { file: FileModel }) {
+function FileIcon({
+  file,
+}: {
+  file: { name: string; cid: string; type?: string }
+}) {
   const [hovered, setHovered] = useState(false)
   const renameFile = useFileStore((state) => state.rename)
   const [selection, select, deselect] = useFVStore(

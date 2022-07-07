@@ -21,6 +21,5 @@ export default function useClickOutside(
     return () => {
       events.forEach((evt) => document.removeEventListener(evt, detectClick))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [events, exclude, onClickOutside, ref, ...deps])
+  }, [events, exclude, onClickOutside, ref])
 }

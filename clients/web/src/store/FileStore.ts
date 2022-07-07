@@ -110,11 +110,11 @@ const fileStore: StateCreator<
     files: {},
     retrieve,
     getContents,
-    add: (directory: CID, file: FileModel) => {
+    add: (directory: CID, file: FileModel & { name: string }) => {
       set(({ files }) => {
         if (files[directory].type === "file")
           throw new FileError(FileErrorType.FILE_INVALID)
-        const fWithoutName = file
+        const fWithoutName = { ...file }
         delete fWithoutName.name
         files[file.cid] = fWithoutName
         const { name, cid, size } = file
