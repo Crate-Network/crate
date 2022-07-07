@@ -39,7 +39,7 @@
     "**/*.{tsx,ts,jsx,js,css,html}": [
       "nx format:write",
       "eslint",
-      "jest"
+      "jest --passWithNoTests"
     ]
   },
   "scripts": {
