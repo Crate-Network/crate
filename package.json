@@ -36,10 +36,10 @@
     "clients/*"
   ],
   "lint-staged": {
-    "src/**/*.{ts,css,html}": [
+    "**/*.{tsx,ts,jsx,js,css,html}": [
       "nx format:write",
-      "nx run-many --target=lint --all",
-      "nx run-many --target=test --all"
+      "eslint",
+      "jest"
     ]
   },
   "scripts": {

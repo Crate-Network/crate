@@ -10,6 +10,7 @@ import Anchor from "models/Anchor"
 import { duplicateFile } from "@crate/common"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "store/FileViewStore"
+import { useEffect, useState } from "preact/hooks"
 
 type RightClickMenuProps = {
   close?: (e: MouseEvent) => void
@@ -32,7 +33,12 @@ export default function RightClickMenu({
     shallow
   )
 
-  const file = retrieve(selection[0])
+  const [file, setFile] = useState(null)
+  useEffect(() => {
+    const fetchFile = async () => setFile(await retrieve(selection[0]))
+    fetchFile()
+  }, [retrieve, selection])
+
   const deleteFiles = () => {
     selection.forEach((fileKey) => {
       deleteFile(files[fileKey].cid)
@@ -65,5 +71,6 @@ export default function RightClickMenu({
     makeOpt("Share", close),
   ].filter((v) => v !== "none") as (SelectionOptions | "divider")[]
 
+  if (file === null) return null
   return <PopoverMenu close={close} anchor={anchor} opts={opts} {...props} />
 }
