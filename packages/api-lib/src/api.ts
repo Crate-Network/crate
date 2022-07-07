@@ -70,7 +70,7 @@ export interface FileModel {
      * @type {string}
      * @memberof FileModel
      */
-    'name': string;
+    'name'?: string;
     /**
      * Whether this is a file or directory
      * @type {string}
@@ -275,13 +275,12 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * Get FileModel object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileModel for the root directory. 
-         * @summary Fetches FileModel for a CID or path
+         * @summary Fetches FileModel for a path relative to the user root.
          * @param {string} [path] 
-         * @param {string} [cid] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        fileGet: async (path?: string, cid?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        fileGet: async (path?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/file`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -300,10 +299,6 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
 
             if (path !== undefined) {
                 localVarQueryParameter['path'] = path;
-            }
-
-            if (cid !== undefined) {
-                localVarQueryParameter['cid'] = cid;
             }
 
 
@@ -378,14 +373,13 @@ export const FilesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Get FileModel object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileModel for the root directory. 
-         * @summary Fetches FileModel for a CID or path
+         * @summary Fetches FileModel for a path relative to the user root.
          * @param {string} [path] 
-         * @param {string} [cid] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async fileGet(path?: string, cid?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileModel>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.fileGet(path, cid, options);
+        async fileGet(path?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fileGet(path, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -411,14 +405,13 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * Get FileModel object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileModel for the root directory. 
-         * @summary Fetches FileModel for a CID or path
+         * @summary Fetches FileModel for a path relative to the user root.
          * @param {string} [path] 
-         * @param {string} [cid] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        fileGet(path?: string, cid?: string, options?: any): AxiosPromise<FileModel> {
-            return localVarFp.fileGet(path, cid, options).then((request) => request(axios, basePath));
+        fileGet(path?: string, options?: any): AxiosPromise<FileModel> {
+            return localVarFp.fileGet(path, options).then((request) => request(axios, basePath));
         },
         /**
          * Upload one or many files/directories to a path specified in the query parameters. If ignored, this will save the files to the root directory. 
@@ -442,15 +435,14 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
 export class FilesApi extends BaseAPI {
     /**
      * Get FileModel object a file/directory specified by either a CID or the path from the root of the user\'s filesystem. If neither are  specified, we return the FileModel for the root directory. 
-     * @summary Fetches FileModel for a CID or path
+     * @summary Fetches FileModel for a path relative to the user root.
      * @param {string} [path] 
-     * @param {string} [cid] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilesApi
      */
-    public fileGet(path?: string, cid?: string, options?: AxiosRequestConfig) {
-        return FilesApiFp(this.configuration).fileGet(path, cid, options).then((request) => request(this.axios, this.basePath));
+    public fileGet(path?: string, options?: AxiosRequestConfig) {
+        return FilesApiFp(this.configuration).fileGet(path, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

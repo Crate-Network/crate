@@ -1,67 +1,73 @@
 import { FileError, FileErrorType } from "../error"
 import { FileModel, FileModelTypeEnum as FileType } from "@crate/api-lib"
-import { UnixFS as _UnixFS, parseMtime } from "ipfs-unixfs"
+import { UnixFS as _UnixFS } from "ipfs-unixfs"
 import { CID as _CID } from "multiformats/cid"
-import { encode, decode, prepare } from "@ipld/dag-pb"
-import Hash from "ipfs-only-hash"
+import { sha256 } from "multiformats/hashes/sha2"
+import { encode, decode, createNode, PBNode } from "@ipld/dag-pb"
+
+type LimitedFileModel = Partial<FileModel> & Pick<FileModel, "type">
 
 export class CID extends _CID {
-  static async fromBlock(bytes: Uint8Array): Promise<CID> {
-    return CID.parse(await Hash.of(bytes))
+  static async fromBytes(bytes: Uint8Array): Promise<CID> {
+    return CID.createV0(await sha256.digest(bytes))
   }
 
-  static async fromFile(file: FileModel): Promise<CID> {
-    return CID.fromBlock(Block.fromFile(file))
+  static async fromNode(node: PBNode): Promise<CID> {
+    return CID.fromBytes(encode(node))
+  }
+
+  static async from(file: LimitedFileModel): Promise<CID> {
+    return CID.fromNode(Node.fromFile(file))
   }
 
   static async recalculate(file: FileModel): Promise<FileModel> {
-    return { ...file, cid: (await CID.fromFile(file)).toString() }
+    return { ...file, cid: (await CID.from(file)).toString() }
   }
 }
 
-export class Block {
-  static fromFile(file: FileModel, content?: Uint8Array): Uint8Array {
-    if (file.type === "file" && !content) {
+export class Node {
+  static fromRawBlock(bytes: Uint8Array): PBNode {
+    return decode(bytes)
+  }
+
+  static fromFile(file: LimitedFileModel, content?: Uint8Array): PBNode {
+    if (file.type === "file" && (content === undefined || content === null)) {
       console.error("Pass file contents as second parameter for files.")
       throw new FileError(FileErrorType.FILE_INVALID)
     }
-    return encode(
-      prepare({
-        Links: file.links
-          ? file.links.map(({ cid, name, size }) => ({
-              Hash: CID.parse(cid),
-              Name: "",
-              Tsize: size,
-            }))
-          : [],
-        Data: UnixFS.from(file.type, file.date, content).marshal(),
-      })
+    return createNode(
+      UnixFS.from(file.type, content).marshal(),
+      file.links
+        ? file.links.map(({ cid, name, size }) => ({
+            Hash: CID.parse(cid),
+            Name: name,
+            Tsize: size,
+          }))
+        : []
     )
   }
 
-  static async toFile(bytes: Uint8Array): Promise<FileModel> {
-    const dag = decode(bytes)
-    if (!dag.Data) throw new FileError(FileErrorType.NO_DATA)
-
-    const ufs = UnixFS.unmarshal(dag.Data)
+  static async toFile(node: PBNode): Promise<FileModel> {
+    if (!node.Data) throw new FileError(FileErrorType.NO_DATA)
+    const cid = await CID.fromNode(node)
+    const ufs = UnixFS.unmarshal(node.Data)
     const isDir = ufs.type === "directory"
     return {
-      cid: (await CID.fromBlock(bytes)).toString(),
+      cid: cid.toString(),
       name: "",
       size: ufs.fileSize(),
-      mode: ufs.mode,
       date: ufs.mtime
         ? new Date(ufs.mtime.secs).toISOString()
         : new Date().toISOString(),
       ...(isDir
         ? {
             type: "directory",
-            links: dag.Links.map((link) => ({
+            links: node.Links.map((link) => ({
               cid: link.Hash.toString(),
               name: link.Name,
               size: link.Tsize,
             })),
-            cumulativeSize: dag.Links.reduce((a, b) => a + b.Tsize, 0),
+            cumulativeSize: node.Links.reduce((a, b) => a + b.Tsize, 0),
           }
         : {
             type: "file",
@@ -71,15 +77,13 @@ export class Block {
 }
 
 export class UnixFS extends _UnixFS {
-  static from(type: FileType, isoDate: string, content?: Uint8Array) {
+  static from(type: FileType, content?: Uint8Array) {
     return new UnixFS({
       type,
       data: content,
       hashType: undefined,
       fanout: undefined,
       blockSizes: [],
-      mtime: parseMtime(isoDate),
-      mode: type === "directory" ? 493 : 420,
     })
   }
 }

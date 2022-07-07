@@ -1,5 +1,3 @@
-import { FilesPageContext } from "pages/Files"
-import { useContext } from "preact/hooks"
 import { JSXInternal } from "preact/src/jsx"
 import {
   makeOpt,
@@ -10,6 +8,9 @@ import {
 import { useFileStore } from "store/FileStore"
 import Anchor from "models/Anchor"
 import { duplicateFile } from "@crate/common"
+import shallow from "zustand/shallow"
+import useClickOutside from "hooks/useClickOutside"
+import { useStore as useFVStore } from "store/FileViewStore"
 
 type RightClickMenuProps = {
   close?: (e: MouseEvent) => void
@@ -23,15 +24,19 @@ export default function RightClickMenu({
   onRenameRequest,
   ...props
 }: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
-  const files = useFileStore((state) => state.files)
-  const addFile = useFileStore((state) => state.addFile)
-  const deleteFile = useFileStore((state) => state.deleteFile)
+  const [files, addFile, deleteFile, retrieve] = useFileStore(
+    (state) => [state.files, state.add, state.delete, state.retrieve],
+    shallow
+  )
+  const [selection, directory] = useFVStore(
+    (state) => [state.selectedFiles, state.visible],
+    shallow
+  )
 
-  const { inspect, selection } = useContext(FilesPageContext)
-  const file = files[selection[0]]
+  const file = retrieve(selection[0])
   const deleteFiles = () => {
     selection.forEach((fileKey) => {
-      deleteFile(files[fileKey])
+      deleteFile(files[fileKey].cid)
     })
   }
 
@@ -54,9 +59,9 @@ export default function RightClickMenu({
     makeOpt("Delete", close, deleteFiles),
     "divider",
     makeOpt("Rename", close, onRenameRequest, !onRenameRequest),
-    makeOpt("Duplicate", close, () => addFile(duplicateFile(file))),
+    makeOpt("Duplicate", close, () => addFile(directory, duplicateFile(file))),
     "divider",
-    makeOpt("Inspect", close, inspect),
+    makeOpt("Inspect", close, useFVStore().showInspector),
     makeOpt("Copy CID", close, copyCID),
     makeOpt("Share", close),
   ].filter((v) => v !== "none") as (SelectionOptions | "divider")[]

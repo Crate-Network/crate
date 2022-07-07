@@ -29,21 +29,21 @@ app.use(async (req, res, next) => {
     return;
   }
 
-  if (process.env.NODE_ENV === "production") {
-    auth
-      .verifyIdToken(token)
-      .then((decodedToken) => {
-        req.token = decodedToken;
-        next();
-      })
-      .catch((err) => {
-        res.status(403).send("Token unauthorized.");
-        logger.error(err);
-      });
-  } else {
-    req.token = { uid: "devAccount" } as DecodedIdToken;
-    next();
-  }
+  // if (process.env.NODE_ENV === "production") {
+  auth
+    .verifyIdToken(token)
+    .then((decodedToken) => {
+      req.token = decodedToken;
+      next();
+    })
+    .catch((err) => {
+      res.status(403).send("Token unauthorized.");
+      logger.error(err);
+    });
+  // } else {
+  //   req.token = { uid: "devAccount" } as DecodedIdToken;
+  //   next();
+  // }
 });
 
 app.use(

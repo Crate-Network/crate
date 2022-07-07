@@ -1,19 +1,46 @@
 import { Router } from "express";
+import fs from "fs";
 import ipfs from "../clients/ipfs";
-import filecoin from "../clients/filecoin";
-import path from "path";
+import logger from "../logger";
+import { firestore } from "../firebase";
 import { FileModel } from "@crate/api-lib";
-import { Block } from "@crate/common";
+import { Node, parsePath } from "@crate/common";
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("Got!");
+const getRootCID = async (uid: string) =>
+  (await firestore.collection("users").doc(uid).get()).get("rootCID");
+
+const setRootCID = async (uid: string, newCID: string) =>
+  await firestore.collection("users").doc(uid).set({ rootCID: newCID });
+
+const makeError = (type: string, msg: string) => ({
+  reason: type,
+  message: msg,
+});
+
+router.get("/", async (req, res) => {
+  const { path, cid } = {
+    path: "/",
+    cid: null,
+    ...req.query,
+  };
+  logger.info(cid);
+  const block = await ipfs.block.get(await getRootCID(req.token.uid));
+  res.send(await Node.toFile(Node.fromRawBlock(block)));
 });
 
 router.post("/", async (req, res) => {
+  const { path } = {
+    path: "/",
+    ...req.query,
+  };
+  const pArr = parsePath(path);
+
   if (!req.files.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
+    return res.status(400).send({
+      error: { reason: "BAD_REQUEST", details: "No files were uploaded." },
+    });
   }
 
   // parse files, forward to IPFS to get the CID
@@ -21,8 +48,9 @@ router.post("/", async (req, res) => {
   const files = Array.isArray(origFiles) ? origFiles : [origFiles];
   const models = await Promise.all(
     files.map(async (file): Promise<FileModel> => {
-      const res = await ipfs.add(file.data);
+      const res = await ipfs.add(fs.createReadStream(file.tempFilePath));
       await ipfs.pin.add(res.cid);
+      console.log(res.cid.toString());
       // const pin = await ipfs.pin.remote.add(res.cid, {
       //   name: file.name,
       //   service: "crate",
@@ -33,12 +61,14 @@ router.post("/", async (req, res) => {
         type: "file",
         size: file.size,
         date: new Date().toISOString(),
-        mode: 420,
       };
     })
   ).catch((e) => {
+    logger.info(e.message);
     res.status(500).send(e);
   });
+
+  logger.info(JSON.stringify(models));
 
   res.send(models);
 });

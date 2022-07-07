@@ -1,17 +1,19 @@
 import create, { StateCreator } from "zustand"
 
 interface ErrorState {
+  name: string
   message: string
   displayed: boolean
-  showMessage: (message: string) => void
+  showError: (error: Error) => void
   hide: () => void
 }
 
 const errorStateCreator: StateCreator<ErrorState> = (set): ErrorState => ({
+  name: "",
   message: "",
   displayed: false,
-  showMessage: (message: string) => {
-    set({ message, displayed: true })
+  showError: ({ name, message }: Error) => {
+    set({ name, message, displayed: true })
   },
   hide: () => {
     set((state) => ({ ...state, displayed: false }))

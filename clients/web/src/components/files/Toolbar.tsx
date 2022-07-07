@@ -7,22 +7,25 @@ import { JSXInternal } from "preact/src/jsx"
 import Dropdown, { FuncInput } from "./Dropdown"
 import sanitizeFilename from "sanitize-filename"
 import { useFileStore } from "store/FileStore"
+import FileAPI from "api/FileAPI"
 import { createFile } from "@crate/common"
-import { FileModelTypeEnum } from "@crate/api-lib"
-import FileAPI from "api/files"
+import { FileModel } from "@crate/api-lib"
+import { useStore as useFVStore } from "store/FileViewStore"
 
 function NewFileBody({
   dismiss,
   type,
 }: {
   dismiss: () => void
-  type: FileModelTypeEnum
+  type: "directory" | "file"
 }) {
-  const addFile = useFileStore((state) => state.addFile)
+  const addFile = useFileStore((state) => state.add)
+  const [directory, show] = useFVStore((state) => [state.visible, state.show])
   const [name, setName] = useState("")
   const invalid = sanitizeFilename(name) !== name
   const confirm = async () => {
-    addFile(await createFile(name, type))
+    const newDir = await addFile(directory, await createFile(type, name))
+    show(newDir)
     dismiss()
   }
   return (
@@ -52,15 +55,25 @@ function NewFileBody({
 export function AddBox() {
   const [inputEl, setInputEl] = useState<HTMLInputElement>(null)
   const [isSelectingFile, setIsSelectingFile] = useState(false)
-
-  const onUpload = (e) => {
-    const fileInput: HTMLInputElement = e.target
-    const { files } = fileInput
-    FileAPI.upload(files)
-    setIsSelectingFile(false)
-  }
+  const visibleDir = useFVStore((state) => state.visible)
+  const show = useFVStore((state) => state.show)
+  const addFile = useFileStore((state) => state.add)
 
   useEffect(() => {
+    const onUpload = async (e) => {
+      const fileInput: HTMLInputElement = e.target
+      const { files } = fileInput
+      const res = await FileAPI.upload(files)
+      const fileModels = (await res.json()) as FileModel[]
+      let updatedCID
+      const p = fileModels.map(
+        async (model) => (updatedCID = await addFile(visibleDir, model))
+      )
+      await Promise.all(p)
+      show(updatedCID)
+      setIsSelectingFile(false)
+    }
+
     const inpt = document.createElement("input")
     inpt.className = "hidden"
     inpt.onchange = onUpload
@@ -71,7 +84,7 @@ export function AddBox() {
       setInputEl(null)
       inpt.remove()
     }
-  }, [isSelectingFile])
+  }, [isSelectingFile, visibleDir, show, addFile])
 
   enum PopoverWindow {
     NEW_FILE,

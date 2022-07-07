@@ -1,12 +1,13 @@
-import { FilesPageContext } from "../../pages/Files"
 import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { FileModel, FileType } from "@crate/common"
-import { useContext, useEffect, useRef, useState } from "preact/hooks"
+import { useEffect, useRef, useState } from "preact/hooks"
 import useClickOutside from "hooks/useClickOutside"
 import RightClickMenu from "./RightClickMenu"
 import Anchor from "models/Anchor"
-import { useFileStore } from "store/FileStore"
+import { useFileStore, VisibleFiles } from "store/FileStore"
+import shallow from "zustand/shallow"
+import { FileModel } from "@crate/api-lib"
+import { useStore as useFVStore } from "store/FileViewStore"
 
 type IconState = "empty" | "selected" | "hovered"
 const getIconState = (selected: boolean, hovered: boolean): IconState => {
@@ -68,27 +69,23 @@ function NameInput({
 
 function FileIcon({ file }: { file: FileModel }) {
   const [hovered, setHovered] = useState(false)
-  const { selection, dispatchSelection } = useContext(FilesPageContext)
-  const renameFile = useFileStore((state) => state.renameFile)
+  const renameFile = useFileStore((state) => state.rename)
+  const [selection, select, deselect] = useFVStore(
+    (state) => [state.selectedFiles, state.select, state.deselect],
+    shallow
+  )
   const [editingName, setEditingName] = useState(false)
 
   const iconRef = useRef()
   const selected = selection.includes(file.name)
 
-  const setSelected = (e) => {
-    if (e.ctrlKey || e.metaKey) {
-      dispatchSelection({ t: "add", id: file.name })
-      return
-    }
-    dispatchSelection({ t: "setone", id: file.name })
-  }
+  const setSelected = (e) => select(file.name, !e.ctrlKey && !e.metaKey)
 
   const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
   const contextShown = Boolean(anchorPos)
   const onContextMenu = (e: MouseEvent) => {
     e.preventDefault()
-    if (!selection.includes(file.name))
-      dispatchSelection({ t: "setone", id: file.name })
+    if (!selection.includes(file.name)) select(file.name, true)
     setAnchorPos({ top: e.pageY, left: e.pageX })
   }
 
@@ -100,7 +97,7 @@ function FileIcon({ file }: { file: FileModel }) {
     iconRef,
     (e) => {
       if (e.ctrlKey || e.metaKey || anchorPos !== null) return
-      dispatchSelection({ t: "remove", id: file.name })
+      deselect(file.name)
     },
     {
       deps: [selected, anchorPos],
@@ -172,18 +169,25 @@ function FileIcon({ file }: { file: FileModel }) {
   )
 }
 
-export function GridView() {
-  const files = useFileStore((state) => state.files)
+export function GridView({ files }: { files: VisibleFiles }) {
   return (
     <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
-      <div
-        className="grid w-full"
-        style={{ gridTemplateColumns: "repeat(auto-fill, minmax(9rem, 1fr))" }}
-      >
-        {Object.values(files).map((el) => (
-          <FileIcon file={el} />
-        ))}
-      </div>
+      {Object.values(files).length === 0 ? (
+        <div className="w-full text-center italic">
+          This directory is empty.
+        </div>
+      ) : (
+        <div
+          className="grid w-full"
+          style={{
+            gridTemplateColumns: "repeat(auto-fill, minmax(9rem, 1fr))",
+          }}
+        >
+          {Object.values(files).map((el) => (
+            <FileIcon file={el} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

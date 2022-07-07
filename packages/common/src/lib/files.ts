@@ -1,23 +1,16 @@
-import { CID } from "multiformats/cid"
-import Hash from "ipfs-only-hash"
+import { CID, Node } from "./ipfs"
+import { Buffer } from "buffer"
 import { FileModel, FileModelTypeEnum as FileType } from "@crate/api-lib"
 
 export async function createFile(
-  name: string,
-  type: FileType
+  type: FileType,
+  name = ""
 ): Promise<FileModel> {
-  const cid = CID.parse(await Hash.of("")).toString()
-  const file = {
-    cid,
-    name,
-    type,
-    mode: 420,
-    size: 0,
-    date: new Date().toISOString(),
-  }
-  return type === "file"
-    ? { ...file }
-    : { ...file, links: [], cumulativeSize: 0 }
+  const content = type === "file" ? Buffer.from("") : undefined
+  const node = Node.fromFile({ type }, content)
+  const file = await Node.toFile(node)
+  file.name = name
+  return file
 }
 
 export function renameFile(file: FileModel, newName: string): FileModel {
@@ -35,3 +28,6 @@ export function duplicateFile(file: FileModel): FileModel {
     date: new Date().toISOString(),
   }
 }
+
+export const parsePath = (path: string) =>
+  path.split("/").filter((s) => s.length > 0)

@@ -30,7 +30,7 @@ servers:
 paths:
   /file:
     get:
-      summary: Fetches FileModel for a CID or path
+      summary: Fetches FileModel for a path relative to the user root.
       parameters:
         - name: path
           in: query
@@ -39,11 +39,6 @@ paths:
             description: File path
             example: /dir1/dir2/file.txt
             type: string
-        - name: cid
-          in: query
-          required: false
-          schema:
-            $ref: "#/components/schemas/CID"
       description: |
         Get FileModel object a file/directory specified by either a CID or
         the path from the root of the user's filesystem. If neither are 
@@ -248,7 +243,6 @@ components:
       type: object
       required:
         - cid
-        - name
         - type
         - size
         - date

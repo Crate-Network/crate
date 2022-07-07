@@ -1,5 +1,5 @@
 import { render } from "preact"
-import { useEffect } from "preact/hooks"
+import { useEffect, useErrorBoundary } from "preact/hooks"
 import Router, { route } from "preact-router"
 import "./index.css"
 
@@ -17,7 +17,12 @@ import { useUserStore } from "store/UserStore"
 const Page = (props) => {
   const { title, component, header, protect } = props
   const loggedIn = useUserStore((state) => state.signedIn)
-  const error = useErrorStore()
+  const errorStore = useErrorStore()
+
+  useErrorBoundary((error: Error) => {
+    console.error(error)
+    errorStore.showError(error)
+  })
 
   if (!loggedIn && protect) {
     route("/", true)
@@ -32,18 +37,18 @@ const Page = (props) => {
       {header ? header : <Navigation />}
       <div
         className={`fixed flex justify-between items-center align-middle transition-all duration-300 mx-auto left-0 right-0 -top-16 w-4/12 p-4 bg-red-500 bg-opacity-90 shadow-md backdrop-blur-lg z-10 rounded-lg text-white ${
-          error.displayed
+          errorStore.displayed
             ? "translate-y-full opacity-100"
             : "-translate-y-full opacity-0"
         }`}
       >
         <span class="text-lg p-1">
-          <b>Error: </b>
-          {error.message}
+          <b>{errorStore.name || "Error"}: </b>
+          {errorStore.message}
         </span>
         <button
           className="font-medium text-neutral-50 rounded-md bg-neutral-400 py-3 px-6"
-          onClick={error.hide}
+          onClick={errorStore.hide}
         >
           Dismiss
         </button>

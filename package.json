@@ -9,7 +9,7 @@
     "@nrwl/eslint-plugin-nx": "14.3.6",
     "@nrwl/jest": "14.3.6",
     "@nrwl/js": "^14.3.5",
-    "@nrwl/linter": "14.3.6",
+    "@nrwl/linter": "^14.3.6",
     "@nrwl/node": "14.3.6",
     "@nrwl/react": "^14.3.5",
     "@nx-tools/docker-metadata": "^3.0.0",

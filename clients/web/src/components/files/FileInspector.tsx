@@ -1,4 +1,3 @@
-import { FileModel } from "@crate/common"
 import { useContext, useEffect, useState } from "preact/hooks"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -6,16 +5,29 @@ import {
   faLessThan,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons"
-import { useFileStore } from "store/FileStore"
-import { FilesPageContext } from "pages/Files"
+import { useFileStore, VisibleFiles } from "store/FileStore"
 import { FileInspectorFileBody } from "components/files/FileInspectorFileBody"
+import { useStore as useFVStore } from "store/FileViewStore"
 
 export function FileInspector({ close }: { close: () => void }) {
-  const { selection } = useContext(FilesPageContext)
-  const files = useFileStore((state) => state.files)
-  const selectedFiles: FileModel[] = selection
-    .map((id) => files[id])
-    .filter((v) => v !== undefined)
+  const selection = useFVStore((state) => state.selectedFiles)
+  const visible = useFVStore((state) => state.visible)
+  const getContents = useFileStore((state) => state.getContents)
+  const [files, setFiles] = useState<VisibleFiles>()
+
+  // self-executing async function
+  useEffect(() => {
+    ;(async () => {
+      const files: VisibleFiles = await getContents(visible)
+      setFiles(files)
+    })()
+  }, [])
+
+  const directory = useFileStore((state) => state.files[visible])
+  const selectedFiles =
+    selection.length > 0 && files
+      ? selection.map((name) => files[name]).filter((v) => v !== undefined)
+      : [directory]
 
   const [fileIndex, setFileIndex] = useState(0)
   const maxIndex = selectedFiles.length - 1
@@ -23,6 +35,8 @@ export function FileInspector({ close }: { close: () => void }) {
     if (maxIndex < fileIndex) setFileIndex(maxIndex)
     if (fileIndex < 0) setFileIndex(0)
   }, [maxIndex, fileIndex])
+
+  if (!files) return null
 
   return (
     <>

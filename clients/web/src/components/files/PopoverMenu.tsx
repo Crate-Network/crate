@@ -40,7 +40,6 @@ export function PopoverMenu({
   ...props
 }: PopoverMenuItemsObj & PopoverMenuProps) {
   const divRef = useRef<HTMLDivElement>()
-  useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
   const [adjAnchor, setAnchor] = useState<Anchor>(anchor)
   const { left, top } = adjAnchor
 
@@ -58,6 +57,8 @@ export function PopoverMenu({
       left: left - (menuRight > docRight ? menuRight - docRight : 0),
     })
   }, [anchor])
+
+  useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
 
   const [initialMenuScale, setInitialMenuScale] = useState<boolean>(false)
   useEffect(() => {
