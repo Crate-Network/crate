@@ -26,6 +26,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.0",
     "jest": "28.1.1",
+    "lint-staged": "^13.0.3",
     "nx": "14.3.6",
     "ts-jest": "28.0.5",
     "ts-node": "~10.8.0"
@@ -36,7 +37,9 @@
   ],
   "lint-staged": {
     "src/**/*.{ts,css,html}": [
-      "nx format:write"
+      "nx format:write",
+      "nx run-many --target=lint --all",
+      "nx run-many --target=test --all"
     ]
   },
   "scripts": {
