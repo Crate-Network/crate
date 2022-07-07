@@ -42,11 +42,11 @@ function NameInput({
     }
     document.addEventListener("keydown", keyPressListener)
     return () => document.removeEventListener("keydown", keyPressListener)
-  }, [val])
+  }, [onCancel, onComplete, val])
 
   useClickOutside(
     fiRef,
-    (e) => {
+    () => {
       if (!fiRef.current) return
       onComplete(val)
     },
@@ -61,7 +61,7 @@ function NameInput({
       value={val}
       autoFocus={true}
       onInput={(e) => {
-        if (e && e.target) setVal((e.target as any).value)
+        if (e && e.target) setVal((e.target as HTMLInputElement).value)
       }}
     />
   )
@@ -89,9 +89,7 @@ function FileIcon({ file }: { file: FileModel }) {
     setAnchorPos({ top: e.pageY, left: e.pageX })
   }
 
-  const handleClose = (e) => {
-    setAnchorPos(null)
-  }
+  const handleClose = () => setAnchorPos(null)
 
   useClickOutside(
     iconRef,
@@ -116,7 +114,7 @@ function FileIcon({ file }: { file: FileModel }) {
         onClick={setSelected}
         onDblClick={() => {
           if (file.type === "file" && !editingName)
-            window.open("https://crate.network/ipfs/" + file.cid, "_blank")
+            window.open(`https://crate.network/ipfs/${file.cid}`, "_blank")
         }}
         onContextMenu={onContextMenu}
         onMouseOver={() => setHovered(true)}
@@ -144,7 +142,7 @@ function FileIcon({ file }: { file: FileModel }) {
             onComplete={(newName) => {
               setEditingName(false)
               if (newName === "") return
-              renameFile(file, newName)
+              renameFile(file.cid, newName)
             }}
           />
         ) : (
@@ -184,7 +182,7 @@ export function GridView({ files }: { files: VisibleFiles }) {
           }}
         >
           {Object.values(files).map((el) => (
-            <FileIcon file={el} />
+            <FileIcon file={el} key={el.name} />
           ))}
         </div>
       )}

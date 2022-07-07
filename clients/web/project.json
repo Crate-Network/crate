@@ -30,8 +30,7 @@
       "outputs": [],
       "dependsOn": ["build"],
       "options": {
-        "jestConfig": "libs/mylib/jest.config.js",
-        "tsConfig": "libs/mylib/tsconfig.spec.json"
+        "jestConfig": "libs/mylib/jest.config.js"
       }
     },
     "version": {

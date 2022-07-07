@@ -1,5 +1,4 @@
 import { Router } from "express";
-import logger from "../logger";
 import { uuid } from "uuidv4";
 
 const router = Router();
@@ -10,7 +9,6 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const fcRes = "Add a pin object.";
   res.send({
     requestid: uuid(),
     status: "queued",

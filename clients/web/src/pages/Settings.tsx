@@ -4,11 +4,8 @@ import {
   faBell,
   faBox,
   faCircleNodes,
-  faDashboard,
   faFileInvoiceDollar,
   faLock,
-  faNetworkWired,
-  faSliders,
   faUser,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

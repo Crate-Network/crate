@@ -10,7 +10,7 @@ export default function useStoredState<T extends string>(
 
   useEffect(() => {
     localStorage.setItem(id, val)
-  }, [val])
+  }, [id, val])
 
   return [val, setVal] as [T, StateUpdater<T>]
 }

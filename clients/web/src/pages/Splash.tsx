@@ -1,5 +1,4 @@
 import { Link, route } from "preact-router"
-import { useContext } from "preact/hooks"
 import { useUserStore } from "store/UserStore"
 
 export default function Splash() {

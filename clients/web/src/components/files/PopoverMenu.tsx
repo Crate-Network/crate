@@ -20,7 +20,7 @@ export function makeOpt(
   name: string,
   closeFunc: (e: MouseEvent) => void,
   f?: () => void,
-  hide: boolean = false
+  hide = false
 ): PopoverMenuItem {
   return hide
     ? "none"
@@ -56,7 +56,7 @@ export function PopoverMenu({
       top: top - (menuBottom > docBottom ? menuBottom - docBottom : 0),
       left: left - (menuRight > docRight ? menuRight - docRight : 0),
     })
-  }, [anchor])
+  }, [anchor, left, top])
 
   useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
 

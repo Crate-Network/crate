@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "preact/hooks"
+import { useEffect, useState } from "preact/hooks"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faGreaterThan,
@@ -17,11 +17,12 @@ export function FileInspector({ close }: { close: () => void }) {
 
   // self-executing async function
   useEffect(() => {
-    ;(async () => {
+    const fetchFiles = async () => {
       const files: VisibleFiles = await getContents(visible)
       setFiles(files)
-    })()
-  }, [])
+    }
+    fetchFiles()
+  }, [getContents, visible])
 
   const directory = useFileStore((state) => state.files[visible])
   const selectedFiles =

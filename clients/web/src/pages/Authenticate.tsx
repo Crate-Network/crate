@@ -19,59 +19,59 @@ type SignInBtnProps = {
   handleProvider: (cb: () => Promise<void>) => void
 }
 
-function SignInWithGoogle({
-  handleProvider,
-  disabled,
-  providerText,
-}: SignInBtnProps) {
-  const useGoogle = handleProvider(async () => {
-    await signInWithRedirect(auth, providers.google)
-  })
+// function SignInWithGoogle({
+//   handleProvider,
+//   disabled,
+//   providerText,
+// }: SignInBtnProps) {
+//   const useGoogle = handleProvider(async () => {
+//     await signInWithRedirect(auth, providers.google)
+//   })
 
-  return (
-    <Button
-      id="google-signin"
-      disabled={disabled}
-      className="text-black p-2 w-full h-8 overflow-hidden bg-gray-100 mt-4 flex flex-row justify-between hover:shadow-md transition-shadow align-middle items-center"
-      onClick={useGoogle}
-    >
-      <img
-        className="h-8 p-2"
-        alt="Google sign-in"
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
-      />
-      {providerText} with Google
-      <span />
-    </Button>
-  )
-}
+//   return (
+//     <Button
+//       id="google-signin"
+//       disabled={disabled}
+//       className="text-black p-2 w-full h-8 overflow-hidden bg-gray-100 mt-4 flex flex-row justify-between hover:shadow-md transition-shadow align-middle items-center"
+//       onClick={useGoogle}
+//     >
+//       <img
+//         className="h-8 p-2"
+//         alt="Google sign-in"
+//         src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+//       />
+//       {providerText} with Google
+//       <span />
+//     </Button>
+//   )
+// }
 
-function SignInWithGithub({
-  handleProvider,
-  disabled,
-  providerText,
-}: SignInBtnProps) {
-  const useGitHub = handleProvider(async () => {
-    await signInWithRedirect(auth, providers.github)
-  })
+// function SignInWithGithub({
+//   handleProvider,
+//   disabled,
+//   providerText,
+// }: SignInBtnProps) {
+//   const useGitHub = handleProvider(async () => {
+//     await signInWithRedirect(auth, providers.github)
+//   })
 
-  return (
-    <Button
-      id="github-signin"
-      disabled={disabled}
-      className="text-black p-2 w-full h-8 overflow-hidden bg-gray-100 mt-4 flex flex-row justify-between hover:shadow-md transition-shadow align-middle items-center"
-      onClick={useGitHub}
-    >
-      <img
-        className="h-8 p-2"
-        alt="GitHub sign-in"
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Font_Awesome_5_brands_github.svg/2560px-Font_Awesome_5_brands_github.svg.png"
-      />
-      {providerText} with GitHub
-      <span />
-    </Button>
-  )
-}
+//   return (
+//     <Button
+//       id="github-signin"
+//       disabled={disabled}
+//       className="text-black p-2 w-full h-8 overflow-hidden bg-gray-100 mt-4 flex flex-row justify-between hover:shadow-md transition-shadow align-middle items-center"
+//       onClick={useGitHub}
+//     >
+//       <img
+//         className="h-8 p-2"
+//         alt="GitHub sign-in"
+//         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Font_Awesome_5_brands_github.svg/2560px-Font_Awesome_5_brands_github.svg.png"
+//       />
+//       {providerText} with GitHub
+//       <span />
+//     </Button>
+//   )
+// }
 
 function SignInWithApple({
   handleProvider,

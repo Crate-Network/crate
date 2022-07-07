@@ -1,5 +1,5 @@
 import Button from "components/Button"
-import { Link, route } from "preact-router"
+import { route } from "preact-router"
 
 export default function NotFound() {
   return (

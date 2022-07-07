@@ -1,8 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCopy } from "@fortawesome/free-solid-svg-icons"
 import { FileModel } from "@crate/api-lib"
+import { VisibleFile } from "store/FileStore"
 
-export function FileInspectorFileBody({ file }: { file: FileModel }) {
+export function FileInspectorFileBody({
+  file,
+}: {
+  file: FileModel | VisibleFile
+}) {
   const { name, cid } = { name: "", cid: "", ...file }
   const rows: [string, string, string?, boolean?][] = []
   if (name && name !== "") rows.push(["Name", name])
@@ -15,7 +20,7 @@ export function FileInspectorFileBody({ file }: { file: FileModel }) {
     <div className="p-2 text-sm">
       <table>
         {rows.map(([title, value, classes, copy]) => (
-          <tr>
+          <tr key={title}>
             <td className="font-semibold text-gray-600 dark:text-gray-300 text-right pr-4 align-top w-20">
               {title}
             </td>

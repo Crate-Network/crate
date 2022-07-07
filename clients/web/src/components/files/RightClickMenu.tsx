@@ -9,7 +9,6 @@ import { useFileStore } from "store/FileStore"
 import Anchor from "models/Anchor"
 import { duplicateFile } from "@crate/common"
 import shallow from "zustand/shallow"
-import useClickOutside from "hooks/useClickOutside"
 import { useStore as useFVStore } from "store/FileViewStore"
 
 type RightClickMenuProps = {

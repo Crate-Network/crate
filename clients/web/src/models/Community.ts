@@ -50,7 +50,7 @@ export const makeCategory = (
   key,
   icon,
   children: children
-    ? children.map((sub) => ({ ...sub, key: key + "-" + sub.key }))
+    ? children.map((sub) => ({ ...sub, key: `${key}-${sub.key}` }))
     : undefined,
 })
 

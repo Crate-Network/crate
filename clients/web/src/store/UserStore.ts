@@ -85,7 +85,7 @@ useUserStore.subscribe(
 
 // on auth state change, set the user in the state
 onAuthStateChanged(auth, async (user) => {
-  useUserStore.setState({ user: user, signedIn: !!user, authenticating: false })
+  useUserStore.setState({ user, signedIn: !!user, authenticating: false })
 })
 
 // user subscription - update the UserStore when the user changes

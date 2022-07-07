@@ -53,8 +53,8 @@ export function FileRow({ file }: { file: VisibleFile }) {
         } select-none cursor-pointer`}
       >
         <td className="p-2 pb-1 pt-1">{file.name}</td>
-        <td></td>
-        <td></td>
+        <td />
+        <td />
       </tr>
 
       {contextShown && (
@@ -88,7 +88,7 @@ export function ListView({ files }: { files: VisibleFiles }) {
           </thead>
           <tbody>
             {Object.values(files).map((file) => (
-              <FileRow file={file} />
+              <FileRow file={file} key={file.name} />
             ))}
           </tbody>
         </table>

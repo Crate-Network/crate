@@ -4,10 +4,9 @@ import files from "./routes/files-route";
 import fileUpload from "express-fileupload";
 import pinning from "./routes/pinning-route";
 import logger from "./logger";
-import { DecodedIdToken } from "firebase-admin/auth";
 import morgan from "morgan";
 
-const args = process.argv.slice(2);
+// const args = process.argv.slice(2);
 const app = express();
 
 const API_VERSION = "v1";

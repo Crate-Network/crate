@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Anchor from "models/Anchor"
 import { StateUpdater, useRef, useState } from "preact/hooks"
 import { JSXInternal } from "preact/src/jsx"
-import { makeOpt, PopoverMenu, PopoverMenuItem } from "./PopoverMenu"
+import { makeOpt, PopoverMenu } from "./PopoverMenu"
 
 export type FuncInput =
   | { name: string; onClick: () => void }

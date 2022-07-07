@@ -10,6 +10,7 @@ export function PopoverButtonRow({
     <div className="border-t border-gray-400 border-opacity-50 flex justify-end p-2 space-x-2">
       {actions.map(([title, func, disabled], idx) => (
         <Button
+          key={title}
           onClick={func}
           disabled={disabled}
           className={idx === 0 ? "" : "bg-slate-400"}

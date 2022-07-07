@@ -11,13 +11,13 @@ const router = Router();
 const getRootCID = async (uid: string) =>
   (await firestore.collection("users").doc(uid).get()).get("rootCID");
 
-const setRootCID = async (uid: string, newCID: string) =>
-  await firestore.collection("users").doc(uid).set({ rootCID: newCID });
+// const setRootCID = async (uid: string, newCID: string) =>
+//   await firestore.collection("users").doc(uid).set({ rootCID: newCID });
 
-const makeError = (type: string, msg: string) => ({
-  reason: type,
-  message: msg,
-});
+// const makeError = (type: string, msg: string) => ({
+//   reason: type,
+//   message: msg,
+// });
 
 router.get("/", async (req, res) => {
   const { path, cid } = {
@@ -25,6 +25,7 @@ router.get("/", async (req, res) => {
     cid: null,
     ...req.query,
   };
+  logger.info(path);
   logger.info(cid);
   const block = await ipfs.block.get(await getRootCID(req.token.uid));
   res.send(await Node.toFile(Node.fromRawBlock(block)));
@@ -36,6 +37,7 @@ router.post("/", async (req, res) => {
     ...req.query,
   };
   const pArr = parsePath(path);
+  logger.info(pArr);
 
   if (!req.files.files || Object.keys(req.files).length === 0) {
     return res.status(400).send({

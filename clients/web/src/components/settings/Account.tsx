@@ -1,5 +1,5 @@
 import FormInput from "components/FormInput"
-import { useCallback, useContext } from "preact/hooks"
+import { useCallback } from "preact/hooks"
 import { doc, DocumentReference, setDoc } from "firebase/firestore"
 import { UserModel } from "@crate/common"
 import { db } from "vendor/firebase"
@@ -21,7 +21,7 @@ export default function Profile() {
       ) as DocumentReference<UserModel>
       setDoc(userDocRef, { ...userDoc, ...newDoc })
     },
-    [userDoc]
+    [user.uid, userDoc]
   )
 
   const { firstName, lastName, organization } = userDoc

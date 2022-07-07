@@ -1,5 +1,4 @@
-import { createContext } from "preact"
-import { useEffect, useReducer, useState } from "preact/hooks"
+import { useEffect, useState } from "preact/hooks"
 import { GridView } from "../components/files/GridView"
 import { ListView } from "../components/files/ListView"
 import {
@@ -33,12 +32,12 @@ function Breadcrumbs() {
         All Files
       </Link>
       {path.map((el) => (
-        <>
+        <span key={el}>
           <span className="font-light inline-block ml-2 mr-2">&gt;</span>
           <Link className="cursor-pointer hover:text-neutral-400 hover:underline">
             {el}
           </Link>
-        </>
+        </span>
       ))}
     </div>
   )
@@ -62,14 +61,14 @@ function FilesChild() {
 
   useEffect(() => {
     if (userDoc.rootCID !== "") show(userDoc.rootCID)
-  }, [userDoc.rootCID])
+  }, [show, userDoc.rootCID])
 
   useEffect(() => {
     selectedFiles.forEach((v) => {
       if (v in files) return
       deselect(v)
     })
-  }, [files])
+  }, [deselect, files, selectedFiles])
 
   const [viewMode, setViewMode] = useStoredState<ViewMode>(
     ViewMode.LIST,
@@ -80,10 +79,10 @@ function FilesChild() {
   const [sortBy, setSortBy] = useStoredState<SortBy>(SortBy.NAME, "sort-order")
 
   const [visibleFiles, setVisibleFiles] = useState<VisibleFiles>(null)
-  const noFiles = !ready || !Boolean(visibleFiles)
+  const noFiles = !ready || !visibleFiles
   useEffect(() => {
     if (ready) getContents(visible).then((vFiles) => setVisibleFiles(vFiles))
-  }, [ready, visible])
+  }, [getContents, ready, visible])
 
   const loading = !ready || noFiles
 

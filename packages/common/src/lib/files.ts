@@ -1,4 +1,4 @@
-import { CID, Node } from "./ipfs"
+import { Node } from "./ipfs"
 import { Buffer } from "buffer"
 import { FileModel, FileModelTypeEnum as FileType } from "@crate/api-lib"
 

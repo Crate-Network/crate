@@ -1,8 +1,3 @@
-import FormInput from "components/FormInput"
-import { useCallback, useContext } from "preact/hooks"
-import { doc, DocumentReference, setDoc } from "firebase/firestore"
-import { UserModel } from "@crate/common"
-import { db } from "vendor/firebase"
 import shallow from "zustand/shallow"
 import { useUserStore } from "store/UserStore"
 
@@ -26,8 +21,11 @@ export default function Security() {
             type="checkbox"
             value=""
             checked={uses2FA}
-            onInput={(e: any) =>
-              updateUser({ ...userDoc, uses2FA: e.target.checked })
+            onInput={(e) =>
+              updateUser({
+                ...userDoc,
+                uses2FA: (e.target as HTMLInputElement).checked,
+              })
             }
             role="switch"
             id="check2FA"

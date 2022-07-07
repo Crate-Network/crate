@@ -6,7 +6,6 @@
  */
 
 import { FileError, FileErrorType, CID as CIDOp, Node } from "@crate/common"
-import { WritableDraft } from "immer/dist/internal"
 import create, { StateCreator } from "zustand"
 import { FileModel, FileModelLinksInner } from "@crate/api-lib"
 import { subscribeWithSelector } from "zustand/middleware"
@@ -84,7 +83,7 @@ const fileStore: StateCreator<
     const node = Node.fromFile(files[ref])
     const cid = (await CIDOp.fromNode(node)).toString()
     set((state) => {
-      let { files } = state
+      const { files } = state
       files[cid] = { ...files[ref], cid }
     })
     // propagate state changes up the tree
@@ -100,7 +99,8 @@ const fileStore: StateCreator<
     set((state) => {
       if (!Object.keys(state.files).includes(cid))
         throw new FileError(FileErrorType.INVALID)
-      const { name: _, ...fileModel } = { ...updatedFile, ...state.files[cid] }
+      const fileModel = { ...updatedFile, ...state.files[cid] }
+      delete fileModel.name
       state.files[cid] = fileModel
       if (fileModel.type === "directory") recalculateCID(cid)
     })
@@ -114,7 +114,8 @@ const fileStore: StateCreator<
       set(({ files }) => {
         if (files[directory].type === "file")
           throw new FileError(FileErrorType.FILE_INVALID)
-        const { name: _, ...fWithoutName } = file
+        const fWithoutName = file
+        delete fWithoutName.name
         files[file.cid] = fWithoutName
         const { name, cid, size } = file
         files[directory].links.push({ name: name || cid, cid, size })
@@ -132,12 +133,12 @@ const fileStore: StateCreator<
 
 export const useFileStore = create(immer(subscribeWithSelector(fileStore)))
 
-type Operation = "create" | "update" | "delete"
-const getOp = (difference: number): Operation => {
-  if (difference < 0) return "delete"
-  else if (difference === 0) return "update"
-  return "create"
-}
+// type Operation = "create" | "update" | "delete"
+// const getOp = (difference: number): Operation => {
+//   if (difference < 0) return "delete"
+//   else if (difference === 0) return "update"
+//   return "create"
+// }
 
 // retrieve root CID on user change
 useUserStore.subscribe(

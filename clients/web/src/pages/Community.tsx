@@ -1,17 +1,12 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core"
 import {
-  faArrowDown,
   faBox,
   faCaretDown,
-  faEnvelope,
   faMailForward,
   faStar,
-  faUpload,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "components/Button"
 import { categories, CommunityPage, SidebarProps } from "models/Community"
-import { Link } from "preact-router"
 import { useState } from "preact/hooks"
 
 function SidebarButton({
@@ -112,6 +107,7 @@ export default function Community() {
                   )
                 return (
                   <SidebarButton
+                    key={name}
                     icon={icon}
                     text={name}
                     selected={key === pane}
@@ -119,6 +115,7 @@ export default function Community() {
                   >
                     {children.map(({ name, icon, key: childKey }) => (
                       <SidebarButton
+                        key={name}
                         icon={icon}
                         text={name}
                         selected={childKey === pane}
