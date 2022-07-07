@@ -110,7 +110,7 @@ const fileStore: StateCreator<
     files: {},
     retrieve,
     getContents,
-    add: (directory: CID, file: FileModel & { name: string }) => {
+    add: (directory: CID, file: FileModel) => {
       set(({ files }) => {
         if (files[directory].type === "file")
           throw new FileError(FileErrorType.FILE_INVALID)
