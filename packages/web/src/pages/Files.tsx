@@ -1,4 +1,3 @@
-import { useEffect, useState } from "preact/hooks"
 import { GridView } from "../components/files/GridView"
 import { ListView } from "../components/files/ListView"
 import {
@@ -11,9 +10,7 @@ import {
 } from "../components/files/Toolbar"
 import { Link } from "preact-router"
 import useStoredState from "hooks/useStoredState"
-import { useFileStore, VisibleFiles } from "store/FileStore"
 import { FileInspector } from "../components/files/FileInspector"
-import shallow from "zustand/shallow"
 import {
   createStore as createFVStore,
   useStore as useFVStore,
@@ -44,47 +41,12 @@ function Breadcrumbs() {
 }
 
 function FilesChild() {
-  const files = useFileStore((state) => state.files)
-  const [signedIn, userDoc, authenticating] = useUserStore(
-    (state) => [state.signedIn, state.userDoc, state.authenticating],
-    shallow
-  )
-  const getContents = useFileStore((state) => state.getContents)
-  const {
-    deselect,
-    selectedFiles,
-    inspectorVisible,
-    hideInspector,
-    visible,
-    show,
-  } = useFVStore()
-
-  useEffect(() => {
-    if (userDoc.rootCID !== "") show(userDoc.rootCID)
-  }, [show, userDoc.rootCID])
-
-  useEffect(() => {
-    selectedFiles.forEach((v) => {
-      if (v in files) return
-      deselect(v)
-    })
-  }, [deselect, files, selectedFiles])
-
+  const { inspectorVisible, hideInspector } = useFVStore()
   const [viewMode, setViewMode] = useStoredState<ViewMode>(
     ViewMode.LIST,
     "view-mode"
   )
-
-  const ready = visible !== "" && signedIn && !authenticating
   const [sortBy, setSortBy] = useStoredState<SortBy>(SortBy.NAME, "sort-order")
-
-  const [visibleFiles, setVisibleFiles] = useState<VisibleFiles>(null)
-  const noFiles = !ready || !visibleFiles
-  useEffect(() => {
-    if (ready) getContents(visible).then((vFiles) => setVisibleFiles(vFiles))
-  }, [getContents, ready, visible])
-
-  const loading = !ready || noFiles
 
   return (
     <main className="flex flex-row mx-auto 2xl:px-32 px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">
@@ -105,17 +67,8 @@ function FilesChild() {
             <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
           </div>
         </div>
-        {loading && (
-          <div className="w-full text-center italic mt-8">
-            Loading your files...
-          </div>
-        )}
-        {!noFiles && viewMode === ViewMode.LIST && (
-          <ListView files={visibleFiles} />
-        )}
-        {!noFiles && viewMode === ViewMode.GRID && (
-          <GridView files={visibleFiles} />
-        )}
+        {viewMode === ViewMode.LIST && <ListView />}
+        {viewMode === ViewMode.GRID && <GridView />}
       </div>
       <div
         id="file-inspector"
@@ -132,8 +85,15 @@ function FilesChild() {
 }
 
 export default function Files() {
+  const userRootCID = useUserStore((state) => state.userDoc.rootCID)
+  if (!userRootCID)
+    return (
+      <div className="w-full text-center italic mt-8">
+        Loading your files...
+      </div>
+    )
   return (
-    <FVProvider createStore={createFVStore}>
+    <FVProvider createStore={createFVStore(userRootCID)}>
       <FilesChild />
     </FVProvider>
   )

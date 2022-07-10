@@ -32,8 +32,7 @@
     "ts-node": "~10.8.0"
   },
   "workspaces": [
-    "packages/*",
-    "clients/*"
+    "packages/*"
   ],
   "lint-staged": {
     "**/*.{tsx,ts,jsx,js,css,html}": [

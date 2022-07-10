@@ -11,6 +11,7 @@ import FileAPI from "api/FileAPI"
 import { createFile } from "@crate/common"
 import { FileModel } from "@crate/api-lib"
 import { useStore as useFVStore } from "store/FileViewStore"
+import shallow from "zustand/shallow"
 
 function NewFileBody({
   dismiss,
@@ -20,12 +21,15 @@ function NewFileBody({
   type: "directory" | "file"
 }) {
   const addFile = useFileStore((state) => state.add)
-  const [directory, show] = useFVStore((state) => [state.visible, state.show])
+  const [path, setPath] = useFVStore(
+    (state) => [state.path, state.setPath],
+    shallow
+  )
   const [name, setName] = useState("")
   const invalid = sanitizeFilename(name) !== name
   const confirm = async () => {
-    const newDir = await addFile(directory, await createFile(type, name))
-    show(newDir)
+    const newDir = await addFile(path, await createFile(type, name))
+    setPath(newDir)
     dismiss()
   }
   return (
@@ -55,22 +59,24 @@ function NewFileBody({
 export function AddBox() {
   const [inputEl, setInputEl] = useState<HTMLInputElement>(null)
   const [isSelectingFile, setIsSelectingFile] = useState(false)
-  const visibleDir = useFVStore((state) => state.visible)
-  const show = useFVStore((state) => state.show)
+  const [path, setPath] = useFVStore(
+    (state) => [state.path, state.setPath],
+    shallow
+  )
   const addFile = useFileStore((state) => state.add)
 
   useEffect(() => {
     const onUpload = async (e) => {
       const fileInput: HTMLInputElement = e.target
       const { files } = fileInput
-      const res = await FileAPI.upload(files)
+      const res = await FileAPI.upload(files, path)
       const fileModels = (await res.json()) as FileModel[]
       let updatedCID
       const p = fileModels.map(
-        async (model) => (updatedCID = await addFile(visibleDir, model))
+        async (model) => (updatedCID = await addFile(path, model))
       )
       await Promise.all(p)
-      show(updatedCID)
+      setPath(updatedCID)
       setIsSelectingFile(false)
     }
 
@@ -84,7 +90,7 @@ export function AddBox() {
       setInputEl(null)
       inpt.remove()
     }
-  }, [isSelectingFile, visibleDir, show, addFile])
+  }, [isSelectingFile, path, setPath, addFile])
 
   enum PopoverWindow {
     NEW_FILE,

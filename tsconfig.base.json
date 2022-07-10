@@ -9,14 +9,27 @@
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "types": ["node", "jest"],
-    "lib": ["es2019"],
+    "types": [
+      "node",
+      "jest"
+    ],
+    "lib": [
+      "es2019"
+    ],
     "declaration": true,
     "resolveJsonModule": true,
     "paths": {
-      "@/api-docs": ["packages/api-docs/src/index.ts"],
-      "@/api-lib": ["packages/api-lib/src/index.ts"]
+      "@/api-docs": [
+        "packages/api-docs/src/index.ts"
+      ],
+      "@/api-lib": [
+        "packages/api-lib/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "*/**/*.test.ts", "*/**/*.spec.ts"]
+  "exclude": [
+    "node_modules",
+    "*/**/*.test.ts",
+    "*/**/*.spec.ts"
+  ]
 }

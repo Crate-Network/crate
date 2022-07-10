@@ -5,30 +5,37 @@ import {
   faLessThan,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons"
-import { useFileStore, VisibleFiles } from "store/FileStore"
+import { useFileStore } from "store/FileStore"
 import { FileInspectorFileBody } from "components/files/FileInspectorFileBody"
 import { useStore as useFVStore } from "store/FileViewStore"
+import shallow from "zustand/shallow"
+import NamedFileModel from "models/NamedFileModel"
 
 export function FileInspector({ close }: { close: () => void }) {
-  const selection = useFVStore((state) => state.selectedFiles)
-  const visible = useFVStore((state) => state.visible)
-  const getContents = useFileStore((state) => state.getContents)
-  const [files, setFiles] = useState<VisibleFiles>()
+  const [selection, path] = useFVStore(
+    (state) => [state.selectedFiles, state.path],
+    shallow
+  )
+  const getCID = useFileStore((state) => state.getCID)
+  const get = useFileStore((state) => state.get)
+  const [selectedFiles, setSelectedFiles] = useState<NamedFileModel[]>([])
 
-  // self-executing async function
   useEffect(() => {
-    const fetchFiles = async () => {
-      const files: VisibleFiles = await getContents(visible)
-      setFiles(files)
+    if (selection.length === 0) {
+      get(path).then((dirModel) =>
+        setSelectedFiles([{ name: "Root", ...dirModel }])
+      )
+    } else {
+      Promise.all(
+        selection.map(async ({ name, cid }) => ({
+          name,
+          ...(await getCID(cid)),
+        }))
+      ).then((v) => {
+        setSelectedFiles(v)
+      })
     }
-    fetchFiles()
-  }, [getContents, visible])
-
-  const directory = useFileStore((state) => state.files[visible])
-  const selectedFiles =
-    selection.length > 0 && files
-      ? selection.map((name) => files[name]).filter((v) => v !== undefined)
-      : [directory]
+  }, [getCID, get, path, selection])
 
   const [fileIndex, setFileIndex] = useState(0)
   const maxIndex = selectedFiles.length - 1
@@ -36,8 +43,6 @@ export function FileInspector({ close }: { close: () => void }) {
     if (maxIndex < fileIndex) setFileIndex(maxIndex)
     if (fileIndex < 0) setFileIndex(0)
   }, [maxIndex, fileIndex])
-
-  if (!files) return null
 
   return (
     <>

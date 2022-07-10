@@ -25,23 +25,25 @@ export default function RightClickMenu({
   ...props
 }: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
   const [files, addFile, deleteFile, retrieve] = useFileStore(
-    (state) => [state.files, state.add, state.delete, state.retrieve],
+    (state) => [state.files, state.add, state.delete, state.get],
     shallow
   )
-  const [selection, directory] = useFVStore(
-    (state) => [state.selectedFiles, state.visible],
+  const [selection, path] = useFVStore(
+    (state) => [state.selectedFiles, state.path],
     shallow
   )
 
   const [file, setFile] = useState(null)
   useEffect(() => {
-    const fetchFile = async () => setFile(await retrieve(selection[0]))
+    const fileMapping = {}
+    files[path].links.forEach((f) => (fileMapping[f.name] = f))
+    const fetchFile = async () => setFile(await retrieve(selection[0].name))
     fetchFile()
-  }, [retrieve, selection])
+  }, [path, files, retrieve, selection])
 
   const deleteFiles = () => {
-    selection.forEach((fileKey) => {
-      deleteFile(files[fileKey].cid)
+    selection.forEach(({ cid }) => {
+      deleteFile(cid)
     })
   }
 
@@ -64,7 +66,7 @@ export default function RightClickMenu({
     makeOpt("Delete", close, deleteFiles),
     "divider",
     makeOpt("Rename", close, onRenameRequest, !onRenameRequest),
-    makeOpt("Duplicate", close, () => addFile(directory, duplicateFile(file))),
+    makeOpt("Duplicate", close, () => addFile(path, duplicateFile(file))),
     "divider",
     makeOpt("Inspect", close, useFVStore().showInspector),
     makeOpt("Copy CID", close, copyCID),

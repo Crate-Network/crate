@@ -1,4 +1,4 @@
-import { Node } from "./ipfs"
+import { CID, Node } from "./ipfs"
 import { Buffer } from "buffer"
 import { FileModel, FileModelTypeEnum as FileType } from "@crate/api-lib"
 
@@ -29,5 +29,21 @@ export function duplicateFile(file: FileModel): FileModel {
   }
 }
 
-export const parsePath = (path: string) =>
-  path.split("/").filter((s) => s.length > 0)
+// splits a path into segments
+export function splitPath(path: string) {
+  return path.split("/").filter((e) => e !== "" && e !== null)
+}
+
+// verify path format
+export function validPath(path: string) {
+  if (!path.startsWith("/")) return false
+  const segments = splitPath(path)
+  if (segments.length < 2) return false
+  if (segments[0] !== "ipfs") return false
+  try {
+    CID.parse(segments[1])
+  } catch (_e) {
+    return false
+  }
+  return true
+}

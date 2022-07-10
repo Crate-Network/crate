@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "preact/hooks"
 import useClickOutside from "hooks/useClickOutside"
 import RightClickMenu from "./RightClickMenu"
 import Anchor from "models/Anchor"
-import { useFileStore, VisibleFiles } from "store/FileStore"
+import { useFileStore } from "store/FileStore"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "store/FileViewStore"
 
@@ -74,7 +74,7 @@ function FileIcon({
   const [hovered, setHovered] = useState(false)
   const renameFile = useFileStore((state) => state.rename)
   const [selection, select, deselect] = useFVStore(
-    (state) => [state.selectedFiles, state.select, state.deselect],
+    (state) => [state.selectedNames(), state.select, state.deselect],
     shallow
   )
   const [editingName, setEditingName] = useState(false)
@@ -82,13 +82,13 @@ function FileIcon({
   const iconRef = useRef()
   const selected = selection.includes(file.name)
 
-  const setSelected = (e) => select(file.name, !e.ctrlKey && !e.metaKey)
+  const setSelected = (e) => select(file, !e.ctrlKey && !e.metaKey)
 
   const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
   const contextShown = Boolean(anchorPos)
   const onContextMenu = (e: MouseEvent) => {
     e.preventDefault()
-    if (!selection.includes(file.name)) select(file.name, true)
+    if (!selection.includes(file.name)) select(file, true)
     setAnchorPos({ top: e.pageY, left: e.pageX })
   }
 
@@ -98,7 +98,7 @@ function FileIcon({
     iconRef,
     (e) => {
       if (e.ctrlKey || e.metaKey || anchorPos !== null) return
-      deselect(file.name)
+      deselect(file)
     },
     {
       deps: [selected, anchorPos],
@@ -170,7 +170,10 @@ function FileIcon({
   )
 }
 
-export function GridView({ files }: { files: VisibleFiles }) {
+export function GridView() {
+  const { path } = useFVStore()
+  const { getChildren } = useFileStore()
+  const files = getChildren(path)
   return (
     <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
       {Object.values(files).length === 0 ? (

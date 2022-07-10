@@ -1,16 +1,22 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "@crate/web",
-  "sourceRoot": "./clients/web/",
+  "sourceRoot": "./packages/web/",
   "projectType": "application",
   "targets": {
     "docker": {
       "executor": "@nx-tools/nx-docker:build",
       "options": {
         "push": true,
-        "platforms": ["linux/amd64", "linux/arm64"],
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
         "metadata": {
-          "images": ["ghcr.io/crate-network/web"],
-          "context": "./clients/web",
+          "images": [
+            "ghcr.io/crate-network/web"
+          ],
+          "context": "./packages/web",
           "tags": [
             "latest",
             "type=schedule",

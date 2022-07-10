@@ -1,16 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCopy } from "@fortawesome/free-solid-svg-icons"
 import { FileModel } from "@crate/api-lib"
-import { VisibleFile } from "store/FileStore"
 
-export function FileInspectorFileBody({
-  file,
-}: {
-  file: FileModel | VisibleFile
-}) {
-  const { name, cid } = { name: "", cid: "", ...file }
+export function FileInspectorFileBody({ file }: { file: FileModel }) {
+  const { name, cid } = file
   const rows: [string, string, string?, boolean?][] = []
-  if (name && name !== "") rows.push(["Name", name])
+  rows.push(["Name", name])
   rows.push(["Path", `/${name ? name : ""}`])
   if (name && name.includes("."))
     rows.push(["Extension", name.split(".", 2)[1]])

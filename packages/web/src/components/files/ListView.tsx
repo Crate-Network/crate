@@ -2,24 +2,25 @@ import useClickOutside from "hooks/useClickOutside"
 import Anchor from "models/Anchor"
 import { useRef, useState } from "preact/hooks"
 import RightClickMenu from "./RightClickMenu"
-import { VisibleFile, VisibleFiles } from "store/FileStore"
+import { useFileStore } from "store/FileStore"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "store/FileViewStore"
+import { FileModel } from "@crate/api-lib"
 
-export function FileRow({ file }: { file: VisibleFile }) {
+export function FileRow({ file }: { file: FileModel }) {
   const [selection, select, deselect] = useFVStore(
-    (state) => [state.selectedFiles, state.select, state.deselect],
+    (state) => [state.selectedNames(), state.select, state.deselect],
     shallow
   )
   const rowRef = useRef()
-  const selected = selection.includes(file.cid)
+  const selected = selection.includes(file.name)
 
-  const setSelected = (e) => select(file.cid, !e.ctrlKey && !e.metaKey)
+  const setSelected = (e) => select(file, !e.ctrlKey && !e.metaKey)
   useClickOutside(
     rowRef,
     (e) => {
       if (e.ctrlKey || e.metaKey || anchorPos !== null) return
-      deselect(file.cid)
+      deselect(file)
     },
     {
       deps: [selected],
@@ -35,7 +36,7 @@ export function FileRow({ file }: { file: VisibleFile }) {
   const onContextMenu = (e: MouseEvent) => {
     e.preventDefault()
     setAnchorPos({ top: e.pageY, left: e.pageX })
-    if (!selection.includes(file.name)) select(file.cid, true)
+    if (!selection.includes(file.name)) select(file, true)
   }
   const handleClose = () => {
     setAnchorPos(null)
@@ -64,7 +65,10 @@ export function FileRow({ file }: { file: VisibleFile }) {
   )
 }
 
-export function ListView({ files }: { files: VisibleFiles }) {
+export function ListView() {
+  const { path } = useFVStore()
+  const { getChildren } = useFileStore()
+  const files = getChildren(path)
   return (
     <div className="mt-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
       {Object.values(files).length === 0 ? (
