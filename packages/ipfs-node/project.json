@@ -7,15 +7,10 @@
       "executor": "@nx-tools/nx-docker:build",
       "options": {
         "push": true,
-        "platforms": [
-          "linux/amd64",
-          "linux/arm64"
-        ],
+        "platforms": ["linux/amd64", "linux/arm64"],
         "context": "packages/ipfs-node",
         "metadata": {
-          "images": [
-            "ghcr.io/crate-network/ipfs"
-          ],
+          "images": ["ghcr.io/crate-network/ipfs"],
           "tags": [
             "latest",
             "type=schedule",

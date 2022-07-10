@@ -15,8 +15,6 @@
       }
     }
   },
-  "implicitDependencies": [
-    "@crate/api-spec"
-  ],
+  "implicitDependencies": ["@crate/api-spec"],
   "tags": []
 }

@@ -35,7 +35,7 @@
     "packages/*"
   ],
   "lint-staged": {
-    "**/*.{tsx,ts,jsx,js,css,html}": [
+    "**/*.{tsx,ts,jsx,js}": [
       "nx format:write",
       "eslint",
       "jest --passWithNoTests"

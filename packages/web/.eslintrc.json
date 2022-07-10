@@ -1,12 +1,6 @@
 {
-  "extends": [
-    "../../.eslintrc.json"
-  ],
-  "ignorePatterns": [
-    "!**/*",
-    "node_modules",
-    "dist"
-  ],
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*", "node_modules", "dist"],
   "overrides": [
     {
       "env": {
@@ -18,12 +12,7 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended"
       ],
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "ecmaFeatures": {
@@ -32,9 +21,7 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
       },
-      "plugins": [
-        "@typescript-eslint"
-      ],
+      "plugins": ["@typescript-eslint"],
       "rules": {
         "@typescript-eslint/no-unused-vars": [
           "warn",

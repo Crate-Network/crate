@@ -8,14 +8,9 @@
       "executor": "@nx-tools/nx-docker:build",
       "options": {
         "push": true,
-        "platforms": [
-          "linux/amd64",
-          "linux/arm64"
-        ],
+        "platforms": ["linux/amd64", "linux/arm64"],
         "metadata": {
-          "images": [
-            "ghcr.io/crate-network/web"
-          ],
+          "images": ["ghcr.io/crate-network/web"],
           "context": "./packages/web",
           "tags": [
             "latest",
