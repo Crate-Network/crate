@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "ESNext",
     "sourceMap": true,
     "importHelpers": true,
@@ -14,8 +15,8 @@
     "declaration": true,
     "resolveJsonModule": true,
     "paths": {
-      "@/api-docs": ["packages/api-docs/src/index.ts"],
-      "@/api-lib": ["packages/api-lib/src/index.ts"]
+      "@crate/common": ["libs/shared/common/src/index.ts"],
+      "@crate/types": ["libs/shared/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "*/**/*.test.ts", "*/**/*.spec.ts"]
