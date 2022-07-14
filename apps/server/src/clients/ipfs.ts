@@ -23,11 +23,12 @@ const walk = async (path: string): Promise<CID[]> => {
   const walkDir = async (dirCID: string, path: string[]): Promise<CID[]> => {
     if (path.length === 0) return [CID.parse(dirCID)]
     const fModel = await fetchFModel(CID.parse(dirCID))
-    if (fModel.type !== "directory")
+    if (!fModel.links || fModel.type !== "directory")
       throw new FileError(FileErrorType.FILE_INVALID)
     if (!fModel.links.some((link) => link.name === path[0]))
       throw new FileError(FileErrorType.NO_DATA)
-    const nextCID = fModel.links.find((el) => el.name === path[0]).cid
+    const nextCID = fModel.links.find((el) => el.name === path[0])?.cid
+    if (!nextCID) throw new Error("nextCID is undefined")
     return [CID.parse(nextCID)].concat(await walkDir(nextCID, path.slice(1)))
   }
   const segments = splitPath(path)

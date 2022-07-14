@@ -55,7 +55,7 @@ app.use(
 app.use(`${API_ROUTE}/file`, files)
 app.use(`${API_ROUTE}/pins`, pinning)
 
-const port = process.env.PORT || 3030
+const port = process.env["PORT"] || 3030
 app.listen(port, () => {
   logger.info(`Listening on port ${port}`)
 })

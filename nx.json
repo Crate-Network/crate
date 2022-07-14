@@ -28,7 +28,7 @@
   "affected": {
     "defaultBase": "main"
   },
-  "defaultProject": "web",
+  "defaultProject": "@crate/web",
   "cli": {
     "defaultCollection": "@nxext/vite"
   },

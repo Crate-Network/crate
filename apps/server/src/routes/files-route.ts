@@ -1,12 +1,19 @@
-import { RequestHandler, Router } from "express"
+import {
+  NextFunction,
+  Request,
+  RequestHandler,
+  Response,
+  Router,
+} from "express"
 import ipfs from "../clients/ipfs"
 import logger from "../logger"
 
 const router = Router()
 
-const asyncHandler = (fn: RequestHandler) => (req, res, next) => {
-  return Promise.resolve(fn(req, res, next)).catch(next)
-}
+const asyncHandler =
+  (fn: RequestHandler) => (req: Request, res: Response, next: NextFunction) => {
+    return Promise.resolve(fn(req, res, next)).catch(next)
+  }
 
 const get: RequestHandler = async (req, res) => {
   const { path, cid } = {
@@ -21,7 +28,7 @@ const get: RequestHandler = async (req, res) => {
 }
 
 const post: RequestHandler = async (req, res) => {
-  if (!req.files.files || Object.keys(req.files).length === 0) {
+  if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send({
       error: { reason: "BAD_REQUEST", details: "No files were uploaded." },
     })
@@ -33,6 +40,8 @@ const post: RequestHandler = async (req, res) => {
 
   logger.info(JSON.stringify(models))
   res.send(models)
+
+  return
 }
 
 router.get("/", asyncHandler(get))

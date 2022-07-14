@@ -8,9 +8,15 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/server",
-        "main": "apps/server/src/index.ts",
+        "main": "apps/server/src/init.ts",
         "tsConfig": "apps/server/tsconfig.lib.json",
         "assets": ["apps/server/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "@crate/server:build"
       }
     },
     "docker": {

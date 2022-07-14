@@ -24,7 +24,7 @@
         }
       }
     },
-    "dev": {
+    "serve": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "command": "docker compose up --build",

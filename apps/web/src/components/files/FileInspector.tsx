@@ -9,7 +9,7 @@ import { useFileStore } from "store/FileStore"
 import { FileInspectorFileBody } from "components/files/FileInspectorFileBody"
 import { useStore as useFVStore } from "store/FileViewStore"
 import shallow from "zustand/shallow"
-import NamedFileModel from "models/NamedFileModel"
+import { NamedFileModel } from "@crate/types"
 
 export function FileInspector({ close }: { close: () => void }) {
   const [selection, path] = useFVStore(

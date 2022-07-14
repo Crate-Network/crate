@@ -3,6 +3,7 @@
   "version": "0.5.1",
   "private": true,
   "author": "Christian van der Loo",
+  "type": "commonjs",
   "dependencies": {
     "@crate/common": "*",
     "@crate/types": "*",
