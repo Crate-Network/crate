@@ -25,6 +25,10 @@
       "dependsOn": ["^build"]
     }
   },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
+  },
   "affected": {
     "defaultBase": "main"
   },
