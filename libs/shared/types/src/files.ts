@@ -55,6 +55,20 @@ export interface FileModel {
 }
 
 /**
+ * A variation of FileModel which requires a name
+ * @export
+ * @interface NamedFileModel
+ */
+export interface NamedFileModel extends FileModel {
+  /**
+   * File/folder name (required)
+   * @type {string}
+   * @memberof NamedFileModel
+   */
+  name: string
+}
+
+/**
  * Simple type which encapsulates possible file types.
  * @export
  * @interface FileType
