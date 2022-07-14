@@ -14,17 +14,17 @@ jobs:
       - name: Create File
         uses: finnp/create-file-action@1.0.0
         env:
-          FILE_NAME: "clients/web/.env.local"
+          FILE_NAME: "apps/web/.env.local"
           FILE_BASE64: ${{ secrets.WEB_ENV }}
       - name: Create File
         uses: finnp/create-file-action@1.0.0
         env:
-          FILE_NAME: "packages/server/.env"
+          FILE_NAME: "apps/server/.env"
           FILE_BASE64: ${{ secrets.API_ENV }}
       - name: Create File
         uses: finnp/create-file-action@1.0.0
         env:
-          FILE_NAME: "packages/server/firebase.json"
+          FILE_NAME: "apps/server/firebase.json"
           FILE_BASE64: ${{ secrets.API_FIREBASE_JSON }}\
       - name: Install dependencies
         uses: DerYeger/yarn-setup-action@master
