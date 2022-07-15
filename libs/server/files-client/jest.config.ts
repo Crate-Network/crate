@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: "server-ipfs-client",
+  displayName: "server-files-client",
   preset: "../../../jest.preset.js",
   globals: {
     "ts-jest": {
@@ -11,5 +11,5 @@ export default {
     "^.+\\.[tj]s$": "ts-jest",
   },
   moduleFileExtensions: ["ts", "js", "html"],
-  coverageDirectory: "../../../coverage/libs/server/ipfs-client",
+  coverageDirectory: "../../../coverage/libs/server/files-client",
 }

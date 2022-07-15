@@ -1,30 +1,30 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/server/ipfs-client/src",
+  "sourceRoot": "libs/server/files-client/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/server/ipfs-client",
-        "main": "libs/server/ipfs-client/src/index.ts",
-        "tsConfig": "libs/server/ipfs-client/tsconfig.lib.json",
-        "assets": ["libs/server/ipfs-client/*.md"]
+        "outputPath": "dist/libs/server/files-client",
+        "main": "libs/server/files-client/src/index.ts",
+        "tsConfig": "libs/server/files-client/tsconfig.lib.json",
+        "assets": ["libs/server/files-client/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/server/ipfs-client/**/*.ts"]
+        "lintFilePatterns": ["libs/server/files-client/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/server/ipfs-client"],
+      "outputs": ["coverage/libs/server/files-client"],
       "options": {
-        "jestConfig": "libs/server/ipfs-client/jest.config.ts",
+        "jestConfig": "libs/server/files-client/jest.config.ts",
         "passWithNoTests": true
       }
     }

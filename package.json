@@ -47,7 +47,7 @@
     "**/*.{tsx,ts,jsx,js}": [
       "nx format:write",
       "eslint",
-      "jest --passWithNoTests"
+      "nx affected:test --uncommitted"
     ]
   },
   "scripts": {
