@@ -66,8 +66,8 @@ export function FileRow({ file }: { file: FileModel }) {
 }
 
 export function ListView() {
-  const { path } = useFVStore()
-  const { getChildren } = useFileStore()
+  const path = useFVStore((state) => state.path)
+  const getChildren = useFileStore((state) => state.getChildren)
   const files = getChildren(path)
   return (
     <div className="mt-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
