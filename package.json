@@ -29,7 +29,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.0",
     "jest": "28.1.1",
-    "jest-environment-jsdom": "^28.1.3",
     "lint-staged": "^13.0.3",
     "nx": "14.3.6",
     "ts-jest": "28.0.5",
@@ -65,8 +64,10 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@wanews/nx-esbuild": "^0.24.1",
     "express": "4.17.2",
     "ipfs-utils": "9.0.7",
+    "jest-environment-jsdom": "^28.1.3",
     "node-fetch": "2",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",

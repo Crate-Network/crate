@@ -7,7 +7,6 @@
   "dependencies": {
     "@crate/types": "*",
     "@ipld/dag-pb": "^2.1.17",
-    "ipfs-http-client": "^57.0.3",
     "ipfs-unixfs": "^6.0.9",
     "multiformats": "^9.7.0"
   }

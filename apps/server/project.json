@@ -10,7 +10,9 @@
       "options": {
         "outputPath": "dist/apps/server",
         "main": "apps/server/src/init.ts",
-        "tsConfig": "apps/server/tsconfig.lib.json"
+        "tsConfig": "apps/server/tsconfig.lib.json",
+        "externalDependencies": "none",
+        "webpackConfig": "apps/server/esbuild-webpack.config.js"
       }
     },
     "serve": {
