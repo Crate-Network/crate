@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.3.1](https://github.com/Crate-Network/crate/compare/@crate/common-0.3.0...@crate/common-0.3.1) (2022-07-15)
+
+
+### Bug Fixes
+
+* finalized server fixes ([e1c4136](https://github.com/Crate-Network/crate/commit/e1c4136b5c2b00a7eaac5cfebf8976119fbda92a))
+* working on fixing up issues ([f35dd03](https://github.com/Crate-Network/crate/commit/f35dd03761c0fc1a1e4cafd5cbfdb080300e5dd0))
+
+### [0.3.1](https://github.com/Crate-Network/crate/compare/@crate/common-0.3.0...@crate/common-0.3.1) (2022-07-15)
+
+
+### Bug Fixes
+
+* finalized server fixes ([e1c4136](https://github.com/Crate-Network/crate/commit/e1c4136b5c2b00a7eaac5cfebf8976119fbda92a))
+* working on fixing up issues ([f35dd03](https://github.com/Crate-Network/crate/commit/f35dd03761c0fc1a1e4cafd5cbfdb080300e5dd0))
+
 ## [0.3.0](https://github.com/Crate-Network/crate/compare/@crate/common-0.2.0...@crate/common-0.3.0) (2022-06-20)
 
 ### Features
