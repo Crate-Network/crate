@@ -1,7 +1,7 @@
 import { FileModel } from "@crate/types"
 import { FileError, FileErrorType, Node } from "@crate/common"
-import { useErrorStore } from "store/ErrorStore"
-import { useUserStore } from "store/UserStore"
+import { useErrorStore } from "../store/ErrorStore"
+import { useUserStore } from "../store/UserStore"
 
 export default {
   apiPath: "/api/v1",
@@ -35,7 +35,7 @@ export default {
     return res
   },
 
-  async update(fileModel: FileModel, path: string) {
+  async update(fileModel: FileModel) {
     return await this.fetch(`${this.apiPath}/block`, {
       method: "POST",
       body: Node.toRawBlock(Node.fromFile(fileModel)),

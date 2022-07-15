@@ -1,10 +1,10 @@
-import useClickOutside from "hooks/useClickOutside"
-import Anchor from "models/Anchor"
+import useClickOutside from "../../hooks/useClickOutside"
+import Anchor from "../../models/Anchor"
 import { useRef, useState } from "preact/hooks"
 import RightClickMenu from "./RightClickMenu"
-import { useFileStore } from "store/FileStore"
+import { useFileStore } from "../../store/FileStore"
 import shallow from "zustand/shallow"
-import { useStore as useFVStore } from "store/FileViewStore"
+import { useStore as useFVStore } from "../../store/FileViewStore"
 import { FileModel } from "@crate/types"
 
 export function FileRow({ file }: { file: FileModel }) {

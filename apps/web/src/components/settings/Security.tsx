@@ -1,5 +1,5 @@
 import shallow from "zustand/shallow"
-import { useUserStore } from "store/UserStore"
+import { useUserStore } from "../../store/UserStore"
 
 export default function Security() {
   const [userDoc, updateUser] = useUserStore(

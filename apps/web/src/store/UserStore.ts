@@ -8,7 +8,7 @@ import {
   onSnapshot,
   setDoc,
 } from "firebase/firestore"
-import { auth, db } from "vendor/firebase"
+import { auth, db } from "../vendor/firebase"
 import create, { StateCreator } from "zustand"
 import { persist, subscribeWithSelector } from "zustand/middleware"
 

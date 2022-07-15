@@ -1,12 +1,12 @@
 import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useRef, useState } from "preact/hooks"
-import useClickOutside from "hooks/useClickOutside"
+import useClickOutside from "../../hooks/useClickOutside"
 import RightClickMenu from "./RightClickMenu"
-import Anchor from "models/Anchor"
-import { useFileStore } from "store/FileStore"
+import Anchor from "../../models/Anchor"
+import { useFileStore } from "../../store/FileStore"
 import shallow from "zustand/shallow"
-import { useStore as useFVStore } from "store/FileViewStore"
+import { useStore as useFVStore } from "../../store/FileViewStore"
 
 type IconState = "empty" | "selected" | "hovered"
 const getIconState = (selected: boolean, hovered: boolean): IconState => {

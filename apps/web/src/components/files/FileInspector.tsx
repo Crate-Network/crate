@@ -5,9 +5,9 @@ import {
   faLessThan,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons"
-import { useFileStore } from "store/FileStore"
-import { FileInspectorFileBody } from "components/files/FileInspectorFileBody"
-import { useStore as useFVStore } from "store/FileViewStore"
+import { useFileStore } from "../../store/FileStore"
+import { FileInspectorFileBody } from "../files/FileInspectorFileBody"
+import { useStore as useFVStore } from "../../store/FileViewStore"
 import shallow from "zustand/shallow"
 import { NamedFileModel } from "@crate/types"
 

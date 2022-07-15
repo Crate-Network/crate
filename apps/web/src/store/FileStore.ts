@@ -16,7 +16,7 @@ import create, { StateCreator } from "zustand"
 import { FileModel } from "@crate/types"
 import { subscribeWithSelector } from "zustand/middleware"
 import { immer } from "zustand/middleware/immer"
-import FileAPI from "api/FileAPI"
+import FileAPI from "../api/FileAPI"
 import { useUserStore } from "./UserStore"
 
 type CID = string

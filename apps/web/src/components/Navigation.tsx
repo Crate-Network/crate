@@ -1,8 +1,8 @@
-import BrightCrateLogo from "assets/light-crate.svg"
-import DarkCrateLogo from "assets/dark-crate.svg"
+import BrightCrateLogo from "../assets/light-crate.svg"
+import DarkCrateLogo from "../assets/dark-crate.svg"
 import { useEffect, useState } from "preact/hooks"
 import { Link } from "preact-router"
-import { useUserStore } from "store/UserStore"
+import { useUserStore } from "../store/UserStore"
 
 function CrateLogo() {
   const [useDark, setUseDark] = useState(false)

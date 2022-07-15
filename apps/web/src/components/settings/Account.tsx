@@ -1,9 +1,9 @@
-import FormInput from "components/FormInput"
+import FormInput from "../FormInput"
 import { useCallback } from "preact/hooks"
 import { doc, DocumentReference, setDoc } from "firebase/firestore"
 import { UserModel } from "@crate/types"
-import { db } from "vendor/firebase"
-import { useUserStore } from "store/UserStore"
+import { db } from "../../vendor/firebase"
+import { useUserStore } from "../../store/UserStore"
 import shallow from "zustand/shallow"
 
 export default function Profile() {

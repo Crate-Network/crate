@@ -5,8 +5,8 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Button from "components/Button"
-import { categories, CommunityPage, SidebarProps } from "models/Community"
+import Button from "../components/Button"
+import { categories, CommunityPage, SidebarProps } from "../models/Community"
 import { useState } from "preact/hooks"
 
 function SidebarButton({

@@ -11,7 +11,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { route } from "preact-router"
 import { useState } from "preact/hooks"
-import { useUserStore } from "store/UserStore"
+import { useUserStore } from "../store/UserStore"
 import Account from "../components/settings/Account"
 import Security from "../components/settings/Security"
 

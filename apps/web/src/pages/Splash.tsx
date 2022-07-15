@@ -1,5 +1,5 @@
 import { Link, route } from "preact-router"
-import { useUserStore } from "store/UserStore"
+import { useUserStore } from "../store/UserStore"
 
 export default function Splash() {
   const loggedIn = useUserStore((state) => state.signedIn)

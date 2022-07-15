@@ -5,11 +5,11 @@ import {
   PopoverMenuProps,
   SelectionOptions,
 } from "./PopoverMenu"
-import { useFileStore } from "store/FileStore"
-import Anchor from "models/Anchor"
+import { useFileStore } from "../../store/FileStore"
+import Anchor from "../../models/Anchor"
 import { duplicateFile } from "@crate/common"
 import shallow from "zustand/shallow"
-import { useStore as useFVStore } from "store/FileViewStore"
+import { useStore as useFVStore } from "../../store/FileViewStore"
 import { useEffect, useState } from "preact/hooks"
 
 type RightClickMenuProps = {

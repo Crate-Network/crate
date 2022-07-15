@@ -9,14 +9,14 @@ import {
   ViewMode,
 } from "../components/files/Toolbar"
 import { Link } from "preact-router"
-import useStoredState from "hooks/useStoredState"
+import useStoredState from "../hooks/useStoredState"
 import { FileInspector } from "../components/files/FileInspector"
 import {
   createStore as createFVStore,
   useStore as useFVStore,
   Provider as FVProvider,
-} from "store/FileViewStore"
-import { useUserStore } from "store/UserStore"
+} from "../store/FileViewStore"
+import { useUserStore } from "../store/UserStore"
 
 function Breadcrumbs() {
   const path = ["folder1", "folder2"]

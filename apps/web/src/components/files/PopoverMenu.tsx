@@ -1,5 +1,5 @@
-import useClickOutside from "hooks/useClickOutside"
-import Anchor from "models/Anchor"
+import useClickOutside from "../../hooks/useClickOutside"
+import Anchor from "../../models/Anchor"
 import { useEffect, useRef, useState } from "preact/hooks"
 import { JSXInternal } from "preact/src/jsx"
 
