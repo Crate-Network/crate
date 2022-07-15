@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.5.2](https://github.com/Crate-Network/crate/compare/@crate/web-0.5.1...@crate/web-0.5.2) (2022-07-15)
+
+
+### Bug Fixes
+
+* finalized server fixes ([e1c4136](https://github.com/Crate-Network/crate/commit/e1c4136b5c2b00a7eaac5cfebf8976119fbda92a))
+* fixed imports ([5dd8995](https://github.com/Crate-Network/crate/commit/5dd8995b7531b62b930ca27f7f32836e30d50a49))
+* moved NamedFileModel over to lib ([6b0f171](https://github.com/Crate-Network/crate/commit/6b0f171d9a865517159caf5ee8eb23dc76c2ac95))
+* working on fixing up issues ([f35dd03](https://github.com/Crate-Network/crate/commit/f35dd03761c0fc1a1e4cafd5cbfdb080300e5dd0))
+
 ### [0.5.1](https://github.com/Crate-Network/crate/compare/@crate/web-0.5.0...@crate/web-0.5.1) (2022-06-20)
 
 ### Bug Fixes
