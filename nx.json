@@ -20,9 +20,6 @@
     },
     "docker": {
       "dependsOn": ["build"]
-    },
-    "serve": {
-      "dependsOn": ["build", "^build"]
     }
   },
   "workspaceLayout": {
