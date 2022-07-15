@@ -59,7 +59,7 @@ export function FileRow({ file }: { file: FileModel }) {
       </tr>
 
       {contextShown && (
-        <RightClickMenu file={file} close={handleClose} anchor={anchorPos} />
+        <RightClickMenu close={handleClose} anchor={anchorPos} />
       )}
     </>
   )

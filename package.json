@@ -44,7 +44,7 @@
   ],
   "lint-staged": {
     "**/*.{tsx,ts,jsx,js}": [
-      "nx format:write",
+      "nx format:write --uncommitted",
       "eslint",
       "nx affected:test --uncommitted"
     ]
