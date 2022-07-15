@@ -21,8 +21,8 @@
     "docker": {
       "dependsOn": ["build"]
     },
-    "dev": {
-      "dependsOn": ["^build"]
+    "serve": {
+      "dependsOn": ["build", "^build"]
     }
   },
   "workspaceLayout": {

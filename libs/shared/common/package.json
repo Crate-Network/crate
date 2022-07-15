@@ -3,9 +3,7 @@
   "version": "0.3.0",
   "author": "Christian van der Loo",
   "type": "commonjs",
-  "private": true,
   "license": "MIT",
-  "main": "./src/index.ts",
   "dependencies": {
     "@crate/types": "*",
     "@ipld/dag-pb": "^2.1.17",

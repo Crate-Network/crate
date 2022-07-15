@@ -1,16 +1,16 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "@crate/server",
-  "sourceRoot": "apps/server/src",
+  "sourceRoot": "apps/server",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/node:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/server",
         "main": "apps/server/src/init.ts",
-        "tsConfig": "apps/server/tsconfig.lib.json",
-        "assets": ["apps/server/*.md"]
+        "tsConfig": "apps/server/tsconfig.lib.json"
       }
     },
     "serve": {

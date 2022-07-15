@@ -1,5 +1,5 @@
 {
-  "name": "@crate/server-ipfs-client",
+  "name": "@crate/server-files-client",
   "version": "0.0.1",
   "type": "commonjs"
 }

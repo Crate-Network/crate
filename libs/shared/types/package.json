@@ -2,7 +2,5 @@
   "name": "@crate/types",
   "version": "0.0.1",
   "author": "Christian van der Loo",
-  "type": "commonjs",
-  "private": true,
-  "main": "./src/index.ts"
+  "type": "commonjs"
 }
