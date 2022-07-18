@@ -15,12 +15,14 @@ export function FileRow({ file }: { file: FileModel }) {
   const rowRef = useRef()
   const selected = selection.includes(file.name)
 
-  const setSelected = (e) => select(file, !e.ctrlKey && !e.metaKey)
+  const selectionInfo = { name: file.name, cid: file.cid }
+
+  const setSelected = (e) => select(selectionInfo, !e.ctrlKey && !e.metaKey)
   useClickOutside(
     rowRef,
     (e) => {
       if (e.ctrlKey || e.metaKey || anchorPos !== null) return
-      deselect(file)
+      deselect(selectionInfo)
     },
     {
       deps: [selected],
@@ -36,7 +38,7 @@ export function FileRow({ file }: { file: FileModel }) {
   const onContextMenu = (e: MouseEvent) => {
     e.preventDefault()
     setAnchorPos({ top: e.pageY, left: e.pageX })
-    if (!selection.includes(file.name)) select(file, true)
+    if (!selection.includes(file.name)) select(selectionInfo, true)
   }
   const handleClose = () => {
     setAnchorPos(null)
