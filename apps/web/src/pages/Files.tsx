@@ -52,7 +52,7 @@ function FilesChild() {
     const pathArr = splitPath(path)
     const currentRootCID = pathArr[0]
     if (rootCID !== currentRootCID) {
-      pathArr[0] = currentRootCID
+      pathArr[0] = rootCID
       setPath(`/ipfs/${pathArr.join("/")}/`)
     }
   }, [path, rootCID, setPath])
