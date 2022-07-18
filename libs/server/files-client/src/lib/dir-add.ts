@@ -74,28 +74,29 @@ export default (client: IPFSHTTPClient) => async (opts: AddToDirOptions) => {
   const pathCIDs = await walk(client, opts.path)
   const pathInfo = pathArr.map((v, i) => ({ name: v, cid: pathCIDs[i] }))
 
-  let dirCID = pathInfo[pathInfo.length - 1].cid
-  pathInfo.push({
+  let info = {
     name: opts.name,
     cid: opts.cid,
-  })
-
+  }
   // walk from the end up the beginning, updating the directories as we go.
-  for (const info of pathInfo.reverse()) {
-    const newDirCID = await addToDir(client, dirCID, info)
-    dirCID = newDirCID
+  for (const dirInfo of pathInfo.reverse()) {
+    const newDirCID = await addToDir(client, dirInfo.cid, info)
+    info = {
+      name: dirInfo.name,
+      cid: newDirCID,
+    }
 
     await client.pin.add(newDirCID)
   }
 
   const strippedRootPath = pathArr.slice(1).join("/")
-  const newPath = `/ipfs/${dirCID}/${strippedRootPath}${
+  const newPath = `/ipfs/${info.cid}/${strippedRootPath}${
     strippedRootPath !== "" ? "/" : ""
   }${opts.name}`
 
   // update the user's root CID if the file matches
   if (opts.uid && (await getRootCID(opts.uid)) === pathArr[0]) {
-    setRootCID(opts.uid, dirCID)
+    setRootCID(opts.uid, info.cid)
   }
 
   return newPath
