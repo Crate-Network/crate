@@ -10,7 +10,7 @@ import * as fs from "fs"
 import { create } from "@crate/files-client"
 import { getRootCID } from "@crate/user-client"
 
-const { getFile, addFile, rmFile, mkdir, dirAdd } = create({
+const { getFile, addFile } = create({
   url: process.env["IPFS_CLIENT_URL"],
   timeout: 5000,
 })
@@ -43,6 +43,7 @@ const post: RequestHandler = async (req, res) => {
 
   const models = await addFile({
     path,
+    uid: req.token.uid,
     fileNames: fileArr.map((f) => f.name),
     files: bufs,
   })
@@ -60,9 +61,6 @@ router.get("/", (req, res) => {
     path: `/ipfs/${req.token?.uid}`,
     ...req.query,
   }
-
-  logger.info(path)
-  logger.info(req.token?.uid)
 
   getFile({ path })
     .then((model) => res.send(model))
