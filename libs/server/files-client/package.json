@@ -1,5 +1,9 @@
 {
-  "name": "@crate/server-files-client",
+  "name": "@crate/files-client",
   "version": "0.0.1",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "@crate/common": "*",
+    "@crate/types": "*"
+  }
 }

@@ -1,6 +1,7 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/server/files-client/src",
+  "name": "@crate/files-client",
   "projectType": "library",
   "targets": {
     "build": {
