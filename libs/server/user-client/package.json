@@ -1,0 +1,9 @@
+{
+  "name": "@crate/user-client",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "dependencies": {
+    "@crate/common": "*",
+    "@crate/types": "*"
+  }
+}
