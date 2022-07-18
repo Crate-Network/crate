@@ -78,7 +78,7 @@ const fileStore: StateCreator<
 
     await Promise.all(
       model.links.map(async (l) => {
-        children[l.name] = await getCID(l.cid)
+        children[l.name] = { ...(await getCID(l.cid)), name: l.name }
       })
     )
 

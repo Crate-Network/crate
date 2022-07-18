@@ -17,6 +17,10 @@ import {
   Provider as FVProvider,
 } from "../store/FileViewStore"
 import { useUserStore } from "../store/UserStore"
+import { useEffect, useState } from "preact/hooks"
+import { splitPath } from "@crate/common"
+import { useFileStore } from "../store/FileStore"
+import { FileModel } from "@crate/types"
 
 function Breadcrumbs() {
   const path = ["folder1", "folder2"]
@@ -41,7 +45,25 @@ function Breadcrumbs() {
 }
 
 function FilesChild() {
-  const { inspectorVisible, hideInspector } = useFVStore()
+  const { inspectorVisible, hideInspector, path, setPath } = useFVStore()
+  const rootCID = useUserStore((state) => state.userDoc.rootCID)
+
+  useEffect(() => {
+    const pathArr = splitPath(path)
+    const currentRootCID = pathArr[0]
+    if (rootCID !== currentRootCID) {
+      pathArr[0] = currentRootCID
+      setPath(`/ipfs/${pathArr.join("/")}/`)
+    }
+  }, [path, rootCID, setPath])
+
+  const { getChildren } = useFileStore()
+  const [files, setFiles] = useState<Record<string, FileModel>>({})
+
+  useEffect(() => {
+    getChildren(path).then(setFiles)
+  }, [getChildren, path])
+
   const [viewMode, setViewMode] = useStoredState<ViewMode>(
     ViewMode.LIST,
     "view-mode"
@@ -67,8 +89,8 @@ function FilesChild() {
             <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
           </div>
         </div>
-        {viewMode === ViewMode.LIST && <ListView />}
-        {viewMode === ViewMode.GRID && <GridView />}
+        {viewMode === ViewMode.LIST && <ListView files={files} />}
+        {viewMode === ViewMode.GRID && <GridView files={files} />}
       </div>
       <div
         id="file-inspector"

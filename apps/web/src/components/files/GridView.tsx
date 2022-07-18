@@ -7,6 +7,7 @@ import Anchor from "../../models/Anchor"
 import { useFileStore } from "../../store/FileStore"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
+import { FileModel } from "@crate/types"
 
 type IconState = "empty" | "selected" | "hovered"
 const getIconState = (selected: boolean, hovered: boolean): IconState => {
@@ -170,10 +171,7 @@ function FileIcon({
   )
 }
 
-export function GridView() {
-  const { path } = useFVStore()
-  const { getChildren } = useFileStore()
-  const files = getChildren(path)
+export function GridView({ files }: { files: Record<string, FileModel> }) {
   return (
     <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
       {Object.values(files).length === 0 ? (
