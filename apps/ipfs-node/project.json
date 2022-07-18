@@ -29,8 +29,8 @@
       "options": {
         "command": "docker compose up --build",
         "color": true,
-        "cwd": "packages/ipfs-node",
-        "readyWhen": "Attaching to"
+        "cwd": "apps/ipfs-node",
+        "readyWhen": "Daemon is"
       }
     },
     "version": {

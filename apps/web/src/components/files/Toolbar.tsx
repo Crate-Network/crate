@@ -69,14 +69,7 @@ export function AddBox() {
     const onUpload = async (e) => {
       const fileInput: HTMLInputElement = e.target
       const { files } = fileInput
-      const res = await FileAPI.upload(files, path)
-      const fileModels = (await res.json()) as FileModel[]
-      let updatedCID
-      const p = fileModels.map(
-        async (model) => (updatedCID = await addFile(path, model))
-      )
-      await Promise.all(p)
-      setPath(updatedCID)
+      await FileAPI.upload(files, path)
       setIsSelectingFile(false)
     }
 

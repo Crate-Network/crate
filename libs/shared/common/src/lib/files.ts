@@ -41,10 +41,9 @@ export function splitPath(path: string) {
 export function validPath(path: string) {
   if (!path.startsWith("/")) return false
   const segments = splitPath(path)
-  if (segments.length < 2) return false
-  if (segments[0] !== "ipfs") return false
+  if (segments.length < 1) return false
   try {
-    CID.parse(segments[1])
+    CID.parse(segments[0])
   } catch (_e) {
     return false
   }

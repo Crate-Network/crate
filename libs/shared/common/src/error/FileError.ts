@@ -5,6 +5,7 @@ export enum FileErrorType {
   FOLDER_INVALID = 'Invalid usage, expected to be of type "file"',
   NO_DATA = "Data field expected but not found on data block.",
   CONNECTION_FAILURE = "Connection failed.",
+  PATH_INVALID = "Path invalid.",
 }
 
 export class FileError extends Error {

@@ -1,5 +1,5 @@
 import express from "express"
-import { auth } from "./firebase"
+import { auth } from "@crate/user-client"
 import files from "./routes/files-route"
 import fileUpload from "express-fileupload"
 import pinning from "./routes/pinning-route"
@@ -13,7 +13,7 @@ const API_VERSION = "v1"
 const API_ROUTE = `/api/${API_VERSION}`
 
 app.use(morgan("tiny"))
-app.use(async (req, res, next) => {
+app.use((req, res, next) => {
   const authHeader = req.headers.authorization
 
   if (!authHeader) {

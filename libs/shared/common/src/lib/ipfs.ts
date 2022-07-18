@@ -3,7 +3,7 @@ import { FileModel, FileType } from "@crate/types"
 import { UnixFS as _UnixFS } from "ipfs-unixfs"
 import { CID as _CID } from "multiformats/cid"
 import { sha256 } from "multiformats/hashes/sha2"
-import { encode, decode, createNode, PBNode } from "@ipld/dag-pb"
+import { encode, decode, prepare, createNode, PBNode } from "@ipld/dag-pb"
 
 type LimitedFileModel = Partial<FileModel> & Pick<FileModel, "type">
 
@@ -49,7 +49,7 @@ export class Node {
   static async toFile(node: PBNode): Promise<FileModel> {
     if (!node.Data) throw new FileError(FileErrorType.NO_DATA)
     const cid = await CID.fromNode(node)
-    const ufs = UnixFS.unmarshal(node.Data)
+    const ufs = UnixFS.unmarshal(encode(node))
     const isDir = ufs.type === "directory"
     return {
       cid: cid.toString(),
@@ -75,7 +75,7 @@ export class Node {
   }
 
   static toRawBlock(node: PBNode): Uint8Array {
-    return encode(node)
+    return encode(prepare(node))
   }
 }
 
