@@ -2,14 +2,18 @@ import { CID } from "@crate/common"
 import { UserModel } from "@crate/types"
 import { firestore } from "./firebase-client"
 
-export const userRef = async (uid: string) =>
-  firestore.collection("users").doc(uid)
+export const getDocRef = async (uid: string) =>
+  await firestore.collection("users").doc(uid)
 
-export const getUserDoc = async (uid: string) =>
-  (await (await userRef(uid)).get()) as unknown as UserModel
+export const getUserDoc = async (uid: string) => {
+  const docRef = await getDocRef(uid)
+  const docSnapshot = await docRef.get()
+  const docData = docSnapshot.data()
+  return docData as UserModel
+}
 
 export const setUserDoc = async (uid: string, model: Partial<UserModel>) =>
-  await (await userRef(uid)).set(model)
+  await (await getDocRef(uid)).update(model)
 
 export const setRootCID = async (uid: string, newCID: CID) =>
   setUserDoc(uid, { rootCID: newCID.toString() })

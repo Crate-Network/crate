@@ -6,16 +6,21 @@ import {
   splitPath,
   UnixFS,
 } from "@crate/common"
+import { getRootCID, setRootCID } from "@crate/user-client"
 import { IPFSHTTPClient } from "ipfs-http-client"
 import { walk } from "./utils"
 
 /**
  * path: path to directory to modify
+ * uid: a uid, where if the path's root matches the user's root CID,
+ *      after the add is complete, the user's root directory will be
+ *      automatically updated.
  * name: name of file to add or update
  * cid: the CID to link
  */
 export type AddToDirOptions = {
   path: string
+  uid?: string
   name: string
   cid: CID
 }
@@ -87,6 +92,11 @@ export default (client: IPFSHTTPClient) => async (opts: AddToDirOptions) => {
   const newPath = `/ipfs/${dirCID}/${strippedRootPath}${
     strippedRootPath !== "" ? "/" : ""
   }${opts.name}`
+
+  // update the user's root CID if the file matches
+  if (opts.uid && (await getRootCID(opts.uid)) === pathArr[0]) {
+    setRootCID(opts.uid, dirCID)
+  }
 
   return newPath
 }

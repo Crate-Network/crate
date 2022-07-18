@@ -2,6 +2,7 @@ import { IPFSHTTPClient } from "ipfs-http-client"
 
 export type CreateDirOptions = {
   path?: string
+  uid?: string
   name: string
 }
 

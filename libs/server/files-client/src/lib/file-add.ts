@@ -1,11 +1,12 @@
 import { IPFSHTTPClient } from "ipfs-http-client"
-import { CID, Node, UnixFS } from "@crate/common"
-import { fetchFModel, walk } from "./utils"
+import { CID, UnixFS } from "@crate/common"
+import { fetchFModel } from "./utils"
 import { FileModel } from "@crate/types"
 import dirAdd from "./dir-add"
 
 export type FileAddOptions = {
   path: string
+  uid?: string
   fileNames?: string[]
 } & (
   | {
@@ -85,6 +86,7 @@ export default (client: IPFSHTTPClient) => async (opts: FileAddOptions) => {
       path: opts.path,
       name,
       cid: CID.parse(cid),
+      uid: opts.uid,
     })
   }
 
