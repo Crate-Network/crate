@@ -7,7 +7,7 @@ import Anchor from "../../models/Anchor"
 import { useFileStore } from "../../store/FileStore"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
-import { FileModel } from "@crate/types"
+import { FileModel, NamedFileModel } from "@crate/types"
 
 type IconState = "empty" | "selected" | "hovered"
 const getIconState = (selected: boolean, hovered: boolean): IconState => {
@@ -44,14 +44,13 @@ function NameInput({
     return () => document.removeEventListener("keydown", keyPressListener)
   }, [onCancel, onComplete, val])
 
-  useClickOutside(
-    fiRef,
-    () => {
+  useClickOutside({
+    ref: fiRef,
+    handler: () => {
       if (!fiRef.current) return
       onComplete(val)
     },
-    { deps: [val] }
-  )
+  })
 
   return (
     <input
@@ -73,49 +72,54 @@ function FileIcon({
   file: { name: string; cid: string; type?: string }
 }) {
   const [hovered, setHovered] = useState(false)
-  const renameFile = useFileStore((state) => state.rename)
-  const [selection, select, deselect] = useFVStore(
-    (state) => [state.selectedNames(), state.select, state.deselect],
-    shallow
-  )
+  const [selected, setSelected] = useState(false)
   const [editingName, setEditingName] = useState(false)
-
-  const iconRef = useRef()
-  const selected = selection.includes(file.name)
-
-  const setSelected = (e) => select(file, !e.ctrlKey && !e.metaKey)
-
   const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
   const contextShown = Boolean(anchorPos)
-  const onContextMenu = (e: MouseEvent) => {
-    e.preventDefault()
-    if (!selection.includes(file.name)) select(file, true)
-    setAnchorPos({ top: e.pageY, left: e.pageX })
-  }
 
-  const handleClose = () => setAnchorPos(null)
-
-  useClickOutside(
-    iconRef,
-    (e) => {
-      if (e.ctrlKey || e.metaKey || anchorPos !== null) return
-      deselect(file)
-    },
-    {
-      deps: [selected, anchorPos],
-      exclude: [
-        document.getElementById("file-toolbar"),
-        document.getElementById("file-inspector"),
-      ],
-    }
+  const [selectionInfo, select, deselect] = useFVStore(
+    (state) => [state.selectedFiles, state.select, state.deselect],
+    shallow
   )
 
+  const onContextMenu = (e: MouseEvent) => {
+    e.preventDefault()
+    if (!selected) select(file, true)
+    setAnchorPos({ top: e.pageY, left: e.pageX })
+  }
+  const handleClose = () => setAnchorPos(null)
+
+  useEffect(() => {
+    const newSelectedStatus = selectionInfo
+      .map((i) => i.name)
+      .includes(file.name)
+    setSelected(newSelectedStatus)
+    if (contextShown && !newSelectedStatus) setAnchorPos(null)
+  }, [contextShown, file.name, selectionInfo])
+
+  const iconRef = useRef()
+  useClickOutside({
+    ref: iconRef,
+    handler: (e) => {
+      if (anchorPos !== null) handleClose()
+      if (e.ctrlKey || e.metaKey || !selected) return
+      deselect(selectionInfo)
+    },
+    exclude: [
+      document.getElementById("file-toolbar"),
+      document.getElementById("file-inspector"),
+      ...document.getElementsByClassName("popover-menu"),
+      ...document.getElementsByClassName("rightclick-menu"),
+    ],
+  })
+
+  const renameFile = useFileStore((state) => state.rename)
   const iconState = getIconState(selected || editingName, hovered)
   return (
     <>
       <div
         className="flex flex-col justify-center items-center w-36 h-36 select-none"
-        onClick={setSelected}
+        onClick={(e) => select(file, !e.ctrlKey && !e.metaKey)}
         onDblClick={() => {
           if (file.type === "file" && !editingName)
             window.open(`https://crate.network/ipfs/${file.cid}`, "_blank")
@@ -171,10 +175,10 @@ function FileIcon({
   )
 }
 
-export function GridView({ files }: { files: Record<string, FileModel> }) {
+export function GridView({ files }: { files: NamedFileModel[] }) {
   return (
     <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
-      {Object.values(files).length === 0 ? (
+      {files.length === 0 ? (
         <div className="w-full text-center italic">
           This directory is empty.
         </div>
@@ -185,7 +189,7 @@ export function GridView({ files }: { files: Record<string, FileModel> }) {
             gridTemplateColumns: "repeat(auto-fill, minmax(9rem, 1fr))",
           }}
         >
-          {Object.values(files).map((el) => (
+          {files.map((el) => (
             <FileIcon file={el} key={el.name} />
           ))}
         </div>

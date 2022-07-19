@@ -20,7 +20,7 @@ import { useUserStore } from "../store/UserStore"
 import { useEffect, useState } from "preact/hooks"
 import { splitPath } from "@crate/common"
 import { useFileStore } from "../store/FileStore"
-import { FileModel } from "@crate/types"
+import { FileModel, NamedFileModel } from "@crate/types"
 
 function Breadcrumbs() {
   const path = ["folder1", "folder2"]
@@ -58,7 +58,7 @@ function FilesChild() {
   }, [path, rootCID, setPath])
 
   const { getChildren } = useFileStore()
-  const [files, setFiles] = useState<Record<string, FileModel>>({})
+  const [files, setFiles] = useState<Record<string, NamedFileModel>>({})
 
   useEffect(() => {
     getChildren(path).then(setFiles)
@@ -69,6 +69,17 @@ function FilesChild() {
     "view-mode"
   )
   const [sortBy, setSortBy] = useStoredState<SortBy>(SortBy.NAME, "sort-order")
+
+  const orderedFiles = Object.values(files).sort((a, b) => {
+    switch (sortBy) {
+      case SortBy.NAME:
+        return a.name > b.name ? 1 : -1
+      case SortBy.SIZE:
+        return a.size < b.size ? 1 : -1
+      default:
+        return a.name > b.name ? 1 : -1
+    }
+  })
 
   return (
     <main className="flex flex-row mx-auto 2xl:px-32 px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">
@@ -89,8 +100,8 @@ function FilesChild() {
             <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
           </div>
         </div>
-        {viewMode === ViewMode.LIST && <ListView files={files} />}
-        {viewMode === ViewMode.GRID && <GridView files={files} />}
+        {viewMode === ViewMode.LIST && <ListView files={orderedFiles} />}
+        {viewMode === ViewMode.GRID && <GridView files={orderedFiles} />}
       </div>
       <div
         id="file-inspector"

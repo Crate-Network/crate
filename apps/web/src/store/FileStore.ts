@@ -5,15 +5,9 @@
  * visibility.
  */
 
-import {
-  FileError,
-  FileErrorType,
-  CID as CIDOp,
-  Node,
-  splitPath,
-} from "@crate/common"
+import { FileError, FileErrorType, CID as CIDOp } from "@crate/common"
 import create, { StateCreator } from "zustand"
-import { FileModel } from "@crate/types"
+import { FileModel, NamedFileModel } from "@crate/types"
 import { subscribeWithSelector } from "zustand/middleware"
 import { immer } from "zustand/middleware/immer"
 import FileAPI from "../api/FileAPI"
@@ -27,7 +21,7 @@ interface FileState {
   // retrieval
   get: (path: string) => Promise<FileModel>
   getCID: (cid: string) => Promise<FileModel>
-  getChildren: (path: string) => Promise<Record<string, FileModel>>
+  getChildren: (path: string) => Promise<Record<string, NamedFileModel>>
   // common operations on files
   // pass in a path and get back a path to updated file
   add: (path: string, file: FileModel) => Promise<string>
@@ -74,7 +68,7 @@ const fileStore: StateCreator<
     if (model.type !== "directory")
       throw new FileError(FileErrorType.FILE_INVALID)
 
-    const children: Record<string, FileModel> = {}
+    const children: Record<string, NamedFileModel> = {}
 
     await Promise.all(
       model.links.map(async (l) => {

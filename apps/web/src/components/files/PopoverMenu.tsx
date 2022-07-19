@@ -58,7 +58,11 @@ export function PopoverMenu({
     })
   }, [anchor, left, top])
 
-  useClickOutside(divRef, close, { events: ["click", "contextmenu"] })
+  useClickOutside({
+    handler: close,
+    events: ["click", "contextmenu"],
+    ref: divRef,
+  })
 
   const [initialMenuScale, setInitialMenuScale] = useState<boolean>(false)
   useEffect(() => {

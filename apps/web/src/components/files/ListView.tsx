@@ -1,53 +1,55 @@
 import useClickOutside from "../../hooks/useClickOutside"
 import Anchor from "../../models/Anchor"
-import { useRef, useState } from "preact/hooks"
+import { useEffect, useRef, useState } from "preact/hooks"
 import RightClickMenu from "./RightClickMenu"
-import { useFileStore } from "../../store/FileStore"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
-import { FileModel } from "@crate/types"
+import { FileModel, NamedFileModel } from "@crate/types"
+import formatFileSize from "../../utils/formatFileSize"
 
 export function FileRow({ file }: { file: FileModel }) {
-  const [selection, select, deselect] = useFVStore(
-    (state) => [state.selectedNames(), state.select, state.deselect],
+  const [selected, setSelected] = useState(false)
+  const [selectionInfo, select, deselect] = useFVStore(
+    (state) => [state.selectedFiles, state.select, state.deselect],
     shallow
   )
   const rowRef = useRef()
-  const selected = selection.includes(file.name)
-
-  const selectionInfo = { name: file.name, cid: file.cid }
-
-  const setSelected = (e) => select(selectionInfo, !e.ctrlKey && !e.metaKey)
-  useClickOutside(
-    rowRef,
-    (e) => {
-      if (e.ctrlKey || e.metaKey || anchorPos !== null) return
-      deselect(selectionInfo)
-    },
-    {
-      deps: [selected],
-      exclude: [
-        document.getElementById("file-toolbar"),
-        document.getElementById("file-inspector"),
-      ],
-    }
-  )
 
   const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
   const contextShown = Boolean(anchorPos)
   const onContextMenu = (e: MouseEvent) => {
     e.preventDefault()
     setAnchorPos({ top: e.pageY, left: e.pageX })
-    if (!selection.includes(file.name)) select(selectionInfo, true)
+    if (!selected) select(selectionInfo, true)
   }
-  const handleClose = () => {
-    setAnchorPos(null)
-  }
+  const handleClose = () => setAnchorPos(null)
+
+  useEffect(() => {
+    const newSelectedStatus = selectionInfo
+      .map((i) => i.name)
+      .includes(file.name)
+    setSelected(newSelectedStatus)
+    if (contextShown && !newSelectedStatus) setAnchorPos(null)
+  }, [contextShown, file.name, selectionInfo])
+
+  useClickOutside({
+    handler: (e) => {
+      if (e.ctrlKey || e.metaKey || !selected) return
+      deselect(selectionInfo)
+    },
+    ref: rowRef,
+    exclude: [
+      document.getElementById("file-toolbar"),
+      document.getElementById("file-inspector"),
+      ...document.getElementsByClassName("popover-menu"),
+      ...document.getElementsByClassName("rightclick-menu"),
+    ],
+  })
 
   return (
     <>
       <tr
-        onClick={setSelected}
+        onClick={(e) => select(selectionInfo, !e.ctrlKey && !e.metaKey)}
         onContextMenu={onContextMenu}
         className={`border-b border-opacity-30 ${
           selected
@@ -57,7 +59,7 @@ export function FileRow({ file }: { file: FileModel }) {
       >
         <td className="p-2 pb-1 pt-1">{file.name}</td>
         <td />
-        <td />
+        <td>{formatFileSize(file.size)}</td>
       </tr>
 
       {contextShown && (
@@ -67,10 +69,10 @@ export function FileRow({ file }: { file: FileModel }) {
   )
 }
 
-export function ListView({ files }: { files: Record<string, FileModel> }) {
+export function ListView({ files }: { files: NamedFileModel[] }) {
   return (
     <div className="mt-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
-      {Object.values(files).length === 0 ? (
+      {files.length === 0 ? (
         <div className="text-center italic w-full p-2 sm:p-4 md:p-8">
           This directory is empty.
         </div>
@@ -90,7 +92,7 @@ export function ListView({ files }: { files: Record<string, FileModel> }) {
             </tr>
           </thead>
           <tbody>
-            {Object.values(files).map((file) => (
+            {files.map((file) => (
               <FileRow file={file} key={file.name} />
             ))}
           </tbody>

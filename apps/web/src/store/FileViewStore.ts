@@ -11,8 +11,6 @@ export type SelectionInfo = { name: string; cid: string }
 type FileViewState = {
   // list of files names in visible directory
   selectedFiles: SelectionInfo[]
-  selectedNames: () => string[]
-  selectedCIDs: () => string[]
   // functions to modify selection
   select: (name: SelectionInfo | SelectionInfo[], replace: boolean) => void
   deselect: (name: SelectionInfo | SelectionInfo[]) => void
@@ -32,21 +30,25 @@ const fileViewStore =
   (set, get) => ({
     selectedFiles: [],
     path: `/ipfs/${rootCID}`,
-    selectedNames: () => get().selectedFiles.map((f) => f.name),
-    selectedCIDs: () => get().selectedFiles.map((f) => f.cid),
-    select: (name: SelectionInfo | SelectionInfo[], replace = false) =>
+    select: (info: SelectionInfo | SelectionInfo[], replace = false) =>
       set((state) => {
-        const nameArr = Array.isArray(name) ? name : [name]
-        if (replace) state.selectedFiles = nameArr
-        state.selectedFiles.concat(nameArr)
+        const infoArr = Array.isArray(info) ? info : [info]
+        if (replace) state.selectedFiles = infoArr
+        const newNames = infoArr.map((e) => e.name)
+        const newSelectedFiles = state.selectedFiles.filter(
+          (e) => !newNames.includes(e.name)
+        )
+        state.selectedFiles = newSelectedFiles.concat(infoArr)
       }),
-    deselect: (name: SelectionInfo | SelectionInfo[]) =>
+    deselect: (info: SelectionInfo | SelectionInfo[]) => {
+      const infoArr = Array.isArray(info) ? info : [info]
+      const newSelectedFiles = get().selectedFiles.filter((el) => {
+        return infoArr.every((e) => e.name !== el.name)
+      })
       set((state) => {
-        const nameArr = Array.isArray(name) ? name : [name]
-        state.selectedFiles = state.selectedFiles.filter((elName) => {
-          return nameArr.every((e) => e !== elName)
-        })
-      }),
+        state.selectedFiles = newSelectedFiles
+      })
+    },
     inspectorVisible: false,
     showInspector: () => set((state) => ({ ...state, inspectorVisible: true })),
     hideInspector: () =>

@@ -1,6 +1,7 @@
 import { CID, Node } from "./ipfs"
 import { Buffer } from "buffer"
 import { FileModel, FileType } from "@crate/types"
+import path from "path"
 
 export async function createFile(
   type: FileType,
@@ -27,6 +28,18 @@ export function duplicateFile(file: FileModel): FileModel {
     name: name + " copy." + rest.join("."),
     date: new Date().toISOString(),
   }
+}
+
+export function stripSlashes(part: string): string {
+  if (part.startsWith("/") && part[part.length - 1] === "/")
+    return part.slice(1, part.length - 1)
+  else if (part[part.length - 1] === "/") return part.slice(0, part.length - 1)
+  else if (part.startsWith("/")) return part.slice(1)
+  else return part
+}
+
+export function joinPath(...elements: string[]): string {
+  return elements.reduce((prev, curr) => `${prev}/${stripSlashes(curr)}`, "/")
 }
 
 // splits a path into segments

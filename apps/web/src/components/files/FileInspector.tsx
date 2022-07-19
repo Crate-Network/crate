@@ -16,26 +16,28 @@ export function FileInspector({ close }: { close: () => void }) {
     (state) => [state.selectedFiles, state.path],
     shallow
   )
-  const getCID = useFileStore((state) => state.getCID)
-  const get = useFileStore((state) => state.get)
+  const [getCID, get] = useFileStore(
+    (state) => [state.getCID, state.get],
+    shallow
+  )
   const [selectedFiles, setSelectedFiles] = useState<NamedFileModel[]>([])
 
-  // useEffect(() => {
-  //   if (selection.length === 0) {
-  //     get(path).then((dirModel) =>
-  //       setSelectedFiles([{ name: "Root", ...dirModel }])
-  //     )
-  //   } else {
-  //     Promise.all(
-  //       selection.map(async ({ name, cid }) => ({
-  //         name,
-  //         ...(await getCID(cid)),
-  //       }))
-  //     ).then((v) => {
-  //       setSelectedFiles(v)
-  //     })
-  //   }
-  // }, [getCID, get, path, selection])
+  useEffect(() => {
+    if (selection.length === 0) {
+      get(path).then((dirModel) =>
+        setSelectedFiles([{ name: "Root", ...dirModel }])
+      )
+    } else {
+      Promise.all(
+        selection.map(async ({ name, cid }) => ({
+          ...(await getCID(cid)),
+          name,
+        }))
+      ).then((v) => {
+        setSelectedFiles(v)
+      })
+    }
+  }, [getCID, get, path, selection])
 
   const [fileIndex, setFileIndex] = useState(0)
   const maxIndex = selectedFiles.length - 1

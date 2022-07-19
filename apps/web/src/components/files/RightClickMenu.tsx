@@ -7,7 +7,7 @@ import {
 } from "./PopoverMenu"
 import { useFileStore } from "../../store/FileStore"
 import Anchor from "../../models/Anchor"
-import { duplicateFile } from "@crate/common"
+import { duplicateFile, joinPath, splitPath } from "@crate/common"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
 import { useEffect, useState } from "preact/hooks"
@@ -28,6 +28,7 @@ export default function RightClickMenu({
     (state) => [state.files, state.add, state.delete, state.get],
     shallow
   )
+
   const [selection, path] = useFVStore(
     (state) => [state.selectedFiles, state.path],
     shallow
@@ -37,7 +38,8 @@ export default function RightClickMenu({
   useEffect(() => {
     const fileMapping = {}
     files[path].links.forEach((f) => (fileMapping[f.name] = f))
-    const fetchFile = async () => setFile(await retrieve(selection[0].name))
+    const fPath = joinPath("ipfs", ...splitPath(path), selection[0].name)
+    const fetchFile = async () => setFile(await retrieve(fPath))
     fetchFile()
   }, [path, files, retrieve, selection])
 
@@ -52,11 +54,13 @@ export default function RightClickMenu({
       `https://crate.network/ipfs/${file.cid}?filename=${file.name}`,
       "_blank"
     )
+
   const downloadFile = () =>
     window.open(
       `https://crate.network/ipfs/${file.cid}?filename=${file.name}&download=true`,
       "_blank"
     )
+
   const copyCID = () => navigator.clipboard.writeText(file.cid)
 
   const opts = [

@@ -1,25 +1,32 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCopy } from "@fortawesome/free-solid-svg-icons"
 import { FileModel } from "@crate/types"
+import { useStore as useFVStore } from "../../store/FileViewStore"
+import { splitPath } from "@crate/common"
 
 export function FileInspectorFileBody({ file }: { file: FileModel }) {
+  const path = useFVStore((state) => state.path)
   const { name, cid } = file
   const rows: [string, string, string?, boolean?][] = []
   rows.push(["Name", name])
-  rows.push(["Path", `/${name ? name : ""}`])
+  rows.push(["Path", `${splitPath(path).slice(1)}/${name ? name : ""}`])
   if (name && name.includes("."))
     rows.push(["Extension", name.split(".", 2)[1]])
   rows.push(["CID", cid, "text-xs font-mono break-all", true])
 
   return (
     <div className="p-2 text-sm">
-      <table>
+      <table className="w-full">
         {rows.map(([title, value, classes, copy]) => (
           <tr key={title}>
             <td className="font-semibold text-gray-600 dark:text-gray-300 text-right pr-4 align-top w-20">
               {title}
             </td>
-            <td className={typeof classes === "string" ? classes : ""}>
+            <td
+              className={`break-all w-full ${
+                typeof classes === "string" ? classes : ""
+              }`}
+            >
               {value}{" "}
               {copy && (
                 <span
