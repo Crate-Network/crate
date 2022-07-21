@@ -20,10 +20,10 @@ import { useUserStore } from "../store/UserStore"
 import { useEffect, useState } from "preact/hooks"
 import { splitPath } from "@crate/common"
 import { useFileStore } from "../store/FileStore"
-import { FileModel, NamedFileModel } from "@crate/types"
+import { NamedFileModel } from "@crate/types"
 
 function Breadcrumbs() {
-  const path = ["folder1", "folder2"]
+  const { path, setPath } = useFVStore()
   return (
     <div className="mb-4 font-bold text-sm text-neutral-700 dark:text-neutral-200">
       <Link
@@ -32,14 +32,17 @@ function Breadcrumbs() {
       >
         All Files
       </Link>
-      {path.map((el) => (
-        <span key={el}>
-          <span className="font-light inline-block ml-2 mr-2">&gt;</span>
-          <Link className="cursor-pointer hover:text-neutral-400 hover:underline">
-            {el}
-          </Link>
-        </span>
-      ))}
+      {splitPath(path)
+        .slice(1)
+        .map((el) => (
+          <span key={el}>
+            <span className="font-light inline-block ml-2 mr-2">&gt;</span>
+            <Link className="cursor-pointer hover:text-neutral-400 hover:underline">
+              {el}
+            </Link>
+          </span>
+        ))}
+      <button onClick={() => setPath("/ipfs/")}>Hi</button>
     </div>
   )
 }
