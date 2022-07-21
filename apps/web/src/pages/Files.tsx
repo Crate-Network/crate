@@ -23,7 +23,7 @@ import { useFileStore } from "../store/FileStore"
 import { NamedFileModel } from "@crate/types"
 
 function Breadcrumbs() {
-  const { path, setPath } = useFVStore()
+  const { path } = useFVStore()
   return (
     <div className="mb-4 font-bold text-sm text-neutral-700 dark:text-neutral-200">
       <Link
@@ -42,7 +42,6 @@ function Breadcrumbs() {
             </Link>
           </span>
         ))}
-      <button onClick={() => setPath("/ipfs/")}>Hi</button>
     </div>
   )
 }
