@@ -39,7 +39,13 @@ export function stripSlashes(part: string): string {
 }
 
 export function joinPath(...elements: string[]): string {
-  return elements.reduce((prev, curr) => `${prev}/${stripSlashes(curr)}`, "/")
+  return elements.reduce((prev, curr) => {
+    const pStripped = stripSlashes(prev)
+    const cStripped = stripSlashes(curr)
+    if (pStripped.length === 0) return `/${cStripped}`
+    else if (cStripped.length === 0) return `/${pStripped}`
+    return `/${pStripped}/${cStripped}`
+  }, "")
 }
 
 // splits a path into segments

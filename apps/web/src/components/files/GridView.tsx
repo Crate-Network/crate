@@ -7,7 +7,8 @@ import Anchor from "../../models/Anchor"
 import { useFileStore } from "../../store/FileStore"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
-import { FileModel, NamedFileModel } from "@crate/types"
+import { FileModel, FileType, NamedFileModel } from "@crate/types"
+import { joinPath } from "@crate/common"
 
 type IconState = "empty" | "selected" | "hovered"
 const getIconState = (selected: boolean, hovered: boolean): IconState => {
@@ -69,7 +70,7 @@ function NameInput({
 function FileIcon({
   file,
 }: {
-  file: { name: string; cid: string; type?: string }
+  file: { name: string; cid: string; type?: FileType }
 }) {
   const [hovered, setHovered] = useState(false)
   const [selected, setSelected] = useState(false)
@@ -77,8 +78,14 @@ function FileIcon({
   const [anchorPos, setAnchorPos] = useState<null | Anchor>(null)
   const contextShown = Boolean(anchorPos)
 
-  const [selectionInfo, select, deselect] = useFVStore(
-    (state) => [state.selectedFiles, state.select, state.deselect],
+  const [selectionInfo, select, deselect, path, setPath] = useFVStore(
+    (state) => [
+      state.selectedFiles,
+      state.select,
+      state.deselect,
+      state.path,
+      state.setPath,
+    ],
     shallow
   )
 
@@ -123,6 +130,9 @@ function FileIcon({
         onDblClick={() => {
           if (file.type === "file" && !editingName)
             window.open(`https://crate.network/ipfs/${file.cid}`, "_blank")
+          else if (file.type === "directory") {
+            setPath(joinPath(path, file.name))
+          }
         }}
         onContextMenu={onContextMenu}
         onMouseOver={() => setHovered(true)}
