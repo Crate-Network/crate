@@ -36,11 +36,14 @@ export default function RightClickMenu({
 
   const [file, setFile] = useState(null)
   useEffect(() => {
-    const fileMapping = {}
-    files[path].links.forEach((f) => (fileMapping[f.name] = f))
-    const fPath = joinPath("ipfs", ...splitPath(path), selection[0].name)
-    const fetchFile = async () => setFile(await retrieve(fPath))
-    fetchFile()
+    const fetchDetails = async () => {
+      const fileMapping = {}
+      const fp = await retrieve(path)
+      fp.links.forEach((f) => (fileMapping[f.name] = f))
+      const fPath = joinPath("ipfs", ...splitPath(path), selection[0].name)
+      setFile(await retrieve(fPath))
+    }
+    fetchDetails()
   }, [path, files, retrieve, selection])
 
   const deleteFiles = () => {

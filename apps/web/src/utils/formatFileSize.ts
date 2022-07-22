@@ -17,5 +17,5 @@ export default function formatFileSize(size: number) {
         Math.round((size / Math.pow(1024, i - 1)) * 100) / 100 + sizes[i - 1]
       )
   }
-  return size
+  return size.toString()
 }
