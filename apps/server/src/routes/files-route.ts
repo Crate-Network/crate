@@ -12,7 +12,7 @@ import { getRootCID } from "@crate/user-client"
 
 const { getFile, addFile } = create({
   url: process.env["IPFS_CLIENT_URL"],
-  timeout: 5000,
+  timeout: 30000,
 })
 
 const router = Router()
