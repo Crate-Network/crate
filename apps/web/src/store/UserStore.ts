@@ -59,9 +59,7 @@ export const useUserStore = create(
       name: "crate-session", // unique name
       partialize: (state) =>
         Object.fromEntries(
-          Object.entries(state).filter(
-            ([key]) => !["authenticating"].includes(key)
-          )
+          Object.entries(state).filter(([key]) => ["signedIn"].includes(key))
         ),
     })
   )

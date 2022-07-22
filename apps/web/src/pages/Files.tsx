@@ -21,6 +21,7 @@ import { useEffect, useState } from "preact/hooks"
 import { joinPath, splitPath } from "@crate/common"
 import { useFileStore } from "../store/FileStore"
 import { NamedFileModel } from "@crate/types"
+import DirectoryLoading from "../components/files/DirectoryLoading"
 
 function Breadcrumbs() {
   const { path, setPath } = useFVStore()
@@ -54,7 +55,8 @@ function Breadcrumbs() {
 }
 
 function FilesChild() {
-  const { inspectorVisible, hideInspector, path, setPath } = useFVStore()
+  const { inspectorVisible, hideInspector, path, setPath, setLoading } =
+    useFVStore()
   const rootCID = useUserStore((state) => state.userDoc.rootCID)
 
   useEffect(() => {
@@ -70,8 +72,16 @@ function FilesChild() {
   const [files, setFiles] = useState<Record<string, NamedFileModel>>({})
 
   useEffect(() => {
-    getChildren(path).then(setFiles)
-  }, [getChildren, path])
+    setLoading(true)
+    getChildren(path)
+      .then((files) => {
+        setLoading(false)
+        setFiles(files)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
+  }, [getChildren, path, setLoading])
 
   const [viewMode, setViewMode] = useStoredState<ViewMode>(
     ViewMode.LIST,
@@ -127,13 +137,8 @@ function FilesChild() {
 }
 
 export default function Files() {
-  const userRootCID = useUserStore((state) => state.userDoc.rootCID)
-  if (!userRootCID)
-    return (
-      <div className="w-full text-center italic mt-8">
-        Loading your files...
-      </div>
-    )
+  const userRootCID = useUserStore((state) => state.userDoc?.rootCID)
+  if (!userRootCID) return <DirectoryLoading />
   return (
     <FVProvider createStore={createFVStore(userRootCID)}>
       <FilesChild />

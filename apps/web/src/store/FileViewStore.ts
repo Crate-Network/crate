@@ -11,6 +11,7 @@ export type SelectionInfo = { name: string; cid: string }
 type FileViewState = {
   // indication of loading
   loading: boolean
+  setLoading: (v: boolean) => void
   // list of files names in visible directory
   selectedFiles: SelectionInfo[]
   // functions to modify selection
@@ -32,6 +33,7 @@ const fileViewStore =
   (set, get) => ({
     selectedFiles: [],
     loading: true,
+    setLoading: (v: boolean) => set({ loading: v }),
     path: `/ipfs/${rootCID}`,
     select: (info: SelectionInfo | SelectionInfo[], replace = false) =>
       set((state) => {
