@@ -9,6 +9,8 @@ import { immer } from "zustand/middleware/immer"
 
 export type SelectionInfo = { name: string; cid: string }
 type FileViewState = {
+  // indication of loading
+  loading: boolean
   // list of files names in visible directory
   selectedFiles: SelectionInfo[]
   // functions to modify selection
@@ -29,6 +31,7 @@ const fileViewStore =
   (rootCID: string): StateCreator<FileViewState, [["zustand/immer", never]]> =>
   (set, get) => ({
     selectedFiles: [],
+    loading: true,
     path: `/ipfs/${rootCID}`,
     select: (info: SelectionInfo | SelectionInfo[], replace = false) =>
       set((state) => {

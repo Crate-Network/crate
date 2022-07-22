@@ -6,6 +6,8 @@ import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
 import { FileModel, NamedFileModel } from "@crate/types"
 import formatFileSize from "../../utils/formatFileSize"
+import DirectoryEmpty from "./DirectoryEmpty"
+import DirectoryLoading from "./DirectoryLoading"
 
 export function FileRow({ file }: { file: FileModel }) {
   const [selected, setSelected] = useState(false)
@@ -70,13 +72,12 @@ export function FileRow({ file }: { file: FileModel }) {
 }
 
 export function ListView({ files }: { files: NamedFileModel[] }) {
+  const loading = useFVStore((state) => state.loading)
   return (
     <div className="mt-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
-      {files.length === 0 ? (
-        <div className="text-center italic w-full p-2 sm:p-4 md:p-8">
-          This directory is empty.
-        </div>
-      ) : (
+      {files.length === 0 && loading && <DirectoryLoading />}
+      {files.length === 0 && !loading && <DirectoryEmpty />}
+      {files.length !== 0 && (
         <table className="min-w-full text-left">
           <thead className="border-b border-opacity-30">
             <tr>

@@ -9,6 +9,8 @@ import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
 import { FileModel, FileType, NamedFileModel } from "@crate/types"
 import { joinPath } from "@crate/common"
+import DirectoryLoading from "./DirectoryLoading"
+import DirectoryEmpty from "./DirectoryEmpty"
 
 type IconState = "empty" | "selected" | "hovered"
 const getIconState = (selected: boolean, hovered: boolean): IconState => {
@@ -186,13 +188,12 @@ function FileIcon({
 }
 
 export function GridView({ files }: { files: NamedFileModel[] }) {
+  const loading = useFVStore((state) => state.loading)
   return (
     <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
-      {files.length === 0 ? (
-        <div className="w-full text-center italic">
-          This directory is empty.
-        </div>
-      ) : (
+      {files.length === 0 && loading && <DirectoryLoading />}
+      {files.length === 0 && !loading && <DirectoryEmpty />}
+      {files.length !== 0 && (
         <div
           className="grid w-full"
           style={{
