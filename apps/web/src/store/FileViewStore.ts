@@ -58,7 +58,7 @@ const fileViewStore =
       set((state) => ({ ...state, inspectorVisible: false })),
     setPath: (path: string) =>
       set((state) => {
-        console.log(path)
+        state.selectedFiles = []
         state.path = path
       }),
   })
