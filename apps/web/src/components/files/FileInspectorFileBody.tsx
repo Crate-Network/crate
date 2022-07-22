@@ -2,14 +2,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCopy } from "@fortawesome/free-solid-svg-icons"
 import { FileModel } from "@crate/types"
 import { useStore as useFVStore } from "../../store/FileViewStore"
-import { splitPath } from "@crate/common"
+import { joinPath, splitPath } from "@crate/common"
+import formatFileSize from "../../utils/formatFileSize"
 
 export function FileInspectorFileBody({ file }: { file: FileModel }) {
   const path = useFVStore((state) => state.path)
   const { name, cid } = file
   const rows: [string, string, string?, boolean?][] = []
-  rows.push(["Name", name])
-  rows.push(["Path", `${splitPath(path).slice(1)}/${name ? name : ""}`])
+  if (name) rows.push(["Name", name])
+  rows.push(["Path", joinPath(...splitPath(path).slice(1), name ? name : "")])
+  if (file.size) rows.push(["Size", formatFileSize(file.size)])
+  if (file.cumulativeSize)
+    rows.push(["Size", formatFileSize(file.cumulativeSize)])
   if (name && name.includes("."))
     rows.push(["Extension", name.split(".", 2)[1]])
   rows.push(["CID", cid, "text-xs font-mono break-all", true])
