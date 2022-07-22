@@ -42,9 +42,10 @@ export const walkDir = async (
   dirCID: string,
   path: string[]
 ): Promise<CID[]> => {
+  const currPath = [CID.parse(dirCID)]
   // if there is no remaining path, this may be a file or directory, and we
-  // should return the final CID (base case).
-  if (path.length === 0) return [CID.parse(dirCID)]
+  // should return the current path.
+  if (path.length === 0) return currPath
   // fetch the file model for the CID
   const fModel = await fetchFModel(client, CID.parse(dirCID))
   // the fetched model must correspond to a directory to recurse
@@ -55,9 +56,7 @@ export const walkDir = async (
   // if the path is invalid, this will throw.
   if (!nextCID) throw new FileError(FileErrorType.NO_DATA)
   // recurse and return the next CID as part of the array.
-  return [CID.parse(nextCID)].concat(
-    await walkDir(client, nextCID, path.slice(1))
-  )
+  return currPath.concat(await walkDir(client, nextCID, path.slice(1)))
 }
 
 /**
