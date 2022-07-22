@@ -40,33 +40,33 @@ async function addToDir(
   parent: CID,
   newFile: FileDesc
 ): Promise<CID> {
-  const rawDirBlock = await client.block.get(parent)
-  const rawFileBlock = await client.block.get(newFile.cid)
+  const rawParentBlock = await client.block.get(parent)
+  const rawChildBlock = await client.block.get(newFile.cid)
 
-  const dirNode = Node.fromRawBlock(rawDirBlock)
-  if (!dirNode.Data) throw new FileError(FileErrorType.NO_DATA)
+  const parentNode = Node.fromRawBlock(rawParentBlock)
+  if (!parentNode.Data) throw new FileError(FileErrorType.NO_DATA)
 
-  const fileNode = Node.fromRawBlock(rawFileBlock)
-  if (!fileNode.Data) throw new FileError(FileErrorType.NO_DATA)
-  const fileUfs = UnixFS.unmarshal(rawFileBlock)
+  const childNode = Node.fromRawBlock(rawChildBlock)
+  if (!childNode.Data) throw new FileError(FileErrorType.NO_DATA)
+  const childUfs = UnixFS.unmarshal(rawChildBlock)
 
-  const idx = dirNode.Links.findIndex((link) => link.Name === newFile.name)
-  if (idx !== -1) dirNode.Links.splice(idx)
+  const idx = parentNode.Links.findIndex((link) => link.Name === newFile.name)
+  if (idx !== -1) parentNode.Links.splice(idx, 1)
 
-  dirNode.Links.push({
+  parentNode.Links.push({
     Hash: newFile.cid,
     Name: newFile.name,
-    Tsize: fileUfs.fileSize(),
+    Tsize: childUfs.fileSize(),
   })
 
-  const newDirCID = (
-    await client.dag.put(Node.toRawBlock(dirNode), {
+  const newParentCID = (
+    await client.dag.put(Node.toRawBlock(parentNode), {
       inputCodec: "dag-pb",
       storeCodec: "dag-pb",
     })
   ).toV0()
 
-  return newDirCID
+  return newParentCID
 }
 
 export default (client: IPFSHTTPClient) => async (opts: AddToDirOptions) => {
