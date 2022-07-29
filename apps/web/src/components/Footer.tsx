@@ -13,10 +13,10 @@ interface FooterProps {
 
 export default function Footer({ breadcrumbs }: FooterProps) {
   return (
-    <div className="w-full bg-orange-50 dark:bg-black p-12 text-orange-900 text-sm dark:text-slate-300 block">
+    <div className="w-full bg-orange-50 dark:bg-black p-12 text-slate-500 text-sm dark:text-slate-300 block absolute bottom-0 h-48">
       <div className="flex items-center">
         <Link href="/">
-          <span className="font-iaQuattro text-3xl font-bold hover:underline hover:text-neutral-400">
+          <span className="font-iaQuattro text-3xl font-bold hover:underline">
             CRATE
           </span>
         </Link>
@@ -25,10 +25,7 @@ export default function Footer({ breadcrumbs }: FooterProps) {
             <span className="font-light inline-block ml-3 mr-3 text-slate-500 text-lg">
               &gt;
             </span>
-            <Link
-              className="hover:text-neutral-400 hover:underline"
-              href={link}
-            >
+            <Link className="hover:underline" href={link}>
               {name}
             </Link>
           </span>
@@ -38,9 +35,13 @@ export default function Footer({ breadcrumbs }: FooterProps) {
       <div className="flex justify-between">
         <span>Copyright © 2022 Crate Network, LLC. All rights reserved.</span>
         <span className="space-x-4">
-          <span>Terms of Use</span>
+          <Link href="/" className="hover:underline">
+            Terms of Use
+          </Link>
           <span className="text-slate-500 text-lg">|</span>
-          <span>Privacy Policy</span>
+          <Link href="/" className="hover:underline">
+            Privacy Policy
+          </Link>
         </span>
       </div>
     </div>

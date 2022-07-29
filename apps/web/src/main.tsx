@@ -34,7 +34,7 @@ const Page = (props) => {
   }, [title])
 
   return (
-    <>
+    <div className="relative min-h-screen pb-48">
       {header ? header : <Navigation />}
       <div
         className={`fixed flex justify-between items-center align-middle transition-all duration-300 mx-auto left-0 right-0 -top-16 w-4/12 p-4 bg-red-500 bg-opacity-90 shadow-md backdrop-blur-lg z-10 rounded-lg text-white ${
@@ -54,9 +54,9 @@ const Page = (props) => {
           Dismiss
         </button>
       </div>
-      <div style={{ minHeight: "80vh" }}>{component}</div>
+      <div>{component}</div>
       <Footer breadcrumbs={[{ name: "Community", link: "/community" }]} />
-    </>
+    </div>
   )
 }
 

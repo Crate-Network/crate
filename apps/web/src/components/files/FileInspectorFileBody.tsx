@@ -20,7 +20,7 @@ export function FileInspectorFileBody({ file }: { file: FileModel }) {
 
   return (
     <div className="p-2 text-sm">
-      <table className="w-full">
+      <table className="w-full table-fixed">
         {rows.map(([title, value, classes, copy]) => (
           <tr key={title}>
             <td className="font-semibold text-gray-600 dark:text-gray-300 text-right pr-4 align-top w-20">
