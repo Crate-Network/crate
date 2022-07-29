@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/Crate-Network/crate/compare/@crate/common-0.3.1...@crate/common-0.4.0) (2022-07-29)
+
+
+### Features
+
+* added file browsing ([7aec420](https://github.com/Crate-Network/crate/commit/7aec420e923981416a28ed41b43f8a51d96dc65a))
+* updated server and web to deal with libs ([b7521dc](https://github.com/Crate-Network/crate/commit/b7521dc42d5842950c06014f36f0df0a4ad3343a))
+
+
+### Bug Fixes
+
+* fixed up frontend selection, upload, sorting, viewing ([65e2689](https://github.com/Crate-Network/crate/commit/65e2689e083a68cc763cd05226577af12fd8ea61))
+
 ### [0.3.1](https://github.com/Crate-Network/crate/compare/@crate/common-0.3.0...@crate/common-0.3.1) (2022-07-15)
 
 
