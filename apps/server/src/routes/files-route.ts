@@ -2,7 +2,6 @@ import { RequestHandler, Router } from "express"
 import logger from "../logger"
 import * as fs from "fs"
 import fileClient from "../clients/files"
-import { getRootCID } from "@crate/user-client"
 import { asyncHandler, defaultPath } from "./utils"
 
 const { getFile, addFile } = fileClient
