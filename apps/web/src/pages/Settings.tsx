@@ -104,11 +104,11 @@ export default function Settings() {
       <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
         Settings
       </h1>
-      <div className="flex flex-wrap w-full rounded-lg">
-        <div className="w-5/12 lg:w-4/12 xl:w-3/12 bg-white dark:bg-stone-800 rounded-lg p-3 shadow-lg">
+      <div className="flex border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-stone-800 shadow-sm rounded-lg overflow-hidden">
+        <div className="lg:w-fit w-56 lg:max-w-sm p-3 border-r">
           {user.email !== "" && (
-            <div className="flex items-center space-x-4 p-2 mb-5">
-              <div className="h-12 w-12 bg-neutral-200 dark:bg-stone-700 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="flex items-center lg:space-x-4 p-2 mb-5">
+              <div className="h-12 w-12 bg-neutral-200 dark:bg-stone-700 rounded-full items-center justify-center flex-shrink-0 hidden lg:flex">
                 <FontAwesomeIcon icon={faUser} />
               </div>
               <div className="overflow-ellipsis overflow-hidden whitespace-nowrap">
@@ -118,7 +118,7 @@ export default function Settings() {
                     : user.email}
                 </h4>
                 {userDoc && userDoc.organization !== "" && (
-                  <span className="overflow-ellipsis overflow-hidden whitespace-nowraptext-sm tracking-wide flex items-center space-x-1">
+                  <span className="overflow-ellipsis overflow-hidden whitespace-nowrap text-sm tracking-wide flex items-center space-x-1">
                     <span className="text-gray-600 dark:text-gray-200 text-md">
                       {userDoc.organization}
                     </span>
@@ -145,8 +145,8 @@ export default function Settings() {
           </ul>
         </div>
 
-        <div className="w-7/12 lg:w-8/12 xl:w-9/12 rounded-md ">
-          <div className="p-6 ml-4 rounded-md bg-white dark:bg-stone-800 dark:text-white text-neutral-900">
+        <div className="flex flex-1 rounded-md justify-center">
+          <div className="p-6 ml-4 bg-white text-neutral-900 w-full">
             {getPane(selectedPane)}
           </div>
         </div>

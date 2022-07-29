@@ -76,7 +76,7 @@ export default function Community() {
           </Button>
         </div>
         <div className="flex border border-neutral-200 dark:border-neutral-700 shadow-sm rounded-lg overflow-hidden">
-          <div className="w-64 xl:w-72 2xl:w-80 bg-white dark:bg-stone-800 p-3 border-r border-neutral-200 dark:border-neutral-700">
+          <div className="w-64 xl:w-72 2xl:w-80 bg-white dark:bg-stone-800 p-3 border-r">
             <ul className="space-y-2 text-sm list-none">
               <SidebarButton
                 icon={faStar}

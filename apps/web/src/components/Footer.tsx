@@ -1,4 +1,5 @@
 import { Link } from "preact-router"
+import { ReactComponent as CopyrightNotice } from "@crate/content/copyright-notice.md"
 import { useState } from "preact/hooks"
 import DarkGlyph from "../assets/dark-crate-glyph.svg"
 
@@ -33,7 +34,9 @@ export default function Footer({ breadcrumbs }: FooterProps) {
       </div>
       <span className="block h-px bg-slate-500 mb-2 mt-2" />
       <div className="flex justify-between">
-        <span>Copyright © 2022 Crate Network, LLC. All rights reserved.</span>
+        <span>
+          <CopyrightNotice />
+        </span>
         <span className="space-x-4">
           <Link href="/terms-of-use" className="hover:underline">
             Terms of Use

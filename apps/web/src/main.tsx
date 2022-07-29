@@ -16,6 +16,7 @@ import { useErrorStore } from "./store/ErrorStore"
 import { useUserStore } from "./store/UserStore"
 import Markdown from "./pages/Markdown"
 import { html as PrivacyPolicy } from "@crate/content/privacy-policy.md"
+import { html as TermsOfUse } from "@crate/content/terms-of-use.md"
 import { JSXInternal } from "preact/src/jsx"
 
 type PageProps = {
@@ -111,6 +112,11 @@ export function App() {
         path="/privacy-policy"
         title={"Crate - Privacy Policy"}
         component={<Markdown html={PrivacyPolicy} />}
+      />
+      <Page
+        path="/terms-of-use"
+        title={"Crate - Terms of Use"}
+        component={<Markdown html={TermsOfUse} />}
       />
       <Page
         path="/login"

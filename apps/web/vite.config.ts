@@ -26,7 +26,7 @@ export default defineConfig({
   plugins: [
     preact(),
     mdPlugin({
-      mode: [Mode.HTML],
+      mode: [Mode.HTML, Mode.REACT],
     }),
     tsconfigPaths(),
     magicalSvg({
