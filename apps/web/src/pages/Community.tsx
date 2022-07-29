@@ -77,8 +77,8 @@ export default function Community() {
             &nbsp;&nbsp;Submit
           </Button>
         </div>
-        <div className="flex">
-          <div className="w-72 xl:w-96 bg-white dark:bg-stone-800 rounded-lg p-3 shadow-lg">
+        <div className="flex border border-neutral-200 dark:border-neutral-700 shadow-sm rounded-lg overflow-hidden">
+          <div className="w-64 xl:w-72 2xl:w-80 bg-white dark:bg-stone-800 p-3 border-r border-neutral-200 dark:border-neutral-700">
             <ul className="space-y-2 text-sm">
               <SidebarButton
                 icon={faStar}
@@ -128,8 +128,8 @@ export default function Community() {
             </ul>
           </div>
 
-          <div className="rounded-md flex-1 ">
-            <div className="p-6 ml-4 rounded-md bg-white dark:bg-stone-800 dark:text-white text-neutral-900 border border-neutral-200 dark:border-neutral-700">
+          <div className="flex-1">
+            <div className="p-6 bg-white dark:bg-stone-800 dark:text-white text-neutral-900 min-h-full">
               <span>Placeholder</span>
             </div>
           </div>
