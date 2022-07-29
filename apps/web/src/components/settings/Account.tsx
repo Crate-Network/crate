@@ -24,7 +24,13 @@ export default function Profile() {
     [user.uid, userDoc]
   )
 
-  const { firstName, lastName, organization } = userDoc
+  const loaded = !!userDoc
+  const { firstName, lastName, organization } = {
+    firstName: "",
+    lastName: "",
+    organization: "",
+    ...userDoc,
+  }
 
   return (
     <div className="space-y-4">
@@ -39,6 +45,7 @@ export default function Profile() {
           type="text"
           value={firstName}
           onInput={(e) => {
+            if (!loaded) return
             if (e && e.target.value !== firstName)
               updateUserDoc({ firstName: e.target.value })
           }}
@@ -52,6 +59,7 @@ export default function Profile() {
           type="text"
           value={lastName}
           onInput={(e) => {
+            if (!loaded) return
             if (e && e.target.value !== lastName)
               updateUserDoc({ lastName: e.target.value })
           }}
@@ -65,6 +73,7 @@ export default function Profile() {
           type="text"
           value={organization}
           onInput={(e) => {
+            if (!loaded) return
             if (e && e.target.value !== organization)
               updateUserDoc({ organization: e.target.value })
           }}

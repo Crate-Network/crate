@@ -99,8 +99,6 @@ export default function Settings() {
   if (!user)
     return <div className="text-center w-full italic mt-6">Loading...</div>
 
-  const { firstName, lastName, organization } = userDoc
-
   return (
     <main className="mt-6 sm:mt-12 md:mt-16 lg:mt-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
@@ -115,12 +113,14 @@ export default function Settings() {
               </div>
               <div className="overflow-ellipsis overflow-hidden whitespace-nowrap">
                 <h4 className="overflow-ellipsis overflow-hidden whitespace-nowrap w-full font-semibold text-md text-gray-700 dark:text-gray-100 font-poppins tracking-wide">
-                  {firstName !== "" ? `${firstName} ${lastName}` : user.email}
+                  {userDoc && userDoc.firstName !== ""
+                    ? `${userDoc.firstName} ${userDoc.lastName}`
+                    : user.email}
                 </h4>
-                {organization !== "" && (
+                {userDoc && userDoc.organization !== "" && (
                   <span className="overflow-ellipsis overflow-hidden whitespace-nowraptext-sm tracking-wide flex items-center space-x-1">
                     <span className="text-gray-600 dark:text-gray-200 text-md">
-                      {organization}
+                      {userDoc.organization}
                     </span>
                   </span>
                 )}
