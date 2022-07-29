@@ -2,6 +2,41 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.6.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.5.1...@crate/web-0.6.0) (2022-07-29)
+
+
+### Features
+
+* added file browsing ([7aec420](https://github.com/Crate-Network/crate/commit/7aec420e923981416a28ed41b43f8a51d96dc65a))
+* added Footer ([1136171](https://github.com/Crate-Network/crate/commit/11361714b214839f2722ce5c9bfeaff8c0159aec))
+* added footer contents and breadcrumbs ([8d9384d](https://github.com/Crate-Network/crate/commit/8d9384dc74ae76437fd38708c117ceeff0352ee8))
+* added loading spinner ([5888aeb](https://github.com/Crate-Network/crate/commit/5888aebc1d11a984c2bff664257fa2fced39c847))
+* added size to FileInspector, handled paths ([81bd887](https://github.com/Crate-Network/crate/commit/81bd887bd987f8a6c33bfb819d82f284ace11954))
+* aligned breadcrumbs to title ([012962e](https://github.com/Crate-Network/crate/commit/012962ee4cf7eea18648424ff3dd5e8c7f107369))
+* corrected Footer positioning ([0e0fc2e](https://github.com/Crate-Network/crate/commit/0e0fc2e712057bcc3b628c4ee309440a8c9c0b5c))
+* tore down existing, move to server ([b8fefb4](https://github.com/Crate-Network/crate/commit/b8fefb424aeed0c67b7cf630c46644912fbec46e))
+* updated server and web to deal with libs ([b7521dc](https://github.com/Crate-Network/crate/commit/b7521dc42d5842950c06014f36f0df0a4ad3343a))
+
+
+### Bug Fixes
+
+* autoupdating files view ([16bd9a0](https://github.com/Crate-Network/crate/commit/16bd9a00ab0cdd24c8436db4e9e73731e612e083))
+* better auth and loading experience ([5f3c691](https://github.com/Crate-Network/crate/commit/5f3c69105a4a04f26f5ae860fa1dd2e232f309e0))
+* clear selection on file browse ([84722f6](https://github.com/Crate-Network/crate/commit/84722f6c4c53e0d289a3b34cad7c2b05b78b971a))
+* finalized server fixes ([e1c4136](https://github.com/Crate-Network/crate/commit/e1c4136b5c2b00a7eaac5cfebf8976119fbda92a))
+* fixed imports ([5dd8995](https://github.com/Crate-Network/crate/commit/5dd8995b7531b62b930ca27f7f32836e30d50a49))
+* fixed up frontend selection, upload, sorting, viewing ([65e2689](https://github.com/Crate-Network/crate/commit/65e2689e083a68cc763cd05226577af12fd8ea61))
+* formatted index.css ([5b8844b](https://github.com/Crate-Network/crate/commit/5b8844bb7b11c2c5231ff3f778ce0cab46d30eff))
+* move file loading logic up to Files ([26842c4](https://github.com/Crate-Network/crate/commit/26842c4f2d108faa9c4ff7e5c85a1de0c7167c48))
+* moved NamedFileModel over to lib ([6b0f171](https://github.com/Crate-Network/crate/commit/6b0f171d9a865517159caf5ee8eb23dc76c2ac95))
+* removed file={} on RightClickMenu ([213285b](https://github.com/Crate-Network/crate/commit/213285ba60e157b7569a806da875716df4dabf83))
+* removed setPath in breadcrumbs ([8e83596](https://github.com/Crate-Network/crate/commit/8e835963280c9bff65a05b823226049a2ade61c6))
+* resolution of paths for right click ([a123c16](https://github.com/Crate-Network/crate/commit/a123c165dd153d0c978b4d52245c1af74dfb630e))
+* split up path in file ([b344bf3](https://github.com/Crate-Network/crate/commit/b344bf3eda23206c6d2a7906ece484a4eb733f10))
+* unified community look ([5fbc13e](https://github.com/Crate-Network/crate/commit/5fbc13eacc8e6f29b395f9430bf771a34773dbd2))
+* use slices ([e109042](https://github.com/Crate-Network/crate/commit/e109042919f712b5477318637b7a973808a1c7bf))
+* working on fixing up issues ([f35dd03](https://github.com/Crate-Network/crate/commit/f35dd03761c0fc1a1e4cafd5cbfdb080300e5dd0))
+
 ### [0.5.2](https://github.com/Crate-Network/crate/compare/@crate/web-0.5.1...@crate/web-0.5.2) (2022-07-15)
 
 
