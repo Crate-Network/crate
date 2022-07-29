@@ -39,7 +39,7 @@ export default function Navigation() {
                       className="flex items-center justify-between"
                     >
                       <CrateLogo />
-                      <h1 className="font-iaQuattro font-bold text-4xl hidden lg:inline-block">
+                      <h1 className="text-4xl hidden lg:inline-block mb-0">
                         CRATE
                       </h1>
                     </Link>

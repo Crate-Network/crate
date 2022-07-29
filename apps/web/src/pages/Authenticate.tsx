@@ -134,7 +134,7 @@ export default function Authenticate({ type }: { type: AuthenticateType }) {
 
   return (
     <FormBox className="mt-8 md:mt-24 xl:mt-36">
-      <h1 className="font-bold text-2xl pb-4">{type}</h1>
+      <h2 className="pb-4">{type}</h2>
       <FormInput
         id="email"
         placeholder="Enter your email"

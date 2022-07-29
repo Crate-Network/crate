@@ -1,6 +1,7 @@
 import { defineConfig } from "vite"
 import preact from "@preact/preset-vite"
 import tsconfigPaths from "vite-tsconfig-paths"
+import mdPlugin, { Mode } from "vite-plugin-markdown"
 import magicalSvg from "vite-plugin-magical-svg"
 
 // https://vitejs.dev/config/
@@ -24,6 +25,9 @@ export default defineConfig({
   },
   plugins: [
     preact(),
+    mdPlugin({
+      mode: [Mode.HTML],
+    }),
     tsconfigPaths(),
     magicalSvg({
       // By default, the output will be a dom element (the <svg> you can use inside the webpage).

@@ -12,13 +12,13 @@ export default function Splash() {
       class="flex items-center justify-center mx-auto px-4 sm:px-6 lg:px-8 2xl:px-32"
     >
       <div class="sm:text-center lg:text-left lg:w-full">
-        <h1 class="text-4xl tracking-tight font-bold text-gray-800 dark:text-gray-100 sm:text-5xl md:text-6xl">
+        <h1 class="tracking-tight font-sans sm:text-5xl md:text-6xl">
           <span class="block xl:inline">Cloud storage, </span>
           <span class="block font-extrabold text-orange-600 dark:text-orange-500 xl:inline">
             reimagined.
           </span>
         </h1>
-        <p class="mt-3 text-base text-gray-700 dark:text-gray-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+        <p class="mt-3 text-base text-gray-700 dark:text-gray-400 sm:mt-5 sm:text-lg sm:max-w-screen-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
           Store your files securely, with crypographically-verified guarantees
           on data accessibility. Access your files on all your devices, from
           anywhere in the world. Store as much data as you want. Get 1 TB of

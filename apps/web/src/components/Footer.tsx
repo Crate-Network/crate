@@ -35,11 +35,11 @@ export default function Footer({ breadcrumbs }: FooterProps) {
       <div className="flex justify-between">
         <span>Copyright © 2022 Crate Network, LLC. All rights reserved.</span>
         <span className="space-x-4">
-          <Link href="/" className="hover:underline">
+          <Link href="/terms-of-use" className="hover:underline">
             Terms of Use
           </Link>
           <span className="text-slate-500 text-lg">|</span>
-          <Link href="/" className="hover:underline">
+          <Link href="/privacy-policy" className="hover:underline">
             Privacy Policy
           </Link>
         </span>

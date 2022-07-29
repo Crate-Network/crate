@@ -32,3 +32,39 @@
   font-style: italic;
   font-weight: bold;
 }
+
+@layer base {
+  h1 {
+    @apply font-iaQuattro lg:text-5xl text-4xl font-bold text-neutral-800 dark:text-neutral-100 lg:mb-8 mb-3;
+  }
+
+  h2 {
+    @apply font-sans lg:text-4xl text-3xl font-semibold text-neutral-700 dark:text-neutral-200 mt-2 mb-3;
+  }
+
+  h3 {
+    @apply font-sans lg:text-3xl text-2xl font-semibold text-neutral-800 dark:text-neutral-100 mb-1;
+  }
+
+  p {
+    @apply mb-3;
+  }
+
+  pre > code {
+    @apply block bg-neutral-200 dark:bg-neutral-800 p-4 my-4 rounded-md;
+  }
+
+  main {
+    @apply mx-auto 2xl:px-32 px-4 mt-6 mb-12 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28 lg:px-8;
+  }
+}
+
+@layer utilities {
+  .text-contents {
+    @apply list-disc;
+  }
+
+  .text-contents ul {
+    @apply list-disc pl-6;
+  }
+}

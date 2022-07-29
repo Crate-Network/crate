@@ -107,9 +107,9 @@ function FilesChild() {
   })
 
   return (
-    <main className="flex flex-row mx-auto 2xl:px-32 px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">
+    <main className="flex flex-row">
       <div className="grow">
-        <h1 className="flex lg:items-end items-center font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
+        <h1 className="flex items-center lg:items-end">
           <Breadcrumbs />
         </h1>
         <div

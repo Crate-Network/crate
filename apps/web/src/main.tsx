@@ -14,9 +14,22 @@ import NotFound from "./pages/NotFound"
 import Settings from "./pages/Settings"
 import { useErrorStore } from "./store/ErrorStore"
 import { useUserStore } from "./store/UserStore"
+import Markdown from "./pages/Markdown"
+import { html as PrivacyPolicy } from "@crate/content/privacy-policy.md"
+import { JSXInternal } from "preact/src/jsx"
 
-const Page = (props) => {
-  const { title, component, header, protect } = props
+type PageProps = {
+  title: string
+  path?: string
+  component: JSXInternal.Element
+  header?: JSXInternal.Element
+  default?: boolean
+  protect?: boolean
+  breadcrumbs?: { name: string; link: string }[]
+}
+
+const Page = (props: PageProps) => {
+  const { title, component, header, protect, breadcrumbs } = props
   const loggedIn = useUserStore((state) => state.signedIn)
   const errorStore = useErrorStore()
 
@@ -55,7 +68,20 @@ const Page = (props) => {
         </button>
       </div>
       <div>{component}</div>
-      <Footer breadcrumbs={[{ name: "Community", link: "/community" }]} />
+      <Footer
+        breadcrumbs={
+          breadcrumbs
+            ? breadcrumbs
+            : [
+                {
+                  name: title.includes("Crate - ")
+                    ? title.split(" - ")[1]
+                    : title,
+                  link: props.path,
+                },
+              ]
+        }
+      />
     </div>
   )
 }
@@ -82,8 +108,13 @@ export function App() {
         component={<Community />}
       />
       <Page
+        path="/privacy-policy"
+        title={"Crate - Privacy Policy"}
+        component={<Markdown html={PrivacyPolicy} />}
+      />
+      <Page
         path="/login"
-        title={"Login to Crate"}
+        title={"Crate - Login"}
         component={<Authenticate type={AuthenticateType.LOGIN} />}
       />
       <Page
@@ -93,10 +124,10 @@ export function App() {
       />
       <Page
         path="/register"
-        title={"Register for Crate"}
+        title={"Crate - Register"}
         component={<Authenticate type={AuthenticateType.REGISTER} />}
       />
-      <Page default component={<NotFound />} />
+      <Page default title="Crate - 404 Not Found" component={<NotFound />} />
     </Router>
   )
 }

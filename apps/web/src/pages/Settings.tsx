@@ -100,7 +100,7 @@ export default function Settings() {
     return <div className="text-center w-full italic mt-6">Loading...</div>
 
   return (
-    <main className="mt-6 sm:mt-12 md:mt-16 lg:mt-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <main className="max-w-screen-2xl">
       <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
         Settings
       </h1>
@@ -127,7 +127,7 @@ export default function Settings() {
               </div>
             </div>
           )}
-          <ul className="space-y-2 text-sm">
+          <ul className="space-y-2 text-sm list-none">
             <SidebarButton {...getProps(Pane.ACCOUNT)} />
             <SidebarButton {...getProps(Pane.SECURITY)} />
             <SidebarButton {...getProps(Pane.BILLING)} />

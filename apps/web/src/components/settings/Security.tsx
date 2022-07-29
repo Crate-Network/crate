@@ -11,9 +11,7 @@ export default function Security() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-3xl font-bold text-neutral-800 dark:text-neutral-100">
-        Security
-      </h1>
+      <h1>Security</h1>
       <div className="flex justify-start">
         <div className="form-check mb-4 mt-2">
           <input

@@ -67,11 +67,9 @@ export default function Community() {
   )
   return (
     <div>
-      <main class="mx-auto 2xl:px-32 px-4 sm:px-6 lg:px-8">
+      <main>
         <div className="flex justify-between items-center">
-          <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold sm:mt-12 md:mt-16 lg:mt-20">
-            Community
-          </h1>
+          <h1>Community</h1>
           <Button className="font-medium h-10 text-neutral-50 rounded-md bg-orange-500 hover:bg-orange-600 active:bg-orange-700 transition-all py-3 px-6">
             <FontAwesomeIcon icon={faMailForward} />
             &nbsp;&nbsp;Submit
@@ -79,7 +77,7 @@ export default function Community() {
         </div>
         <div className="flex border border-neutral-200 dark:border-neutral-700 shadow-sm rounded-lg overflow-hidden">
           <div className="w-64 xl:w-72 2xl:w-80 bg-white dark:bg-stone-800 p-3 border-r border-neutral-200 dark:border-neutral-700">
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-sm list-none">
               <SidebarButton
                 icon={faStar}
                 text="Featured"
