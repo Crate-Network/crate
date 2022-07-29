@@ -46,14 +46,14 @@ export default function Navigation() {
                   </div>
                 </div>
                 <div className="ml-10 pr-4 space-x-8">
-                  <span className="space-x-8">
+                  {/* <span className="space-x-8">
                     <Link
                       href="/community"
                       className="font-medium text-gray-500 dark:text-gray-300 hover:text-neutral-400"
                     >
                       Community
                     </Link>
-                  </span>
+                  </span> */}
                   {!loggedIn ? (
                     <>
                       <span className="space-x-8">
