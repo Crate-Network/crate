@@ -6,6 +6,7 @@ import "./index.css"
 import Splash from "./pages/Splash"
 import Authenticate, { AuthenticateType } from "./pages/Authenticate"
 import Navigation from "./components/Navigation"
+import Footer from "./components/footer"
 import EmailSignIn from "./pages/EmailSignIn"
 import Community from "./pages/Community"
 import Files from "./pages/Files"
@@ -54,6 +55,7 @@ const Page = (props) => {
         </button>
       </div>
       {component}
+      <Footer breadcrumbs={[]} />
     </>
   )
 }

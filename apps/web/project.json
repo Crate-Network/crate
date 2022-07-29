@@ -49,6 +49,7 @@
         "baseHref": "/",
         "configFile": "apps/web/vite.config.ts"
       },
+      "dependsOn": ["@crate/server"],
       "configurations": {
         "production": {
           "fileReplacements": [
