@@ -26,31 +26,37 @@ import DirectoryLoading from "../components/files/DirectoryLoading"
 function Breadcrumbs() {
   const { path, setPath } = useFVStore()
   return (
-    <div className="mb-4 font-bold text-sm text-neutral-700 dark:text-neutral-200">
+    <>
       <button
-        className="cursor-pointer hover:text-neutral-400 hover:underline"
+        className="cursor-pointer hover:underline"
         onClick={() => {
           setPath(joinPath("ipfs", splitPath(path)[0]))
         }}
       >
-        All Files
+        Files
       </button>
-      {splitPath(path)
-        .slice(1)
-        .map((el, idx) => (
-          <span key={el}>
-            <span className="font-light inline-block ml-2 mr-2">&gt;</span>
-            <button
-              className="cursor-pointer hover:text-neutral-400 hover:underline"
-              onClick={() => {
-                setPath(joinPath("ipfs", ...splitPath(path).slice(0, idx + 2)))
-              }}
-            >
-              {el}
-            </button>
-          </span>
-        ))}
-    </div>
+      <span className="lg:text-lg text-sm font-bold text-neutral-700 dark:text-neutral-200">
+        {splitPath(path)
+          .slice(1)
+          .map((el, idx) => (
+            <span key={el}>
+              <span className="inline-block font-light text-neutral-500 mx-3">
+                &gt;
+              </span>
+              <button
+                className="cursor-pointer hover:text-neutral-400 hover:underline"
+                onClick={() => {
+                  setPath(
+                    joinPath("ipfs", ...splitPath(path).slice(0, idx + 2))
+                  )
+                }}
+              >
+                {el}
+              </button>
+            </span>
+          ))}
+      </span>
+    </>
   )
 }
 
@@ -103,10 +109,9 @@ function FilesChild() {
   return (
     <main className="flex flex-row mx-auto 2xl:px-32 px-4 mt-6 sm:mt-12 md:mt-16 lg:mt-20 lg:px-8">
       <div className="grow">
-        <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
-          Files
+        <h1 className="flex lg:items-end items-center font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
+          <Breadcrumbs />
         </h1>
-        <Breadcrumbs />
         <div
           id="file-toolbar"
           className="flex justify-between space-x-0 md:space-x-8 lg:space-x-24 2xl:space-x-48 flex-col md:flex-row"
