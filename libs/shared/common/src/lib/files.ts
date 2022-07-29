@@ -1,7 +1,6 @@
 import { CID, Node } from "./ipfs"
 import { Buffer } from "buffer"
 import { FileModel, FileType } from "@crate/types"
-import path from "path"
 
 export async function createFile(
   type: FileType,

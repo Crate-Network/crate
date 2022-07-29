@@ -1,6 +1,6 @@
 {
   "name": "@crate/app",
-  "sourceRoot": "packages/app/",
+  "sourceRoot": "apps/app/",
   "projectType": "application",
   "targets": {}
 }

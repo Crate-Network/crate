@@ -1,4 +1,4 @@
 FROM node:16-alpine
 WORKDIR /app
-COPY ./packages/server/dist .
+COPY ./dist/apps/server .
 CMD [ "node", "index.js" ]

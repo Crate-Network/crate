@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "@crate/api-docs",
-  "sourceRoot": "packages/api-docs/src",
+  "sourceRoot": "docs/api-docs/src",
   "projectType": "library",
   "targets": {
     "generate-sources": {
@@ -9,7 +9,7 @@
       "options": {
         "useDockerBuild": true,
         "generator": "html",
-        "sourceSpecPathOrUrl": "packages/api-spec/src/crate-spec.openapi.yml",
+        "sourceSpecPathOrUrl": "docs/api-spec/src/crate-spec.openapi.yml",
         "additionalProperties": "",
         "globalProperties": ""
       }
@@ -21,7 +21,7 @@
         "platforms": ["linux/amd64", "linux/arm64"],
         "metadata": {
           "images": ["ghcr.io/crate-network/api-docs"],
-          "context": "./packages/api-docs",
+          "context": "./docs/api-docs",
           "tags": [
             "latest",
             "type=schedule",

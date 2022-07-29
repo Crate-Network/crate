@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "@crate/api-spec",
-  "sourceRoot": "packages/api-spec/src",
+  "sourceRoot": "docs/api-spec/src",
   "projectType": "library",
   "targets": {},
   "tags": []
