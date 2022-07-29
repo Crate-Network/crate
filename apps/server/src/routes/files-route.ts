@@ -1,4 +1,4 @@
-import { RequestHandler, Router } from "express"
+import { Request, RequestHandler, Router } from "express"
 import logger from "../logger"
 import * as fs from "fs"
 import fileClient from "../clients/files"
@@ -40,20 +40,20 @@ const post: RequestHandler = async (req, res) => {
   res.send(models)
 }
 
-// const del: RequestHandler = async (req, res) => {}
-
-router.get("/", (req, res) => {
+const get: RequestHandler = async (req, res) => {
   if (!req.token) return
   const { path } = {
     path: `/ipfs/${req.token.uid}`,
     ...req.query,
   }
 
-  getFile({ path })
-    .then((model) => res.send(model))
-    .catch((err) => res.status(500).send(err))
-})
+  const model = await getFile({ path })
+  res.send(model)
+}
 
+// const del: RequestHandler = async (req, res) => {}
+
+router.get("/", asyncHandler(get))
 router.post("/", asyncHandler(post))
 // router.delete("/", asyncHandler(del))
 
