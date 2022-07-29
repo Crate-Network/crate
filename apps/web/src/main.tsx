@@ -6,7 +6,7 @@ import "./index.css"
 import Splash from "./pages/Splash"
 import Authenticate, { AuthenticateType } from "./pages/Authenticate"
 import Navigation from "./components/Navigation"
-import Footer from "./components/footer"
+import Footer from "./components/Footer"
 import EmailSignIn from "./pages/EmailSignIn"
 import Community from "./pages/Community"
 import Files from "./pages/Files"
@@ -54,8 +54,8 @@ const Page = (props) => {
           Dismiss
         </button>
       </div>
-      {component}
-      <Footer breadcrumbs={[]} />
+      <div style={{ minHeight: "80vh" }}>{component}</div>
+      <Footer breadcrumbs={[{ name: "Community", link: "/community" }]} />
     </>
   )
 }
