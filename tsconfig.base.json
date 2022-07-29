@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "rootDir": "./",
     "target": "ESNext",
     "sourceMap": true,
     "importHelpers": true,
@@ -17,10 +18,10 @@
     "resolveJsonModule": true,
     "paths": {
       "@crate/common": ["libs/shared/common/src/index.ts"],
-      "@crate/content/*": ["docs/content/src/*"],
       "@crate/files-client": ["libs/server/files-client/src/index.ts"],
       "@crate/types": ["libs/shared/types/src/index.ts"],
       "@crate/user-client": ["libs/server/user-client/src/index.ts"],
+      "@crate/content/*": ["docs/content/src/*"],
       "@crate/web/*": ["apps/web/src/*"]
     }
   },
