@@ -1,36 +1,25 @@
-import {
-  NextFunction,
-  Request,
-  RequestHandler,
-  Response,
-  Router,
-} from "express"
+import { RequestHandler, Router } from "express"
 import logger from "../logger"
 import * as fs from "fs"
-import { create } from "@crate/files-client"
+import fileClient from "../clients/files"
 import { getRootCID } from "@crate/user-client"
+import { asyncHandler, defaultPath } from "./utils"
 
-const { getFile, addFile } = create({
-  url: process.env["IPFS_CLIENT_URL"],
-  timeout: 30000,
-})
+const { getFile, addFile } = fileClient
 
 const router = Router()
-const asyncHandler =
-  (fn: RequestHandler) => (req: Request, res: Response, next: NextFunction) => {
-    return Promise.resolve(fn(req, res, next)).catch(next)
-  }
 
 const post: RequestHandler = async (req, res) => {
   if (!req.token) return
   if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send({
+    res.status(400).send({
       error: { reason: "BAD_REQUEST", details: "No files were uploaded." },
     })
+    return
   }
 
   const { path } = {
-    path: `/ipfs/${await getRootCID(req.token.uid)}`,
+    path: await defaultPath(req.token.uid),
     ...req.query,
   }
 
@@ -50,15 +39,14 @@ const post: RequestHandler = async (req, res) => {
 
   logger.info(JSON.stringify(models))
   res.send(models)
-
-  return
 }
 
 // const del: RequestHandler = async (req, res) => {}
 
 router.get("/", (req, res) => {
+  if (!req.token) return
   const { path } = {
-    path: `/ipfs/${req.token?.uid}`,
+    path: `/ipfs/${req.token.uid}`,
     ...req.query,
   }
 
