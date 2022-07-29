@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.7.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.6.0...@crate/web-0.7.0) (2022-07-29)
+
+
+### Features
+
+* simplified classes and added markdown parsing ([ba5d157](https://github.com/Crate-Network/crate/commit/ba5d15756b57dd8473ee7961cccdda29f9044ab6))
+
+
+### Bug Fixes
+
+* improve loading of settings page ([f884f95](https://github.com/Crate-Network/crate/commit/f884f95a9c10866ba0c8835965fd0554e2a91481))
+
 ## [0.6.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.5.1...@crate/web-0.6.0) (2022-07-29)
 
 
