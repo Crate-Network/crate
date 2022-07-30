@@ -105,7 +105,7 @@ export default function Settings() {
         Settings
       </h1>
       <div className="flex border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-stone-800 shadow-sm rounded-lg overflow-hidden">
-        <div className="lg:w-fit w-56 lg:max-w-sm p-3 border-r">
+        <div className="lg:w-fit w-56 lg:max-w-sm p-3 border-r dark:border-neutral-700">
           {user.email !== "" && (
             <div className="flex items-center lg:space-x-4 p-2 mb-5">
               <div className="h-12 w-12 bg-neutral-200 dark:bg-stone-700 rounded-full items-center justify-center flex-shrink-0 hidden lg:flex">
@@ -146,9 +146,7 @@ export default function Settings() {
         </div>
 
         <div className="flex flex-1 rounded-md justify-center">
-          <div className="p-6 ml-4 bg-white text-neutral-900 w-full">
-            {getPane(selectedPane)}
-          </div>
+          <div className="p-6 ml-4 w-full">{getPane(selectedPane)}</div>
         </div>
       </div>
     </main>

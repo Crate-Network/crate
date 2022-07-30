@@ -1,4 +1,4 @@
-import { Request, RequestHandler, Router } from "express"
+import { RequestHandler, Router } from "express"
 import logger from "../logger"
 import * as fs from "fs"
 import fileClient from "../clients/files"
