@@ -59,6 +59,14 @@ paths:
         Upload one or many files to Crate and get back FileModel objects.
       tags:
         - files
+      parameters:
+        - name: path
+          in: query
+          required: false
+          schema:
+            description: File path
+            example: /ipfs/Qm.../dir1/dir2/file.txt
+            type: string
       requestBody:
         content:
           multipart/form-data:
