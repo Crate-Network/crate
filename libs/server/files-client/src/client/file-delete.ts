@@ -7,7 +7,7 @@ import {
 } from "@crate/common"
 import { getRootCID, setRootCID } from "@crate/user-client"
 import { IPFSHTTPClient } from "ipfs-http-client"
-import { removeFromDir } from "../lib/nodes"
+import { removeFromDir } from "../lib/directories"
 import { pin } from "../lib/pinning"
 import { walk } from "../lib/resolution"
 import updatePath from "../lib/update-path"
