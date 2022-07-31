@@ -7,10 +7,11 @@ import {
 } from "./PopoverMenu"
 import { useFileStore } from "../../store/FileStore"
 import Anchor from "../../models/Anchor"
-import { duplicateFile, joinPath, splitPath } from "@crate/common"
+import { duplicateFile } from "@crate/common"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
 import { useEffect, useState } from "preact/hooks"
+import { FileModel, FolderLink } from "@crate/types"
 
 type RightClickMenuProps = {
   close?: (e: MouseEvent) => void
@@ -24,8 +25,8 @@ export default function RightClickMenu({
   onRenameRequest,
   ...props
 }: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
-  const [files, addFile, deleteFile, retrieve] = useFileStore(
-    (state) => [state.files, state.add, state.delete, state.get],
+  const [addFile, deleteFile] = useFileStore(
+    (state) => [state.add, state.delete],
     shallow
   )
 
@@ -34,18 +35,6 @@ export default function RightClickMenu({
     shallow
   )
 
-  const [file, setFile] = useState(null)
-  useEffect(() => {
-    const fetchDetails = async () => {
-      const fileMapping = {}
-      const fp = await retrieve(path)
-      fp.links.forEach((f) => (fileMapping[f.name] = f))
-      const fPath = joinPath("ipfs", ...splitPath(path), selection[0].name)
-      setFile(await retrieve(fPath))
-    }
-    fetchDetails()
-  }, [path, files, retrieve, selection])
-
   const deleteFiles = () => {
     selection.forEach(({ cid }) => {
       deleteFile(cid)
@@ -53,18 +42,27 @@ export default function RightClickMenu({
   }
 
   const openFile = () =>
-    window.open(
-      `https://crate.network/ipfs/${file.cid}?filename=${file.name}`,
-      "_blank"
+    selection.forEach(({ cid, name }) =>
+      window.open(
+        `https://crate.network/ipfs/${cid}?filename=${name}`,
+        "_blank"
+      )
     )
 
   const downloadFile = () =>
-    window.open(
-      `https://crate.network/ipfs/${file.cid}?filename=${file.name}&download=true`,
-      "_blank"
+    selection.forEach(({ cid, name }) =>
+      window.open(
+        `https://crate.network/ipfs/${cid}?filename=${name}&download=true`,
+        "_blank"
+      )
     )
 
-  const copyCID = () => navigator.clipboard.writeText(file.cid)
+  const copyCID = () =>
+    navigator.clipboard.writeText(selection.map(({ cid }) => cid).join(","))
+
+  // const duplicateFiles = () => {
+  //   addFile(path, duplicateFile(file))
+  // }
 
   const opts = [
     makeOpt("Open", close, openFile),
@@ -73,13 +71,12 @@ export default function RightClickMenu({
     makeOpt("Delete", close, deleteFiles),
     "divider",
     makeOpt("Rename", close, onRenameRequest, !onRenameRequest),
-    makeOpt("Duplicate", close, () => addFile(path, duplicateFile(file))),
+    // makeOpt("Duplicate", close, ),
     "divider",
     makeOpt("Inspect", close, useFVStore().showInspector),
     makeOpt("Copy CID", close, copyCID),
     makeOpt("Share", close),
   ].filter((v) => v !== "none") as (SelectionOptions | "divider")[]
 
-  if (file === null) return null
   return <PopoverMenu close={close} anchor={anchor} opts={opts} {...props} />
 }
