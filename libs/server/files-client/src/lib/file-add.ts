@@ -1,8 +1,9 @@
 import { IPFSHTTPClient } from "ipfs-http-client"
-import { CID, UnixFS } from "@crate/common"
+import { CID, joinPath, splitPath, UnixFS } from "@crate/common"
 import { fetchFModel } from "./utils"
 import { FileModel } from "@crate/types"
 import dirAdd from "./dir-add"
+import { setRootCID } from "@crate/user-client"
 
 export type FileAddOptions = {
   path: string
@@ -22,6 +23,12 @@ type AddResult = {
   size: number
 }
 
+/**
+ * Resolve existing CIDs on IPFS to determine size of the files.
+ * @param client the {@link IPFSHTTPClient}
+ * @param cids an array of {@link CID} to add
+ * @returns an array of {@link AddResult} objects, which specify CID and size
+ */
 async function resolveCIDs(
   client: IPFSHTTPClient,
   cids: CID[]
@@ -37,6 +44,12 @@ async function resolveCIDs(
   )
 }
 
+/**
+ * Add a series of files to the IPFS client by way of NodeJS file buffers.
+ * @param client the {@link IPFSHTTPClient}
+ * @param files an array of {@link NodeJS.ReadableStream} to read bytes from
+ * @returns an array of {@link AddResult} objects, which specify CID and size
+ */
 async function addFileBuffers(
   client: IPFSHTTPClient,
   files: NodeJS.ReadableStream[]
@@ -75,20 +88,29 @@ export default (client: IPFSHTTPClient) => async (opts: FileAddOptions) => {
     }
   })
 
+  // update the directory sequentially, one file at a time, to generate new
+  // hashes as we go.
+  let dirPath = opts.path
   for (const i in models) {
     const { cid, name } = models[i]
     await client.pin.add(cid)
+
     // const pin = await client.pin.remote.add(addResult.cid, {
     //   name: file.name,
     //   service: "crate",
     // });
-    await dirAdd(client)({
-      path: opts.path,
+
+    const filePath = await dirAdd(client)({
+      path: dirPath,
       name,
       cid: CID.parse(cid),
       uid: opts.uid,
     })
+
+    dirPath = joinPath("ipfs", ...splitPath(filePath).slice(0, -1))
   }
+
+  if (opts.uid) await setRootCID(opts.uid, CID.parse(splitPath(dirPath)[0]))
 
   return models as FileModel[]
 }
