@@ -6,6 +6,7 @@ export enum FileErrorType {
   NO_DATA = "Data field expected but not found on data block.",
   CONNECTION_FAILURE = "Connection failed.",
   PATH_INVALID = "Path invalid.",
+  CANNOT_RM_ROOT = "Cannot remove root directory.",
 }
 
 export class FileError extends Error {

@@ -87,10 +87,6 @@ const fileStore: StateCreator<
     return ""
   }
 
-  const del = async () => {
-    return ""
-  }
-
   const rename = async () => {
     return ""
   }
@@ -102,7 +98,7 @@ const fileStore: StateCreator<
     getChildren,
     add,
     update,
-    delete: del,
+    delete: (path: string) => FileAPI.deleteFile(path),
     rename,
   }
 }

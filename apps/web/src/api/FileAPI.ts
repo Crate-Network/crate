@@ -60,6 +60,12 @@ async function upload(files: FileList, path: string) {
   })
 }
 
+async function deleteFile(path: string) {
+  const url = `${apiPath}/file?path=${encodeURIComponent(path)}`
+  const res = await crFetch(url, { method: "DELETE" })
+  return res?.json()
+}
+
 async function fetchFileByPath(path: string): Promise<FileModel | null> {
   const url = `${apiPath}/file?path=${encodeURIComponent(path)}`
   const res = await crFetch(url)
@@ -76,6 +82,7 @@ export default {
   apiPath,
   update,
   upload,
+  deleteFile,
   fetchFileByPath,
   fetchFileByCID,
 }

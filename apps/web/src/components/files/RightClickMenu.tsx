@@ -9,7 +9,7 @@ import { useFileStore } from "../../store/FileStore"
 import Anchor from "../../models/Anchor"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
-import { duplicateFile } from "@crate/common"
+import { duplicateFile, joinPath, splitPath } from "@crate/common"
 
 type RightClickMenuProps = {
   close?: (e: MouseEvent) => void
@@ -34,8 +34,8 @@ export default function RightClickMenu({
   )
 
   const deleteFiles = () => {
-    selection.forEach(({ cid }) => {
-      deleteFile(cid)
+    selection.forEach(({ name }) => {
+      deleteFile(joinPath("ipfs", ...splitPath(path), name))
     })
   }
 
