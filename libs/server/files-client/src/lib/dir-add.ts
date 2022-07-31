@@ -28,6 +28,8 @@ export type AddToDirOptions = {
 type FileDesc = { name: string; cid: CID }
 
 /**
+ * Add a file specified by it's {@link FileDesc} to the directory specified by
+ * {@link CID} and return the updated {@link CID}.
  *
  * @param client the {@link IPFSHTTPClient}
  * @param parent the {@link CID} of the directory being updated.
@@ -69,6 +71,13 @@ async function addToDir(
   return newParentCID
 }
 
+/**
+ * Add a file to an existing directory, specified by it's path, and the CID of
+ * the file to add.
+ *
+ * @param opts the {@link AddToDirOptions} object
+ * @returns the updated path to the file.
+ */
 export default (client: IPFSHTTPClient) => async (opts: AddToDirOptions) => {
   const pathArr = splitPath(opts.path)
   const pathCIDs = await walk(client, opts.path)
@@ -78,6 +87,7 @@ export default (client: IPFSHTTPClient) => async (opts: AddToDirOptions) => {
     name: opts.name,
     cid: opts.cid,
   }
+
   // walk from the end up the beginning, updating the directories as we go.
   for (const dirInfo of pathInfo.reverse()) {
     const newDirCID = await addToDir(client, dirInfo.cid, info)
