@@ -1,1 +1,1 @@
-export { default as create } from "./lib/ipfs-client"
+export { default as create } from "./client/ipfs-client"

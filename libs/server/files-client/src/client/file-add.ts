@@ -1,9 +1,10 @@
 import { IPFSHTTPClient } from "ipfs-http-client"
 import { CID, joinPath, splitPath, UnixFS } from "@crate/common"
-import { fetchFModel } from "./utils"
+import { fetchFModel } from "../lib/resolution"
 import { FileModel } from "@crate/types"
 import dirAdd from "./dir-add"
 import { setRootCID } from "@crate/user-client"
+import { pin } from "../lib/pinning"
 
 export type FileAddOptions = {
   path: string
@@ -74,36 +75,36 @@ export default (client: IPFSHTTPClient) => async (opts: FileAddOptions) => {
       ? await addFileBuffers(client, opts.files)
       : await resolveCIDs(client, opts.cids)
 
+  // resolve filenames, if they exist
   const filenames = opts.fileNames
-  const models = results.map((res, idx) => {
-    const hasFName = filenames && filenames.length > idx
-    const name = hasFName ? filenames[idx] : res.cid.toString()
+  const namedResults = results.map((res, idx) => ({
+    name:
+      filenames && filenames.length > idx ? filenames[idx] : res.cid.toString(),
+    ...res,
+  }))
 
-    return {
-      cid: res.cid.toString(),
-      name,
-      type: "file",
-      size: res.size,
-      date: new Date().toISOString(),
-    }
-  })
+  // finish up file model convention
+  const models = namedResults.map((res) => ({
+    cid: res.cid,
+    name: res.name,
+    type: "file",
+    size: res.size,
+    date: new Date().toISOString(),
+  }))
 
   // update the directory sequentially, one file at a time, to generate new
   // hashes as we go.
   let dirPath = opts.path
   for (const i in models) {
     const { cid, name } = models[i]
-    await client.pin.add(cid)
 
-    // const pin = await client.pin.remote.add(addResult.cid, {
-    //   name: file.name,
-    //   service: "crate",
-    // });
+    // pin the file using our remote pinning service
+    await pin(client, cid, name)
 
     const filePath = await dirAdd(client)({
       path: dirPath,
       name,
-      cid: CID.parse(cid),
+      cid,
       uid: opts.uid,
     })
 
@@ -112,5 +113,9 @@ export default (client: IPFSHTTPClient) => async (opts: FileAddOptions) => {
 
   if (opts.uid) await setRootCID(opts.uid, CID.parse(splitPath(dirPath)[0]))
 
-  return models as FileModel[]
+  // for API consistency, we require the CID be a string
+  return models.map((model) => ({
+    ...model,
+    cid: model.cid.toString(),
+  })) as FileModel[]
 }

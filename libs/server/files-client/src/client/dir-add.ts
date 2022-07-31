@@ -8,7 +8,8 @@ import {
 } from "@crate/common"
 import { getRootCID, setRootCID } from "@crate/user-client"
 import { IPFSHTTPClient } from "ipfs-http-client"
-import { walk } from "./utils"
+import { pin } from "../lib/pinning"
+import { walk } from "../lib/resolution"
 
 /**
  * path: path to directory to modify
@@ -96,7 +97,7 @@ export default (client: IPFSHTTPClient) => async (opts: AddToDirOptions) => {
       cid: newDirCID,
     }
 
-    await client.pin.add(newDirCID)
+    await pin(client, newDirCID, dirInfo.name)
   }
 
   const strippedRootPath = pathArr.slice(1).join("/")

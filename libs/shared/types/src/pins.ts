@@ -11,6 +11,12 @@ export interface Pin {
    */
   cid: string
   /**
+   *
+   * @type {Status}
+   * @memberof PinStatus
+   */
+  status: Status
+  /**
    * Optional name for pinned data; can be used for lookups later
    * @type {string}
    * @memberof Pin
@@ -57,7 +63,8 @@ export interface PinResults {
  */
 export interface PinStatus {
   /**
-   * Globally unique identifier of the pin request; can be used to check the status of ongoing pinning, or pin removal
+   * Globally unique identifier of the pin request; can be used to check the
+   * status of ongoing pinning, or pin removal
    * @type {string}
    * @memberof PinStatus
    */
@@ -69,7 +76,8 @@ export interface PinStatus {
    */
   status: Status
   /**
-   * Immutable timestamp indicating when a pin request entered a pinning service; can be used for filtering results and pagination
+   * Immutable timestamp indicating when a pin request entered a pinning
+   * service; can be used for filtering results and pagination
    * @type {string}
    * @memberof PinStatus
    */
@@ -81,7 +89,8 @@ export interface PinStatus {
    */
   pin: Pin
   /**
-   * List of multiaddrs designated by pinning service that will receive the  pin data; see Provider Hints in the docs
+   * List of multiaddrs designated by pinning service that will receive the pin
+   * data; see Provider Hints in the docs
    * @type {string[]}
    * @memberof PinStatus
    */
