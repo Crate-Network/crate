@@ -3,6 +3,7 @@ import preact from "@preact/preset-vite"
 import tsconfigPaths from "vite-tsconfig-paths"
 import mdPlugin, { Mode } from "vite-plugin-markdown"
 import magicalSvg from "vite-plugin-magical-svg"
+import { visualizer } from "rollup-plugin-visualizer"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -36,5 +37,6 @@ export default defineConfig({
       // By default, the svgs are optimized with svgo. You can disable this by setting this to false.
       svgo: false,
     }),
+    visualizer(),
   ],
 })
