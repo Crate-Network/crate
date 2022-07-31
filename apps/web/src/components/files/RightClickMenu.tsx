@@ -7,11 +7,9 @@ import {
 } from "./PopoverMenu"
 import { useFileStore } from "../../store/FileStore"
 import Anchor from "../../models/Anchor"
-import { duplicateFile } from "@crate/common"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
-import { useEffect, useState } from "preact/hooks"
-import { FileModel, FolderLink } from "@crate/types"
+import { duplicateFile } from "@crate/common"
 
 type RightClickMenuProps = {
   close?: (e: MouseEvent) => void
@@ -25,8 +23,8 @@ export default function RightClickMenu({
   onRenameRequest,
   ...props
 }: RightClickMenuProps & JSXInternal.HTMLAttributes<HTMLDivElement>) {
-  const [addFile, deleteFile] = useFileStore(
-    (state) => [state.add, state.delete],
+  const [addFile, deleteFile, getCID] = useFileStore(
+    (state) => [state.add, state.delete, state.getCID],
     shallow
   )
 
@@ -60,9 +58,10 @@ export default function RightClickMenu({
   const copyCID = () =>
     navigator.clipboard.writeText(selection.map(({ cid }) => cid).join(","))
 
-  // const duplicateFiles = () => {
-  //   addFile(path, duplicateFile(file))
-  // }
+  const duplicateFiles = () =>
+    selection.forEach(async ({ cid }) => {
+      addFile(path, duplicateFile(await getCID(cid)))
+    })
 
   const opts = [
     makeOpt("Open", close, openFile),
@@ -71,7 +70,7 @@ export default function RightClickMenu({
     makeOpt("Delete", close, deleteFiles),
     "divider",
     makeOpt("Rename", close, onRenameRequest, !onRenameRequest),
-    // makeOpt("Duplicate", close, ),
+    makeOpt("Duplicate", close, duplicateFiles),
     "divider",
     makeOpt("Inspect", close, useFVStore().showInspector),
     makeOpt("Copy CID", close, copyCID),
