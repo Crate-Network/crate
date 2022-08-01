@@ -1,6 +1,7 @@
 import express from "express"
 import { auth } from "@crate/user-client"
 import files from "./routes/files-route"
+import dirs from "./routes/dir-route"
 import fileUpload from "express-fileupload"
 import pinning from "./routes/pinning-route"
 import logger from "./logger"
@@ -54,6 +55,7 @@ app.use(
 
 app.use(`${API_ROUTE}/file`, files)
 app.use(`${API_ROUTE}/pins`, pinning)
+app.use(`${API_ROUTE}/dir`, dirs)
 
 const port = process.env["PORT"] || 3030
 app.listen(port, () => {
