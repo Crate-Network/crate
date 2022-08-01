@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.8.4](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.3...@crate/web-0.8.4) (2022-08-01)
+
+
+### Bug Fixes
+
+* added favicon ([f7fa6cb](https://github.com/Crate-Network/crate/commit/f7fa6cbe06e0dbb419d89b1d5ca38ad23a7f49f3))
+
 ### [0.8.3](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.2...@crate/web-0.8.3) (2022-08-01)
 
 
