@@ -3,15 +3,15 @@ import { create as createIPFS, IPFSHTTPClient, Options } from "ipfs-http-client"
 import getFile, { FileRetrieveOptions } from "./file-retrieve"
 import addFile, { FileAddOptions } from "./file-add"
 import rmFile, { FileDeleteOptions } from "./file-delete"
-import mkdir, { CreateDirOptions } from "./dir-create"
+import makeFile, { CreateDirOptions } from "./dir-create"
 import dirAdd, { AddToDirOptions } from "./dir-add"
 
 type FileClient = {
   ipfsClient: IPFSHTTPClient
   getFile: (opts: FileRetrieveOptions) => Promise<FileModel>
-  addFile: (opts: FileAddOptions) => Promise<FileModel[]>
+  addFile: (opts: FileAddOptions) => Promise<FileModel>
   rmFile: (opts: FileDeleteOptions) => Promise<string>
-  mkdir: (opts: CreateDirOptions) => Promise<string>
+  makeFile: (opts: CreateDirOptions) => Promise<string>
   dirAdd: (opts: AddToDirOptions) => Promise<string>
 }
 
@@ -24,7 +24,7 @@ export default function create(options?: Options): FileClient {
     getFile: getFile(ipfsClient),
     addFile: addFile(ipfsClient),
     rmFile: rmFile(ipfsClient),
-    mkdir: mkdir(ipfsClient),
+    makeFile: makeFile(ipfsClient),
     dirAdd: dirAdd(ipfsClient),
   }
 }

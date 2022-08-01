@@ -1,5 +1,5 @@
 import { IPFSHTTPClient } from "ipfs-http-client"
-import { CID, joinPath, splitPath, UnixFS } from "@crate/common"
+import { CID, splitPath, UnixFS } from "@crate/common"
 import { fetchFModel } from "../lib/resolution"
 import { FileModel } from "@crate/types"
 import dirAdd from "./dir-add"
@@ -9,13 +9,13 @@ import { pin } from "../lib/pinning"
 export type FileAddOptions = {
   path: string
   uid?: string
-  fileNames?: string[]
+  filename?: string
 } & (
   | {
-      files: NodeJS.ReadableStream[]
+      file: NodeJS.ReadableStream
     }
   | {
-      cids: CID[]
+      fileCID: CID
     }
 )
 
@@ -30,19 +30,15 @@ type AddResult = {
  * @param cids an array of {@link CID} to add
  * @returns an array of {@link AddResult} objects, which specify CID and size
  */
-async function resolveCIDs(
+async function resolveCID(
   client: IPFSHTTPClient,
-  cids: CID[]
-): Promise<AddResult[]> {
-  return await Promise.all(
-    cids.map(async (cid) => {
-      const model = await fetchFModel(client, cid)
-      return {
-        cid,
-        size: model.size,
-      }
-    })
-  )
+  cid: CID
+): Promise<AddResult> {
+  const model = await fetchFModel(client, cid)
+  return {
+    cid,
+    size: model.size,
+  }
 }
 
 /**
@@ -51,71 +47,49 @@ async function resolveCIDs(
  * @param files an array of {@link NodeJS.ReadableStream} to read bytes from
  * @returns an array of {@link AddResult} objects, which specify CID and size
  */
-async function addFileBuffers(
+async function addFileBuffer(
   client: IPFSHTTPClient,
-  files: NodeJS.ReadableStream[]
-): Promise<AddResult[]> {
-  return await Promise.all(
-    files.map(async (fBuffer) => {
-      const res = await client.add(fBuffer)
-      const block = await client.block.get(res.cid)
-      const size = await UnixFS.unmarshal(block).fileSize()
-      return {
-        ...res,
-        size,
-      }
-    })
-  )
+  buffer: NodeJS.ReadableStream
+): Promise<AddResult> {
+  const res = await client.add(buffer)
+  const block = await client.block.get(res.cid)
+  const size = await UnixFS.unmarshal(block).fileSize()
+  return {
+    ...res,
+    size,
+  }
 }
 
 export default (client: IPFSHTTPClient) => async (opts: FileAddOptions) => {
   // parse files, forward to IPFS to get the CID
-  const results =
-    "files" in opts
-      ? await addFileBuffers(client, opts.files)
-      : await resolveCIDs(client, opts.cids)
+  const result =
+    "file" in opts
+      ? await addFileBuffer(client, opts.file)
+      : await resolveCID(client, opts.fileCID)
 
   // resolve filenames, if they exist
-  const filenames = opts.fileNames
-  const namedResults = results.map((res, idx) => ({
-    name:
-      filenames && filenames.length > idx ? filenames[idx] : res.cid.toString(),
-    ...res,
-  }))
+  const filename = opts.filename ? opts.filename : result.cid.toString()
 
   // finish up file model convention
-  const models = namedResults.map((res) => ({
-    cid: res.cid,
-    name: res.name,
+  const model: FileModel = {
+    cid: result.cid.toString(),
+    name: filename,
     type: "file",
-    size: res.size,
+    size: result.size,
     date: new Date().toISOString(),
-  }))
-
-  // update the directory sequentially, one file at a time, to generate new
-  // hashes as we go.
-  let dirPath = opts.path
-  for (const i in models) {
-    const { cid, name } = models[i]
-
-    // pin the file using our remote pinning service
-    await pin(client, cid, name)
-
-    const filePath = await dirAdd(client)({
-      path: dirPath,
-      name,
-      cid,
-      uid: opts.uid,
-    })
-
-    dirPath = joinPath("ipfs", ...splitPath(filePath).slice(0, -1))
   }
 
-  if (opts.uid) await setRootCID(opts.uid, CID.parse(splitPath(dirPath)[0]))
+  // pin the file using our remote pinning service
+  await pin(client, result.cid, model.name)
 
-  // for API consistency, we require the CID be a string
-  return models.map((model) => ({
-    ...model,
-    cid: model.cid.toString(),
-  })) as FileModel[]
+  const filePath = await dirAdd(client)({
+    path: opts.path,
+    name: filename,
+    cid: result.cid,
+    uid: opts.uid,
+  })
+
+  if (opts.uid) await setRootCID(opts.uid, CID.parse(splitPath(filePath)[0]))
+
+  return model
 }

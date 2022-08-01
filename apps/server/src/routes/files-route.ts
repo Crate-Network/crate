@@ -17,24 +17,26 @@ const post: RequestHandler = async (req, res) => {
     return
   }
 
+  const { uid } = req.token
   const { path } = {
-    path: await defaultPath(req.token.uid),
+    path: await defaultPath(uid),
     ...req.query,
   }
 
   const { files } = req.files
   const fileArr = Array.isArray(files) ? files : [files]
 
-  const bufs = await Promise.all(
-    fileArr.map((file) => fs.createReadStream(file.tempFilePath))
+  const models = await Promise.all(
+    fileArr.map(async (file) => {
+      const buffer = fs.createReadStream(file.tempFilePath)
+      return await addFile({
+        path,
+        uid,
+        filename: file.name,
+        file: buffer,
+      })
+    })
   )
-
-  const models = await addFile({
-    path,
-    uid: req.token.uid,
-    fileNames: fileArr.map((f) => f.name),
-    files: bufs,
-  })
 
   logger.info(JSON.stringify(models))
   res.send(models)
