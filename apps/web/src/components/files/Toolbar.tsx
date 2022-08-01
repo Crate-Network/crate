@@ -8,8 +8,6 @@ import Dropdown, { FuncInput } from "./Dropdown"
 import sanitizeFilename from "sanitize-filename"
 import { useFileStore } from "../../store/FileStore"
 import FileAPI from "../../api/FileAPI"
-import { createFile } from "@crate/common"
-import { FileModel } from "@crate/types"
 import { useStore as useFVStore } from "../../store/FileViewStore"
 import shallow from "zustand/shallow"
 

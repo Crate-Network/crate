@@ -33,10 +33,14 @@ export default function RightClickMenu({
     shallow
   )
 
-  const deleteFiles = () => {
-    selection.forEach(({ name }) => {
-      deleteFile(joinPath("ipfs", ...splitPath(path), name))
-    })
+  const deleteFiles = async () => {
+    let nextPath = path
+    for (const { name } of selection) {
+      nextPath = await deleteFile(
+        joinPath("ipfs", ...splitPath(nextPath), name)
+      )
+      console.log(nextPath)
+    }
   }
 
   const openFile = () =>
