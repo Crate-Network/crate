@@ -30,6 +30,7 @@ async function crFetch(url, params = {}): Promise<Response | null> {
   })
   if (res.status !== 200) {
     const fErr = new FileError(FileErrorType.CONNECTION_FAILURE)
+    fErr.message = await res.text()
     useErrorStore.getState().showError(fErr)
     return null
   }
@@ -79,7 +80,7 @@ async function makeFile(path: string, name: string) {
 async function deleteFile(path: string) {
   const url = `${apiPath}/file?path=${encodeURIComponent(path)}`
   const res = await crFetch(url, { method: "DELETE" })
-  return res?.json()
+  return res?.text()
 }
 
 async function fetchFileByPath(path: string): Promise<FileModel | null> {
