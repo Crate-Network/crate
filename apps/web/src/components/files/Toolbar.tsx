@@ -20,18 +20,20 @@ function NewFileBody({
   dismiss: () => void
   type: "directory" | "file"
 }) {
-  const addFile = useFileStore((state) => state.add)
-  const [path, setPath] = useFVStore(
-    (state) => [state.path, state.setPath],
+  const [makeDir, makeFile] = useFileStore(
+    (state) => [state.makeDir, state.makeFile],
     shallow
   )
+  const path = useFVStore((state) => state.path)
   const [name, setName] = useState("")
   const invalid = sanitizeFilename(name) !== name
+
   const confirm = async () => {
-    const newDir = await addFile(path, await createFile(type, name))
-    setPath(newDir)
+    if (type === "directory") await makeDir(path, name)
+    else await makeFile(path, name)
     dismiss()
   }
+
   return (
     <>
       <div className="p-2 w-96">

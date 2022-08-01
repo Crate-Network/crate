@@ -28,6 +28,8 @@ interface FileState {
   update: (path: string, updated: Partial<FileModel>) => Promise<string>
   delete: (path: string) => Promise<string>
   rename: (path: string, newName: string) => Promise<string>
+  makeDir: (path: string, name: string) => Promise<string>
+  makeFile: (path: string, name: string) => Promise<string>
 }
 
 const fileStore: StateCreator<
@@ -100,6 +102,8 @@ const fileStore: StateCreator<
     update,
     delete: (path: string) => FileAPI.deleteFile(path),
     rename,
+    makeDir: (path: string, name: string) => FileAPI.makeDir(path, name),
+    makeFile: (path: string, name: string) => FileAPI.makeFile(path, name),
   }
 }
 

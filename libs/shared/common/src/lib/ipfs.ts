@@ -30,10 +30,10 @@ export class Node {
     return decode(bytes)
   }
 
-  static fromFile(file: LimitedFileModel, content?: Uint8Array): PBNode {
-    if (file.type === "file" && (content === undefined || content === null)) {
-      throw new FileError(FileErrorType.FILE_INVALID)
-    }
+  static fromFile(
+    file: LimitedFileModel,
+    content: Uint8Array = Uint8Array.from([])
+  ): PBNode {
     return createNode(
       UnixFS.from(file.type, content).marshal(),
       file.links

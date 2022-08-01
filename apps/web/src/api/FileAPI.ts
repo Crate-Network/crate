@@ -60,6 +60,22 @@ async function upload(files: FileList, path: string) {
   })
 }
 
+async function makeDir(path: string, name: string) {
+  const url =
+    `${apiPath}/dir?path=${encodeURIComponent(path)}` +
+    `&name=${encodeURIComponent(name)}&type=directory`
+  const res = await crFetch(url, { method: "POST" })
+  return res?.text()
+}
+
+async function makeFile(path: string, name: string) {
+  const url =
+    `${apiPath}/dir?path=${encodeURIComponent(path)}` +
+    `&name=${encodeURIComponent(name)}&type=file`
+  const res = await crFetch(url, { method: "POST" })
+  return res?.text()
+}
+
 async function deleteFile(path: string) {
   const url = `${apiPath}/file?path=${encodeURIComponent(path)}`
   const res = await crFetch(url, { method: "DELETE" })
@@ -85,4 +101,6 @@ export default {
   deleteFile,
   fetchFileByPath,
   fetchFileByCID,
+  makeDir,
+  makeFile,
 }

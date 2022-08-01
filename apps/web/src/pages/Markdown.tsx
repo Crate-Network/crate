@@ -1,11 +1,16 @@
-import hljs from "highlight.js"
-import "highlight.js/styles/atom-one-dark.css"
 import { useEffect } from "preact/hooks"
+import "highlight.js/styles/atom-one-dark.css"
 
 export default function Markdown({ html }) {
   useEffect(() => {
-    hljs.highlightAll()
-  }, [])
+    const fetchAndHighlight = async () => {
+      const { default: hljs } = await import(
+        "@highlightjs/cdn-assets/highlight.min.js"
+      )
+      hljs.highlightAll()
+    }
+    fetchAndHighlight()
+  }, [html])
 
   return (
     <main

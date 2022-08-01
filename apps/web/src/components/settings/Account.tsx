@@ -1,8 +1,6 @@
 import FormInput from "../FormInput"
 import { useCallback } from "preact/hooks"
-import { doc, DocumentReference, setDoc } from "firebase/firestore"
 import { UserModel } from "@crate/types"
-import { db } from "../../vendor/firebase"
 import { useUserStore } from "../../store/UserStore"
 import shallow from "zustand/shallow"
 
@@ -13,12 +11,11 @@ export default function Profile() {
   )
 
   const updateUserDoc = useCallback(
-    (newDoc: Partial<UserModel>) => {
-      const userDocRef = doc(
-        db,
-        "users",
-        user.uid.toString()
-      ) as DocumentReference<UserModel>
+    async (newDoc: Partial<UserModel>) => {
+      const { doc, setDoc } = await import("firebase/firestore")
+      const { db } = await import("../../vendor/firebase")
+
+      const userDocRef = doc(db, "users", user.uid.toString())
       setDoc(userDocRef, { ...userDoc, ...newDoc })
     },
     [user.uid, userDoc]

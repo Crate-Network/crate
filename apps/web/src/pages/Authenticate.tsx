@@ -2,10 +2,8 @@ import Button from "../components/Button"
 import FormBox from "../components/FormBox"
 import FormInput from "../components/FormInput"
 import AppleLogo from "../assets/signin-apple-logo.svg"
-import { sendSignInLinkToEmail, signInWithRedirect } from "firebase/auth"
 import { Link, route } from "preact-router"
 import { useState } from "preact/hooks"
-import { actionCodeSettings, auth, providers } from "../vendor/firebase"
 import { useUserStore } from "../store/UserStore"
 
 export enum AuthenticateType {
@@ -79,6 +77,9 @@ function SignInWithApple({
   providerText,
 }: SignInBtnProps) {
   const useApple = handleProvider(async () => {
+    const { signInWithRedirect } = await import("firebase/auth")
+    const { auth, providers } = await import("../vendor/firebase")
+
     await signInWithRedirect(auth, providers.apple)
   })
   return (
@@ -118,6 +119,9 @@ export default function Authenticate({ type }: { type: AuthenticateType }) {
   const [email, setEmail] = useState("")
   const [emailSent, setEmailSent] = useState(false)
   const useEmail = handleProvider(async () => {
+    const { sendSignInLinkToEmail } = await import("firebase/auth")
+    const { actionCodeSettings, auth } = await import("../vendor/firebase")
+
     await sendSignInLinkToEmail(auth, email, actionCodeSettings)
     window.localStorage.setItem("emailForSignIn", email)
     setEmailSent(true)
