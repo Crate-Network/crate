@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.8.3](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.2...@crate/web-0.8.3) (2022-08-01)
+
+
+### Bug Fixes
+
+* use Crate naming on first load instead of Vite App ([c543bb8](https://github.com/Crate-Network/crate/commit/c543bb8d8a0983c880a6b7ddaf69e57816a98f9f))
+
 ### [0.8.2](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.1...@crate/web-0.8.2) (2022-08-01)
 
 ### [0.8.1](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.0...@crate/web-0.8.1) (2022-08-01)
