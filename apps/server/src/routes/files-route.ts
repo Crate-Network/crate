@@ -3,6 +3,7 @@ import logger from "../logger"
 import * as fs from "fs"
 import fileClient from "../clients/files"
 import { asyncHandler, defaultPath } from "./utils"
+import { joinPath, splitPath } from "@crate/common"
 
 const { getFile, addFile, rmFile } = fileClient
 
@@ -26,17 +27,19 @@ const post: RequestHandler = async (req, res) => {
   const { files } = req.files
   const fileArr = Array.isArray(files) ? files : [files]
 
-  const models = await Promise.all(
-    fileArr.map(async (file) => {
-      const buffer = fs.createReadStream(file.tempFilePath)
-      return await addFile({
-        path,
-        uid,
-        filename: file.name,
-        file: buffer,
-      })
+  let nextPath = path
+  const models = []
+  for (const file of fileArr) {
+    const buffer = fs.createReadStream(file.tempFilePath)
+    const [model, newPath] = await addFile({
+      path: nextPath,
+      uid,
+      filename: file.name,
+      file: buffer,
     })
-  )
+    models.push(model)
+    nextPath = joinPath("ipfs", ...splitPath(newPath).slice(0, -1))
+  }
 
   logger.info(JSON.stringify(models))
   res.send(models)
@@ -61,8 +64,7 @@ const del: RequestHandler = async (req, res) => {
   }
 
   const newPath = await rmFile({ path, uid: req.token.uid })
-  const model = await getFile({ path: newPath })
-  res.send(model)
+  res.send(newPath)
 }
 
 router.get("/", asyncHandler(get))

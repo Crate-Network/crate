@@ -9,7 +9,7 @@ import dirAdd, { AddToDirOptions } from "./dir-add"
 type FileClient = {
   ipfsClient: IPFSHTTPClient
   getFile: (opts: FileRetrieveOptions) => Promise<FileModel>
-  addFile: (opts: FileAddOptions) => Promise<FileModel>
+  addFile: (opts: FileAddOptions) => Promise<[FileModel, string]>
   rmFile: (opts: FileDeleteOptions) => Promise<string>
   makeFile: (opts: CreateDirOptions) => Promise<string>
   dirAdd: (opts: AddToDirOptions) => Promise<string>

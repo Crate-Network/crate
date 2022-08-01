@@ -60,36 +60,36 @@ async function addFileBuffer(
   }
 }
 
-export default (client: IPFSHTTPClient) => async (opts: FileAddOptions) => {
-  // parse files, forward to IPFS to get the CID
-  const result =
-    "file" in opts
-      ? await addFileBuffer(client, opts.file)
-      : await resolveCID(client, opts.fileCID)
+export default (client: IPFSHTTPClient) =>
+  async (opts: FileAddOptions): Promise<[FileModel, string]> => {
+    // parse files, forward to IPFS to get the CID
+    const result =
+      "file" in opts
+        ? await addFileBuffer(client, opts.file)
+        : await resolveCID(client, opts.fileCID)
 
-  // resolve filenames, if they exist
-  const filename = opts.filename ? opts.filename : result.cid.toString()
+    // resolve filenames, if they exist
+    const filename = opts.filename ? opts.filename : result.cid.toString()
 
-  // finish up file model convention
-  const model: FileModel = {
-    cid: result.cid.toString(),
-    name: filename,
-    type: "file",
-    size: result.size,
-    date: new Date().toISOString(),
+    // finish up file model convention
+    const model: FileModel = {
+      cid: result.cid.toString(),
+      name: filename,
+      type: "file",
+      size: result.size,
+      date: new Date().toISOString(),
+    }
+
+    const filePath = await dirAdd(client)({
+      path: opts.path,
+      name: filename,
+      cid: result.cid,
+      uid: opts.uid,
+    })
+
+    // pin the file using our remote pinning service
+    await pin(client, result.cid, model.name)
+    if (opts.uid) await setRootCID(opts.uid, CID.parse(splitPath(filePath)[0]))
+
+    return [model, filePath]
   }
-
-  // pin the file using our remote pinning service
-  await pin(client, result.cid, model.name)
-
-  const filePath = await dirAdd(client)({
-    path: opts.path,
-    name: filename,
-    cid: result.cid,
-    uid: opts.uid,
-  })
-
-  if (opts.uid) await setRootCID(opts.uid, CID.parse(splitPath(filePath)[0]))
-
-  return model
-}
