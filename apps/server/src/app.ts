@@ -29,10 +29,14 @@ app.use((req, res, next) => {
     return
   }
 
-  // if (process.env.NODE_ENV === "production") {
   auth
     .verifyIdToken(token)
     .then((decodedToken) => {
+      if (
+        decodedToken.uid !== "hNDmf7OI3yUP0DhcULm64nGL1nI3" &&
+        process.env["NODE_ENV"] === "production"
+      )
+        throw new Error("Unauthorized token.")
       req.token = decodedToken
       next()
     })
@@ -40,10 +44,6 @@ app.use((req, res, next) => {
       res.status(403).send("Token unauthorized.")
       logger.error(err)
     })
-  // } else {
-  //   req.token = { uid: "devAccount" } as DecodedIdToken;
-  //   next();
-  // }
 })
 
 app.use(
