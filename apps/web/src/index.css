@@ -11,24 +11,24 @@
 
 @font-face {
   font-family: "iA Quattro";
-  src: url(assets/iAWriterQuattroS-Regular.ttf);
+  src: url(assets/iAWriterQuattroS-Regular.woff2);
 }
 
 @font-face {
   font-family: "iA Quattro";
-  src: url(assets/iAWriterQuattroS-Bold.ttf);
+  src: url(assets/iAWriterQuattroS-Bold.woff2);
   font-weight: bold;
 }
 
 @font-face {
   font-family: "iA Quattro";
-  src: url(assets/iAWriterQuattroS-Italic.ttf);
+  src: url(assets/iAWriterQuattroS-Italic.woff2);
   font-style: italic;
 }
 
 @font-face {
   font-family: "iA Quattro";
-  src: url(assets/iAWriterQuattroS-BoldItalic.ttf);
+  src: url(assets/iAWriterQuattroS-BoldItalic.woff2);
   font-style: italic;
   font-weight: bold;
 }
