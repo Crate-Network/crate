@@ -2,6 +2,26 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.8.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.7.0...@crate/web-0.8.0) (2022-08-01)
+
+
+### Features
+
+* added Duplicate back to right click menu ([808c1ac](https://github.com/Crate-Network/crate/commit/808c1aca29808f32d932cc0a1b0c2f7de6b238b9))
+* added mkdir, create file ([ef1ab19](https://github.com/Crate-Network/crate/commit/ef1ab19a614b0bc1242376aa0a0d2124adc85322))
+* implement copyright and terms ([25475bb](https://github.com/Crate-Network/crate/commit/25475bb157f1353425776df2e25a62ca9627bb5f))
+* implemented directory deletion ([a801b32](https://github.com/Crate-Network/crate/commit/a801b3203b285fb3db3f3b3dc12bccf67e034fba))
+
+
+### Bug Fixes
+
+* added boilerplate to privacy policy and commented out Navigation ([cc3e44d](https://github.com/Crate-Network/crate/commit/cc3e44dd5210849bfff36d7d25bdb710e81c9bd0))
+* file deletion is now sequential ([08b7467](https://github.com/Crate-Network/crate/commit/08b7467f969f0fca191cf6fd038145f8025a7735))
+* fixed colors ([32b44b6](https://github.com/Crate-Network/crate/commit/32b44b62507017843631ead6fc5709a1ee9a6de4))
+* make network error more informative ([a0ea581](https://github.com/Crate-Network/crate/commit/a0ea581a073e2a06614f52a33ae82bb6460ddec3))
+* simplified margin top ([a3a386c](https://github.com/Crate-Network/crate/commit/a3a386c5a8e9f236244f186a84f8b00fb8343c56))
+* simplified RIghtClickMenu requests ([854fce3](https://github.com/Crate-Network/crate/commit/854fce386fe30390070b8e688ef80e5b7a1a1444))
+
 ## [0.7.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.6.0...@crate/web-0.7.0) (2022-07-29)
 
 
