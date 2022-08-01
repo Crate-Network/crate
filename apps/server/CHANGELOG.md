@@ -2,6 +2,25 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/Crate-Network/crate/compare/@crate/server-0.1.0...@crate/server-0.2.0) (2022-08-01)
+
+
+### Features
+
+* added dirs route ([d687949](https://github.com/Crate-Network/crate/commit/d6879490eaaa4d75686a248b79a40e43f793fa13))
+* added mkdir, create file ([ef1ab19](https://github.com/Crate-Network/crate/commit/ef1ab19a614b0bc1242376aa0a0d2124adc85322))
+* implemented directory deletion ([a801b32](https://github.com/Crate-Network/crate/commit/a801b3203b285fb3db3f3b3dc12bccf67e034fba))
+
+
+### Bug Fixes
+
+* batch uploads now happen sequentially ([1971a2d](https://github.com/Crate-Network/crate/commit/1971a2d0e732aea0a329f777d77c2d597698c2d0))
+* fixed colors ([32b44b6](https://github.com/Crate-Network/crate/commit/32b44b62507017843631ead6fc5709a1ee9a6de4))
+* made add file singular ([c3509c3](https://github.com/Crate-Network/crate/commit/c3509c3d795f360cec5847ad16c30914ec759fbc))
+* main.js in docker image for server ([9ad857d](https://github.com/Crate-Network/crate/commit/9ad857d393cb9ac0d168e97fa41ae44bc919f1a4))
+* modified permissions in production ([e31a6f6](https://github.com/Crate-Network/crate/commit/e31a6f66156f9b3b6f06edb07d1cf8f9273f8b2d))
+* more information for debug ([30c4476](https://github.com/Crate-Network/crate/commit/30c44760286d489e34b0218992e34fc0e1908067))
+
 ## [0.1.0](https://github.com/Crate-Network/crate/compare/@crate/server-0.0.2...@crate/server-0.1.0) (2022-07-29)
 
 
