@@ -38,9 +38,7 @@
   },
   "workspaces": [
     "apps/*",
-    "libs/shared/*",
-    "libs/server/*",
-    "libs/common/*"
+    "libs/*"
   ],
   "lint-staged": {
     "**/*.{tsx,ts,jsx,js}": [

@@ -1,31 +1,31 @@
 {
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "name": "@crate/common",
-  "sourceRoot": "libs/shared/common/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "@crate/types",
+  "sourceRoot": "libs/types/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/common",
-        "main": "libs/shared/common/src/index.ts",
-        "tsConfig": "libs/shared/common/tsconfig.lib.json",
-        "assets": ["libs/shared/common/*.md"]
+        "outputPath": "dist/libs/types",
+        "main": "libs/types/src/index.ts",
+        "tsConfig": "libs/types/tsconfig.lib.json",
+        "assets": ["libs/types/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/shared/common/**/*.ts"]
+        "lintFilePatterns": ["libs/types/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/shared/common"],
+      "outputs": ["coverage/libs/types"],
       "options": {
-        "jestConfig": "libs/shared/common/jest.config.ts",
+        "jestConfig": "libs/types/jest.config.ts",
         "passWithNoTests": true
       }
     },

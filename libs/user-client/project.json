@@ -1,6 +1,6 @@
 {
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/server/user-client/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/user-client/src",
   "name": "@crate/user-client",
   "projectType": "library",
   "targets": {
@@ -8,24 +8,24 @@
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/server/user-client",
-        "main": "libs/server/user-client/src/index.ts",
-        "tsConfig": "libs/server/user-client/tsconfig.lib.json",
-        "assets": ["libs/server/user-client/*.md"]
+        "outputPath": "dist/libs/user-client",
+        "main": "libs/user-client/src/index.ts",
+        "tsConfig": "libs/user-client/tsconfig.lib.json",
+        "assets": ["libs/user-client/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/server/user-client/**/*.ts"]
+        "lintFilePatterns": ["libs/user-client/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/server/user-client"],
+      "outputs": ["coverage/libs/user-client"],
       "options": {
-        "jestConfig": "libs/server/user-client/jest.config.ts",
+        "jestConfig": "libs/user-client/jest.config.ts",
         "passWithNoTests": true
       }
     },

@@ -1,6 +1,6 @@
 {
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/server/files-client/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/files-client/src",
   "name": "@crate/files-client",
   "projectType": "library",
   "targets": {
@@ -8,24 +8,24 @@
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/server/files-client",
-        "main": "libs/server/files-client/src/index.ts",
-        "tsConfig": "libs/server/files-client/tsconfig.lib.json",
-        "assets": ["libs/server/files-client/*.md"]
+        "outputPath": "dist/libs/files-client",
+        "main": "libs/files-client/src/index.ts",
+        "tsConfig": "libs/files-client/tsconfig.lib.json",
+        "assets": ["libs/files-client/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/server/files-client/**/*.ts"]
+        "lintFilePatterns": ["libs/files-client/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/server/files-client"],
+      "outputs": ["coverage/libs/files-client"],
       "options": {
-        "jestConfig": "libs/server/files-client/jest.config.ts",
+        "jestConfig": "libs/files-client/jest.config.ts",
         "passWithNoTests": true
       }
     },
