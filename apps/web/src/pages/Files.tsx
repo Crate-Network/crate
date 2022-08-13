@@ -35,12 +35,12 @@ function Breadcrumbs() {
       >
         Files
       </button>
-      <span className="lg:text-lg text-sm font-bold text-neutral-700 dark:text-neutral-200">
+      <span className="text-sm font-bold lg:text-lg text-neutral-700 dark:text-neutral-200">
         {splitPath(path)
           .slice(1)
           .map((el, idx) => (
             <span key={el}>
-              <span className="inline-block font-light text-neutral-500 mx-3">
+              <span className="inline-block mx-3 font-light text-neutral-500">
                 &gt;
               </span>
               <button
@@ -114,11 +114,11 @@ function FilesChild() {
         </h1>
         <div
           id="file-toolbar"
-          className="flex justify-between space-x-0 md:space-x-8 lg:space-x-24 2xl:space-x-48 flex-col md:flex-row"
+          className="flex flex-col justify-between space-x-0 md:space-x-8 lg:space-x-24 2xl:space-x-48 md:flex-row"
         >
           <SearchBar />
 
-          <div className="flex space-x-8 justify-end mt-4 md:mt-0">
+          <div className="flex justify-end mt-4 space-x-8 md:mt-0">
             <AddBox />
             <SortBar sortBy={sortBy} setSortBy={setSortBy} />
             <ViewBar viewMode={viewMode} setViewMode={setViewMode} />
