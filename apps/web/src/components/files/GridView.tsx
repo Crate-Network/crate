@@ -57,7 +57,7 @@ function NameInput({
 
   return (
     <input
-      className="text-sm h-5 text-center border-gray-500"
+      className="h-5 text-sm text-center border-gray-500"
       type="text"
       ref={fiRef}
       value={val}
@@ -127,7 +127,7 @@ function FileIcon({
   return (
     <>
       <div
-        className="flex flex-col justify-center items-center w-36 h-36 select-none"
+        className="flex flex-col items-center justify-center select-none w-36 h-36"
         onClick={(e) => select(file, !e.ctrlKey && !e.metaKey)}
         onDblClick={() => {
           if (file.type === "file" && !editingName)
@@ -190,12 +190,12 @@ function FileIcon({
 export function GridView({ files }: { files: NamedFileModel[] }) {
   const loading = useFVStore((state) => state.loading)
   return (
-    <div className="mt-8 p-2 sm:p-4 md:p-8 shadow-sm bg-white dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700">
+    <div className="p-2 mt-8 bg-white border sm:p-4 md:p-8 shadow-sm dark:bg-neutral-800 rounded-md border-neutral-200 dark:border-neutral-700">
       {files.length === 0 && loading && <DirectoryLoading />}
       {files.length === 0 && !loading && <DirectoryEmpty />}
       {files.length !== 0 && (
         <div
-          className="grid w-full"
+          className="w-full grid"
           style={{
             gridTemplateColumns: "repeat(auto-fill, minmax(9rem, 1fr))",
           }}
