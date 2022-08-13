@@ -5,6 +5,7 @@ import AppleLogo from "../assets/signin-apple-logo.svg"
 import { Link, route } from "preact-router"
 import { useState } from "preact/hooks"
 import { useUserStore } from "../store/UserStore"
+import { useErrorStore } from "../store/ErrorStore"
 
 export enum AuthenticateType {
   REGISTER = "Register",
@@ -30,7 +31,7 @@ type SignInBtnProps = {
 //     <Button
 //       id="google-signin"
 //       disabled={disabled}
-//       className="text-black p-2 w-full h-8 overflow-hidden bg-gray-100 mt-4 flex flex-row justify-between hover:shadow-md transition-shadow align-middle items-center"
+//       className="flex flex-row items-center justify-between w-full h-8 p-2 mt-4 overflow-hidden text-black align-middle bg-gray-100 hover:shadow-md transition-shadow"
 //       onClick={useGoogle}
 //     >
 //       <img
@@ -57,7 +58,7 @@ type SignInBtnProps = {
 //     <Button
 //       id="github-signin"
 //       disabled={disabled}
-//       className="text-black p-2 w-full h-8 overflow-hidden bg-gray-100 mt-4 flex flex-row justify-between hover:shadow-md transition-shadow align-middle items-center"
+//       className="flex flex-row items-center justify-between w-full h-8 p-2 mt-4 overflow-hidden text-black align-middle bg-gray-100 hover:shadow-md transition-shadow"
 //       onClick={useGitHub}
 //     >
 //       <img
@@ -86,7 +87,7 @@ function SignInWithApple({
     <Button
       id="apple-signin"
       disabled={disabled}
-      className="text-white p-2 w-full h-9 overflow-hidden bg-black mt-4 flex flex-row justify-between hover:shadow-md transition-shadow align-middle items-center"
+      className="flex flex-row items-center justify-between w-full p-2 mt-4 overflow-hidden text-white align-middle bg-black h-9 hover:shadow-md transition-shadow"
       onClick={useApple}
     >
       <AppleLogo className="h-8 mt-0.5" alt="Apple sign-in" />
@@ -104,41 +105,42 @@ export default function Authenticate({ type }: { type: AuthenticateType }) {
   const [disableInputs, setDisableInputs] = useState(false)
   const providerText = type === AuthenticateType.LOGIN ? "Sign in" : "Sign up"
 
-  const handleProvider = (providerCb: () => void) => async () => {
+  const handleProvider = (providerCb: () => void) => () => {
     setDisableInputs(true)
-    try {
-      await providerCb()
-    } catch (error) {
+    providerCb().catch((error) => {
       const errorCode = error.code
       const errorMessage = error.message
-      console.error(errorCode, errorMessage)
-    }
+      useErrorStore
+        .getState()
+        .showError({ name: errorCode, message: errorMessage })
+    })
     setDisableInputs(false)
   }
 
   const [email, setEmail] = useState("")
-  const [emailSent, setEmailSent] = useState(false)
+  const [password, setPassword] = useState("")
+  const [verifyPassword, setVerifyPassword] = useState("")
   const useEmail = handleProvider(async () => {
-    const { sendSignInLinkToEmail } = await import("firebase/auth")
-    const { actionCodeSettings, auth } = await import("../vendor/firebase")
+    const { signInWithEmailAndPassword, createUserWithEmailAndPassword } =
+      await import("firebase/auth")
+    const { auth } = await import("../vendor/firebase")
 
-    await sendSignInLinkToEmail(auth, email, actionCodeSettings)
-    window.localStorage.setItem("emailForSignIn", email)
-    setEmailSent(true)
+    if (type === AuthenticateType.REGISTER)
+      await createUserWithEmailAndPassword(auth, email, password)
+    else await signInWithEmailAndPassword(auth, email, password)
   })
 
-  if (emailSent)
-    return (
-      <div className="flex w-full justify-center items-center">
-        <div className="font-sans text-2xl font-medium">
-          A link has been sent to your email. Click it to log in.
-        </div>
-      </div>
-    )
+  const emailValidated =
+    email &&
+    password &&
+    email !== "" &&
+    password.length > 8 &&
+    (type === AuthenticateType.LOGIN ||
+      (verifyPassword && verifyPassword === password))
 
   return (
-    <FormBox className="mt-8 md:mt-24 xl:mt-36">
-      <h2 className="pb-4">{type}</h2>
+    <FormBox className="mt-6 space-y-4 md:mt-24 xl:mt-36">
+      <h2 className="pb-2">{type}</h2>
       <FormInput
         id="email"
         placeholder="Enter your email"
@@ -149,10 +151,32 @@ export default function Authenticate({ type }: { type: AuthenticateType }) {
           if (e) setEmail(e.target.value)
         }}
       />
+      <FormInput
+        id="password"
+        placeholder="Password"
+        type="password"
+        value={password}
+        disabled={disableInputs}
+        onInput={(e) => {
+          if (e) setPassword(e.target.value)
+        }}
+      />
+      {type === AuthenticateType.REGISTER && (
+        <FormInput
+          id="password"
+          placeholder="Confirm Password"
+          type="password"
+          value={verifyPassword}
+          disabled={disableInputs}
+          onInput={(e) => {
+            if (e) setVerifyPassword(e.target.value)
+          }}
+        />
+      )}
       <Button
-        className="block w-full my-4 text-white"
+        className="w-full text-white"
         onClick={useEmail}
-        disabled={disableInputs || email === "" || !email}
+        disabled={!emailValidated}
       >
         {providerText} with Email
       </Button>
@@ -171,7 +195,7 @@ export default function Authenticate({ type }: { type: AuthenticateType }) {
         providerText={providerText}
         handleProvider={handleProvider}
       /> */}
-      <div className="mt-4 mb-1 h-px w-full bg-gray-300 dark:bg-gray-600" />
+      <div className="w-full h-px mt-4 mb-1 bg-gray-300 dark:bg-gray-600" />
       <span className="text-sm text-gray-700 dark:text-gray-300">
         {type === AuthenticateType.LOGIN ? (
           <>

@@ -49,10 +49,8 @@ const Page = (props: PageProps) => {
     <div className="relative min-h-screen pb-48">
       {header ? header : <Navigation />}
       <div
-        className={`fixed flex justify-between items-center align-middle transition-all duration-300 mx-auto left-0 right-0 -top-16 w-4/12 p-4 bg-red-500 bg-opacity-90 shadow-md backdrop-blur-lg z-10 rounded-lg text-white ${
-          errorStore.displayed
-            ? "translate-y-full opacity-100"
-            : "-translate-y-full opacity-0"
+        className={`fixed flex justify-between items-center align-middle transition-all duration-300 mx-auto left-0 right-0 w-4/12 p-4 bg-red-500 bg-opacity-90 shadow-md backdrop-blur-lg z-10 rounded-lg text-white ${
+          errorStore.displayed ? "top-4 opacity-100" : "-top-full opacity-0"
         }`}
       >
         <span class="text-lg p-1">
@@ -60,7 +58,7 @@ const Page = (props: PageProps) => {
           {errorStore.message}
         </span>
         <button
-          className="font-medium text-neutral-50 rounded-md bg-neutral-400 py-3 px-6"
+          className="px-6 py-3 font-medium text-neutral-50 rounded-md bg-neutral-400"
           onClick={errorStore.hide}
         >
           Dismiss
@@ -111,14 +109,6 @@ export function App() {
       </Page>
       <Page path="/terms-of-use" title={"Crate - Terms of Use"}>
         <Markdown html={TermsOfUse} />
-      </Page>
-      <Page path="/email-sign-in" title={"Crate - Authorize"}>
-        <AsyncRoute
-          path="/email-sign-in"
-          getComponent={async () =>
-            (await import("./pages/EmailSignIn")).default
-          }
-        />
       </Page>
       <Page path="/login" title={"Crate - Login"}>
         <Authenticate type={AuthenticateType.LOGIN} />
