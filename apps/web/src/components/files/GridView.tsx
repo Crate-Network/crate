@@ -191,9 +191,9 @@ export function GridView({ files }: { files: NamedFileModel[] }) {
   const loading = useFVStore((state) => state.loading)
   return (
     <div className="p-2 mt-8 bg-white border sm:p-4 md:p-8 shadow-sm dark:bg-neutral-800 rounded-md border-neutral-200 dark:border-neutral-700">
-      {files.length === 0 && loading && <DirectoryLoading />}
+      {loading && <DirectoryLoading />}
       {files.length === 0 && !loading && <DirectoryEmpty />}
-      {files.length !== 0 && (
+      {files.length !== 0 && !loading && (
         <div
           className="w-full grid"
           style={{
