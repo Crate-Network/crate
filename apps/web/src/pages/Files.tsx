@@ -8,7 +8,6 @@ import {
   ViewBar,
   ViewMode,
 } from "../components/files/Toolbar"
-import { Link } from "preact-router"
 import useStoredState from "../hooks/useStoredState"
 import { FileInspector } from "../components/files/FileInspector"
 import {
