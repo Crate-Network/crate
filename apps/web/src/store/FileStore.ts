@@ -5,14 +5,13 @@
  * visibility.
  */
 
-import { FileError, FileErrorType, CID as CIDOp } from "@crate/common"
+import { FileError, FileErrorType } from "@crate/common"
 import create, { StateCreator } from "zustand"
 import { FileModel, NamedFileModel } from "@crate/types"
 import { subscribeWithSelector } from "zustand/middleware"
 import { immer } from "zustand/middleware/immer"
 import FileAPI from "../api/FileAPI"
 
-type CID = string
 type CIDRefFileModel = Exclude<FileModel, { name: string }>
 
 interface FileState {
