@@ -31,6 +31,11 @@
         "color": true,
         "cwd": "apps/ipfs-node",
         "readyWhen": "Daemon is"
+      },
+      "configurations": {
+        "remote": {
+          "command": "kubectl port-forward pods/ipfs-ipfs-ipfs-cluster-0 4001:4001 5001:5001 8080:8080"
+        }
       }
     },
     "version": {
