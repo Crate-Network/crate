@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.1](https://github.com/Crate-Network/crate/compare/@crate/ipfs-0.1.0...@crate/ipfs-0.1.1) (2022-08-14)
+
+### [0.1.1](https://github.com/Crate-Network/crate/compare/@crate/ipfs-0.1.0...@crate/ipfs-0.1.1) (2022-08-14)
+
 ## [0.1.0](https://github.com/Crate-Network/crate/compare/@crate/ipfs-0.0.1...@crate/ipfs-0.1.0) (2022-08-01)
 
 ### Features
