@@ -1,8 +1,0 @@
-{
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "@crate/content",
-  "sourceRoot": "docs/content/src",
-  "projectType": "library",
-  "targets": {},
-  "tags": []
-}

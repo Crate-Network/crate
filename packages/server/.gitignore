@@ -1,0 +1,19 @@
+# packages
+node_modules
+
+# cache
+.eslintcache
+
+# environment
+.env*
+firebase.json
+
+# build
+dist
+
+# macOS
+.DS_Store
+
+*.log
+
+tmp

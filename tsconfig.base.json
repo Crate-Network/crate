@@ -16,12 +16,11 @@
     "declaration": true,
     "resolveJsonModule": true,
     "paths": {
-      "@crate/common": ["libs/common/src/index.ts"],
-      "@crate/content/*": ["docs/content/src/*"],
-      "@crate/files-client": ["libs/files-client/src/index.ts"],
-      "@crate/types": ["libs/types/src/index.ts"],
-      "@crate/user-client": ["libs/user-client/src/index.ts"],
-      "@crate/web": ["apps/web/src"]
+      "@crate/common": ["packages/common/src/index.ts"],
+      "@crate/content/*": ["packages/content/src/*"],
+      "@crate/files-client": ["packages/files-client/src/index.ts"],
+      "@crate/types": ["packages/types/src/index.ts"],
+      "@crate/web": ["packages/web/src"]
     }
   },
   "include": [],
