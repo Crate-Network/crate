@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.1](https://github.com/Crate-Network/crate/compare/@crate/server-0.2.0...@crate/server-0.2.1) (2022-08-14)
+
 ## [0.2.0](https://github.com/Crate-Network/crate/compare/@crate/server-0.1.0...@crate/server-0.2.0) (2022-08-01)
 
 ### Features
