@@ -4,6 +4,8 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 ### [0.8.5](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.4...@crate/web-0.8.5) (2022-08-14)
 
+### [0.8.5](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.4...@crate/web-0.8.5) (2022-08-14)
+
 ### [0.8.4](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.3...@crate/web-0.8.4) (2022-08-01)
 
 ### Bug Fixes
