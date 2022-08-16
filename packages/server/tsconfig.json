@@ -8,7 +8,9 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "allowJs": true
+    "esModuleInterop": true,
+    "allowJs": true,
+    "typeRoots": ["./src/types", "./node_modules/@types"]
   },
   "files": [],
   "include": [],

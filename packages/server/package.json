@@ -28,6 +28,7 @@
     "firebase-admin": "^11.0.0",
     "ipfs-http-client": "56.0.3",
     "ipfs-unixfs": "^6.0.9",
+    "ipfs-utils": "^9.0.7",
     "jest-environment-jsdom": "^28.1.3",
     "morgan": "^1.10.0",
     "node-fetch": "2",
