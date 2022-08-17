@@ -11,7 +11,7 @@
         "outputPath": "dist/packages/server",
         "main": "packages/server/src/init.ts",
         "tsConfig": "packages/server/tsconfig.lib.json",
-        "externalDependencies": "none",
+        "externalDependencies": ["electron"],
         "webpackConfig": "packages/server/esbuild-webpack.config.js"
       }
     },

@@ -1,31 +1,29 @@
-diff --git a/node_modules/ipfs-utils/src/http.js b/node_modules/ipfs-utils/src/http.js
-index 0180fdf..40153f9 100644
---- a/node_modules/ipfs-utils/src/http.js
-+++ b/node_modules/ipfs-utils/src/http.js
-@@ -1,7 +1,7 @@
- /* eslint-disable no-undef */
- 'use strict'
+diff --git a/node_modules/ipfs-utils/src/fetch.js b/node_modules/ipfs-utils/src/fetch.js
+index a941d92..fe4fba4 100644
+--- a/node_modules/ipfs-utils/src/fetch.js
++++ b/node_modules/ipfs-utils/src/fetch.js
+@@ -9,10 +9,6 @@
+ const { isElectronMain } = require('./env')
  
--const { fetch, Request, Headers } = require('./http/fetch')
-+const { Request, Headers } = require('./http/fetch')
- const { TimeoutError, HTTPError } = require('./http/error')
- const merge = require('merge-options').bind({ ignoreUndefined: true })
- const { URL, URLSearchParams } = require('iso-url')
+ // use window.fetch if it is available, fall back to node-fetch if not
+-let impl = 'native-fetch'
+-
+-if (isElectronMain) {
+-  impl = 'electron-fetch'
+-}
+-
+-module.exports = require(impl)
++module.exports = (isElectronMain) ?
++  require('electron-fetch') : 
++  require('native-fetch')
 diff --git a/node_modules/ipfs-utils/src/http/fetch.js b/node_modules/ipfs-utils/src/http/fetch.js
-index 1a27129..10010d8 100644
+index 1a27129..1e7e940 100644
 --- a/node_modules/ipfs-utils/src/http/fetch.js
 +++ b/node_modules/ipfs-utils/src/http/fetch.js
-@@ -1,22 +1,3 @@
- 'use strict'
+@@ -8,15 +8,10 @@
+  * @property {globalThis.Headers} fetchImpl.Headers
+  */
  
--/**
-- * @typedef {object} fetchImpl
-- * @property {globalThis.fetch} fetchImpl.fetch
-- * @property {globalThis.Request} fetchImpl.Request
-- * @property {globalThis.Response} fetchImpl.Response
-- * @property {globalThis.Headers} fetchImpl.Headers
-- */
--
 -let implName = './fetch.node'
 -
 -if (typeof XMLHttpRequest === 'function') {
@@ -34,8 +32,11 @@ index 1a27129..10010d8 100644
 -  implName = './fetch.browser'
 -}
 -
--/** @type {fetchImpl} */
+ /** @type {fetchImpl} */
 -const fetch = require(implName)
--
--module.exports = fetch
-+module.exports = require("node-fetch")
++const fetch = 
++  (typeof XMLHttpRequest === 'function') ? 
++    require('./fetch.browser') : 
++    require('./fetch.node') 
+ 
+ module.exports = fetch

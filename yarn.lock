@@ -9114,7 +9114,7 @@ ipfs-unixfs@^6.0.0, ipfs-unixfs@^6.0.3, ipfs-unixfs@^6.0.9:
     err-code "^3.0.1"
     protobufjs "^6.10.2"
 
-ipfs-utils@9.0.7, ipfs-utils@^9.0.6:
+ipfs-utils@9.0.7, ipfs-utils@^9.0.6, ipfs-utils@^9.0.7:
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/ipfs-utils/-/ipfs-utils-9.0.7.tgz#b8644b9d053e4dd258f69773b146ac243921aa1f"
   integrity sha512-Umvb0Zydy2zZiTmQBGLfLISr8vOmXX8cxEIP+N8zGHrtRShG/j32yl1xd/BtS+Hbg0FIbVm3opwvxB2gmta0YA==
