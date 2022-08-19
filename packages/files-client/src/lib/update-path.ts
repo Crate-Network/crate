@@ -1,4 +1,4 @@
-import { CID, splitPath } from "@crate/common"
+import { CID, splitPath } from "@crate/utils"
 import { IPFSHTTPClient } from "ipfs-http-client"
 import { addToDir } from "./directories"
 import { walk } from "./resolution"

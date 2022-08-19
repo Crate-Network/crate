@@ -5,7 +5,7 @@
  * visibility.
  */
 
-import { FileError, FileErrorType } from "@crate/common"
+import { FileError, FileErrorType } from "@crate/utils"
 import create, { StateCreator } from "zustand"
 import { FileModel, NamedFileModel } from "@crate/types"
 import { subscribeWithSelector } from "zustand/middleware"

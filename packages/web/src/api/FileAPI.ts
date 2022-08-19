@@ -1,5 +1,5 @@
 import { FileModel } from "@crate/types"
-import { FileError, FileErrorType, Node } from "@crate/common"
+import { FileError, FileErrorType, Node } from "@crate/utils"
 import { useErrorStore } from "../store/ErrorStore"
 import { useUserStore } from "../store/UserStore"
 

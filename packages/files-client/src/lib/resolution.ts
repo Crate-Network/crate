@@ -5,7 +5,7 @@ import {
   Node,
   splitPath,
   validPath,
-} from "@crate/common"
+} from "@crate/utils"
 import { FileModel } from "@crate/types"
 import { IPFSHTTPClient } from "ipfs-http-client"
 

@@ -1,4 +1,4 @@
-import { createFile, Node } from "@crate/common"
+import { createFile, Node } from "@crate/utils"
 import { FileType } from "@crate/types"
 import { IPFSHTTPClient } from "ipfs-http-client"
 import dirAdd from "./dir-add"

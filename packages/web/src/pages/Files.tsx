@@ -17,7 +17,7 @@ import {
 } from "../store/FileViewStore"
 import { useUserStore } from "../store/UserStore"
 import { useEffect, useState } from "preact/hooks"
-import { joinPath, splitPath } from "@crate/common"
+import { joinPath, splitPath } from "@crate/utils"
 import { useFileStore } from "../store/FileStore"
 import { NamedFileModel } from "@crate/types"
 import DirectoryLoading from "../components/files/DirectoryLoading"

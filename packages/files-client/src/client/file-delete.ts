@@ -4,7 +4,7 @@ import {
   FileErrorType,
   joinPath,
   splitPath,
-} from "@crate/common"
+} from "@crate/utils"
 import { getRootCID, setRootCID } from "../user/user-client"
 import { IPFSHTTPClient } from "ipfs-http-client"
 import { removeFromDir } from "../lib/directories"

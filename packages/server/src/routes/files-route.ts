@@ -3,7 +3,7 @@ import logger from "../logger"
 import * as fs from "fs"
 import fileClient from "../clients/files"
 import { asyncHandler, defaultPath } from "./utils"
-import { joinPath, splitPath } from "@crate/common"
+import { joinPath, splitPath } from "@crate/utils"
 
 const { getFile, addFile, rmFile } = fileClient
 

@@ -1,4 +1,4 @@
-import { CID, joinPath, splitPath } from "@crate/common"
+import { CID, joinPath, splitPath } from "@crate/utils"
 import { getRootCID, setRootCID } from "../user/user-client"
 import { IPFSHTTPClient } from "ipfs-http-client"
 import { addToDir } from "../lib/directories"

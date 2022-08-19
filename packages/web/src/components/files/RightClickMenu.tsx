@@ -9,7 +9,7 @@ import { useFileStore } from "../../store/FileStore"
 import Anchor from "../../models/Anchor"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
-import { duplicateFile, joinPath, splitPath } from "@crate/common"
+import { duplicateFile, joinPath, splitPath } from "@crate/utils"
 
 type RightClickMenuProps = {
   close?: (e: MouseEvent) => void

@@ -1,5 +1,5 @@
 import { UserModel } from "@crate/types"
-import { CID } from "@crate/common"
+import { CID } from "@crate/utils"
 import create, { StateCreator } from "zustand"
 import { persist, subscribeWithSelector } from "zustand/middleware"
 import { User } from "firebase/auth"

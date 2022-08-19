@@ -1,4 +1,4 @@
-import { CID } from "@crate/common"
+import { CID } from "@crate/utils"
 import { IPFSHTTPClient } from "ipfs-http-client"
 import { fetchFModel, walk } from "../lib/resolution"
 

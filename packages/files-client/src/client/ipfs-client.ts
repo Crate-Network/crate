@@ -6,7 +6,7 @@ import rmFile, { FileDeleteOptions } from "./file-delete"
 import makeFile, { CreateDirOptions } from "./dir-create"
 import dirAdd, { AddToDirOptions } from "./dir-add"
 
-type FileClient = {
+export type FileClient = {
   ipfsClient: IPFSHTTPClient
   getFile: (opts: FileRetrieveOptions) => Promise<FileModel>
   addFile: (opts: FileAddOptions) => Promise<[FileModel, string]>

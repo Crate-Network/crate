@@ -1,5 +1,5 @@
 import { IPFSHTTPClient } from "ipfs-http-client"
-import { CID, splitPath, UnixFS } from "@crate/common"
+import { CID, splitPath, UnixFS } from "@crate/utils"
 import { fetchFModel } from "../lib/resolution"
 import { FileModel } from "@crate/types"
 import dirAdd from "./dir-add"

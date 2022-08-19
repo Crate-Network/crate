@@ -8,7 +8,7 @@ import { useFileStore } from "../../store/FileStore"
 import shallow from "zustand/shallow"
 import { useStore as useFVStore } from "../../store/FileViewStore"
 import { FileModel, FileType, NamedFileModel } from "@crate/types"
-import { joinPath } from "@crate/common"
+import { joinPath } from "@crate/utils"
 import DirectoryLoading from "./DirectoryLoading"
 import DirectoryEmpty from "./DirectoryEmpty"
 

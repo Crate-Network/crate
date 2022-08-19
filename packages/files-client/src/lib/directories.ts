@@ -1,4 +1,4 @@
-import { CID, FileError, FileErrorType, Node, UnixFS } from "@crate/common"
+import { CID, FileError, FileErrorType, Node, UnixFS } from "@crate/utils"
 import { IPFSHTTPClient } from "ipfs-http-client"
 import { PBNode, PBLink } from "@ipld/dag-pb"
 

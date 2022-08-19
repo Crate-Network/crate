@@ -1,4 +1,4 @@
-import { CID } from "@crate/common"
+import { CID } from "@crate/utils"
 import { UserModel } from "@crate/types"
 import { firestore } from "./firebase-client"
 

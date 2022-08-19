@@ -16,7 +16,7 @@
     "declaration": true,
     "resolveJsonModule": true,
     "paths": {
-      "@crate/common": ["packages/common/src/index.ts"],
+      "@crate/utils": ["packages/utils/src/index.ts"],
       "@crate/content/*": ["packages/content/src/*"],
       "@crate/files-client": ["packages/files-client/src/index.ts"],
       "@crate/types": ["packages/types/src/index.ts"],

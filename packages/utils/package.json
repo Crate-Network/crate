@@ -1,5 +1,5 @@
 {
-  "name": "@crate/common",
+  "name": "@crate/utils",
   "version": "0.5.1",
   "author": "Christian van der Loo",
   "type": "commonjs",

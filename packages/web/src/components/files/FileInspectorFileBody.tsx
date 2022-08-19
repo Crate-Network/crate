@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCopy } from "@fortawesome/free-solid-svg-icons"
 import { FileModel } from "@crate/types"
 import { useStore as useFVStore } from "../../store/FileViewStore"
-import { joinPath, splitPath } from "@crate/common"
+import { joinPath, splitPath } from "@crate/utils"
 import formatFileSize from "../../utils/formatFileSize"
 
 export function FileInspectorFileBody({ file }: { file: FileModel }) {

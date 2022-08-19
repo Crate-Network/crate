@@ -6,7 +6,7 @@
   "type": "commonjs",
   "dependencies": {
     "@babel/plugin-transform-react-jsx-source": "^7.16.7",
-    "@crate/common": "*",
+    "@crate/utils": "*",
     "@crate/types": "*",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
