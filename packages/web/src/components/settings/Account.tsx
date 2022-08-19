@@ -31,10 +31,8 @@ export default function Profile() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-3xl font-bold text-neutral-800 dark:text-neutral-100">
-        Profile
-      </h1>
-      <div className="flex justify-center items-center">
+      <h2>Profile</h2>
+      <div className="flex items-center justify-center">
         <span className="w-36">First Name</span>
         <FormInput
           id="fname"
@@ -48,7 +46,7 @@ export default function Profile() {
           }}
         />
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex items-center justify-center">
         <span className="w-36">Last Name</span>
         <FormInput
           id="lname"
@@ -62,7 +60,7 @@ export default function Profile() {
           }}
         />
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex items-center justify-center">
         <span className="w-36">Organization</span>
         <FormInput
           id="org"

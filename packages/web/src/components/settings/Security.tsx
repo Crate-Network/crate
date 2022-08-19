@@ -11,11 +11,11 @@ export default function Security() {
 
   return (
     <div className="space-y-4">
-      <h1>Security</h1>
+      <h2>Security</h2>
       <div className="flex justify-start">
-        <div className="form-check mb-4 mt-2">
+        <div className="mt-2 mb-4 form-check">
           <input
-            className="form-check-input h-4 w-4 border border-gray-300 rounded-sm mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+            className="float-left w-4 h-4 mt-1 mr-2 align-top bg-center bg-no-repeat bg-contain border border-gray-300 rounded-sm cursor-pointer form-check-input"
             type="checkbox"
             value=""
             checked={uses2FA}
@@ -29,7 +29,7 @@ export default function Security() {
             id="check2FA"
           />
           <label
-            className="form-check-label inline-block text-stone-800 dark:text-stone-100"
+            className="inline-block form-check-label text-stone-800 dark:text-stone-100"
             for="check2FA"
           >
             Use 2-Factor Authentication
