@@ -1,11 +1,14 @@
 import { Link, route } from "preact-router"
+import { useEffect } from "preact/hooks"
 import { useUserStore } from "../store/UserStore"
 
 export default function Splash() {
   const loggedIn = useUserStore((state) => state.signedIn)
-  if (loggedIn) {
-    route("/files", true)
-  }
+  useEffect(() => {
+    if (loggedIn) {
+      route("/files", true)
+    }
+  }, [loggedIn])
   return (
     <main
       style={{ height: "60vh", minHeight: "600px" }}
