@@ -3,7 +3,7 @@ import { CID, splitPath, UnixFS } from "@crate/utils"
 import { fetchFModel } from "../lib/resolution"
 import { FileModel } from "@crate/types"
 import dirAdd from "./dir-add"
-import { setRootCID } from "../user/user-client"
+import { setRootCID } from "../user/user-model"
 import { pin } from "../lib/pinning"
 
 export type FileAddOptions = {

@@ -5,7 +5,7 @@ import {
   joinPath,
   splitPath,
 } from "@crate/utils"
-import { getRootCID, setRootCID } from "../user/user-client"
+import { getRootCID, setRootCID } from "../user/user-model"
 import { IPFSHTTPClient } from "ipfs-http-client"
 import { removeFromDir } from "../lib/directories"
 import { pin } from "../lib/pinning"

@@ -1,5 +1,5 @@
 import express from "express"
-import { auth } from "@crate/files-client"
+import { auth } from "./user/firebase"
 import files from "./routes/files-route"
 import dirs from "./routes/dir-route"
 import fileUpload from "express-fileupload"

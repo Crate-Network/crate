@@ -1,4 +1,4 @@
-import { create } from "@crate/files-client"
+import create from "../ipfs-client"
 import logger from "../logger"
 
 const client = create({

@@ -1,9 +1,9 @@
 import { CID } from "@crate/utils"
 import { UserModel } from "@crate/types"
-import { firestore } from "./firebase-client"
+import { firestore } from "./firebase"
 
 export const getDocRef = async (uid: string) =>
-  await firestore.collection("users").doc(uid)
+  firestore.collection("users").doc(uid)
 
 export const getUserDoc = async (uid: string) => {
   const docRef = await getDocRef(uid)

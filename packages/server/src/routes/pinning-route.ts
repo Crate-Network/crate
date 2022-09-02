@@ -1,3 +1,4 @@
+import { Pin, PinStatus, Status } from "@crate/types"
 import { Router } from "express"
 import { uuid } from "uuidv4"
 
@@ -8,13 +9,35 @@ router.get("/", (req, res) => {
   res.send(fcRes)
 })
 
+function checkPin(obj: unknown): obj is Pin {
+  const objCast: Pin = obj as Pin
+  if (
+    objCast.status &&
+    objCast.cid &&
+    typeof objCast.status === "string" &&
+    typeof objCast.cid === "string"
+  ) {
+    return true
+  }
+  return false
+}
+
 router.post("/", (req, res) => {
-  res.send({
+  const pin = req.body as unknown
+  if (!checkPin(pin)) {
+    res.sendStatus(400)
+    return
+  }
+
+  const pinStatus: PinStatus = {
     requestid: uuid(),
-    status: "queued",
+    status: Status.Queued,
     created: new Date().toISOString(),
-    pin: {},
-  })
+    delegates: [],
+    pin,
+  }
+
+  res.send(pinStatus)
 })
 
 router.get(/\/(.+)$/, (req, res) => {
