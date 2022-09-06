@@ -13,31 +13,34 @@ export default function Splash() {
   }, [loggedIn])
 
   const [[r1, r2, r3, r4, r5], setRand] = useState([1, 1, 1, 1, 1] as number[])
+  const [opacity, setOpacity] = useState(0)
   useEffect(() => {
     const interval = setInterval(() => {
       setRand((arr) => arr.map(Math.random))
     }, 6000)
+    setOpacity(1)
     return () => clearInterval(interval)
   }, [])
 
   return (
-    <>
+    <div className="relative overflow-hidden">
       <Navigation className="absolute top-0 w-full" />
       <img
         src={colorGradientBackdrop}
         style={{
           transitionDuration: "6s",
-          filter: `saturate(${150 * r3 + 250}%) blur(${r4 * 4}rem)`,
-          transform: `skewX(${120 * (1 - r5) * (r2 - 0.5) * r1}deg) scale(${
-            r1 * 3.5 + 1.5
-          }) rotate(${r5 * 360}deg)`,
+          opacity,
+          filter: `saturate(${150 * r4 + 250}%) blur(${r5 * 4}rem)`,
+          transform: `scale(${r1 * 3 + 1.5}, ${r2 * 3 + 1.5}) rotate(${
+            r3 * 360
+          }deg)`,
         }}
-        className="fixed top-0 object-cover h-full min-w-full -z-20 transition-all motion-safe:transform-none ease-in-out"
+        className="absolute top-0 object-cover h-full min-w-full -z-20 transition-all motion-safe:transform-none ease-in-out"
       />
-      <div className="flex items-center justify-center h-screen p-8 mx-auto 2xl:px-24 bg-opacity-80 bg-orange-50 dark:bg-stone-900 dark:bg-opacity-80">
+      <div className="flex items-center justify-center h-screen p-8 mx-auto bg-orange-100 2xl:px-24 bg-opacity-80 dark:bg-stone-900 dark:bg-opacity-80">
         <div class="w-full mt-16">
           <h1 class="font-sans sm:text-5xl lg:text-7xl">
-            <span class="block font-extrabold xl:inline">Cloud storage, </span>
+            <span class="block font-bold xl:inline">Cloud storage, </span>
             <span class="block font-black text-orange-600 dark:text-orange-500 xl:inline">
               reimagined.
             </span>
@@ -66,6 +69,6 @@ export default function Splash() {
         </div>
       </div>
       <div className="w-full h-screen bg-stone-500 bg-opacity-80 backdrop-blur-lg" />
-    </>
+    </div>
   )
 }
