@@ -1,6 +1,8 @@
 import { Link, route } from "preact-router"
-import { useEffect } from "preact/hooks"
+import { useEffect, useState } from "preact/hooks"
+import Navigation from "../components/Navigation"
 import { useUserStore } from "../store/UserStore"
+import colorGradientBackdrop from "../assets/color-gradient-backdrop.svg"
 
 export default function Splash() {
   const loggedIn = useUserStore((state) => state.signedIn)
@@ -9,44 +11,61 @@ export default function Splash() {
       route("/files", true)
     }
   }, [loggedIn])
+
+  const [[r1, r2, r3, r4, r5], setRand] = useState([1, 1, 1, 1, 1] as number[])
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRand((arr) => arr.map(Math.random))
+    }, 6000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <main
-      style={{ height: "60vh", minHeight: "600px" }}
-      class="flex items-center justify-center mx-auto px-4 sm:px-6 lg:px-8 2xl:px-32"
-    >
-      <div class="sm:text-center lg:text-left lg:w-full">
-        <h1 class="tracking-tight font-sans sm:text-5xl md:text-6xl">
-          <span class="block xl:inline">Cloud storage, </span>
-          <span class="block font-extrabold text-orange-600 dark:text-orange-500 xl:inline">
-            reimagined.
-          </span>
-        </h1>
-        <p class="mt-3 text-base text-gray-700 dark:text-gray-400 sm:mt-5 sm:text-lg sm:max-w-screen-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-          Store your files securely, with crypographically-verified guarantees
-          on data accessibility. Access your files on all your devices, from
-          anywhere in the world. Store as much data as you want. Get 1 TB of
-          storage for just
-          <span class="font-bold"> $10/month</span>.
-        </p>
-        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-          <div class="rounded-md shadow">
+    <>
+      <Navigation className="absolute top-0 w-full" />
+      <img
+        src={colorGradientBackdrop}
+        style={{
+          transitionDuration: "6s",
+          filter: `saturate(${150 * r3 + 250}%) blur(${r4 * 4}rem)`,
+          transform: `skewX(${120 * (1 - r5) * (r2 - 0.5) * r1}deg) scale(${
+            r1 * 3.5 + 1.5
+          }) rotate(${r5 * 360}deg)`,
+        }}
+        className="fixed top-0 object-cover h-full min-w-full -z-20 transition-all motion-safe:transform-none ease-in-out"
+      />
+      <div className="flex items-center justify-center h-screen p-8 mx-auto 2xl:px-24 bg-opacity-80 bg-orange-50 dark:bg-stone-900 dark:bg-opacity-80">
+        <div class="w-full mt-16">
+          <h1 class="font-sans sm:text-5xl lg:text-7xl">
+            <span class="block font-extrabold xl:inline">Cloud storage, </span>
+            <span class="block font-black text-orange-600 dark:text-orange-500 xl:inline">
+              reimagined.
+            </span>
+          </h1>
+          <p className="sm:max-w-xl lg:max-w-3xl sm:text-2xl lg:text-4xl">
+            Store your files securely, with crypographically-verified guarantees
+            on data accessibility. Access your files on all your devices, from
+            anywhere in the world. Store as much data as you want. Get 1 TB of
+            storage for just
+            <span class="font-bold"> $10/month</span>.
+          </p>
+          <div class="flex mt-12 space-x-8">
             <Link
               href="/register"
-              class="w-full bg-orange-500 text-white flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
+              class="flex items-center justify-center bg-orange-500 text-white w-40 h-16 justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md"
             >
               Get started
             </Link>
-          </div>
-          <div class="mt-3 sm:mt-0 sm:ml-3">
             <Link
               href="#"
-              class="w-full bg-gray-500 text-gray-100 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
+              class="flex items-center justify-center inline-block bg-stone-500 text-gray-100 w-40 h-16 justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md"
             >
               Learn more
             </Link>
           </div>
         </div>
       </div>
-    </main>
+      <div className="w-full h-screen bg-stone-500 bg-opacity-80 backdrop-blur-lg" />
+    </>
   )
 }

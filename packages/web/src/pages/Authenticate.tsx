@@ -1,7 +1,7 @@
 import Button from "../components/Button"
 import FormBox from "../components/FormBox"
 import FormInput from "../components/FormInput"
-import AppleLogo from "../assets/signin-apple-logo.svg"
+import appleLogo from "../assets/signin-apple-logo.svg"
 import { Link, route } from "preact-router"
 import { useState } from "preact/hooks"
 import { useUserStore } from "../store/UserStore"
@@ -90,7 +90,7 @@ function SignInWithApple({
       className="flex flex-row items-center justify-between w-full p-2 mt-4 overflow-hidden text-white align-middle bg-black h-9 hover:shadow-md transition-shadow"
       onClick={useApple}
     >
-      <AppleLogo className="h-8 mt-0.5" alt="Apple sign-in" />
+      <img src={appleLogo} className="h-8 mt-0.5" alt="Apple sign-in" />
       {providerText} with Apple
       <span />
     </Button>

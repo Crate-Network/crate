@@ -1,4 +1,4 @@
-import { render } from "preact"
+import { Fragment, render } from "preact"
 import { useEffect, useErrorBoundary } from "preact/hooks"
 import Router, { route } from "preact-router"
 import AsyncRoute from "preact-async-route"
@@ -86,7 +86,7 @@ const Page = (props: PageProps) => {
 export function App() {
   return (
     <Router>
-      <Page path="/" title={"Crate"}>
+      <Page path="/" header={<Fragment />} title={"Crate"}>
         <Splash />
       </Page>
       <Page path="/files" title={"Crate - Files"} protect>
