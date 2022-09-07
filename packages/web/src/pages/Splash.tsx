@@ -12,8 +12,9 @@ export default function Splash() {
     }
   }, [loggedIn])
 
-  const [[r1, r2, r3, r4, r5], setRand] = useState([1, 1, 1, 1, 1] as number[])
+  const [rValues, setRand] = useState([1, 1, 1, 1] as number[])
   const [opacity, setOpacity] = useState(0)
+  const [r1, r2, r3, r4] = rValues.map((v) => v * opacity)
   useEffect(() => {
     const interval = setInterval(() => {
       setRand((arr) => arr.map(Math.random))
@@ -23,22 +24,27 @@ export default function Splash() {
   }, [])
 
   return (
-    <div className="relative overflow-hidden">
-      <Navigation className="absolute top-0 w-full" />
-      <img
-        src={colorGradientBackdrop}
+    <div className="flex flex-col flex-1 h-screen min-h-max">
+      <Navigation />
+      <div
         style={{
-          transitionDuration: "6s",
-          opacity,
-          filter: `saturate(${150 * r4 + 250}%) blur(${r5 * 4}rem)`,
-          transform: `scale(${r1 * 3 + 1.5}, ${r2 * 3 + 1.5}) rotate(${
-            r3 * 360
-          }deg)`,
+          "border-radius": 50,
+          "-webkit-mask-image": "-webkit-radial-gradient(white, black)",
         }}
-        className="absolute top-0 object-cover h-full min-w-full -z-20 transition-all motion-safe:transform-none ease-in-out"
-      />
-      <div className="flex items-center justify-center h-screen p-8 mx-auto bg-orange-100 2xl:px-24 bg-opacity-80 dark:bg-stone-900 dark:bg-opacity-80">
-        <div class="w-full mt-16">
+        className="relative z-10 flex flex-1 overflow-hidden sm:m-16 lg:m-32"
+      >
+        <img
+          src={colorGradientBackdrop}
+          style={{
+            transitionDuration: "6s",
+            opacity,
+            transform: `scale(${r1 * 3 + 2}, ${r2 * 3 + 2}) translate(${
+              (r3 - 0.5) * 50
+            }%, ${(r4 - 0.5) * 50}%)`,
+          }}
+          className="hidden object-cover w-full aspect-square -z-20 transition-all motion-safe:transform-none ease-in-out sm:block"
+        />
+        <div className="absolute top-0 left-0 flex flex-col justify-center w-full h-full p-16 bg-orange-100 bg-opacity-60 dark:bg-stone-900 dark:bg-opacity-60 backdrop-blur-lg">
           <h1 class="font-sans sm:text-5xl lg:text-7xl">
             <span class="block font-bold xl:inline">Cloud storage, </span>
             <span class="block font-black text-orange-600 dark:text-orange-500 xl:inline">
@@ -68,7 +74,6 @@ export default function Splash() {
           </div>
         </div>
       </div>
-      <div className="w-full h-screen bg-stone-500 bg-opacity-80 backdrop-blur-lg" />
     </div>
   )
 }
