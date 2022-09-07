@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.9.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.5...@crate/web-0.9.0) (2022-09-07)
+
+
+### Features
+
+* made Splash have fancy new backdrop ([d3a5e59](https://github.com/Crate-Network/crate/commit/d3a5e592bb5d82cbcbcf94aa833a7e4c1a197998))
+* pumped up the font sizes ([2d3bfe4](https://github.com/Crate-Network/crate/commit/2d3bfe451bcc758a1252a704dc03d0db5a57285e))
+* redid assets and layout of splash ([df13a7b](https://github.com/Crate-Network/crate/commit/df13a7b0c0dbb7a4b508032ecaca5c21996a014c))
+* updated splash to incorporate into page more ([30b1960](https://github.com/Crate-Network/crate/commit/30b19601bedd10dfd3ddf303fe43e8bb7e6161a3))
+
+
+### Bug Fixes
+
+* redirect from splash if logged in using effect ([37ce696](https://github.com/Crate-Network/crate/commit/37ce69622a9949d96ddcbc260aa70a7251563058))
+* sort tailwindcss, h2 on profile ([79a1907](https://github.com/Crate-Network/crate/commit/79a19076e656c49c10cea2f15e1239c2df612c91))
+
 ### [0.8.5](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.4...@crate/web-0.8.5) (2022-08-14)
 
 ### [0.8.5](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.4...@crate/web-0.8.5) (2022-08-14)
