@@ -24,11 +24,12 @@ export default function Splash() {
   }, [])
 
   return (
-    <div className="flex flex-col flex-1 h-screen min-h-max">
+    <div style={{ minHeight: "100vh" }} className="flex flex-col">
       <Navigation />
       <div
         style={{
           "border-radius": 50,
+          minHeight: "max-content",
           "-webkit-mask-image": "-webkit-radial-gradient(white, black)",
         }}
         className="relative z-10 flex flex-1 overflow-hidden sm:m-16 lg:m-32"
@@ -42,9 +43,9 @@ export default function Splash() {
               (r3 - 0.5) * 50
             }%, ${(r4 - 0.5) * 50}%)`,
           }}
-          className="hidden object-cover w-full aspect-square -z-20 transition-all motion-safe:transform-none ease-in-out sm:block"
+          className="absolute top-0 left-0 hidden object-cover w-full aspect-square -z-20 transition motion-safe:transform-none ease-in-out sm:block"
         />
-        <div className="absolute top-0 left-0 flex flex-col justify-center w-full h-full p-8 bg-orange-100 lg:p-16 bg-opacity-60 dark:bg-stone-900 dark:bg-opacity-60 backdrop-blur-lg">
+        <div className="flex flex-col justify-center w-full p-8 bg-orange-100 lg:p-16 bg-opacity-60 dark:bg-stone-900 dark:bg-opacity-60 backdrop-blur-lg">
           <h1 class="font-sans text-4xl sm:text-6xl md:text-8xl xl:text-9xl">
             <span class="block font-bold inline">Cloud storage, </span>
             <span class="block font-black text-orange-600 dark:text-orange-500 inline">
