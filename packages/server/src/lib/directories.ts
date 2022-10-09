@@ -16,7 +16,7 @@ export async function getLinkTo(
   name?: string
 ): Promise<PBLink> {
   const rawBlock = await client.block.get(cid)
-  const node = await Node.fromRawBlock(rawBlock)
+  const node = Node.fromRawBlock(rawBlock)
   if (!node.Data) throw new FileError(FileErrorType.NO_DATA)
   const ufs = UnixFS.unmarshal(rawBlock)
 

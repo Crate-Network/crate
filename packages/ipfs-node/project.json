@@ -27,14 +27,14 @@
     "serve": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "command": "docker compose up --build",
+        "command": "kubectl port-forward pods/ipfs-ipfs-ipfs-cluster-0 4001:4001 5001:5001 8080:8080",
         "color": true,
-        "cwd": "packages/ipfs-node",
-        "readyWhen": "Daemon is"
+        "cwd": "packages/ipfs-node"
       },
       "configurations": {
-        "remote": {
-          "command": "kubectl port-forward pods/ipfs-ipfs-ipfs-cluster-0 4001:4001 5001:5001 8080:8080"
+        "local": {
+          "command": "docker compose up --build",
+          "readyWhen": "Daemon is"
         }
       }
     },

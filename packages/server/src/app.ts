@@ -6,6 +6,8 @@ import fileUpload from "express-fileupload"
 import pinning from "./routes/pinning-route"
 import logger from "./logger"
 import morgan from "morgan"
+import filecoinClient from "./clients/filecoin"
+console.log(filecoinClient)
 
 // const args = process.argv.slice(2);
 const app = express()

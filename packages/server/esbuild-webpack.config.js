@@ -9,7 +9,7 @@ module.exports = (config, context) => {
           loader: "esbuild-loader",
           options: {
             loader: "ts",
-            target: "es2015",
+            target: "node12",
           },
         },
       ],

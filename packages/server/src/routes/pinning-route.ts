@@ -1,7 +1,6 @@
 import { Pin, PinStatus, Status } from "@crate/types"
 import { Router } from "express"
 import { uuid } from "uuidv4"
-import fcClient from "../clients/filecoin"
 
 const router = Router()
 
