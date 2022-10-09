@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.9.1](https://github.com/Crate-Network/crate/compare/@crate/web-0.9.0...@crate/web-0.9.1) (2022-10-09)
+
+
+### Bug Fixes
+
+* fixed splash page container clipping content ([eaaec49](https://github.com/Crate-Network/crate/commit/eaaec495b7087f533da91fb0efa0e76e9991cf79))
+
 ## [0.9.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.8.5...@crate/web-0.9.0) (2022-09-07)
 
 
