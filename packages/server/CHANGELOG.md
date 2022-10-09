@@ -4,16 +4,14 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 ## [0.3.0](https://github.com/Crate-Network/crate/compare/@crate/server-0.2.1...@crate/server-0.3.0) (2022-10-09)
 
-
 ### Features
 
-* stripped out infura references, using local node ([5e91786](https://github.com/Crate-Network/crate/commit/5e917869c6512769a5cb7d13909aade565bfdc07))
-
+- stripped out infura references, using local node ([5e91786](https://github.com/Crate-Network/crate/commit/5e917869c6512769a5cb7d13909aade565bfdc07))
 
 ### Bug Fixes
 
-* added client logging ([370fa34](https://github.com/Crate-Network/crate/commit/370fa345de754e6575cadc6034b1a2ab29c0fdac))
-* added more detail to build ([b150b76](https://github.com/Crate-Network/crate/commit/b150b7649c4085d42b1a6c3e03b062d1ba67dde6))
+- added client logging ([370fa34](https://github.com/Crate-Network/crate/commit/370fa345de754e6575cadc6034b1a2ab29c0fdac))
+- added more detail to build ([b150b76](https://github.com/Crate-Network/crate/commit/b150b7649c4085d42b1a6c3e03b062d1ba67dde6))
 
 ### [0.2.1](https://github.com/Crate-Network/crate/compare/@crate/server-0.2.0...@crate/server-0.2.1) (2022-08-14)
 
