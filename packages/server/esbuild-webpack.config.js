@@ -1,4 +1,5 @@
 const { merge } = require("webpack-merge")
+const nodeExternals = require("webpack-node-externals")
 
 module.exports = (config, context) => {
   return merge(config, {
@@ -9,7 +10,7 @@ module.exports = (config, context) => {
           loader: "esbuild-loader",
           options: {
             loader: "ts",
-            target: "node12",
+            target: "node18",
           },
         },
       ],

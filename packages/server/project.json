@@ -1,6 +1,6 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "@crate/server",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/server",
   "projectType": "application",
   "targets": {
@@ -11,7 +11,12 @@
         "outputPath": "dist/packages/server",
         "main": "packages/server/src/init.ts",
         "tsConfig": "packages/server/tsconfig.lib.json",
-        "externalDependencies": ["electron"],
+        "externalDependencies": [
+          "fetch",
+          "utf-8-validate",
+          "bufferutil",
+          "electron"
+        ],
         "webpackConfig": "packages/server/esbuild-webpack.config.js"
       }
     },
