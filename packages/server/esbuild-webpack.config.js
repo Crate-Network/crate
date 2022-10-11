@@ -3,6 +3,8 @@ const nodeExternals = require("webpack-node-externals")
 
 module.exports = (config, context) => {
   return merge(config, {
+    target: "node",
+    externals: [nodeExternals()],
     module: {
       rules: [
         {

@@ -62,7 +62,6 @@
   },
   "dependencies": {
     "@wanews/nx-esbuild": "^0.24.1",
-    "express": "4.17.2",
     "ipfs-utils": "9.0.7",
     "jest-environment-jsdom": "^28.1.3",
     "node-fetch": "2",
