@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.10.0](https://github.com/Crate-Network/crate/compare/@crate/web-0.9.1...@crate/web-0.10.0) (2022-10-12)
+
+
+### Features
+
+* color consistency, use stone instead of gray ([f2e14f4](https://github.com/Crate-Network/crate/commit/f2e14f430ce17f40b03e8b97ba81a279f66e26ce))
+* update preact, use async lazy loading ([04c3869](https://github.com/Crate-Network/crate/commit/04c3869a96160cdd431fd210d3286b3a1aaf8b82))
+
+
+### Bug Fixes
+
+* decreased font sizes for web ([0184525](https://github.com/Crate-Network/crate/commit/0184525afea844296ded1681ec419ae5e2f96c7e))
+* tweaked some webpage margins ([052c549](https://github.com/Crate-Network/crate/commit/052c549e4776f8df9f1bae1558ce6b63c4fc9e4c))
+
 ### [0.9.1](https://github.com/Crate-Network/crate/compare/@crate/web-0.9.0...@crate/web-0.9.1) (2022-10-09)
 
 
