@@ -24,7 +24,7 @@ export default function Splash() {
           minHeight: "max-content",
           "-webkit-mask-image": "-webkit-radial-gradient(white, black)",
         }}
-        className="relative z-10 flex flex-1 overflow-hidden sm:m-16 lg:m-32"
+        className="relative z-10 flex flex-1 overflow-hidden sm:m-16 2xl:mx-32"
       >
         <img
           src={colorGradientBackdrop}
