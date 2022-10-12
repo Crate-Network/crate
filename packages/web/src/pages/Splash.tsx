@@ -46,13 +46,13 @@ export default function Splash() {
           className="absolute top-0 left-0 hidden object-cover w-full aspect-square -z-20 transition motion-safe:transform-none ease-in-out sm:block"
         />
         <div className="flex flex-col justify-center w-full p-8 bg-orange-100 lg:p-16 bg-opacity-60 dark:bg-stone-900 dark:bg-opacity-60 backdrop-blur-lg">
-          <h1 class="font-sans text-4xl sm:text-6xl md:text-8xl xl:text-9xl">
+          <h1 class="font-sans text-4xl sm:text-5xl md:text-7xl xl:text-8xl">
             <span class="block font-bold inline">Cloud storage, </span>
             <span class="block font-black text-orange-600 dark:text-orange-500 inline">
               reimagined.
             </span>
           </h1>
-          <p className="sm:max-w-2xl lg:max-w-5xl sm:text-3xl lg:text-5xl">
+          <p className="sm:max-w-2xl lg:max-w-5xl sm:text-2xl lg:text-4xl">
             Store your files securely, with crypographically-verified guarantees
             on data accessibility. Access your files on all your devices, from
             anywhere in the world. Store as much data as you want. Get 1 TB of
@@ -62,13 +62,13 @@ export default function Splash() {
           <div class="flex mt-12 space-x-8">
             <Link
               href="/register"
-              class="flex items-center justify-center bg-orange-500 text-white w-40 h-16 justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md"
+              class="flex items-center justify-center bg-orange-500 text-white w-40 h-16 justify-center border border-transparent text-base font-medium rounded-md"
             >
               Get started
             </Link>
             <Link
               href="#"
-              class="flex items-center justify-center inline-block bg-stone-500 text-gray-100 w-40 h-16 justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md"
+              class="flex items-center justify-center inline-block bg-stone-500 text-gray-100 w-40 h-16 justify-center border border-transparent text-base font-medium rounded-md"
             >
               Learn more
             </Link>
