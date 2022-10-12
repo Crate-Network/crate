@@ -58,6 +58,7 @@ enum Pane {
 }
 
 export default function Settings() {
+  console.log("SETTINGS")
   const { user, userDoc, logout } = useUserStore()
 
   const [selectedPane, setSelectedPane] = useState(Pane.ACCOUNT)
@@ -97,28 +98,28 @@ export default function Settings() {
   }
 
   if (!user)
-    return <div className="text-center w-full italic mt-6">Loading...</div>
+    return <div className="w-full mt-6 italic text-center">Loading...</div>
 
   return (
     <main className="max-w-screen-2xl">
-      <h1 className="font-iaQuattro lg:text-5xl lg:mb-8 mb-3 text-4xl font-bold">
+      <h1 className="mb-3 text-4xl font-bold font-iaQuattro lg:text-5xl lg:mb-8">
         Settings
       </h1>
-      <div className="flex border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-stone-800 shadow-sm rounded-lg overflow-hidden">
-        <div className="lg:w-fit w-56 lg:max-w-sm p-3 border-r dark:border-neutral-700">
+      <div className="flex overflow-hidden bg-white border rounded-lg border-neutral-200 dark:border-neutral-700 dark:bg-stone-800 shadow-sm">
+        <div className="w-56 p-3 border-r lg:w-fit lg:max-w-sm dark:border-neutral-700">
           {user.email !== "" && (
-            <div className="flex items-center lg:space-x-4 p-2 mb-5">
-              <div className="h-12 w-12 bg-neutral-200 dark:bg-stone-700 rounded-full items-center justify-center flex-shrink-0 hidden lg:flex">
+            <div className="flex items-center p-2 mb-5 lg:space-x-4">
+              <div className="items-center justify-center flex-shrink-0 hidden w-12 h-12 rounded-full bg-neutral-200 dark:bg-stone-700 lg:flex">
                 <FontAwesomeIcon icon={faUser} />
               </div>
-              <div className="overflow-ellipsis overflow-hidden whitespace-nowrap">
-                <h4 className="overflow-ellipsis overflow-hidden whitespace-nowrap w-full font-semibold text-md text-gray-700 dark:text-gray-100 font-poppins tracking-wide">
+              <div className="overflow-hidden overflow-ellipsis whitespace-nowrap">
+                <h4 className="w-full overflow-hidden font-semibold tracking-wide text-gray-700 overflow-ellipsis whitespace-nowrap text-md dark:text-gray-100 font-poppins">
                   {userDoc && userDoc.firstName !== ""
                     ? `${userDoc.firstName} ${userDoc.lastName}`
                     : user.email}
                 </h4>
                 {userDoc && userDoc.organization !== "" && (
-                  <span className="overflow-ellipsis overflow-hidden whitespace-nowrap text-sm tracking-wide flex items-center space-x-1">
+                  <span className="flex items-center overflow-hidden text-sm tracking-wide overflow-ellipsis whitespace-nowrap space-x-1">
                     <span className="text-gray-600 dark:text-gray-200 text-md">
                       {userDoc.organization}
                     </span>
@@ -127,7 +128,7 @@ export default function Settings() {
               </div>
             </div>
           )}
-          <ul className="space-y-2 text-sm list-none">
+          <ul className="text-sm list-none space-y-2">
             <SidebarButton {...getProps(Pane.ACCOUNT)} />
             <SidebarButton {...getProps(Pane.SECURITY)} />
             <SidebarButton {...getProps(Pane.BILLING)} />
@@ -145,8 +146,8 @@ export default function Settings() {
           </ul>
         </div>
 
-        <div className="flex flex-1 rounded-md justify-center">
-          <div className="p-6 ml-4 w-full">{getPane(selectedPane)}</div>
+        <div className="flex justify-center flex-1 rounded-md">
+          <div className="w-full p-6 ml-4">{getPane(selectedPane)}</div>
         </div>
       </div>
     </main>

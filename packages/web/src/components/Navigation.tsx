@@ -63,7 +63,7 @@ export default function Navigation(props) {
                   <>
                     <span className="space-x-4">
                       <Link
-                        href="/"
+                        href="/files"
                         className="px-6 py-3 font-medium bg-orange-500 text-neutral-50 rounded-md hover:bg-orange-600 active:bg-orange-700 transition-all"
                       >
                         Files

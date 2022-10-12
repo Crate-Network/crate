@@ -1,17 +1,9 @@
-import { Link, route } from "preact-router"
+import { Link } from "preact-router"
 import { useEffect, useState } from "preact/hooks"
 import Navigation from "../components/Navigation"
-import { useUserStore } from "../store/UserStore"
 import colorGradientBackdrop from "../assets/color-gradient-backdrop.svg"
 
 export default function Splash() {
-  const loggedIn = useUserStore((state) => state.signedIn)
-  useEffect(() => {
-    if (loggedIn) {
-      route("/files", true)
-    }
-  }, [loggedIn])
-
   const [rValues, setRand] = useState([1, 1, 1, 1] as number[])
   const [opacity, setOpacity] = useState(0)
   const [r1, r2, r3, r4] = rValues.map((v) => v * opacity)

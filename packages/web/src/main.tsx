@@ -1,7 +1,7 @@
 import { Fragment, render } from "preact"
 import { useEffect, useErrorBoundary } from "preact/hooks"
 import Router, { route } from "preact-router"
-import AsyncRoute from "preact-async-route"
+import lazy from "preact-lazy"
 import "./index.css"
 
 import Splash from "./pages/Splash"
@@ -83,6 +83,9 @@ const Page = (props: PageProps) => {
   )
 }
 
+const Files = lazy(() => import("./pages/Files"))
+const Settings = lazy(() => import("./pages/Settings"))
+
 export function App() {
   return (
     <Router>
@@ -90,16 +93,10 @@ export function App() {
         <Splash />
       </Page>
       <Page path="/files" title={"Crate - Files"} protect>
-        <AsyncRoute
-          path="/files"
-          getComponent={async () => (await import("./pages/Files")).default}
-        />
+        <Files />
       </Page>
       <Page path="/settings" title={"Crate - Settings"} protect>
-        <AsyncRoute
-          path="/settings"
-          getComponent={async () => (await import("./pages/Settings")).default}
-        />
+        <Settings />
       </Page>
       <Page path="/community" title={"Crate - Community"}>
         <Community />
