@@ -35,7 +35,7 @@ function NewFileBody({
   return (
     <>
       <div className="p-2 w-96">
-        <h1 className="text-xl font-bold mb-2">
+        <h1 className="mb-2 text-xl font-bold">
           New {type === "file" ? "File" : "Folder"}
         </h1>
         <FormInput
@@ -120,7 +120,7 @@ export function AddBox() {
     <div className="flex flex-col justify-between">
       <label
         htmlFor="search"
-        className="text-sm font-medium text-gray-700 dark:text-gray-400"
+        className="text-sm font-medium text-stone-700 dark:text-stone-400"
       >
         Add Files
       </label>
@@ -145,14 +145,14 @@ export function AddBox() {
 
 export function SearchBar() {
   return (
-    <div className="flex-1 flex-col justify-between">
+    <div className="flex-col justify-between flex-1">
       <label
         htmlFor="search"
-        className="text-sm font-medium text-gray-700 dark:text-gray-400 md:block hidden"
+        className="hidden text-sm font-medium text-stone-700 dark:text-stone-400 md:block"
       >
         Search
       </label>
-      <div className="mt-1 relative rounded-md shadow-sm">
+      <div className="relative mt-1 rounded-md shadow-sm">
         <FormInput
           type="text"
           name="search"
@@ -161,7 +161,7 @@ export function SearchBar() {
         />
         <div className="absolute inset-y-0 right-0 flex items-center">
           <button
-            className="btn px-6 h-full bg-orange-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-orange-600 hover:shadow-lg focus:bg-orange-600  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-orange-700 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+            className="flex items-center h-full px-6 text-xs font-medium leading-tight text-white uppercase bg-orange-500 rounded shadow-md btn hover:bg-orange-600 hover:shadow-lg focus:bg-orange-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-orange-700 active:shadow-lg transition duration-150 ease-in-out"
             type="button"
             id="search-button"
           >
@@ -225,12 +225,12 @@ export function ViewBar({ viewMode, setViewMode }) {
     <div className="flex flex-col justify-between">
       <label
         htmlFor="view-mode"
-        className="text-sm font-medium text-gray-700 dark:text-gray-400"
+        className="text-sm font-medium text-stone-700 dark:text-stone-400"
       >
         View Mode
       </label>
       <div
-        className="inline-flex shadow-sm rounded overflow-hidden"
+        className="inline-flex overflow-hidden rounded shadow-sm"
         id="view-mode"
       >
         <MultiSelectBar
@@ -270,12 +270,12 @@ export function SortBar({ sortBy, setSortBy }: SortBarProps) {
       <div className="flex flex-col justify-between">
         <label
           htmlFor="view-mode"
-          className="text-sm font-medium text-gray-700 dark:text-gray-400"
+          className="text-sm font-medium text-stone-700 dark:text-stone-400"
         >
           Sorting
         </label>
         <div
-          className="inline-flex shadow-sm rounded overflow-hidden"
+          className="inline-flex overflow-hidden rounded shadow-sm"
           id="view-mode"
         >
           <Dropdown
@@ -288,7 +288,7 @@ export function SortBar({ sortBy, setSortBy }: SortBarProps) {
       {/* <div className="flex flex-col justify-between">
         <span />
         <div
-          className="inline-flex shadow-sm rounded overflow-hidden"
+          className="inline-flex overflow-hidden rounded shadow-sm"
           id="view-mode"
         >
           Test2

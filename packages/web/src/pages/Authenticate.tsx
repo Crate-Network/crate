@@ -195,7 +195,7 @@ export default function Authenticate({ type }: { type: AuthenticateType }) {
         providerText={providerText}
         handleProvider={handleProvider}
       /> */}
-      <div className="w-full h-px mt-4 mb-1 bg-gray-300 dark:bg-gray-600" />
+      <div className="w-full h-px mt-4 mb-1 bg-stone-300 dark:bg-stone-600" />
       <span className="text-sm text-gray-700 dark:text-gray-300">
         {type === AuthenticateType.LOGIN ? (
           <>

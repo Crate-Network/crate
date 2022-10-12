@@ -9,21 +9,21 @@ export default function FormInput(props) {
         py-1.5
         text-base
         font-normal
-        text-gray-700
+        text-stone-700
         bg-white 
-        dark:bg-gray-600 
+        dark:bg-stone-600 
         dark:text-neutral-50
         bg-clip-padding
-        border border-solid border-gray-300
+        border border-solid border-stone-300
         dark:border-neutral-700
         rounded
         transition
         ease-in-out
         m-0
         dark:focus:text-neutral-50 
-        dark:focus:bg-gray-700
-        focus:text-gray-700 focus:bg-white 
-        focus:border-blue-600 focus:outline-none placeholder:text-gray-400
+        dark:focus:bg-stone-700
+        focus:text-stone-700 focus:bg-white 
+        focus:border-blue-600 focus:outline-none placeholder:text-stone-400
       "
       {...props}
     />

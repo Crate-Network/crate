@@ -56,12 +56,12 @@ export default function Dropdown<T extends string>(
         py-1.5
         text-base
         font-normal
-        text-gray-700
+        text-stone-700
         bg-white 
-        dark:bg-gray-600 
+        dark:bg-stone-600 
         dark:text-neutral-50
         bg-clip-padding
-        border border-solid border-gray-300
+        border border-solid border-stone-300
         dark:border-neutral-700
         rounded
         transition
@@ -70,7 +70,7 @@ export default function Dropdown<T extends string>(
         shadow-sm
         ${
           expanded
-            ? "dark:text-neutral-50 dark:bg-gray-700 text-gray-700 bg-white border-blue-600 outline-none"
+            ? "dark:text-neutral-50 dark:bg-stone-700 text-gray-700 bg-white border-blue-600 outline-none"
             : ""
         } ${display ? "" : "w-48"}`}
         onClick={toggleExpanded}

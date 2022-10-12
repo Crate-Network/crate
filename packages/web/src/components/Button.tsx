@@ -11,12 +11,12 @@ export default function Button(props) {
         font-normal
         rounded
         transition
-        focus:text-gray-700 
+        focus:text-stone-700 
         focus:bg-white 
         focus:border-blue-600 
         focus:outline-none 
-        disabled:bg-gray-300
-        dark:disabled:bg-gray-800
+        disabled:bg-stone-300
+        dark:disabled:bg-stone-800
         disabled:text-neutral-400
         dark:disabled:text-neutral-600
         hover:shadow-md
