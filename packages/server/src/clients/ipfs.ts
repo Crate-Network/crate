@@ -6,6 +6,6 @@ const client = create({
   timeout: 30000,
 })
 
-logger.info("IPFS Client Started")
+client.ipfsClient.id().then(() => logger.info("Connected to IPFS"))
 
 export default client

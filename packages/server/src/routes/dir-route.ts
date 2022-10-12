@@ -1,6 +1,6 @@
 import { FileType } from "@crate/types"
 import { RequestHandler, Router } from "express"
-import fileClient from "../clients/files"
+import fileClient from "../clients/ipfs"
 import { asyncHandler } from "./utils"
 
 const { makeFile } = fileClient

@@ -1,7 +1,7 @@
 import { RequestHandler, Router } from "express"
 import logger from "../logger"
 import * as fs from "fs"
-import fileClient from "../clients/files"
+import fileClient from "../clients/ipfs"
 import { asyncHandler, defaultPath } from "./utils"
 import { joinPath, splitPath } from "@crate/utils"
 
