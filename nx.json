@@ -2,7 +2,6 @@
   "extends": "nx/presets/npm.json",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": [
           "generate-sources",
@@ -20,6 +19,12 @@
     },
     "docker": {
       "dependsOn": ["build"]
+    },
+    "test": {
+      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
     }
   },
   "workspaceLayout": {
