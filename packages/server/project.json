@@ -5,25 +5,19 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
       "options": {
-        "outputPath": "dist/packages/server",
-        "main": "packages/server/src/init.ts",
-        "tsConfig": "packages/server/tsconfig.lib.json",
-        "externalDependencies": [
-          "fetch",
-          "utf-8-validate",
-          "bufferutil",
-          "electron"
-        ],
-        "webpackConfig": "packages/server/esbuild-webpack.config.js"
+        "command": "esbuild packages/server/src/init.ts --external:electron --bundle --platform=node --outfile=dist/packages/server/main.js"
       }
     },
     "serve": {
-      "executor": "@nrwl/node:node",
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "@crate/server:build"
+        "commands": [
+          "nx run @crate/server:build --watch",
+          "npx nodemon --watch dist/packages/server dist/packages/server/main.js"
+        ],
+        "parallel": true
       }
     },
     "docker": {
@@ -57,7 +51,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/server"],
+      "outputs": ["{workspaceRoot}/coverage/packages/server"],
       "options": {
         "jestConfig": "packages/server/jest.config.ts",
         "passWithNoTests": true
