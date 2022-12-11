@@ -24,20 +24,6 @@
         }
       }
     },
-    "serve": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "kubectl port-forward pods/ipfs-ipfs-ipfs-cluster-0 4001:4001 5001:5001 8080:8080",
-        "color": true,
-        "cwd": "packages/ipfs-node"
-      },
-      "configurations": {
-        "local": {
-          "command": "docker compose up --build",
-          "readyWhen": "Daemon is"
-        }
-      }
-    },
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
