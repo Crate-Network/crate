@@ -1,5 +1,5 @@
 import { Link } from "preact-router"
-import { ReactComponent as CopyrightNotice } from "@crate/content/copyright-notice.md"
+import { ReactComponent as CopyrightNotice } from "../content/copyright-notice.md"
 import { useState } from "preact/hooks"
 import DarkGlyph from "../assets/dark-crate-glyph.svg"
 
