@@ -78,5 +78,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["@crate/server", "@crate/content"]
+  "implicitDependencies": ["@crate/server"]
 }
