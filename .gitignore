@@ -4,3 +4,4 @@ dist
 tmp
 logs
 stats.html
+firebase.json
