@@ -3123,6 +3123,13 @@
     rxjs-for-await "1.0.0"
     tsconfig-paths "^3.14.1"
 
+"@nxrs/cargo@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@nxrs/cargo/-/cargo-0.3.3.tgz#4cb05fa99e944772b8494d82666b9885b96f1bbd"
+  integrity sha512-Osh6dbWfygkCTLwedIv/+qyFUJ/rvultE4KN8ELimBgaGKbPrCqqlxVqhnzAcfEv2qYs/tLKRKvPCJqCBCH1Ig==
+  dependencies:
+    chalk "^4.1.2"
+
 "@octokit/auth-token@^2.4.4":
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@octokit/auth-token/-/auth-token-2.5.0.tgz#27c37ea26c205f28443402477ffd261311f21e36"
